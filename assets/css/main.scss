@@ -1,0 +1,75 @@
+@import 'mixins';
+/*
+  breakpoint mobile <960px
+*/
+
+.v-card-auth-body{
+  @media screen and (width < 960px) {
+    box-shadow: unset!important;
+  }
+
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+  border-radius: 8px;
+  width: 100%;
+}
+.auth-section-logo{
+  @include bc-main-gradient;
+}
+.w-100{
+  width: 100%;
+}
+.auth-section-form{
+  background-color: #FBFDFF;
+}
+.auth-body-form{
+  padding: 20px 18px;
+  background-color: #FBFDFF;
+}
+
+// If Only Skecth
+.sketch{
+  border-color: #AAAAAA!important;
+  color: #AAAAAA;
+  *{
+    border-color: #AAAAAA!important;
+    color: #AAAAAA;
+  }
+  &.bc-white{
+    background-color: #FFFFFF;
+  }
+  &.bc-silver{
+    background-color: #EEEEEE;
+  }
+  &.bc-blue{
+    background-color: #074EE8;
+    color: white!important;
+  }
+}
+
+.form-input{
+  label{
+    display: block;
+    margin-bottom: 4px;
+  }
+  input {
+    border: 1px solid;
+    height: 48px;
+    border-radius: 4px;
+  }
+  &:not(:last-child){
+    margin-bottom: 12px;
+  }
+}
+
+.btn{
+  height: 48px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  .btn-primary{
+  }
+
+  &:disabled{
+    background-color: #AAAAAA;
+    cursor: not-allowed;
+  }
+}
