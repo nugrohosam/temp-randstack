@@ -44,6 +44,7 @@
               >
                 Sign In
               </button>
+              <!-- <p>{{user}}</p> -->
             </form>
           </div>
         </div>
@@ -59,10 +60,13 @@ export default {
   layout: "auth",
   // components: { VueRecaptcha },
   computed: {
-    ...mapGetters(['auth/getUser']),
-    getUser: function(){
-      alert("Signed!");
-      console.log(this.getUser);
+    ...mapGetters({
+      user: 'auth/getUser'
+    }),
+  },
+  watch: {
+    user: function(){
+      console.log(this.user);
     }
   },
   auth(context) {

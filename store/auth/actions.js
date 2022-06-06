@@ -6,6 +6,6 @@ export default {
       'polis' : '123',
       'email' : 'azharogi@gmail.com',
       'toke' : 'Bearer XXX',
-    }, { root: true })
+    })
   }
 }

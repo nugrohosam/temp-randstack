@@ -1,6 +1,7 @@
 @import 'mixins';
 /*
-  breakpoint mobile <960px
+  breakpoint mobile <960px,
+  breakpoint tablet <1264
 */
 
 .v-card-auth-body{
@@ -14,6 +15,9 @@
 }
 .auth-section-logo{
   @include bc-main-gradient;
+}
+.auth-section-otp{
+  text-align: center;
 }
 .w-100{
   width: 100%;
@@ -62,6 +66,7 @@
 }
 
 .btn{
+  padding: 0 10px;
   height: 48px;
   border-radius: 4px;
   margin-bottom: 12px;
