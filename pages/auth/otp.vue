@@ -1,30 +1,29 @@
 <template>
-  <v-row justify="center" align="center">
-    <div class="col-md-8 col-xs-8">
-      <div class="v-card-auth-body">
-        <div class="row">
+ <div class="row" style="height: 100%; align-items: center; height: 100vh">
+    <div class="col-md-12 col-xs-8">
+      <div
+        class="row v-card-auth-body"
+        style="justify-content: center; width: 100%; max-width: 1020px"
+      >
           <div class="col-lg-12 auth-section-otp">
             <h2>Masukkan kode OTP untuk verifikasi akun anda</h2>
             <p id="otp_sent_to">Kode OTP telah dikirimkan ke nomor +62 812 2233 3444</p>
             <v-otp-input v-model="otp" length="6" type="number"></v-otp-input>
             <button
               id="verify"
-              class="btn btn-primary sketch bc-blue"
+              class="btn btn-primary"
               @click="verify"
               :disabled="submitDisable"
             >
               Verifikasi Akun
             </button>
             <div id="resend">
-              <a @click.prevent="resend">Resend OTP (23 detik)</a>
+              <a @click.prevent="resend">Belum menerima OTP? Kirim Ulang OTP (23 detik)</a>
             </div>
-
-            <small class="sketch">Time Limit 5:00</small>
           </div>
-        </div>
       </div>
     </div>
-  </v-row>
+  </div>
 </template>
 
 <script>
@@ -32,16 +31,17 @@ import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   name: "AuthOtpPage",
   layout: "auth",
+  auth: false,
   // components: { VueRecaptcha },
   computed: {
     ...mapGetters({
-      user: "auth/getUser",
+      // auth: "auth/getAuth",
     }),
   },
   watch: {
-    user: function () {
-      console.log(this.user);
-    },
+    // auth: function () {
+    //   console.log(this.auth);
+    // },
     otp: function(){
       this.otp.length >= 6 ? this.submitDisable = false : this.submitDisable = true;
     }
@@ -62,7 +62,9 @@ export default {
       if(this.otp != otp_expected){
         alert("Salah!");
       }else{
-        alert("Benar");
+        this.$router.push({
+          path: '/transaction/submission'
+        })
       }
     },
     resend(){
@@ -73,9 +75,19 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
 ::v-deep .v-otp-input {
-    max-width: 480px!important;
+    max-width: 560px!important;
     margin: auto!important;
+}
+
+::v-deep .v-input__control .v-input__slot{
+  height: 80px;
+  width: 80px;
+  @media screen and (max-width: 720px){
+    height: unset;
+    width: unset;
+  }
 }
 
 h2{

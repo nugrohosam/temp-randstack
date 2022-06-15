@@ -45,12 +45,13 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/auth-next',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'http://127.0.0.1:3005',
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -83,8 +84,47 @@ export default {
   build: {
   },
 
+  auth: {
+    strategies: {
+      local: {
+        // scheme: 'refresh',
+        token: {
+          property: 'result.username',
+          type: '',
+          maxAge: 3600,
+          global: true,
+        },
+        refreshToken: {
+          // property: 'refresh_token',
+          // data: 'refresh_token',
+          // maxAge: 60 * 60 * 24 * 30
+        },
+        user: {
+          property: 'result.username',
+         // autoFetch: true
+        },
+        endpoints: {
+          login: {url: '/login', method: 'post'},
+          // refresh: { url: 'https://app.semesta.io/api/27b2cab7f9a61ad9c07077f5dc1f8315/customers/refresh-token', method: 'post' },
+          // logout: { url: 'https://app.semesta.io/api/27b2cab7f9a61ad9c07077f5dc1f8315/customers/logout', method: 'get' },
+          user: { url: '/user', method: 'get'}
+        },
+      }
+    },
+    // redirect: {
+    //   login: '/auth/login',
+    //   logout: '/auth/login',
+    //   home: '/transaction/status'
+    // }
+  },
+
   // Serve local port
   server: {
     port: 80 // default: 3000
+  },
+
+  // Router
+  router: {
+    // middleware: ['auth']
   }
 }

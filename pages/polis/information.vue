@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-center">
-        HALAMAN STATUS TRANSAKSI
+        HALAMAN INFORMASI DATA POLIS
     </div>
   </div>
 </template>

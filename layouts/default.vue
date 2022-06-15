@@ -19,8 +19,14 @@
             router
             exact
           >
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
+            <v-list-item-action v-if="item.to == '/transaction/submission'">
+               <refresh-cw-icon size="1.5x" class="custom-class"></refresh-cw-icon>
+            </v-list-item-action>
+            <v-list-item-action v-else-if="item.to == '/transaction/status'">
+               <activity-icon size="1.5x" class="custom-class"></activity-icon>
+            </v-list-item-action>
+            <v-list-item-action v-else>
+               <clipboard-icon size="1.5x" class="custom-class"></clipboard-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title v-text="item.title" />
@@ -28,8 +34,23 @@
           </v-list-item>
         </v-list>
       </div>
+      <div class="logout-container">
+        <v-list>
+          <v-list-item
+            router
+            exact
+          >
+            <v-list-item-action @click="signOut()">
+              <v-icon>mdi-logout</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="'Logout'" />
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </div>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
+    <v-app-bar :clipped-left="clipped" fixed app class="app-bar-bnil">
       <v-app-bar-nav-icon
         @click.stop="drawer = !drawer"
         v-show="burgerButton"
@@ -41,15 +62,19 @@
       </v-container>
     </v-main>
 
-    <v-footer :absolute="!fixed" app>
+    <!-- <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    </v-footer> -->
   </v-app>
 </template>
 
 <script>
+import { ActivityIcon, RefreshCwIcon, ClipboardIcon   } from 'vue-feather-icons'
 export default {
   name: "DefaultLayout",
+  components: {
+    ActivityIcon, RefreshCwIcon, ClipboardIcon
+  },
   watch: {
     windowWidth(newWidth, oldWidth) {
       // breakpoint mobile <960px
@@ -74,19 +99,19 @@ export default {
       fixed: false,
       items: [
         {
-          icon: "mdi-apps",
+          icon: `<activity-icon size="1.5x" class="custom-class"></activity-icon>`,
+          title: "Pengajuan Transaksi",
+          to: "/transaction/submission",
+        },
+        {
+          icon: "mdi-chart-bubble",
           title: "Status Transaksi",
           to: "/transaction/status",
         },
         {
           icon: "mdi-chart-bubble",
           title: "Informasi Data Polis",
-          to: "/inspire",
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "Pengajuan Transaksi",
-          to: "",
+          to: "/polis/information",
         },
       ],
       miniVariant: false,
@@ -111,6 +136,12 @@ export default {
         this.drawer = true;
       }
     },
+
+    signOut: function(){
+      this.$router.push({
+        path: '/auth/login'
+      })
+    }
   },
 };
 </script>
@@ -124,10 +155,15 @@ export default {
 }
 .list-container{
   flex: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 50px;
 }
 .logo_container {
   text-align: center;
   flex: 0;
+  margin-top: 20px;
   img {
     width: 100px;
   }

@@ -5,7 +5,7 @@ export default {
     commit('setUser', {
       'polis' : '123',
       'email' : 'azharogi@gmail.com',
-      'toke' : 'Bearer XXX',
+      'token' : 'Bearer XXX',
     })
   }
 }
