@@ -60,7 +60,7 @@ export default {
       // do verify to backend
       let otp_expected = "123456";
       if(this.otp != otp_expected){
-        alert("Salah!");
+        alert("OTP : 123456");
       }else{
         this.$router.push({
           path: '/transaction/submission'
