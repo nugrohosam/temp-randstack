@@ -148,9 +148,7 @@ p.auth-title-form{
   /* Left Border - Active */
   box-shadow: inset 2px 0px 0px #F15921!important;
   /* Primary */
-
-color: #F15921!important;
-
+  color: #F15921!important;
 }
 
 #auth_help, #resend{
@@ -161,4 +159,34 @@ color: #F15921!important;
     text-align: center;
     color: #F15921;
   }
+}
+
+.page-header{
+  background: url("~/assets/svg/slicing_page_header.svg");
+  height: 102px;
+  display: flex;
+  align-items: center;
+  padding: 0 36px;
+  background-repeat: no-repeat;
+    background-size: 100%;
+
+  .page-title{
+    color: white;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 26px;
+  }
+}
+
+.page-body{
+  background: #FFFFFF;
+  border: 1px solid #E5E9F5;
+  border-radius: 16px;
+  padding: 37px 26px;
+}
+
+.search-bar {
+  border: 2px solid #E5E9F5;
+  border-radius: 4px;
+  padding: 3px 10px!important;
 }

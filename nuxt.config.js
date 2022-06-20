@@ -118,6 +118,12 @@ export default {
     // }
   },
 
+  components: {
+    dirs: [
+      '~/components',
+      '~/components/submission_transaction'
+    ]
+  },
   // Serve local port
   server: {
     port: 80 // default: 3000
