@@ -1,5 +1,8 @@
 <template>
-  <div class="row" style="height: 100%; align-items: center; height: 100vh">
+  <div class="row main">
+    <div class="col-12 d-md-none bni_logo">
+      <img src="~/assets/icon/main_bni_life.svg" alt="logo" />
+    </div>
     <div class="col-md-12 col-xs-8">
       <div
         class="row v-card-auth-body"
@@ -22,21 +25,37 @@
         <div class="col-md-6 col-xs-12 auth-section-form">
           <!-- <div class="row">
               <div class="col-12"> -->
+          <h2 class="d-md-none mobile-logo">ePos</h2>
           <p class="auth-title-form">Login</p>
           <!-- </div>
             </div> -->
           <form action="">
             <div class="form-input auth">
               <label>Nomor Polis</label>
-              <input type="text" class="w-100" v-model="form.polis_number" />
+              <input
+                type="text"
+                class="w-100"
+                v-model="form.polis_number"
+                placeholder="123"
+              />
             </div>
             <div class="form-input auth">
               <label>Nomor HP</label>
-              <input type="text" class="w-100" v-model="form.phonenumber"/>
+              <input
+                type="text"
+                class="w-100"
+                v-model="form.phonenumber"
+                placeholder="123"
+              />
             </div>
             <div class="form-input auth" style="margin-bottom: 66px">
               <label>Nomor Identitas</label>
-              <input type="text" class="w-100"  v-model="form.identity_number"/>
+              <input
+                type="text"
+                class="w-100"
+                v-model="form.identity_number"
+                placeholder="123"
+              />
             </div>
 
             <vue-recaptcha
@@ -62,11 +81,19 @@
         </div>
       </div>
     </div>
+    <!-- Modal Message -->
+    <ModalMessage
+      :message="modal.message"
+      :show="modal.show"
+      @closeModal="modal.show = false"
+    />
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
+import { AlertCircleIcon } from "vue-feather-icons";
+
 export default {
   auth: false,
   name: "AuthLoginPage",
@@ -77,17 +104,25 @@ export default {
     //   auth: "auth/getAuth",
     // }),
   },
+  components: {
+    AlertCircleIcon,
+  },
   watch: {
     form: {
-      handler(val){
-        if(val.polis_number != "" && val.phonenumber != "" && val.identity_number != "" && val.verified == true){
+      handler(val) {
+        if (
+          val.polis_number != "" &&
+          val.phonenumber != "" &&
+          val.identity_number != "" &&
+          val.verified == true
+        ) {
           this.signInDisable = false;
-        }else{
+        } else {
           this.signInDisable = true;
         }
       },
       deep: true,
-    }
+    },
     // auth: function () {
     //   if (this.auth) {
     //     this.$router.push({
@@ -106,16 +141,30 @@ export default {
         polis_number: "",
         phonenumber: "",
         identity_number: "",
-        verified: ""
-      }
+        verified: "",
+      },
+      modal: {
+        message: "",
+        show: false,
+      },
     };
   },
   methods: {
     // ...mapActions("auth", ["signIn"]),
-    signIn: async function () {
+    signIn: function () {
+      // TEST
+
+      if (this.form.identity_number != "123") {
+        (this.modal.message =
+          "Akun anda telah terblokir, silahkan hubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id"),
+          (this.modal.show = true);
+        return;
+      }
+      // TEST
       this.$router.push({
         path: "/auth/otp",
       });
+
       // try {
       //   let response = await this.$auth.loginWith('local', { data: {
       //     username: 'cuk',
@@ -129,7 +178,7 @@ export default {
       // }
     },
     verifyMethod: function (response) {
-      if(response){
+      if (response) {
         this.form.verified = true;
       }
     },
@@ -157,6 +206,40 @@ export default {
   align-items: center;
   img {
     margin-bottom: 24px;
+  }
+}
+
+h2.mobile-logo {
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  /* identical to box height */
+
+  text-align: center;
+
+  /* Text/Normal */
+
+  color: #2e343d;
+}
+
+.main {
+  align-items: center;
+  height: 100vh;
+}
+// Breakpoints
+@media screen and (max-width: 959px) {
+  .main {
+    align-items: unset;
+    height: unset;
+  }
+  .bni_logo {
+    padding-bottom: 0px;
+    text-align: center;
+    img{
+      width: 50px;
+    }
+
   }
 }
 </style>
