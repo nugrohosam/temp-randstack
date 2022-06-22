@@ -8,15 +8,28 @@ export default {
   head: {
     titleTemplate: 'Landing App',
     title: 'Landing App',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+    meta: [{
+        charset: 'utf-8'
+      },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1, shrink-to-fit=no'
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: ''
+      },
+      {
+        name: 'format-detection',
+        content: 'telephone=no'
+      }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{
+      rel: 'icon',
+      type: 'image/x-icon',
+      href: '/favicon.ico'
+    }]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -25,9 +38,12 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    { src: '~/plugins/vue-recaptcha.js' },
-    { src: '~/plugins/composition-api.js' },
+  plugins: [{
+      src: '~/plugins/vue-recaptcha.js'
+    },
+    {
+      src: '~/plugins/composition-api.js'
+    },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -41,6 +57,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    'nuxt-healthcheck',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
@@ -61,6 +78,16 @@ export default {
     }
   },
 
+  healthcheck: {
+    path: '/health-check',
+    contentType: 'application/json',
+    healthy: () => {
+      return JSON.stringify({
+        result: 'Healty'
+      })
+    }
+  },
+  
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
@@ -81,8 +108,7 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  },
+  build: {},
 
   auth: {
     strategies: {
@@ -101,13 +127,19 @@ export default {
         },
         user: {
           property: 'result.username',
-         // autoFetch: true
+          // autoFetch: true
         },
         endpoints: {
-          login: {url: '/login', method: 'post'},
+          login: {
+            url: '/login',
+            method: 'post'
+          },
           // refresh: { url: 'https://app.semesta.io/api/27b2cab7f9a61ad9c07077f5dc1f8315/customers/refresh-token', method: 'post' },
           // logout: { url: 'https://app.semesta.io/api/27b2cab7f9a61ad9c07077f5dc1f8315/customers/logout', method: 'get' },
-          user: { url: '/user', method: 'get'}
+          user: {
+            url: '/user',
+            method: 'get'
+          }
         },
       }
     },
@@ -126,7 +158,7 @@ export default {
   },
   // Serve local port
   server: {
-    port: 80 // default: 3000
+    port: 3000 // default: 3000
   },
 
   // Router
