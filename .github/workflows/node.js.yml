@@ -26,7 +26,6 @@ jobs:
         
     - name: Set environment variables
       run: |
-          echo '${{ secrets.APP_SETTING_JSON }}' | base64 --decode >> ./appsettings.json
           echo "IMAGE_NAME=asia-southeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/e-submission-lp/frontend" >> $GITHUB_ENV
           TAG=$([ $(echo $GITHUB_REF | cut -d'/' -f2) = "tags" ] && echo "production" || echo "${GITHUB_REF##*/}")
           echo "IMAGE_TAG=$TAG" >> $GITHUB_ENV
