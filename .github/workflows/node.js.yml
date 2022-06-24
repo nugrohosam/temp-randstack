@@ -63,6 +63,8 @@ jobs:
         script_stop: true
         envs: IMAGE_NAME,IMAGE_TAG
         script: |
+          rm -rf docker-compose.yml
+          touch docker-compose.yml
           echo '${{ secrets.DOCKER_COMPOSE }}' | base64 --decode >> docker-compose.yml
           echo "IMAGE: $IMAGE_NAME:$IMAGE_TAG"
           export IMAGE_NAME=$IMAGE_NAME
