@@ -151,26 +151,32 @@ export default {
   },
   methods: {
     // ...mapActions("auth", ["signIn"]),
-    signIn: async function () {
-      // TEST
-
+    signIn: function () {
+       this.$axios
+        .post("/api/v1/auth/login", this.form)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
       // TEST
       // this.$router.push({
       //   path: "/auth/otp",
       // });
 
-      try {
-        let response = await this.$auth
-          .loginWith("local", {
-            data: {
-              policy_number: this.form.policy_number,
-              phone_number: this.form.phone_number,
-              identity_number: this.form.identity_number,
-            },
-          })
-          .then((response) => {
-            console.log(response);
-          });
+      // try {
+        // let response = await this.$auth
+        //   .loginWith("local", {
+        //     data: {
+        //       policy_number: this.form.policy_number,
+        //       phone_number: this.form.phone_number,
+        //       identity_number: this.form.identity_number,
+        //     },
+        //   })
+        //   .then((response) => {
+        //     console.log(response);
+        //   });
 
         // console.log(response);
         // if (response) {
@@ -179,11 +185,10 @@ export default {
         //     "Akun anda telah terblokir, silahkan hubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
         //   this.modal.show = true;
         // }
-
-      } catch (err) {
-        console.log(err);
-        this.error = err.response.data.message;
-      }
+      // } catch (err) {
+      //   console.log(err);
+      //   this.error = err.response.data.message;
+      // }
     },
     verifyMethod: function (response) {
       if (response) {
