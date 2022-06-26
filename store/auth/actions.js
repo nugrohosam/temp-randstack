@@ -49,7 +49,6 @@ export default {
   },
 
   async otpSubmit({ getters, commit }, data) {
-
     const response = await this.$axios
       .$post("/api/v1/auth/otp/check", data)
       .then((response) => {

@@ -144,11 +144,11 @@ export default {
   methods: {
     signIn: async function () {
       const response = await this.$store.dispatch("auth/signIn", this.form);
-      // if(typeof response.success != "undefined" && response.success){
+      if(typeof response.success != "undefined" && response.success){
         this.$router.push({
           path: "/auth/otp",
         });
-      // }
+      }
 
 
       // TEST
