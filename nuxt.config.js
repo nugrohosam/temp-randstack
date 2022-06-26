@@ -51,7 +51,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://127.0.0.1:3005',
+    baseURL: process.env.API_BASE_URL,
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -104,7 +104,7 @@ export default {
          // autoFetch: true
         },
         endpoints: {
-          login: {url: '/login', method: 'post'},
+          login: {url: '/auth/login', method: 'post'},
           // refresh: { url: 'https://app.semesta.io/api/27b2cab7f9a61ad9c07077f5dc1f8315/customers/refresh-token', method: 'post' },
           // logout: { url: 'https://app.semesta.io/api/27b2cab7f9a61ad9c07077f5dc1f8315/customers/logout', method: 'get' },
           user: { url: '/user', method: 'get'}
