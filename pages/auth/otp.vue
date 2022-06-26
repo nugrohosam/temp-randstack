@@ -10,7 +10,11 @@
           <p id="otp_sent_to">
             Kode OTP telah dikirimkan ke nomor +62 812 2233 3444
           </p>
-          <v-otp-input v-model="otp" length="6" type="number" ></v-otp-input>
+          <v-otp-input
+            v-model="form.otp_number"
+            length="6"
+            type="number"
+          ></v-otp-input>
           <button
             id="verify"
             class="btn btn-primary"
@@ -21,7 +25,10 @@
           </button>
           <div id="resend">
             <a @click.prevent="resend" :class="resend_active ? '' : 'disabled'">
-               {{is_mobile  ? resend_text_mobile : resend_text}} ({{otp_timer}} detik)
+              {{ is_mobile ? resend_text_mobile : resend_text }} ({{
+                otp_timer
+              }}
+              detik)
             </a>
           </div>
         </div>
@@ -39,7 +46,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
-import {MOBILE_BREAKPOINT,DESKTOP_BREAKPOINT} from '../../constants';
+import { MOBILE_BREAKPOINT, DESKTOP_BREAKPOINT } from "../../constants";
 
 export default {
   name: "AuthOtpPage",
@@ -48,29 +55,38 @@ export default {
   // components: { VueRecaptcha },
   computed: {
     ...mapGetters({
-      // auth: "auth/getAuth",
+      auth: "auth/getAuthIsAuth",
     }),
   },
   watch: {
-    // auth: function () {
-    //   console.log(this.auth);
-    // },
-    otp_timer: function(value){
-      if(value <= 0){
+    auth(isAuth) {
+      if (isAuth) {
+        this.$router.push({
+          path: "/transaction/submission",
+        });
+      }
+    },
+    otp_timer: function (value) {
+      if (value <= 0) {
         this.otp_timer = 0;
         this.resend_active = true;
         clearInterval(this.otp_counter);
       }
     },
-    otp: function () {
-      this.otp.length >= 6
-        ? (this.submitDisable = false)
-        : (this.submitDisable = true);
+    form: {
+      handler(value) {
+        if (value.otp_number.length == 6) {
+          this.submitDisable = false;
+        } else {
+          this.submitDisable = true;
+        }
+      },
+      deep: true,
     },
   },
   mounted() {
     this.counter();
-    if(window.screen.width < MOBILE_BREAKPOINT){
+    if (window.screen.width < MOBILE_BREAKPOINT) {
       this.is_mobile = true;
     }
   },
@@ -80,54 +96,57 @@ export default {
   data() {
     return {
       is_mobile: false,
+      form: {
+        otp_number: "",
+        identity: this.$store.getters["auth/getAuthPhoneNumber"],
+      },
       modal: {
         message: "",
         show: false,
         button: {
-          redirect_link: '/auth/login',
-          text: 'Kembali ke Halaman Login'
-        }
+          redirect_link: "/auth/login",
+          text: "Kembali ke Halaman Login",
+        },
       },
       submitDisable: true,
-      otp: "",
       otp_timer: "", //seconds
       otp_counter: null,
+      otp_remaining: 3  ,
       resend_active: false,
       resend_text: "Belum menerima OTP? Kirim Ulang OTP ",
       resend_text_mobile: "Resend OTP ",
     };
   },
   methods: {
-    verify() {
-      // do verify to backend
-      let otp_expected = "123456";
-      if (this.otp != otp_expected) {
-        this.modal.message =
-          "Anda melakukan kesalahan pengisian OTP sebanyak ..... kali. Silahkan melakukan login kembali setelah 5 menit.";
-        this.modal.show = true;
-        alert("OTP : 123456");
-      } else {
-        this.$router.push({
-          path: "/transaction/submission",
-        });
+    verify: async function () {
+      const response = await this.$store.dispatch("auth/otpSubmit", this.form);
+      if (typeof response.data != "undefined" && !response.data.success) {
+        this.otp_remaining -= 1;
+        if (this.otp_remaining <= 0) {
+          this.modal.message =
+            "Anda melakukan kesalahan pengisian OTP sebanyak 3 kali. Silahkan melakukan login kembali setelah 5 menit.";
+          this.modal.show = true;
+        }
       }
     },
-    resend() {
 
-      // do request otp again
-      if(this.otp_timer <= 0){
-        alert("resend");
-      }else{
+    resend: async function() {
+      if (this.otp_timer <= 0) {
+        await this.$store.dispatch('auth/otpResend', {
+          identity: this.form.identity
+        })
+        this.counter();
+      } else {
         alert("wait until otp time is 0");
       }
-
     },
-    counter(){
-      this.otp_timer = 5 //seconds
+
+    counter() {
+      this.otp_timer = 5; //seconds
       this.otp_counter = setInterval(() => {
         this.otp_timer -= 1;
-      },1000)
-    }
+      }, 1000);
+    },
   },
 };
 </script>

@@ -33,7 +33,6 @@ export default {
         this.isShow = false
         this.$emit('closeModal')
       }
-
     }
   }
 }

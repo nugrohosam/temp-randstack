@@ -34,13 +34,13 @@
           </v-list-item>
         </v-list>
       </div>
-      <div class="logout-container">
+      <div class="logout-container" @click="signOut()">
         <v-list>
           <v-list-item
             router
             exact
           >
-            <v-list-item-action @click="signOut()">
+            <v-list-item-action >
               <v-icon>mdi-logout</v-icon>
             </v-list-item-action>
             <v-list-item-content>
@@ -88,6 +88,10 @@ export default {
       window.addEventListener("resize", this.onResize);
     });
   },
+
+  beforeMount(){
+    this.check();
+  },
   beforeDestroy() {
     window.removeEventListener("resize", this.onResize);
   },
@@ -127,7 +131,6 @@ export default {
     },
 
     changeAppDrawer(width) {
-      console.log(width);
       if (width < 1264) {
         this.burgerButton = true;
         this.drawer = false;
@@ -138,9 +141,16 @@ export default {
     },
 
     signOut: function(){
-      this.$router.push({
-        path: '/auth/login'
-      })
+      this.$store.dispatch('auth/signOut');
+    },
+
+    check: async function(){
+      const isAuthenticated = await this.$store.dispatch('auth/check');
+      if(!isAuthenticated){
+        this.$router.push({
+          path: "/auth/login",
+        });
+      }
     }
   },
 };

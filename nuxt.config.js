@@ -44,6 +44,9 @@ export default {
     {
       src: '~/plugins/composition-api.js'
     },
+    {
+      src: '~/plugins/axios.js'
+    },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -62,13 +65,20 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    '@nuxtjs/auth-next',
+    // '@nuxtjs/auth-next',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    // baseURL: "http://34.143.254.25:8888/",
+    proxy: true
+  },
+  proxy: {
+    // Simple proxy
+    "/api/v1/": {
+      // target: "http://34.143.254.25:8888",
+      target: "http://34.143.254.25:8888",
+      pathRewrite: { "^/api/v1/": "/api/v1/" }
+    }
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

@@ -1,13 +1,48 @@
 <template>
   <v-app>
-
     <v-main>
       <v-container fluid>
         <Nuxt />
+        <ResponseAlert
+            @closeModal="modal.show = false"
+        />
       </v-container>
     </v-main>
   </v-app>
 </template>
+<script>
+import {mapGetters} from 'vuex';
+export default {
+  beforeMount(){
+    this.check();
+  },
+  watch: {
+
+  },
+  data(){
+    return {
+       modal: {
+        message: "",
+        show: false,
+      },
+    }
+  },
+  methods: {
+    check: async function(){
+      const isAuthenticated = await this.$store.dispatch('auth/check');
+      if(isAuthenticated){
+        this.$router.push({
+          path: "/transaction/submission",
+        });
+      }else{
+        this.$router.push({
+          path: "/auth/login",
+        });
+      }
+    }
+  }
+}
+</script>
 <style lang="scss" scoped>
 #app {
   // background: rgb(251, 253, 255);

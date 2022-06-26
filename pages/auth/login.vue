@@ -98,11 +98,10 @@ export default {
   auth: false,
   name: "AuthLoginPage",
   layout: "auth",
-  // components: { VueRecaptcha },
   computed: {
-    // ...mapGetters({
-    //   auth: "auth/getAuth",
-    // }),
+    ...mapGetters({
+      auth: "auth/getAuthIsAuth",
+    }),
   },
   components: {
     AlertCircleIcon,
@@ -113,8 +112,8 @@ export default {
         if (
           val.policy_number != "" &&
           val.phone_number != "" &&
-          val.identity_number != "" &&
-          val.verified == true
+          val.identity_number != ""
+          && val.verified == true
         ) {
           this.signInDisable = false;
         } else {
@@ -123,13 +122,6 @@ export default {
       },
       deep: true,
     },
-    // auth: function () {
-    //   if (this.auth) {
-    //     this.$router.push({
-    //       path: "/auth/otp",
-    //     });
-    //   }
-    // },
   },
   auth(context) {
     return "auth";
@@ -138,9 +130,9 @@ export default {
     return {
       signInDisable: true,
       form: {
-        policy_number: "",
-        phone_number: "",
-        identity_number: "",
+        policy_number: "9210000627",
+        phone_number: "6288809139413",
+        identity_number: "5315056301790004",
         verified: "",
       },
       modal: {
@@ -150,41 +142,37 @@ export default {
     };
   },
   methods: {
-    // ...mapActions("auth", ["signIn"]),
-    signIn: function () {
-       this.$axios
-        .post("http://34.143.254.25:8888/api/v1/auth/login", this.form)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.error(err);
+    signIn: async function () {
+      const response = await this.$store.dispatch("auth/signIn", this.form);
+      // if(typeof response.success != "undefined" && response.success){
+        this.$router.push({
+          path: "/auth/otp",
         });
+      // }
+
+
       // TEST
-      // this.$router.push({
-      //   path: "/auth/otp",
-      // });
 
       // try {
-        // let response = await this.$auth
-        //   .loginWith("local", {
-        //     data: {
-        //       policy_number: this.form.policy_number,
-        //       phone_number: this.form.phone_number,
-        //       identity_number: this.form.identity_number,
-        //     },
-        //   })
-        //   .then((response) => {
-        //     console.log(response);
-        //   });
+      // let response = await this.$auth
+      //   .loginWith("local", {
+      //     data: {
+      //       policy_number: this.form.policy_number,
+      //       phone_number: this.form.phone_number,
+      //       identity_number: this.form.identity_number,
+      //     },
+      //   })
+      //   .then((response) => {
+      //     console.log(response);
+      //   });
 
-        // console.log(response);
-        // if (response) {
-        // } else {
-        //   this.modal.message =
-        //     "Akun anda telah terblokir, silahkan hubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
-        //   this.modal.show = true;
-        // }
+      // console.log(response);
+      // if (response) {
+      // } else {
+      //   this.modal.message =
+      //     "Akun anda telah terblokir, silahkan hubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
+      //   this.modal.show = true;
+      // }
       // } catch (err) {
       //   console.log(err);
       //   this.error = err.response.data.message;
@@ -206,10 +194,7 @@ export default {
   display: flex;
   justify-content: center;
   margin-bottom: 14px;
-  // transform: scaleX(2);
-  // -webkit-transform: scalex(2);
-  // transform-origin: 0 0;
-  // -webkit-transform-origin: 0 0;
+
 }
 .logo-container {
   height: 360px;
