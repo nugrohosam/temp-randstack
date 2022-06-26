@@ -153,7 +153,7 @@ export default {
     // ...mapActions("auth", ["signIn"]),
     signIn: function () {
        this.$axios
-        .post("/api/v1/auth/login", this.form)
+        .post("http://34.143.254.25:8888/api/v1/auth/login", this.form)
         .then((res) => {
           console.log(res);
         })
