@@ -78,7 +78,12 @@ export default {
       // target: "http://34.143.254.25:8888",
       target: "http://34.143.254.25:8888",
       pathRewrite: { "^/api/v1/": "/api/v1/" }
-    }
+    },
+    "/test/v1/": {
+      // target: "http://34.143.254.25:8888",
+      target: "http://34.143.254.25:8888",
+      pathRewrite: { "^/test/v1/": "/test/v1/" }
+    },
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

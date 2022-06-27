@@ -32,6 +32,17 @@ export default {
     });
   },
 
+  async sendMail(){
+    const response = await this.$axios
+      .$get("/test/v1/email/login-attempt?email=blabla@rojak.com")
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+    return response;
+  },
   async signOut({commit}) {
     const response = await this.$axios
       .$post("/api/v1/auth/logout")
@@ -48,7 +59,8 @@ export default {
       });
   },
 
-  async otpSubmit({ getters, commit }, data) {
+  async otpSubmit({ dispatch, getters, commit }, data) {
+    dispatch('sendMail')
     const response = await this.$axios
       .$post("/api/v1/auth/otp/check", data)
       .then((response) => {
