@@ -1,20 +1,8 @@
 import colors from 'vuetify/es5/util/colors'
 
-require('dotenv').config()
-
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
-
-  sentry: {
-    dsn: process.env.SENTRY_DSN || "", // Enter your project's DSN here
-    // Additional Module Options go here
-    // https://sentry.nuxtjs.org/sentry/options
-    config: {
-      // Add native Sentry config here
-      // https://docs.sentry.io/platforms/javascript/guides/vue/configuration/options/
-    },
-  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
