@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: 'Landing App',
+    titleTemplate: 'BNIL - Landing App',
     title: 'Landing App',
     meta: [{
         charset: 'utf-8'
