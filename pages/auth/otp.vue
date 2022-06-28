@@ -142,7 +142,7 @@ export default {
     },
 
     counter() {
-      this.otp_timer = 5; //seconds
+      this.otp_timer = 60; //seconds
       this.otp_counter = setInterval(() => {
         this.otp_timer -= 1;
       }, 1000);

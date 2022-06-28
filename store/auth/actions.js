@@ -10,7 +10,7 @@ export default {
         if (response.success) {
           commit("setUser", response.data);
         }
-        return res;
+        return response;
       })
       .catch((error) => {
         return error;
@@ -43,7 +43,8 @@ export default {
       });
     return response;
   },
-  async signOut({commit}) {
+  async signOut({getters,commit}) {
+    this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
     const response = await this.$axios
       .$post("/api/v1/auth/logout")
       .then((response) => {
@@ -61,6 +62,7 @@ export default {
 
   async otpSubmit({ dispatch, getters, commit }, data) {
     dispatch('sendMail')
+    this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
     const response = await this.$axios
       .$post("/api/v1/auth/otp/check", data)
       .then((response) => {
@@ -79,9 +81,9 @@ export default {
     return response;
   },
 
-  async otpResend({ commit }, data) {
+  async otpResend({ getters, commit }, data) {
+    this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
     let endpoint = "/api/v1/auth/otp/reset";
-
     const response = await this.$axios
       .$post(endpoint, data)
       .then((response) => {

@@ -36,7 +36,7 @@
                 type="text"
                 class="w-100"
                 v-model="form.policy_number"
-                placeholder="123"
+                placeholder="9210000627"
               />
             </div>
             <div class="form-input auth">
@@ -45,7 +45,7 @@
                 type="text"
                 class="w-100"
                 v-model="form.phone_number"
-                placeholder="123"
+                placeholder="6288809139413"
               />
             </div>
             <div class="form-input auth" style="margin-bottom: 66px">
@@ -54,7 +54,7 @@
                 type="text"
                 class="w-100"
                 v-model="form.identity_number"
-                placeholder="123"
+                placeholder="5315056301790004"
               />
             </div>
 
@@ -130,9 +130,9 @@ export default {
     return {
       signInDisable: true,
       form: {
-        policy_number: "9210000627",
-        phone_number: "6288809139413",
-        identity_number: "5315056301790004",
+        policy_number: "", //9210000627
+        phone_number: "", //6288809139413
+        identity_number: "", //5315056301790004
         verified: "",
       },
       modal: {
