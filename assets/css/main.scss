@@ -1,4 +1,5 @@
 @import 'mixins';
+@import 'colors';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 /*
   breakpoint mobile <960px,
@@ -9,6 +10,40 @@
   font-family: 'Inter', sans-serif;
   font-style: normal;
 }
+
+a{
+  &.bni-primary{
+    color: $primary!important;
+  }
+}
+.v-data-table {
+  border-radius: 20px!important;
+  box-shadow: unset;
+}
+.v-data-table__expanded.v-data-table__expanded__content {
+  box-shadow: none !important;
+}
+.v-data-table{
+  border: thin solid rgba(0, 0, 0, 0.12)!important;
+  th{
+
+    &:not(:last-child){
+      border-right: thin solid rgba(0, 0, 0, 0.12)!important;
+    }
+  }
+  tr{
+    border: unset!important;
+  }
+  td{
+    border: thin solid rgba(0, 0, 0, 0.12)!important;
+  }
+}
+
+// .v-pagination__item--active.primary{
+//   background-color: $primary!important;
+//   border-color: $primary!important;
+// }
+
 .v-application--wrap{
   flex-direction: row!important;
 }
@@ -275,6 +310,7 @@ p.auth-title-form{
   /* Primary */
   color: #F15921!important;
 }
+
 
 #auth_help, #resend{
   margin-top: 18px;

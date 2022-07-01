@@ -16,11 +16,15 @@ import AuthModules from './auth'
 // Import Submission Transaction Modules
 import SubmissionTransactionModules from './submission_transaction'
 
+// Import Transaction Status Modules
+import TransactionStatusModules from './transaction_status'
+
 Vue.use(Vuex)
 export default () => new Vuex.Store({
   modules: {
       auth: AuthModules,
-      submission_transaction: SubmissionTransactionModules
+      submission_transaction: SubmissionTransactionModules,
+      transaction_status: TransactionStatusModules
   },
   state: state,
   getters: getters,
