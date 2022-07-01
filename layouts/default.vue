@@ -1,62 +1,99 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
+    <!-- <v-navigation-drawer
       fixed
       app
-    >
-      <div class="logo_container">
-        <img src="~/assets/icon/main_bni_life.svg" alt="logo" />
+    > -->
+
+    <div class="navbar-container desktop">
+      <div class="navbar desktop">
+        <div class="logo_container">
+          <img src="~/assets/icon/main_bni_life.svg" alt="logo" />
+        </div>
+        <div class="list-container">
+          <v-list>
+            <v-list-item
+              v-for="(item, i) in items"
+              :key="i"
+              :to="item.to"
+              router
+              exact
+            >
+              <v-list-item-action v-if="item.to == '/transaction/submission'">
+                <refresh-cw-icon
+                  size="1.5x"
+                  class="custom-class"
+                ></refresh-cw-icon>
+              </v-list-item-action>
+              <v-list-item-action v-else-if="item.to == '/transaction/status'">
+                <activity-icon size="1.5x" class="custom-class"></activity-icon>
+              </v-list-item-action>
+              <v-list-item-action v-else>
+                <clipboard-icon
+                  size="1.5x"
+                  class="custom-class"
+                ></clipboard-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title v-text="item.title" />
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </div>
+        <div class="logout-container" @click="signOut()">
+          <v-list>
+            <v-list-item router exact>
+              <v-list-item-action>
+                <v-icon>mdi-logout</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title v-text="'Logout'" />
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </div>
       </div>
-      <div class="list-container">
-        <v-list>
-          <v-list-item
-            v-for="(item, i) in items"
-            :key="i"
-            :to="item.to"
-            router
-            exact
-          >
-            <v-list-item-action v-if="item.to == '/transaction/submission'">
-               <refresh-cw-icon size="1.5x" class="custom-class"></refresh-cw-icon>
-            </v-list-item-action>
-            <v-list-item-action v-else-if="item.to == '/transaction/status'">
-               <activity-icon size="1.5x" class="custom-class"></activity-icon>
-            </v-list-item-action>
-            <v-list-item-action v-else>
-               <clipboard-icon size="1.5x" class="custom-class"></clipboard-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title v-text="item.title" />
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </div>
-      <div class="logout-container" @click="signOut()">
-        <v-list>
-          <v-list-item
-            router
-            exact
-          >
-            <v-list-item-action >
-              <v-icon>mdi-logout</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title v-text="'Logout'" />
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </div>
-    </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app class="app-bar-bnil">
-      <v-app-bar-nav-icon
-        @click.stop="drawer = !drawer"
-        v-show="burgerButton"
-      />
-    </v-app-bar>
+    </div>
+
+    <template>
+      <v-bottom-navigation class="navbar mobile" fixed color="#F15921" grow>
+        <v-btn
+          :to="'/transaction/submission'"
+          :ripple="false"
+          dark
+          plain
+          router
+          exact
+        >
+          <span>Pengajuan</span>
+          <repeat-icon size="1.5x" class="custom-class"></repeat-icon>
+        </v-btn>
+        <v-btn :to="'/transaction/status'" :ripple="false" router plain exact>
+          <span>Status</span>
+          <activity-icon size="1.5x" class="custom-class"></activity-icon>
+        </v-btn>
+        <v-btn :to="'/polis/information'" :ripple="false" router plain exact>
+          <span>Info Polis</span>
+          <clipboard-icon size="1.5x" class="custom-class"></clipboard-icon>
+        </v-btn>
+        <v-btn :to="'/notification/'" :ripple="false" router plain exact>
+          <span>Notifikasi</span>
+          <bell-icon size="1.5x" class="custom-class"></bell-icon>
+        </v-btn>
+        <v-btn :to="'/profile/'" :ripple="false" router plain exact>
+          <span>Profil</span>
+          <user-icon size="1.5x" class="custom-class"></user-icon>
+        </v-btn>
+      </v-bottom-navigation>
+    </template>
     <v-main>
+      <div class="app-drawer">
+        <div class="action-container">
+          <span>Profile</span>
+          <span>Help</span>
+          <span>Notification</span>
+        </div>
+      </div>
       <v-container>
         <Nuxt />
       </v-container>
@@ -69,11 +106,23 @@
 </template>
 
 <script>
-import { ActivityIcon, RefreshCwIcon, ClipboardIcon   } from 'vue-feather-icons'
+import {
+  ActivityIcon,
+  RefreshCwIcon,
+  ClipboardIcon,
+  UserIcon,
+  BellIcon,
+  RepeatIcon,
+} from "vue-feather-icons";
 export default {
   name: "DefaultLayout",
   components: {
-    ActivityIcon, RefreshCwIcon, ClipboardIcon
+    ActivityIcon,
+    RefreshCwIcon,
+    ClipboardIcon,
+    UserIcon,
+    BellIcon,
+    RepeatIcon,
   },
   watch: {
     windowWidth(newWidth, oldWidth) {
@@ -89,7 +138,7 @@ export default {
     });
   },
 
-  beforeMount(){
+  beforeMount() {
     this.check();
   },
   beforeDestroy() {
@@ -140,18 +189,18 @@ export default {
       }
     },
 
-    signOut: function(){
-      this.$store.dispatch('auth/signOut');
+    signOut: function () {
+      this.$store.dispatch("auth/signOut");
     },
 
-    check: async function(){
-      const isAuthenticated = await this.$store.dispatch('auth/check');
-      if(!isAuthenticated){
+    check: async function () {
+      const isAuthenticated = await this.$store.dispatch("auth/check");
+      if (!isAuthenticated) {
         this.$router.push({
           path: "/auth/login",
         });
       }
-    }
+    },
   },
 };
 </script>
@@ -161,9 +210,9 @@ export default {
   flex-direction: column;
 }
 ::v-deep .v-list {
-
 }
-.list-container{
+
+.list-container {
   flex: auto;
   display: flex;
   flex-direction: column;

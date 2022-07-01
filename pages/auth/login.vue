@@ -130,9 +130,9 @@ export default {
     return {
       signInDisable: true,
       form: {
-        policy_number: "", //9210000627
-        phone_number: "", //6288809139413
-        identity_number: "", //5315056301790004
+        policy_number: "9210000627", //9210000627
+        phone_number: "6288809139413", //6288809139413
+        identity_number: "5315056301790004", //5315056301790004
         verified: "",
       },
       modal: {

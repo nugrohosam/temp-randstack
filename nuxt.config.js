@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: 'BNIL - Landing Uy',
+    titleTemplate: 'BNIL - Landing Page',
     title: 'Landing App',
     meta: [{
         charset: 'utf-8'
@@ -173,6 +173,7 @@ export default {
   },
   // Serve local port
   server: {
+
     port: 3000 // default: 3000
   },
 

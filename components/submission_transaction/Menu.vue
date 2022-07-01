@@ -1,14 +1,14 @@
 <!-- Please remove this file from your project -->
 <template>
   <div>
-    <div class="card-menu">
-      <div class="icon">
-        <img :src="require(`@/assets/icon/${icon}`)" alt="" />
+    <NuxtLink :to="link">
+      <div class="card-menu">
+        <div class="icon">
+          <img :src="require(`@/assets/icon/${icon}`)" alt="" />
+        </div>
+        <p>{{ name }}</p>
       </div>
-      <p>{{ name }}</p>
-    </div>
-    <div class="open-button">
-      <NuxtLink :to="link">
+      <div class="open-button">
         <v-btn>
           Buka
           <chevron-right-icon
@@ -16,8 +16,8 @@
             class="custom-class"
           ></chevron-right-icon>
         </v-btn>
-      </NuxtLink>
-    </div>
+      </div>
+    </NuxtLink>
   </div>
 </template>
 
@@ -42,7 +42,21 @@ export default {
   box-shadow: 6px 7px 16px rgba(193, 185, 185, 0.2);
   border-radius: 8px;
   padding: 16px;
+  @media screen and (max-width: 960px) {
+    border: unset;
+    box-shadow: unset;
+    border-radius: unset;
+    padding: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
   .icon {
+    @media screen and (max-width: 960px){
+      width: 50px;
+    }
     background-color: #f15921;
     width: -webkit-fit-content;
     width: -moz-fit-content;
@@ -66,6 +80,9 @@ export default {
   }
 }
 .open-button {
+  @media screen and (max-width: 960px){
+    display: none;
+  }
   background: #f15921;
   font-weight: 600;
   font-size: 12px;

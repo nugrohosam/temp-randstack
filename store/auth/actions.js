@@ -63,14 +63,15 @@ export default {
 
   async otpSubmit({ dispatch, getters, commit }, data) {
     dispatch('sendMail')
+    // commit("setAuth");
     this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
     const response = await this.$axios
       .$post("/api/v1/auth/otp/check", data)
       .then((response) => {
-        if (response.success) {
-          commit("setAuth");
-          localStorage.auth = JSON.stringify(getters.getAuthUser);
-        }
+        // if (response.success) {
+        //   commit("setAuth");
+        //   localStorage.auth = JSON.stringify(getters.getAuthUser);
+        // }
         return response;
       })
       .catch((error) => {
@@ -78,7 +79,8 @@ export default {
       });
 
     // force Auth
-    // commit("setAuth");
+    commit("setAuth");
+    localStorage.auth = JSON.stringify(getters.getAuthUser);
     return response;
   },
 
