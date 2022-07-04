@@ -3,11 +3,11 @@ import getters from './getters'
 import actions from './actions'
 import mutations from './mutations'
 
-const InformationPolicyModules = {
+const TransactionStatusModules = {
     namespaced: true,
     state,
     getters,
     actions,
     mutations
 }
-export default InformationPolicyModules
+export default TransactionStatusModules

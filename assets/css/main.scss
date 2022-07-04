@@ -38,7 +38,23 @@ a{
     border: thin solid rgba(0, 0, 0, 0.12)!important;
   }
 }
-
+.my-app.v-application .primary--text {
+  color: $primary !important;
+}
+.v-expansion-panel{
+  border: 1px solid #e5e9f5!important;
+  &::before{
+    box-shadow: unset!important;
+  }
+}
+.v-expansion-panel-header{
+  min-height: 43px!important;
+  padding: 0 10px!important;
+}
+.v-expansion-panel--active > .v-expansion-panel-header {
+  background-color: $bgPrimary;
+  color: $primary
+}
 // .v-pagination__item--active.primary{
 //   background-color: $primary!important;
 //   border-color: $primary!important;
@@ -175,6 +191,22 @@ p.auth-title-form{
   text-align: center;
 }
 
+p.data-value {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  /* Text/Normal */
+  color: #2e343d;
+  margin-bottom: 30px!important;
+}
+p.data-title {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 26px;
+  color: #767676;
+  margin: 0!important;
+}
+
 .w-100{
   width: 100%;
 }
@@ -245,6 +277,15 @@ p.auth-title-form{
   border-radius: 24px!important;
   width: unset;
   max-width: 620px!important;
+}
+.main-v-card {
+  border: 1px solid #e5e9f5;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  padding: 18px;
+}
+.v-card-parent {
+  padding: 20px!important;
 }
 .modal-v-card{
   text-align: center;
@@ -361,4 +402,12 @@ p.auth-title-form{
 
 .logout-container{
   cursor: pointer;
+}
+
+.information-tab{
+  color: #2E343D!important;
+}
+
+.information-tab-active{
+  color: $primary!important;
 }

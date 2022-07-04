@@ -72,6 +72,7 @@ export default {
   },
 
   async getTransactionStatusDetail({dispatch, commit}, data){
+    dispatch('toggleOverlayLoading',{show: true},{root: true});
     const id = data.id;
     let messages = new Array();
     messages['failed'] = "Nasabah yang terhormat, Pembayaran manfaat anda gagal. Berikut informasi nomor rekening manfaat anda:"
@@ -91,6 +92,7 @@ export default {
     // Just Visualization
     return new Promise((resolve, reject) => {
       setTimeout(() => {
+        dispatch('toggleOverlayLoading',{show: false},{root: true});
         resolve(result);
       },2000);
     });

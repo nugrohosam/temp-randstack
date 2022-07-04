@@ -216,7 +216,6 @@ export default {
   methods: {
     showUpload(item) {},
     async showDetail(item) {
-      this.overlay = true;
       const detail = await this.$store.dispatch(
         "transaction_status/getTransactionStatusDetail",
         {
@@ -224,7 +223,6 @@ export default {
         }
       );
       this.detailDialog = true;
-      this.overlay = false;
       // mapping detail if has different format with response
       this.transaction_detail = detail;
     },
