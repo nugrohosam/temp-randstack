@@ -4,5 +4,11 @@ export default {
   },
   getMessageResponseAlert: (state) => {
     return state.response_alert.message
+  },
+  getShowOverlayLoading: (state) => {
+    return state.overlay_loading.show
+  },
+  getMessageOverlayLoading: (state) => {
+    return state.overlay_loading.message
   }
 };

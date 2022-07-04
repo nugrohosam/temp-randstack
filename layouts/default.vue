@@ -96,6 +96,9 @@
       </div>
       <v-container>
         <Nuxt />
+        <ResponseAlert
+          @closeModal="modal.show = false"
+        />
       </v-container>
     </v-main>
 
@@ -146,6 +149,10 @@ export default {
   },
   data() {
     return {
+      modal: {
+        message: "",
+        show: false,
+      },
       windowWidth: window.innerWidth,
       clipped: false,
       drawer: false,

@@ -4,5 +4,9 @@ export default {
     show: false,
     message: "Error ...",
     status_code: 500
+  },
+  overlay_loading: {
+    show: false,
+    message: "Mohon Tunggu..."
   }
 };

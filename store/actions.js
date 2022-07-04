@@ -5,6 +5,9 @@ export default {
   },
   closeResponseAlert: function({commit}){
     commit('clearResponseAlert');
-  }
+  },
+  toggleOverlayLoading: function({commit},data){
+    commit('setOverlayLoading', data);
+  },
 };
 

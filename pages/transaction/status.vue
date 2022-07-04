@@ -151,11 +151,11 @@
     </v-dialog>
 
     <!-- Temp Overlay Loading -->
-    <div class="text-center">
+    <!-- <div class="text-center">
       <v-overlay :value="overlay" color="rgba(250, 250, 250, 0.9)">
         <v-progress-circular indeterminate size="64" color="#F15921"></v-progress-circular>
       </v-overlay>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

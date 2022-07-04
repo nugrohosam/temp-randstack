@@ -1,6 +1,7 @@
 export default function ({ store, $axios }) {
   $axios.setToken(store.getters['auth/getAuthAccessToken'], 'Bearer');
   $axios.onError((error) => {
+    store.dispatch('toggleOverlayLoading', {show: false}, {root:true});
     // console.log(error.response);
     let message = "Terjadi kesalahan, coba lagi.";
     if(typeof error.response.data.message != "undefined"){

@@ -1,5 +1,6 @@
 export default {
   async signIn({ dispatch, commit }, data) {
+    dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
     const response = await this.$axios
       .$post("/api/v1/auth/login", {
         policy_number: data.policy_number,
@@ -7,6 +8,7 @@ export default {
         identity_number: data.identity_number,
       })
       .then((response) => {
+        dispatch('toggleOverlayLoading', {show: false}, {root:true});
         if (response.success) {
           commit("setUser", response.data);
         }

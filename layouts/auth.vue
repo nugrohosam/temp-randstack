@@ -6,6 +6,7 @@
         <ResponseAlert
             @closeModal="modal.show = false"
         />
+        <OverlayLoading />
       </v-container>
     </v-main>
   </v-app>
@@ -21,7 +22,7 @@ export default {
   },
   data(){
     return {
-       modal: {
+      modal: {
         message: "",
         show: false,
       },
