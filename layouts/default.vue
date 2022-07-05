@@ -12,30 +12,32 @@
         </div>
         <div class="list-container">
           <v-list>
-            <v-list-item
-              v-for="(item, i) in items"
-              :key="i"
-              :to="item.to"
-              router
-              exact
-            >
-              <v-list-item-action v-if="item.to == '/transaction/submission'">
+            <v-list-item router to="/transaction/submission">
+              <v-list-item-action>
                 <refresh-cw-icon
                   size="1.5x"
                   class="custom-class"
                 ></refresh-cw-icon>
               </v-list-item-action>
-              <v-list-item-action v-else-if="item.to == '/transaction/status'">
+
+              <v-list-item-content>
+                <v-list-item-title v-text="'Pengajuan Transaksi'" />
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item router to="/transaction/status">
+              <v-list-item-action>
                 <activity-icon size="1.5x" class="custom-class"></activity-icon>
               </v-list-item-action>
-              <v-list-item-action v-else>
-                <clipboard-icon
-                  size="1.5x"
-                  class="custom-class"
-                ></clipboard-icon>
+              <v-list-item-content>
+                <v-list-item-title v-text="'Status Transaksi'" />
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item router to="/polis/information">
+              <v-list-item-action>
+                <clipboard-icon size="1.5x"></clipboard-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title v-text="item.title" />
+                <v-list-item-title v-text="'Informasi Data Polis'" />
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -96,10 +98,8 @@
       </div>
       <v-container>
         <Nuxt />
-        <ResponseAlert
-          @closeModal="modal.show = false"
-        />
-         <OverlayLoading />
+        <ResponseAlert @closeModal="modal.show = false" />
+        <OverlayLoading />
       </v-container>
     </v-main>
 

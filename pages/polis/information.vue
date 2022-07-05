@@ -153,12 +153,15 @@
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <v-tabs v-model="tab" show-arrows color="#F15921">
+                    <v-tabs :v-model="'2'" show-arrows color="#F15921" >
                       <v-tab
                         v-for="item in items"
-                        :key="item.tab"
+                        :id="'tab' + item.index"
+                        :ref="'tab' + item.index"
+                        :key="item.index"
                         :to="item.link"
                         :ripple="false"
+
                         active-class="information-tab-active"
                         class="information-tab"
                       >
@@ -212,15 +215,17 @@ export default {
       showMenu: true,
       default_header_title: "Informasi Data Polis",
       current_header_title: "",
-      tab: null,
+      tab: 1,
       items: [
-        { tab: "Tertanggung", link: "/polis/information/insured" },
-        { tab: "Data Ahli Waris", link: "/polis/information/heirs" },
+        { index: 0, tab: "Tertanggung", link: "/polis/information/insured" },
+        { index: 1, tab: "Data Ahli Waris", link: "/polis/information/heirs" },
         {
+          index: 2,
           tab: "Data Rekening Pembayaran",
           link: "/polis/information/payment-account",
         },
         {
+          index: 3,
           tab: "Data Rekening Manfaat",
           link: "/polis/information/benefit-account",
         },
@@ -228,7 +233,8 @@ export default {
       information_policy: null,
     };
   },
-  watch: {},
+  watch: {
+  },
   computed: {
     informationPolicyList() {
       return this.$store.getters["information_policy/getInformationPolicyList"];
@@ -238,8 +244,7 @@ export default {
     getInformationPolicyList: async function () {
       await this.$store.dispatch("information_policy/getInformationPolicyList");
       this.information_policy = this.informationPolicyList;
-      console.log(this.information_policy);
-      // getInformationPolicyList
+      this.$router.push({path: '/polis/information/insured'})
     },
   },
 };

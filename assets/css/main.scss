@@ -23,19 +23,42 @@ a{
 .v-data-table__expanded.v-data-table__expanded__content {
   box-shadow: none !important;
 }
+tbody tr:nth-of-type(even) {
+  background-color: rgba(0, 0, 0, .05);
+}
 .v-data-table{
   border: thin solid rgba(0, 0, 0, 0.12)!important;
   th{
-
+    background-color: rgba(0, 0, 0, .1);
     &:not(:last-child){
       border-right: thin solid rgba(0, 0, 0, 0.12)!important;
+
+    }
+    &:last-child{
+      border-top-right-radius: 20px;
+    }
+    &:first-child{
+      border-top-left-radius: 20px;
     }
   }
   tr{
     border: unset!important;
+    &:last-child{
+      td{
+        &:last-child{
+          border-bottom-right-radius: 20px;
+        }
+        &:first-child{
+          border-bottom-left-radius: 20px;
+        }
+      }
+    }
   }
   td{
-    border: thin solid rgba(0, 0, 0, 0.12)!important;
+    &:not(:last-child){
+      border-right: thin solid rgba(0, 0, 0, 0.12)!important;
+    }
+
   }
 }
 .my-app.v-application .primary--text {
@@ -146,6 +169,7 @@ a{
   // flex-direction: column;
   // align-items: center;
 }
+
 .auth-section-logo{
   background-image: url('~/assets/svg/slicing_auth_form.svg');
   background-position-y: bottom;
