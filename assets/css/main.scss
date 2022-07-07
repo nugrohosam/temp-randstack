@@ -67,6 +67,16 @@ tbody tr:nth-of-type(even) {
 
   }
 }
+
+// Radio Button
+.v-input--radio-group, .v-input--radio-group--row{
+  padding: 0!important;
+  margin: 0!important;
+  .v-input__slot{
+    margin: 0!important;
+  }
+}
+
 .my-app.v-application .primary--text {
   color: $primary !important;
 }
@@ -115,7 +125,7 @@ tbody tr:nth-of-type(even) {
 .message-bar{
   background: #FED9A1;
   padding: 20px;
-  display: flex;
+  // display: flex;
 }
 .navbar-container{
   width: 244px;
@@ -331,7 +341,15 @@ input{
   border-radius: 16px;
   margin-bottom: 20px;
   padding: 18px;
+  @media screen and (max-width: 959px) {
+    border: none;
+    border-top:  1px solid #e5e9f5;
+    // border-bottom:  1px solid #e5e9f5;
+    border-radius: 0;
+    padding: 18px 0;
+  }
 }
+
 .v-card-parent {
   padding: 20px!important;
 }
