@@ -11,11 +11,17 @@
   font-style: normal;
 }
 
+// Anchor a
 a{
+  &.no-border{
+    text-decoration: none;
+  }
   &.bni-primary{
     color: $primary!important;
   }
 }
+
+// Data Table
 .v-data-table {
   border-radius: 20px!important;
   box-shadow: unset;
@@ -106,6 +112,11 @@ tbody tr:nth-of-type(even) {
     justify-content: space-around;
   }
 }
+.message-bar{
+  background: #FED9A1;
+  padding: 20px;
+  display: flex;
+}
 .navbar-container{
   width: 244px;
   position: relative;
@@ -152,6 +163,13 @@ tbody tr:nth-of-type(even) {
     }
   }
 }
+
+// ic- class
+.ic-primary{
+  color: $primary;
+}
+
+// v-card
 .v-card-auth-body{
   @media screen and (width < 960px) {
     // box-shadow: unset!important;
@@ -267,6 +285,12 @@ p.data-title {
   }
 }
 
+input{
+  &.outlined{
+    border: 2px solid #c4c6cb!important;
+    border-radius: 4px!important;
+  }
+}
 .form-input{
   input{
     padding: 5px;
@@ -360,6 +384,18 @@ p.data-title {
     background: #F15921;
     border-radius: 4px;
     color: white;
+  }
+  &.btn-primary-outlined{
+    background: white;
+    border-radius: 4px;
+    color: #F15921;
+    border: 2px solid #F15921;
+    &:hover{
+      transition: all ease 100ms;
+      background: #F15921;
+      border-radius: 4px;
+      color: white;
+    }
   }
 
   &:disabled{
