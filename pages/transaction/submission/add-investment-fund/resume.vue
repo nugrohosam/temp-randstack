@@ -1,5 +1,13 @@
 <template>
   <div>
+    <!-- <div class="row">
+      <div class="col-12">
+        <div class="page-header">
+          <h3 class="page-title">Resume Pengajuan Penambahan Dana Investasi (Top Up Sekaligus) </h3>
+          <p class="page-caption">Penambahan Dana Investasi (Top Up Sekaligus)</p>
+        </div>
+      </div>
+    </div> -->
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>

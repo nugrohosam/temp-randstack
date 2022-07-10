@@ -15,7 +15,9 @@
           <p class="data-value">BLPM20113145</p>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Nama Pemilik Nomor Rekening Manfaat Saat Ini</p>
+          <p class="data-title mb-2">
+            Nama Pemilik Nomor Rekening Manfaat Saat Ini
+          </p>
           <p class="data-value">JHON DOE</p>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -32,10 +34,8 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
-          <p class="data-title">Jenis dan Dana Investasi yang dimiliki</p>
-        </div>
         <div class="col-12">
+          <p class="data-title mb-1">Jenis dan Dana Investasi yang dimiliki</p>
           <template>
             <v-data-table
               :headers="table.headers"
@@ -46,47 +46,16 @@
               hide-default-footer
               @page-count="pageCount = $event"
             >
-              <template v-slot:item.no="{ item, index }">
-                {{ index + 1 }}
+              <template v-slot:item.id="{ item }">
+                <v-simple-checkbox v-model="item.selected"></v-simple-checkbox>
               </template>
             </v-data-table>
           </template>
-
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-1">Jenis Dana Investasi yang Dipilih *</p>
-          <v-select
-            :items="investment_types"
-            dense
-            outlined
-            class="investment_type_option"
-          ></v-select>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-1">Amount Top Up (Rp)</p>
-          <div class="form-input">
-            <input type="text" class="outlined" placeholder="200.000" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-4">
-          <button
-            class="btn btn-primary-outlined w-100 btn-add-investment"
-            @click.prevent="addInvestment()"
-          >
-            Tambah
-          </button>
-        </div>
-      </div>
-      <br />
-      <v-divider></v-divider>
-      <br />
       <div class="row">
         <div class="col-lg-6 col-sm-12">
-          <p class="data-value">Data Pengajuan Top Up Sekaligus</p>
+          <p class="data-title mb-1">Data Pengajuan Top Up Sekaligus</p>
           <v-simple-table>
             <template v-slot:default>
               <thead>
@@ -94,7 +63,6 @@
                   <th class="text-left">No</th>
                   <th class="text-left">Nama Fund</th>
                   <th class="text-left">Nilai Top Up</th>
-                  <th class="text-left">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -103,7 +71,6 @@
                     <td>{{ i + 1 }}</td>
                     <td>{{ item.fund_name }}</td>
                     <td>{{ item.topup_value }}</td>
-                    <td>Edit | Hapus</td>
                   </template>
                   <template v-else>
                     <td></td>
@@ -113,7 +80,6 @@
                     <td>
                       <b>{{ item.topup_value }}</b>
                     </td>
-                    <td></td>
                   </template>
                 </tr>
               </tbody>
@@ -122,34 +88,61 @@
         </div>
       </div>
       <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-1">Estimasi Nilai Tunai</p>
+          <h3>Rp 16.000.000</h3>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-1">Estimasi Pengembalian Dana COP</p>
+          <h3>Rp 4.000.000</h3>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-lg-6 col-sm-12">
-          <p class="data-title mb-2">
-            Unggah Bukti Transfer (Jika sudah melakukan transfer)
-          </p>
+          <p class="data-title mb-2">KTP Pemegang Polis</p>
           <button
             class="btn btn-primary-outlined"
             @click.prevent="addInvestment()"
           >
-            Unggah Bukti Transfer
+            Unggah KTP
           </button>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-6 col-sm-12">
-          <p class="data-title mb-2">Unggah selfie dan KTP</p>
+          <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
           <button
             class="btn btn-primary-outlined"
             @click.prevent="addInvestment()"
           >
-            Unggah Selfie + KTP
+            Unggah Foto Selfie dengan KTP
           </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-1">Alasan</p>
+          <v-select
+            :items="problems_type"
+            dense
+            outlined
+            class="investment_type_option"
+          ></v-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 col-sm-12">
+          <div class="message-bar d-flex rounded-lg">
+            <info-icon class="ic-primary mr-2 "></info-icon>
+            Transaksi ini akan dikenakan biaya
+          </div>
         </div>
       </div>
       <div class="row">
         <div class="col-12">
           <button
             class="btn btn-primary btn-save float-right"
-            @click.prevent="saveInvestment()"
+            @click.prevent="save()"
           >
             <save-icon></save-icon> Simpan
           </button>
@@ -179,8 +172,17 @@ export default {
   data() {
     return {
       showMe: true,
+      selected: [],
       items: ["321321321 - BNI", "321321322 - BNI"],
-      investment_types: ["UANG SEKOLAH", "ASURANSI"],
+      problems_type: [
+        "Masalah Pengiriman Polis",
+        "Manfaat Produk",
+        "Penjelasan yang kurang jelas oleh pemasar",
+        "Alasan Keluarga",
+        "Kesulitan Finansial / Butuh Uang",
+        "Untuk SPAJ Baru",
+        "Memiliki Banyak Asuransi",
+      ],
       data_investments: [
         {
           id: 1,
@@ -203,43 +205,44 @@ export default {
           {
             text: "Pilihan",
             align: "start",
-            value: "no",
+            value: "id",
           },
           {
             text: "Nama Produk",
-            value: "type",
+            value: "product_name",
           },
           {
             text: "Uang Pertangguhan/Benefit",
-            value: "currency",
+            value: "benefit",
           },
           {
             text: "Premium",
-            value: "unit_total",
+            value: "premium",
           },
           {
             text: "Masa mulai produk",
-            value: "unit_price",
+            value: "start_date",
           },
           {
             text: "Nama Tertanggung",
-            value: "nab_date",
+            value: "insured_name",
           },
           {
             text: "Status Produk",
-            value: "total_investment",
+            value: "product_status",
           },
           {
             text: "Akhir masa produk",
-            value: "total_investment",
+            value: "end_date",
           },
           {
             text: "Jenis produk",
-            value: "total_investment",
+            value: "product_type",
           },
         ],
         items: [
           {
+            id: 1,
             product_name: "BNI LIFE MULTI PLAN PRO",
             benefit: 100,
             premium: 10000,
@@ -248,8 +251,10 @@ export default {
             product_status: "Active",
             end_date: "07/06/2045",
             product_type: "Utama",
+            selected: false,
           },
           {
+            id: 2,
             product_name: "BNI LIFE MULTI PLAN PRO",
             benefit: 100,
             premium: 10000,
@@ -258,8 +263,10 @@ export default {
             product_status: "Active",
             end_date: "07/06/2045",
             product_type: "Tambahan",
+            selected: true,
           },
           {
+            id: 3,
             product_name: "BNI LIFE MULTI PLAN PRO",
             benefit: 100,
             premium: 10000,
@@ -268,6 +275,7 @@ export default {
             product_status: "Active",
             end_date: "07/06/2045",
             product_type: "Tambahan",
+            selected: false,
           },
         ],
       },
@@ -287,11 +295,14 @@ export default {
     },
   },
   methods: {
-    saveInvestment: async function () {
+    save: async function () {
       // patch to action
-      this.$router.push({ path: "./add-investment-fund/resume" });
+      this.$router.push({ path: "./add-rider-product/resume" });
     },
     addInvestment: async function () {},
+    selectData: function (item) {
+      console.log(item);
+    },
   },
 };
 </script>
