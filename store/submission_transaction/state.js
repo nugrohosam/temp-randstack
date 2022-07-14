@@ -13,7 +13,7 @@ export default {
     },
     {
       name: "Pemulihan Polis",
-      link: "/transaction/submission/polis-recovery",
+      link: "/transaction/submission/policy-recovery",
       icon: "ic_cuti_premi.svg",
     },
     {
@@ -73,7 +73,7 @@ export default {
     },
     {
       name: "Pinjaman Polis",
-      link: "/transaction/submission/policy-load",
+      link: "/transaction/submission/policy-loan",
       icon: "ic_cuti_premi.svg",
     },
   ]

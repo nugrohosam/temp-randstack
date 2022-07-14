@@ -300,6 +300,9 @@ input{
     border: 2px solid #c4c6cb!important;
     border-radius: 4px!important;
   }
+  &:disabled{
+    background-color: #EEEEEE!important;
+  }
 }
 .form-input{
   input{

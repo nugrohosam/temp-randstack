@@ -1,0 +1,311 @@
+<template>
+  <div>
+    <div v-show="showMe">
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nama Pemegang Polis</p>
+          <p class="data-value">JHON DOE</p>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nomor Polis</p>
+          <p class="data-value">BLPM20113145</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Due Date Premium</p>
+          <p class="data-value">JHON DOE</p>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Informasi Virtual Account</p>
+          <p class="data-value">BLPM20113145</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <p class="data-title mb-1">Jenis dan Dana Investasi yang dimiliki</p>
+          <template>
+            <v-data-table
+              :headers="table.headers"
+              :items="table.items"
+              :page.sync="page"
+              :items-per-page="itemsPerPage"
+              mobile-breakpoint="480"
+              hide-default-footer
+              @page-count="pageCount = $event"
+            >
+              <template v-slot:item.id="{ item }">
+                <v-simple-checkbox v-model="item.selected"></v-simple-checkbox>
+              </template>
+            </v-data-table>
+          </template>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12">
+          <p class="data-title mb-1">Data Pengajuan Top Up Sekaligus</p>
+          <v-simple-table>
+            <template v-slot:default>
+              <thead>
+                <tr>
+                  <th class="text-left">No</th>
+                  <th class="text-left">Nama Fund</th>
+                  <th class="text-left">Nilai Top Up</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(item, i) in data_investments" :key="item.name">
+                  <template v-if="i < data_investments.length - 1">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.fund_name }}</td>
+                    <td>{{ item.topup_value }}</td>
+                  </template>
+                  <template v-else>
+                    <td></td>
+                    <td>
+                      <b>{{ item.fund_name }}</b>
+                    </td>
+                    <td>
+                      <b>{{ item.topup_value }}</b>
+                    </td>
+                  </template>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-1">Estimasi Nilai Tunai</p>
+          <h3>Rp 16.000.000</h3>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-1">Estimasi Pengembalian Dana COP</p>
+          <h3>Rp 4.000.000</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12">
+          <p class="data-title mb-2">KTP Pemegang Polis</p>
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="addInvestment()"
+          >
+            Unggah KTP
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12">
+          <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="addInvestment()"
+          >
+            Unggah Foto Selfie dengan KTP
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-1">Alasan</p>
+          <v-select
+            :items="problems_type"
+            dense
+            outlined
+            class="investment_type_option"
+          ></v-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 col-sm-12">
+          <div class="message-bar d-flex rounded-lg">
+            <info-icon class="ic-primary mr-2 "></info-icon>
+            Transaksi ini akan dikenakan biaya
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button
+            class="btn btn-primary btn-save float-right"
+            @click.prevent="save()"
+          >
+            <save-icon></save-icon> Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+    <NuxtChild />
+  </div>
+</template>
+<script>
+import { SaveIcon, InfoIcon } from "vue-feather-icons";
+export default {
+  name: "add-investment-fund",
+  components: {
+    SaveIcon,
+    InfoIcon,
+  },
+  mounted() {
+    console.log($nuxt.$route.name);
+    if ($nuxt.$route.name != "transaction-submission-policy-recovery") {
+      this.showMe = false;
+    } else {
+      this.showMe = true;
+      // this.current_header_title = this.default_header_title;
+    }
+  },
+  data() {
+    return {
+      showMe: true,
+      selected: [],
+      items: ["321321321 - BNI", "321321322 - BNI"],
+      problems_type: [
+        "Masalah Pengiriman Polis",
+        "Manfaat Produk",
+        "Penjelasan yang kurang jelas oleh pemasar",
+        "Alasan Keluarga",
+        "Kesulitan Finansial / Butuh Uang",
+        "Untuk SPAJ Baru",
+        "Memiliki Banyak Asuransi",
+      ],
+      data_investments: [
+        {
+          id: 1,
+          fund_name: "DANA MAKSIMA",
+          topup_value: 1000000,
+        },
+        {
+          id: 2,
+          fund_name: "DANA CEMERLANG",
+          topup_value: 2000000,
+        },
+        {
+          id: "",
+          fund_name: "Total",
+          topup_value: 3000000,
+        },
+      ],
+      table: {
+        headers: [
+          {
+            text: "Pilihan",
+            align: "start",
+            value: "id",
+          },
+          {
+            text: "Nama Produk",
+            value: "product_name",
+          },
+          {
+            text: "Uang Pertangguhan/Benefit",
+            value: "benefit",
+          },
+          {
+            text: "Premium",
+            value: "premium",
+          },
+          {
+            text: "Masa mulai produk",
+            value: "start_date",
+          },
+          {
+            text: "Nama Tertanggung",
+            value: "insured_name",
+          },
+          {
+            text: "Status Produk",
+            value: "product_status",
+          },
+          {
+            text: "Akhir masa produk",
+            value: "end_date",
+          },
+          {
+            text: "Jenis produk",
+            value: "product_type",
+          },
+        ],
+        items: [
+          {
+            id: 1,
+            product_name: "BNI LIFE MULTI PLAN PRO",
+            benefit: 100,
+            premium: 10000,
+            start_date: "07/06/2021",
+            insured_name: "JOHN DAN",
+            product_status: "Active",
+            end_date: "07/06/2045",
+            product_type: "Utama",
+            selected: false,
+          },
+          {
+            id: 2,
+            product_name: "BNI LIFE MULTI PLAN PRO",
+            benefit: 100,
+            premium: 10000,
+            start_date: "07/06/2021",
+            insured_name: "JOHN DAN",
+            product_status: "Active",
+            end_date: "07/06/2045",
+            product_type: "Tambahan",
+            selected: true,
+          },
+          {
+            id: 3,
+            product_name: "BNI LIFE MULTI PLAN PRO",
+            benefit: 100,
+            premium: 10000,
+            start_date: "07/06/2021",
+            insured_name: "JOHN DAN",
+            product_status: "Active",
+            end_date: "07/06/2045",
+            product_type: "Tambahan",
+            selected: false,
+          },
+        ],
+      },
+      page: 1,
+      pageCount: 0,
+      itemsPerPage: 5,
+      limitPages: [5, 10, 15, 20, 25],
+    };
+  },
+  watch: {
+    $route(to, from) {
+      if (to.name != "transaction-submission-policy-recovery") {
+        this.showMe = false;
+      } else {
+        this.showMe = true;
+      }
+    },
+  },
+  methods: {
+    save: async function () {
+      // patch to action
+      this.$router.push({ path: "./add-rider-product/resume" });
+    },
+    addInvestment: async function () {},
+    selectData: function (item) {
+      console.log(item);
+    },
+  },
+};
+</script>
+<style lang="scss" scoped>
+.investment_type_option {
+  max-width: 250px !important;
+}
+.btn-add-investment {
+  max-width: 250px !important;
+}
+.btn-save {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 150px;
+  justify-content: center;
+}
+</style>
