@@ -18,12 +18,16 @@
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Informasi Virtual Account</p>
-          <p class="data-value">BLPM20113145</p>
+          <v-select
+            :items="virtual_accounts"
+            dense
+            outlined
+          ></v-select>
         </div>
       </div>
       <div class="row">
         <div class="col-12">
-          <p class="data-title mb-1">Jenis dan Dana Investasi yang dimiliki</p>
+          <!-- <p class="data-title mb-1">Jenis dan Dana Investasi yang dimiliki</p> -->
           <template>
             <v-data-table
               :headers="table.headers"
@@ -34,66 +38,15 @@
               hide-default-footer
               @page-count="pageCount = $event"
             >
-              <template v-slot:item.id="{ item }">
-                <v-simple-checkbox v-model="item.selected"></v-simple-checkbox>
+              <template v-slot:item.id="{ item, index }">
+                <v-simple-checkbox v-model="item.selected" v-if="index < table.items.length - 1"></v-simple-checkbox>
               </template>
+              <template v-slot:item.product_status="{ item }">
+                <b>{{item.product_status}}</b>
+              </template>
+
             </v-data-table>
           </template>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 col-sm-12">
-          <p class="data-title mb-1">Data Pengajuan Top Up Sekaligus</p>
-          <v-simple-table>
-            <template v-slot:default>
-              <thead>
-                <tr>
-                  <th class="text-left">No</th>
-                  <th class="text-left">Nama Fund</th>
-                  <th class="text-left">Nilai Top Up</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(item, i) in data_investments" :key="item.name">
-                  <template v-if="i < data_investments.length - 1">
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ item.fund_name }}</td>
-                    <td>{{ item.topup_value }}</td>
-                  </template>
-                  <template v-else>
-                    <td></td>
-                    <td>
-                      <b>{{ item.fund_name }}</b>
-                    </td>
-                    <td>
-                      <b>{{ item.topup_value }}</b>
-                    </td>
-                  </template>
-                </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-1">Estimasi Nilai Tunai</p>
-          <h3>Rp 16.000.000</h3>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-1">Estimasi Pengembalian Dana COP</p>
-          <h3>Rp 4.000.000</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 col-sm-12">
-          <p class="data-title mb-2">KTP Pemegang Polis</p>
-          <button
-            class="btn btn-primary-outlined"
-            @click.prevent="addInvestment()"
-          >
-            Unggah KTP
-          </button>
         </div>
       </div>
       <div class="row">
@@ -108,21 +61,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-1">Alasan</p>
-          <v-select
-            :items="problems_type"
-            dense
-            outlined
-            class="investment_type_option"
-          ></v-select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-8 col-sm-12">
+        <div class="col-lg-12 col-sm-12">
           <div class="message-bar d-flex rounded-lg">
             <info-icon class="ic-primary mr-2 "></info-icon>
-            Transaksi ini akan dikenakan biaya
+            Pemulihan polis hanya berlaku jika usia dibawah atau sama dengan 2 tahun sejak tanggal  <b>&nbsp; lapsed date</b>
           </div>
         </div>
       </div>
@@ -132,7 +74,7 @@
             class="btn btn-primary btn-save float-right"
             @click.prevent="save()"
           >
-            <save-icon></save-icon> Simpan
+            Simpan
           </button>
         </div>
       </div>
@@ -162,14 +104,11 @@ export default {
       showMe: true,
       selected: [],
       items: ["321321321 - BNI", "321321322 - BNI"],
-      problems_type: [
-        "Masalah Pengiriman Polis",
-        "Manfaat Produk",
-        "Penjelasan yang kurang jelas oleh pemasar",
-        "Alasan Keluarga",
-        "Kesulitan Finansial / Butuh Uang",
-        "Untuk SPAJ Baru",
-        "Memiliki Banyak Asuransi",
+      virtual_accounts: [
+        "321321321 - BNI",
+        "921321230 - MANDIRI",
+        "132432456 - BCA",
+        "111222333 - BRI",
       ],
       data_investments: [
         {
@@ -207,10 +146,7 @@ export default {
             text: "Premium",
             value: "premium",
           },
-          {
-            text: "Masa mulai produk",
-            value: "start_date",
-          },
+
           {
             text: "Nama Tertanggung",
             value: "insured_name",
@@ -220,12 +156,16 @@ export default {
             value: "product_status",
           },
           {
-            text: "Akhir masa produk",
-            value: "end_date",
+            text: "Premi Terhutang",
+            value: "indebted",
           },
           {
             text: "Jenis produk",
             value: "product_type",
+          },
+          {
+            text: "Lapsed Date",
+            value: "lapsed_date",
           },
         ],
         items: [
@@ -237,8 +177,9 @@ export default {
             start_date: "07/06/2021",
             insured_name: "JOHN DAN",
             product_status: "Active",
-            end_date: "07/06/2045",
+            lapsed_date: "07/06/2045",
             product_type: "Utama",
+            indebted: 9000000,
             selected: false,
           },
           {
@@ -249,8 +190,9 @@ export default {
             start_date: "07/06/2021",
             insured_name: "JOHN DAN",
             product_status: "Active",
-            end_date: "07/06/2045",
+            lapsed_date: "07/06/2045",
             product_type: "Tambahan",
+            indebted: 9000000,
             selected: true,
           },
           {
@@ -261,8 +203,22 @@ export default {
             start_date: "07/06/2021",
             insured_name: "JOHN DAN",
             product_status: "Active",
-            end_date: "07/06/2045",
+            lapsed_date: "07/06/2045",
             product_type: "Tambahan",
+            indebted: 9000000,
+            selected: false,
+          },
+          {
+            id: 4,
+            product_name: "",
+            benefit: "",
+            premium: "",
+            start_date: "",
+            insured_name: "",
+            product_status: "Total",
+            lapsed_date: "",
+            product_type: "",
+            indebted: 2400000,
             selected: false,
           },
         ],
@@ -285,7 +241,7 @@ export default {
   methods: {
     save: async function () {
       // patch to action
-      this.$router.push({ path: "./add-rider-product/resume" });
+      this.$router.push({ path: "./policy-recovery/resume" });
     },
     addInvestment: async function () {},
     selectData: function (item) {
