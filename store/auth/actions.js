@@ -34,7 +34,7 @@ export default {
     });
   },
 
-  async sendMail(){
+  async sendMail({getters}){
     this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
     const response = await this.$axios
       .$get("/test/v1/email/login-attempt?email=blabla@rojak.com")
