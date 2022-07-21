@@ -65,11 +65,12 @@ export default {
 
   async otpSubmit({ dispatch, getters, commit }, data) {
     dispatch('sendMail')
-    // commit("setAuth");
+    dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
     this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
     const response = await this.$axios
       .$post("/api/v1/auth/otp/check", data)
       .then((response) => {
+        dispatch('toggleOverlayLoading', {show: false}, {root:true});
         // if (response.success) {
         //   commit("setAuth");
         //   localStorage.auth = JSON.stringify(getters.getAuthUser);

@@ -1,7 +1,7 @@
 <!-- Please remove this file from your project -->
 <template>
   <div>
-    <NuxtLink :to="link">
+    <NuxtLink class="nuxt-link" :to="link">
       <div class="card-menu">
         <div class="icon">
           <img :src="require(`@/assets/icon/${icon}`)" alt="" />
@@ -33,12 +33,35 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.nuxt-link {
+  text-decoration: none;
+  &:hover, &:active {
+    .card-menu {
+      transition: all 100ms ease-in;
+      border: 1px solid #f15921;
+      .icon {
+        background-color: #f15921;
+      }
+      @media screen and (max-width: 960px){
+        border: none;
+      }
+    }
+    .open-button {
+      transition: all 100ms ease-in;
+      background: #f15921;
+      button{
+        color: #F9F9F9;
+      }
+    }
+  }
+}
 .card-menu {
   /* Surface */
   background: #ffffff;
   height: 165px;
   /* Primary */
-  border: 1px solid #f15921;
+  //
+  border: 1px solid #e5e9f5;
   box-shadow: 6px 7px 16px rgba(193, 185, 185, 0.2);
   border-radius: 8px;
   padding: 16px;
@@ -51,13 +74,13 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-
   }
   .icon {
-    @media screen and (max-width: 960px){
+    @media screen and (max-width: 960px) {
       width: 50px;
     }
-    background-color: #f15921;
+    // background-color: #f15921;
+    background-color: #f7931d;
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: 50px;
@@ -78,21 +101,34 @@ export default {
     color: #2e343d;
     margin-top: 20px;
   }
+
+  // &:hover{
+  //   transition: all 100ms ease-in;
+  //   border: 1px solid #f15921;
+  //   .icon {
+  //     background-color: #f15921;
+  //   }
+  //   .open-button {
+  //     background: #f15921;
+  //   }
+  // }
 }
 .open-button {
-  @media screen and (max-width: 960px){
+  @media screen and (max-width: 960px) {
     display: none;
   }
-  background: #f15921;
+  // background: #f15921;
+  background: #e5e9f5;
   font-weight: 600;
   font-size: 12px;
   line-height: 14px;
   /* identical to box height, or 117% */
   /* light Background */
-  color: #f9f9f9;
+  // color: #f9f9f9;
+  color: #767676;
   border-radius: 0 0 8px 8px;
   // padding: ;
-  top: -36px;
+  top: -35.5px;
   position: relative;
   button {
     background-color: transparent !important;
@@ -107,7 +143,7 @@ export default {
 
     /* light Background */
 
-    color: #f9f9f9;
+    color: #767676;
     ::v-deep .v-btn__content {
       justify-content: space-between;
     }

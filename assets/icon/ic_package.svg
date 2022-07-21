@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="-0.946 -0.758 28.892 27.849" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 14.749 0.478 L 24.426 5.316 C 24.829 5.516 25.169 5.826 25.406 6.208 C 25.643 6.59 25.769 7.032 25.769 7.482 L 25.769 19.01 C 25.769 19.46 25.643 19.901 25.406 20.283 C 25.169 20.666 24.829 20.974 24.426 21.175 L 14.749 26.013 C 14.413 26.182 14.043 26.269 13.666 26.269 C 13.29 26.269 12.92 26.182 12.584 26.013 L 2.907 21.175 C 2.504 20.972 2.166 20.661 1.932 20.276 C 1.696 19.891 1.574 19.449 1.576 18.998 L 1.576 7.482 C 1.576 7.032 1.702 6.59 1.939 6.208 C 2.177 5.826 2.516 5.516 2.919 5.316 L 12.596 0.478 C 12.931 0.311 13.299 0.225 13.672 0.225 C 14.046 0.225 14.415 0.311 14.749 0.478 Z" stroke-width="1.41176" stroke-linecap="round" stroke-linejoin="round" style="fill: none; stroke: rgb(255, 255, 255);"/>
+  <path d="M 1.963 6.175 L 13.672 12.03 L 25.382 6.175" stroke-width="1.41176" stroke-linecap="round" stroke-linejoin="round" style="fill: none; stroke: rgb(255, 255, 255);"/>
+  <path d="M 13.672 26.255 L 13.672 12.03" stroke-width="1.41176" stroke-linecap="round" stroke-linejoin="round" style="fill: none; stroke: rgb(255, 255, 255);"/>
+  <path d="M 7.757 3.224 L 19.057 8.74" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="fill: none; stroke: rgb(255, 255, 255);"/>
+</svg>
