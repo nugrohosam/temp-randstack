@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
@@ -39,21 +38,52 @@
         <template>
           <v-data-table
             :headers="table.headers"
-            :items="table.items"
+            :items="coveragesSelected"
             :page.sync="page"
-            :items-per-page="itemsPerPage"
             mobile-breakpoint="480"
             hide-default-footer
             @page-count="pageCount = $event"
           >
-            <template v-slot:item.id="{ item }">
-              <v-simple-checkbox v-model="item.selected"></v-simple-checkbox>
+            <template v-slot:item.itemId="{ item }">
+              <v-simple-checkbox
+                v-model="item.selected"
+                @input="coverageSelected(item)"
+              ></v-simple-checkbox>
+            </template>
+            <template v-slot:item.issueDate="{ item }">
+              {{ $moment(item.issueDate).format("DD/MM/Y") }}
+            </template>
+            <template v-slot:item.nextPremium.sumAssured="{ item }">
+              {{ convertToRupiah(item.nextPremium.sumAssured) }}
+            </template>
+            <template v-slot:item.currentPremium.totalPremAf="{ item }">
+              {{ convertToRupiah(item.currentPremium.totalPremAf) }}
+            </template>
+            <template v-slot:item.expiryDate="{ item }">
+              {{ $moment(item.expiryDate).format("DD/MM/Y") }}
+            </template>
+            <template v-slot:item.lifeInsured.insured.person="{ item }">
+              {{
+                item.lifeInsured.insured.person.firstName
+                  ? item.lifeInsured.insured.person.firstName
+                  : ""
+              }}
+              {{
+                item.lifeInsured.insured.person.midName
+                  ? item.lifeInsured.insured.person.midName
+                  : ""
+              }}
+              {{
+                item.lifeInsured.insured.person.lastName
+                  ? item.lifeInsured.insured.person.lastName
+                  : ""
+              }}
             </template>
           </v-data-table>
         </template>
       </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-1">Data Pengajuan Top Up Sekaligus</p>
         <v-simple-table>
@@ -96,13 +126,13 @@
         <p class="data-title mb-1">Estimasi Pengembalian Dana COP</p>
         <h3>Rp 4.000.000</h3>
       </div>
-    </div>
+    </div> -->
     <div class="row">
       <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">KTP Pemegang Polis</p>
         <button
           class="btn btn-primary-outlined"
-          @click.prevent="addInvestment()"
+          @click.prevent="showKtpPreview"
         >
           Lihat KTP
         </button>
@@ -110,10 +140,10 @@
     </div>
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+        <p class="data-title mb-2">Lihat Foto Selfie dengan KTP</p>
         <button
           class="btn btn-primary-outlined"
-          @click.prevent="addInvestment()"
+          @click.prevent="showSelfieKtpPreview"
         >
           Lihat Foto Selfie + KTP
         </button>
@@ -122,13 +152,13 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-1">Alasan</p>
-        <p class="data-value ">Alasan Keluarga</p>
+        <p class="data-value">{{ reasonSelected[0].description }}</p>
       </div>
     </div>
     <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
-          v-model="ex4"
+          v-model="accepted"
           color="orange darken-3"
           value="orange darken-3"
           hide-details
@@ -151,6 +181,11 @@
         </button>
       </div>
     </div>
+    <ModalImagePreview
+      :src="image_preview.src"
+      :show="image_preview.show"
+      @closeImagePreview="image_preview.show = false"
+    />
   </div>
 </template>
 <script>
@@ -161,13 +196,16 @@ export default {
     SaveIcon,
     InfoIcon,
   },
-  mounted() {
-
-  },
+  mounted() {},
   data() {
     return {
+      accepted: false,
       showMe: true,
       selected: [],
+      image_preview: {
+        src: "",
+        show: false,
+      },
       items: ["321321321 - BNI", "321321322 - BNI"],
       problems_type: [
         "Masalah Pengiriman Polis",
@@ -200,27 +238,27 @@ export default {
           {
             text: "Pilihan",
             align: "start",
-            value: "id",
+            value: "itemId",
           },
           {
             text: "Nama Produk",
-            value: "product_name",
+            value: "productName",
           },
           {
             text: "Uang Pertangguhan/Benefit",
-            value: "benefit",
+            value: "nextPremium.sumAssured",
           },
           {
             text: "Premium",
-            value: "premium",
+            value: "currentPremium.totalPremAf",
           },
           {
             text: "Masa mulai produk",
-            value: "start_date",
+            value: "issueDate",
           },
           {
             text: "Nama Tertanggung",
-            value: "insured_name",
+            value: "lifeInsured.insured.person",
           },
           {
             text: "Status Produk",
@@ -228,7 +266,7 @@ export default {
           },
           {
             text: "Akhir masa produk",
-            value: "end_date",
+            value: "expiryDate",
           },
           {
             text: "Jenis produk",
@@ -248,7 +286,6 @@ export default {
             product_type: "Tambahan",
             selected: true,
           },
-
         ],
       },
       page: 1,
@@ -256,6 +293,21 @@ export default {
       itemsPerPage: 5,
       limitPages: [5, 10, 15, 20, 25],
     };
+  },
+  computed: {
+    ktpFile() {
+      return this.$store.getters["submission_transaction/getKtpFile"];
+    },
+    selfieKtpFile() {
+      return this.$store.getters["submission_transaction/getSelfieKtpFile"];
+    },
+    coveragesSelected() {
+      // console.log(this.$store.getters['submission_transaction/getCoveragesSelected']);
+      return this.$store.getters["submission_transaction/getCoveragesSelected"];
+    },
+    reasonSelected() {
+      return this.$store.getters["submission_transaction/getReasonSelected"];
+    },
   },
   watch: {
     $route(to, from) {
@@ -274,6 +326,24 @@ export default {
     addInvestment: async function () {},
     selectData: function (item) {
       console.log(item);
+    },
+    showKtpPreview: function () {
+      if (this.ktpFile) {
+        this.image_preview.src = URL.createObjectURL(this.ktpFile);
+        this.image_preview.show = true;
+      }
+    },
+    showSelfieKtpPreview: function () {
+      if (this.selfieKtpFile) {
+        this.image_preview.src = URL.createObjectURL(this.selfieKtpFile);
+        this.image_preview.show = true;
+      }
+    },
+    convertToRupiah(amount) {
+      return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      }).format(amount);
     },
   },
 };

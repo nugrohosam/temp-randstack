@@ -90,7 +90,10 @@
         <div class="message-bar rounded-lg">
           <p><b>Perhatian !</b></p>
           <ul>
-            <li>Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak silahkan hubungi Customer Care 1-500-045</li>
+            <li>
+              Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
+              silahkan hubungi Customer Care 1-500-045
+            </li>
             <li>Terdapat Biaya Penarikan Dana Investasi</li>
           </ul>
         </div>
@@ -164,6 +167,7 @@ export default {
       this.modal.message =
         "Jika No Rekening Manfaat kosong (Payee Refund Account) maka Transaksi ditolak oleh LP dan di arahkan ke Perubahan Rekening Manfaat (Change Payee Refund Account)";
     },
+
   },
 };
 </script>

@@ -76,5 +76,21 @@ export default {
       link: "/transaction/submission/policy-loan",
       icon: "ic_package.svg",
     },
-  ]
+  ],
+  cancellation_main_product: {
+    upload: {
+      ktp: {
+        file: null,
+        name: '',
+        preview: '',
+      },
+      selfie_ktp: {
+        file: null,
+        name: '',
+        preview: '',
+      }
+    },
+    coverages_selected: [],
+    reason_selected: null,
+  }
 }

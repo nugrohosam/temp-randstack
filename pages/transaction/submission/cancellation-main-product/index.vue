@@ -5,11 +5,21 @@
         <div class="row">
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nama Pemegang Polis</p>
-            <p class="data-value">{{ my_policy != null ? my_policy.policyWithCode.policyHolder.person.firstName : ""}}</p>
+            <p class="data-value">
+              {{
+                my_policy != null
+                  ? my_policy.policyWithCode.policyHolder.person.firstName
+                  : ""
+              }}
+            </p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nomor Polis</p>
-            <p class="data-value">{{ my_policy != null ? my_policy.policyWithCode.policyNumber : ""}}</p>
+            <p class="data-value">
+              {{
+                my_policy != null ? my_policy.policyWithCode.policyNumber : ""
+              }}
+            </p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title">Nomor Rekening Saat Ini</p>
@@ -48,47 +58,46 @@
                 hide-default-footer
                 @page-count="pageCount = $event"
               >
-                <template v-slot:item.productId="{ item }">
+                <template v-slot:item.itemId="{ item }">
                   <v-simple-checkbox
                     v-model="item.selected"
+                    @input="coverageSelected(item)"
                   ></v-simple-checkbox>
                 </template>
                 <template v-slot:item.issueDate="{ item }">
-                  {{
-                    $moment(item.issueDate).format("DD/MM/Y")
-                  }}
+                  {{ $moment(item.issueDate).format("DD/MM/Y") }}
                 </template>
-                <template v-slot:item.nextPremium.sumAssured ="{ item }">
-                  {{
-                    convertToRupiah(item.nextPremium.sumAssured)
-                  }}
+                <template v-slot:item.nextPremium.sumAssured="{ item }">
+                  {{ convertToRupiah(item.nextPremium.sumAssured) }}
                 </template>
-                <template v-slot:item.currentPremium.totalPremAf ="{ item }">
-                  {{
-                    convertToRupiah(item.currentPremium.totalPremAf)
-                  }}
+                <template v-slot:item.currentPremium.totalPremAf="{ item }">
+                  {{ convertToRupiah(item.currentPremium.totalPremAf) }}
                 </template>
-                <template v-slot:item.expiryDate ="{ item }">
-                  {{
-                    $moment(item.expiryDate ).format("DD/MM/Y")
-                  }}
+                <template v-slot:item.expiryDate="{ item }">
+                  {{ $moment(item.expiryDate).format("DD/MM/Y") }}
                 </template>
                 <template v-slot:item.lifeInsured.insured.person="{ item }">
                   {{
-                    item.lifeInsured.insured.person.firstName ? item.lifeInsured.insured.person.firstName  : ""
+                    item.lifeInsured.insured.person.firstName
+                      ? item.lifeInsured.insured.person.firstName
+                      : ""
                   }}
                   {{
-                    item.lifeInsured.insured.person.midName ? item.lifeInsured.insured.person.midName  : ""
+                    item.lifeInsured.insured.person.midName
+                      ? item.lifeInsured.insured.person.midName
+                      : ""
                   }}
                   {{
-                    item.lifeInsured.insured.person.lastName ? item.lifeInsured.insured.person.lastName  : ""
+                    item.lifeInsured.insured.person.lastName
+                      ? item.lifeInsured.insured.person.lastName
+                      : ""
                   }}
                 </template>
               </v-data-table>
             </template>
           </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-lg-6 col-sm-12">
             <p class="data-title mb-1">Data Pengajuan Top Up Sekaligus</p>
             <v-simple-table>
@@ -121,8 +130,8 @@
               </template>
             </v-simple-table>
           </div>
-        </div>
-        <div class="row">
+        </div> -->
+        <!-- <div class="row">
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-1">Estimasi Nilai Tunai</p>
             <h3>Rp 16.000.000</h3>
@@ -131,27 +140,44 @@
             <p class="data-title mb-1">Estimasi Pengembalian Dana COP</p>
             <h3>Rp 4.000.000</h3>
           </div>
-        </div>
+        </div> -->
         <div class="row">
-          <div class="col-lg-6 col-sm-12">
+          <div class="col-lg-12 col-sm-12">
             <p class="data-title mb-2">KTP Pemegang Polis</p>
+            <input
+              type="file"
+              ref="inputKtpImage"
+              v-show="false"
+              accept="image/*"
+              @change="addKtpImage"
+            />
             <button
               class="btn btn-primary-outlined"
-              @click.prevent="addInvestment()"
+              @click.prevent="$refs.inputKtpImage.click()"
             >
               Unggah KTP
             </button>
+            <small>{{ ktpFileName }}</small>
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-6 col-sm-12">
+          <div class="col-lg-12 col-sm-12">
             <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+
+            <input
+              type="file"
+              ref="inputSelfieKtpImage"
+              v-show="false"
+              accept="image/*"
+              @change="addSelfieKtpImage"
+            />
             <button
               class="btn btn-primary-outlined"
-              @click.prevent="addInvestment()"
+              @click.prevent="$refs.inputSelfieKtpImage.click()"
             >
               Unggah Foto Selfie dengan KTP
             </button>
+            <small>{{ selfieKtpFileName }}</small>
           </div>
         </div>
         <div class="row">
@@ -159,9 +185,12 @@
             <p class="data-title mb-1">Alasan</p>
             <v-select
               :items="problems_type"
+              item-text="description"
+              item-value="id"
               dense
               outlined
               class="investment_type_option"
+              @input="reasonSelected"
             ></v-select>
           </div>
         </div>
@@ -186,7 +215,14 @@
       </div>
     </template>
     <template v-else>
-      <div style="display:flex; flex-direction:column; justify-content: center; align-items:center;">
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        "
+      >
         <v-progress-circular indeterminate size="64" color="#F15921" width="7">
         </v-progress-circular>
         <p style="color: black">Mohon Tunggu...</p>
@@ -196,7 +232,6 @@
   </div>
 </template>
 <script>
-
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
   name: "cancellation-main-product",
@@ -217,19 +252,53 @@ export default {
   },
   data() {
     return {
+      cancellation_main_product: {
+        upload: {
+          ktp: {
+            file: null,
+            name: "",
+            preview: "",
+          },
+          selfie_ktp: {
+            file: null,
+            name: "",
+            preview: "",
+          },
+        },
+      },
       my_policy: null,
-
       showMe: true,
       selected: [],
       items: ["321321321 - BNI", "321321322 - BNI"],
       problems_type: [
-        "Masalah Pengiriman Polis",
-        "Manfaat Produk",
-        "Penjelasan yang kurang jelas oleh pemasar",
-        "Alasan Keluarga",
-        "Kesulitan Finansial / Butuh Uang",
-        "Untuk SPAJ Baru",
-        "Memiliki Banyak Asuransi",
+        {
+          id: 1,
+          description: "Masalah Pengiriman Polis",
+        },
+        {
+          id: 2,
+          description: "Manfaat Produk",
+        },
+        {
+          id: 3,
+          description: "Penjelasan yang kurang jelas oleh pemasar",
+        },
+        {
+          id: 4,
+          description: "Alasan Keluarga",
+        },
+        {
+          id: 5,
+          description: "Kesulitan Finansial / Butuh Uang",
+        },
+        {
+          id: 6,
+          description: "Untuk SPAJ Baru",
+        },
+        {
+          id: 7,
+          description: "Memiliki Banyak Asuransi",
+        },
       ],
       data_investments: [
         {
@@ -249,12 +318,13 @@ export default {
         },
       ],
       coverages: [],
+      coverages_selected: [],
       table: {
         headers: [
           {
             text: "Pilihan",
             align: "start",
-            value: "productId",
+            value: "itemId",
           },
           {
             text: "Nama Produk",
@@ -274,7 +344,7 @@ export default {
           },
           {
             text: "Nama Tertanggung",
-            value:  "lifeInsured.insured.person",
+            value: "lifeInsured.insured.person",
           },
           {
             text: "Status Produk",
@@ -343,29 +413,66 @@ export default {
       }
     },
   },
+  computed: {
+    ktpFileName() {
+      return this.$store.getters["submission_transaction/getKtpFileName"];
+    },
+    selfieKtpFileName() {
+      return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
+    },
+  },
   methods: {
     myPolicy: async function () {
-      let data = await this.$store.dispatch('submission_transaction/getMyPolicy');
+      let data = await this.$store.dispatch(
+        "submission_transaction/getMyPolicy"
+      );
       this.my_policy = data;
-      // this.my_policy.policyWithCode.lifeInsured = this.my_policy.policyWithCode.lifeInsured1
-      this.my_policy.policyWithCode.coverages.forEach((v,i) => {
-        this.my_policy.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1
+      this.my_policy.policyWithCode.coverages.forEach((v, i) => {
+        this.my_policy.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
       });
-      // console.log(this.my_policy.policyWithCode.coverages[0].lifeInsured);
     },
     save: async function () {
-      // patch to action
       this.$router.push({ path: "./cancellation-main-product/resume" });
     },
     addInvestment: async function () {},
     selectData: function (item) {
       console.log(item);
     },
-    convertToRupiah(amount){
-      return new Intl.NumberFormat("id-ID" , {
+    convertToRupiah(amount) {
+      return new Intl.NumberFormat("id-ID", {
         style: "currency",
-        currency: "IDR"
-      }).format(amount)
+        currency: "IDR",
+      }).format(amount);
+    },
+    addKtpImage: function (e) {
+      this.$store.commit(
+        "submission_transaction/setUploadKtpFile",
+        e.target.files[0]
+      );
+    },
+    addSelfieKtpImage: function (e) {
+      this.$store.commit(
+        "submission_transaction/setUploadSelfieKtpFile",
+        e.target.files[0]
+      );
+    },
+    coverageSelected: function (item) {
+      if (
+        this.coverages_selected.find((items) => items.itemId == item.itemId)
+      ) {
+        this.coverages_selected = this.coverages_selected.filter(
+          (items) => items.itemId !== item.itemId
+        );
+      } else {
+        this.coverages_selected.push(item);
+      }
+      this.$store.commit(
+        "submission_transaction/setCoveragesSelected",
+        this.coverages_selected
+      );
+    },
+    reasonSelected: function(id){
+      this.$store.commit("submission_transaction/setReasonSelected", this.problems_type.filter(items => items.id == id))
     }
   },
 };
