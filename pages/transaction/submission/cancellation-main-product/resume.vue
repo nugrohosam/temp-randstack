@@ -321,7 +321,12 @@ export default {
   methods: {
     submit: async function () {
       // patch to action
-      this.$router.push({ path: "./thankyou" });
+      const result = await this.$store.dispatch(
+        "submission_transaction/submitTransactionProposalSurrender"
+      )
+      if(result){
+        this.$router.push({ path: "./thankyou" });
+      }
     },
     addInvestment: async function () {},
     selectData: function (item) {

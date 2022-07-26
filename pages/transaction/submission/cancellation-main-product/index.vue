@@ -184,9 +184,9 @@
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-1">Alasan</p>
             <v-select
-              :items="problems_type"
-              item-text="description"
-              item-value="id"
+              :items="reasons"
+              item-text="name"
+              item-value="reason_id"
               dense
               outlined
               class="investment_type_option"
@@ -241,6 +241,7 @@ export default {
   },
   mounted() {
     this.myPolicy();
+    this.surrenderReason();
     if (
       $nuxt.$route.name != "transaction-submission-cancellation-main-product"
     ) {
@@ -267,39 +268,16 @@ export default {
         },
       },
       my_policy: null,
+      reasons: [
+        {
+          id: "",
+          reason_id: "",
+          name: "",
+        }
+      ],
       showMe: true,
       selected: [],
       items: ["321321321 - BNI", "321321322 - BNI"],
-      problems_type: [
-        {
-          id: 1,
-          description: "Masalah Pengiriman Polis",
-        },
-        {
-          id: 2,
-          description: "Manfaat Produk",
-        },
-        {
-          id: 3,
-          description: "Penjelasan yang kurang jelas oleh pemasar",
-        },
-        {
-          id: 4,
-          description: "Alasan Keluarga",
-        },
-        {
-          id: 5,
-          description: "Kesulitan Finansial / Butuh Uang",
-        },
-        {
-          id: 6,
-          description: "Untuk SPAJ Baru",
-        },
-        {
-          id: 7,
-          description: "Memiliki Banyak Asuransi",
-        },
-      ],
       data_investments: [
         {
           id: 1,
@@ -431,7 +409,14 @@ export default {
         this.my_policy.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
       });
     },
+    surrenderReason: async function(){
+      let reasons = await this.$store.dispatch(
+        "submission_transaction/getSurrenderReasons"
+      );
+      this.reasons = reasons;
+    },
     save: async function () {
+
       this.$router.push({ path: "./cancellation-main-product/resume" });
     },
     addInvestment: async function () {},
@@ -445,18 +430,21 @@ export default {
       }).format(amount);
     },
     addKtpImage: function (e) {
-      this.$store.commit(
-        "submission_transaction/setUploadKtpFile",
-        e.target.files[0]
+      this.$store.dispatch(
+        "submission_transaction/uploadKtpFile",{
+          file: e.target.files[0]
+        }
       );
     },
     addSelfieKtpImage: function (e) {
-      this.$store.commit(
-        "submission_transaction/setUploadSelfieKtpFile",
-        e.target.files[0]
+      this.$store.dispatch(
+        "submission_transaction/uploadSelieKtpFile",{
+          file: e.target.files[0]
+        }
       );
     },
     coverageSelected: function (item) {
+      console.log(item.itemId)
       if (
         this.coverages_selected.find((items) => items.itemId == item.itemId)
       ) {
@@ -471,8 +459,8 @@ export default {
         this.coverages_selected
       );
     },
-    reasonSelected: function(id){
-      this.$store.commit("submission_transaction/setReasonSelected", this.problems_type.filter(items => items.id == id))
+    reasonSelected: function(reason_id){
+      this.$store.commit("submission_transaction/setReasonSelected", this.reasons.filter(items => items.reason_id == reason_id))
     }
   },
 };

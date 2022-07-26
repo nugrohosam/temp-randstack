@@ -63,6 +63,15 @@ export default {
       });
   },
 
+  async clearAuth({commit}){
+    if(localStorage.getItem('auth') === null){
+      return;
+    }
+    localStorage.removeItem('auth');
+    commit('clearAuth');
+    window.location.href = "/auth/login";
+  },
+
   async otpSubmit({ dispatch, getters, commit }, data) {
     dispatch('sendMail')
     dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});

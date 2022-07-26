@@ -17,6 +17,12 @@ export default function ({ store, $axios}) {
       type: "error",
       status_code: error.response.status
     });
+
+    // Handle if response unauthorized 401
+    // console.log("ERROR : " , error.response.status);
+    if(error.response.status == 401){
+      store.dispatch("auth/clearAuth");
+    }
     // window.$nuxt.$store.getters.myVar => can use this for another js without closure
     return Promise.reject(error.response);
   });
