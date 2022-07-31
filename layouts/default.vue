@@ -79,7 +79,7 @@
           <clipboard-icon size="1.5x" class="custom-class"></clipboard-icon>
         </v-btn>
         <v-btn :to="'/notification/'" :ripple="false" router plain exact>
-          <span>Notifikasi</span>
+          <span></span>
           <bell-icon size="1.5x" class="custom-class"></bell-icon>
         </v-btn>
         <v-btn :to="'/profile/'" :ripple="false" router plain exact>
@@ -91,9 +91,29 @@
     <v-main>
       <div class="app-drawer">
         <div class="action-container">
-          <span>Profile</span>
-          <span>Help</span>
-          <span>Notification</span>
+          <span>
+            <a href="">
+              <bell-icon size="1.5x"></bell-icon>
+            </a>
+          </span>
+          <span>
+            <a href="">
+              <help-circle-icon size="1.5x"></help-circle-icon>
+            </a>
+          </span>
+          <span>
+            <div class="small-profile">
+              <div class="sec-title">
+                <p class="_policy">3105202299</p>
+                <p class="_name">Jhon Doe</p>
+              </div>
+              <div class="sec-image">
+                <div class="_ellipse-image">
+                  <img src="https://image.akurat.co/uploads/gallery/2021/09/gal_615280331d9202-33976211-68748998.jpeg" alt="">
+                </div>
+              </div>
+            </div>
+          </span>
         </div>
       </div>
       <v-container>
@@ -117,6 +137,7 @@ import {
   UserIcon,
   BellIcon,
   RepeatIcon,
+  HelpCircleIcon,
 } from "vue-feather-icons";
 export default {
   name: "DefaultLayout",
@@ -127,6 +148,7 @@ export default {
     UserIcon,
     BellIcon,
     RepeatIcon,
+    HelpCircleIcon
   },
   watch: {
     windowWidth(newWidth, oldWidth) {

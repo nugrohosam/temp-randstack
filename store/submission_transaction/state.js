@@ -1,5 +1,6 @@
 export default {
   menus_search: '',
+  myPolicy: null,
   menus: [
     {
       name: "Cuti Premi",
@@ -92,5 +93,8 @@ export default {
     },
     coverages_selected: [],
     reason_selected: null,
+  },
+  changeCustomerInfo: {
+    changed: null,
   }
 }

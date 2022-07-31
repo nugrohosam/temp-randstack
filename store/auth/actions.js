@@ -83,6 +83,7 @@ export default {
         // if (response.success) {
         //   commit("setAuth");
         //   localStorage.auth = JSON.stringify(getters.getAuthUser);
+
         // }
         return response;
       })

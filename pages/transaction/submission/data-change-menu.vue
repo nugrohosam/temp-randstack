@@ -6,24 +6,7 @@
         <template>
           <div class="row">
             <div class="col-12">
-              <v-tabs :v-model="'2'" show-arrows color="#F15921">
-                <v-tab
-                  v-for="item in items"
-                  :id="'tab' + item.index"
-                  :ref="'tab' + item.index"
-                  :key="item.index"
-                  :to="item.link"
-                  :ripple="false"
-                  active-class="information-tab-active"
-                  class="information-tab"
-                >
-                  {{ item.tab }}
-                </v-tab>
-              </v-tabs>
-              <br /><br>
-              <v-tabs-items v-model="tab">
-                <NuxtChild />
-              </v-tabs-items>
+              <NuxtChild />
             </div>
           </div>
         </template>

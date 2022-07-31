@@ -152,7 +152,7 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-1">Alasan</p>
-        <p class="data-value">{{ reasonSelected[0].description }}</p>
+        <p class="data-value">{{ reasonSelected[0].name }}</p>
       </div>
     </div>
     <div class="row">

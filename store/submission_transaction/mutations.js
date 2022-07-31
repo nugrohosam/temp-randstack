@@ -16,5 +16,11 @@ export default {
   },
   setReasonSelected(state, data){
     state.cancellation_main_product.reason_selected = data;
+  },
+  saveCustomerInfoChanged(state, data){
+    state.customerInfo.changed = data;
+  },
+  setMyPolicy(state, data){
+    state.myPolicy = data;
   }
 }

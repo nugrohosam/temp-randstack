@@ -8,6 +8,7 @@ export default {
       .$get("/api/v1/policy/get-my-policy")
       .then((response) => {
         if (response.success) {
+          commit('setMyPolicy', response.data);
           return response.data;
         }
         // return response;
@@ -43,7 +44,6 @@ export default {
     const response = await this.$axios
       .$post("/api/v1/attachments", formData)
       .then((response) => {
-        console.log(response);
         if (response.success) {
           commit(
             "setUploadKtpFile",
@@ -69,7 +69,6 @@ export default {
     const response = await this.$axios
       .$post("/api/v1/attachments", formData)
       .then((response) => {
-        console.log(response);
         if (response.success) {
           commit(
             "setUploadSelfieKtpFile",
@@ -86,24 +85,44 @@ export default {
     return response;
   },
 
-  async submitTransactionProposalSurrender({rootGetters, dispatch}, data){
+  async submitTransactionProposalSurrender({rootGetters, getters, dispatch}, data){
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
-    dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
+    console.log(getters);
+    const items = []
+    getters.getCoveragesSelected.forEach((v,i) => items.push({
+      itemId: v.itemId
+    }));
+
+    const form = {
+      items: items,
+      cancel_reason: getters.getReasonSelected[0].id,
+      ktp_attachment: "",
+      ktp_selfie_attachment: "",
+    }
+
+    console.log(form);
+    // dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
+    // const response = await this.$axios
+    //   .$post("/api/v1/transaction-proposal/surrender", form)
+    //   .then((response) => {
+    //     if (response.success) {
+    //       dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, {root:true});
+    //       return response.data;
+    //     }
+    //     // return response;
+    //   })
+    //   .catch((error) => {
+    //     return error;
+    //   });
+    // return response;
+  },
+
+  async getProducts({rootGetters, dispatch}, data){
+    this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await this.$axios
-      .$post("/api/v1/transaction-proposal/surrender", {
-        items: [
-          {
-            'itemdId' : "",
-          }
-        ],
-        cancel_reason: "",
-        ktp_attachment: "",
-        ktp_selfie_attachment: "",
-      })
+      .$get(`/api/v1/products?ids=${data}`)
       .then((response) => {
-        console.log(response);
         if (response.success) {
-          dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, {root:true});
           return response.data;
         }
         // return response;
@@ -112,5 +131,10 @@ export default {
         return error;
       });
     return response;
+  },
+
+  async saveCustomerinfo({rootGetters, dispatch, commit}, data){
+    commit('setCustomerInfoChanged', data);
   }
+
 }

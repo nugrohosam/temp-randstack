@@ -155,7 +155,7 @@
               class="btn btn-primary-outlined"
               @click.prevent="$refs.inputKtpImage.click()"
             >
-              Unggah KTP
+              Unggah
             </button>
             <small>{{ ktpFileName }}</small>
           </div>
@@ -175,7 +175,7 @@
               class="btn btn-primary-outlined"
               @click.prevent="$refs.inputSelfieKtpImage.click()"
             >
-              Unggah Foto Selfie dengan KTP
+              Unggah
             </button>
             <small>{{ selfieKtpFileName }}</small>
           </div>
@@ -186,7 +186,8 @@
             <v-select
               :items="reasons"
               item-text="name"
-              item-value="reason_id"
+              item-value="reasonId"
+              placeholder="Pilih Alasan"
               dense
               outlined
               class="investment_type_option"
@@ -277,7 +278,6 @@ export default {
       ],
       showMe: true,
       selected: [],
-      items: ["321321321 - BNI", "321321322 - BNI"],
       data_investments: [
         {
           id: 1,
@@ -326,7 +326,7 @@ export default {
           },
           {
             text: "Status Produk",
-            value: "product_status",
+            value: "productStatus",
           },
           {
             text: "Akhir masa produk",
@@ -334,7 +334,7 @@ export default {
           },
           {
             text: "Jenis produk",
-            value: "product_type",
+            value: "productType",
           },
         ],
         items: [
@@ -404,10 +404,30 @@ export default {
       let data = await this.$store.dispatch(
         "submission_transaction/getMyPolicy"
       );
-      this.my_policy = data;
-      this.my_policy.policyWithCode.coverages.forEach((v, i) => {
-        this.my_policy.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
+      let productIds = [], products = [];
+      data.policyWithCode.coverages.forEach((v, i) => {
+        productIds.push(v.productId);
+        data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
+        data.policyWithCode.coverages[i].productName = ""
+        if(i == 0){
+          data.policyWithCode.coverages[i].productType = "Utama";
+        }else{
+          data.policyWithCode.coverages[i].productType = "Tambahan";
+        }
+        if(this.$moment(v.expiryDate).diff() >= 0){
+          data.policyWithCode.coverages[i].productStatus = "Aktif"
+        }else{
+          data.policyWithCode.coverages[i].productStatus = "Tidak Aktif"
+        }
       });
+      products =  await this.$store.dispatch("submission_transaction/getProducts", productIds.join());
+      data.policyWithCode.coverages.forEach((v, i) => {
+        v.productName = products[i].name;
+      })
+
+      if(data){
+        this.my_policy = data;
+      }
     },
     surrenderReason: async function(){
       let reasons = await this.$store.dispatch(
@@ -444,7 +464,7 @@ export default {
       );
     },
     coverageSelected: function (item) {
-      console.log(item.itemId)
+
       if (
         this.coverages_selected.find((items) => items.itemId == item.itemId)
       ) {
@@ -460,7 +480,7 @@ export default {
       );
     },
     reasonSelected: function(reason_id){
-      this.$store.commit("submission_transaction/setReasonSelected", this.reasons.filter(items => items.reason_id == reason_id))
+      this.$store.commit("submission_transaction/setReasonSelected", this.reasons.filter(items => items.reasonId == reason_id))
     }
   },
 };

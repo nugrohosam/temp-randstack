@@ -28,6 +28,7 @@ export default {
     return state.cancellation_main_product.coverages_selected
   },
   getReasonSelected: (state) => {
+    console.log(state);
     return state.cancellation_main_product.reason_selected
   }
 };

@@ -6,7 +6,7 @@
           <Menu
             :name="'Pembayar'"
             :icon="'ic_cuti_premi.svg'"
-            :link="'./data-change-menu'"
+            :link="'./change/payer'"
           />
           <Menu
             :name="'Data Tertanggung'"
@@ -36,7 +36,7 @@
           <Menu
             :name="'Informasi Customer'"
             :icon="'ic_cuti_premi.svg'"
-            :link="'./new-policy-loan'"
+            :link="'./change/customer-info'"
           />
         </div>
       </div>
@@ -45,7 +45,7 @@
 </template>
 <script>
 export default {
-  name: "policy-loan",
+  name: "data-change",
   data() {
     return {};
   },

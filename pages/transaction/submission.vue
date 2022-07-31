@@ -12,7 +12,7 @@
         </div>
         <div class="row">
           <!-- Search -->
-          <div class="col-12">
+          <div class="col-12 page-container">
             <div class="page-body" >
               <div class="row" v-show="showMenu">
                 <div class="col-lg-6 col-md-12">
