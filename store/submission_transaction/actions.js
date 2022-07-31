@@ -2,7 +2,7 @@ export default {
   searchMenu({dispatch, commit}, data){
     commit('setMenuKeyword', data)
   },
-  async getMyPolicy({rootGetters}){
+  async getMyPolicy({rootGetters, commit}){
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await this.$axios
       .$get("/api/v1/policy/get-my-policy")
@@ -87,7 +87,6 @@ export default {
 
   async submitTransactionProposalSurrender({rootGetters, getters, dispatch}, data){
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
-    console.log(getters);
     const items = []
     getters.getCoveragesSelected.forEach((v,i) => items.push({
       itemId: v.itemId
@@ -99,8 +98,6 @@ export default {
       ktp_attachment: "",
       ktp_selfie_attachment: "",
     }
-
-    console.log(form);
     // dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
     // const response = await this.$axios
     //   .$post("/api/v1/transaction-proposal/surrender", form)
@@ -117,7 +114,7 @@ export default {
     // return response;
   },
 
-  async getProducts({rootGetters, dispatch}, data){
+  async getProducts({rootGetters, dispatch, commit}, data){
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await this.$axios
       .$get(`/api/v1/products?ids=${data}`)

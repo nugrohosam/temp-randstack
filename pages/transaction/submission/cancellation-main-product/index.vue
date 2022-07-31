@@ -404,6 +404,8 @@ export default {
       let data = await this.$store.dispatch(
         "submission_transaction/getMyPolicy"
       );
+
+      console.log(data);
       let productIds = [], products = [];
       data.policyWithCode.coverages.forEach((v, i) => {
         productIds.push(v.productId);
@@ -440,9 +442,6 @@ export default {
       this.$router.push({ path: "./cancellation-main-product/resume" });
     },
     addInvestment: async function () {},
-    selectData: function (item) {
-      console.log(item);
-    },
     convertToRupiah(amount) {
       return new Intl.NumberFormat("id-ID", {
         style: "currency",

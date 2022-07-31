@@ -354,7 +354,7 @@ export default {
   },
   mounted() {
     this.getMyPolicy();
-    if ($nuxt.$route.name != "transaction-submission-change-payer") {
+    if ($nuxt.$route.name != "transaction-submission-change-customer-info") {
       this.showMe = false;
     } else {
       this.showMe = true;
@@ -431,8 +431,6 @@ export default {
         default:
           break;
       }
-
-      console.log(this.selectedPolicy);
     },
     save: async function () {
       // patch to action
