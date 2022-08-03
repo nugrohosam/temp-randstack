@@ -129,19 +129,36 @@
       </v-main>
     </template>
     <template v-else>
-       <div
-        style="
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          width:100%;
-        "
-      >
-        <v-progress-circular indeterminate size="64" color="#F15921" width="7">
-        </v-progress-circular>
-        <p style="color: black">Mohon tunggu, sedang memuat data...</p>
-      </div>
+      <template v-if="error.status">
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+          "
+        >
+          <img v-if="type ? type : 'warning'" src="~/assets/icon/ic_warning_modal.svg" class="modal-icon" alt="">
+          <p style="color: black">{{error.message}}</p>
+        </div>
+      </template>
+      <template v-else>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+          "
+        >
+          <v-progress-circular indeterminate size="64" color="#F15921" width="7">
+          </v-progress-circular>
+          <p style="color: black">Mohon tunggu, sedang memuat data...</p>
+        </div>
+      </template>
+
     </template>
 
     <!-- <v-footer :absolute="!fixed" app>
@@ -194,6 +211,10 @@ export default {
   data() {
     return {
       isChecked: false,
+      error: {
+        status: false,
+        message: "",
+      },
       modal: {
         message: "",
         show: false,
@@ -263,8 +284,14 @@ export default {
       if (result.success == true) {
         this.isChecked = true;
       } else {
-        //
-
+        this.error.status = true;
+        if (typeof result.data.message != "undefined") {
+          this.error.message = result.data.message;
+        } else if (typeof result.data.Message != "undefined") {
+          this.error.message = result.data.Message;
+        } else {
+          this.error.message = "Terjadi kesalahan, coba lagi.";
+        }
       }
     },
   },

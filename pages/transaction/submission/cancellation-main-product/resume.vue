@@ -7,7 +7,7 @@
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nomor Polis</p>
-        <p class="data-value">{{myPolicy.policyWithCode.policyHolder.policyNumber}}</p>
+        <p class="data-value">{{myPolicy.policyWithCode.policyNumber}}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nomor Rekening Saat Ini</p>
