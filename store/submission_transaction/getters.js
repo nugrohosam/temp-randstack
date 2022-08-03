@@ -12,6 +12,9 @@ export default {
       return state.menus;
     }
   },
+  getMyPolicy: (state) => {
+    return state.myPolicy;
+  },
   getKtpFile: (state) => {
     return state.cancellation_main_product.upload.ktp.file
   },
@@ -24,11 +27,19 @@ export default {
   getSelfieKtpFileName: (state) => {
     return state.cancellation_main_product.upload.selfie_ktp.name
   },
+  getKtpUploadFileName: (state) => {
+    return state.cancellation_main_product.upload.ktp.upload_filename
+  },
+  getSelfieKtpUploadFileName: (state) => {
+    return state.cancellation_main_product.upload.selfie_ktp.upload_filename
+  },
   getCoveragesSelected: (state) => {
     return state.cancellation_main_product.coverages_selected
   },
   getReasonSelected: (state) => {
-    console.log(state);
     return state.cancellation_main_product.reason_selected
+  },
+  getCustomerInfoChanged: (state) => {
+    return state.customerInfo.resume;
   }
 };

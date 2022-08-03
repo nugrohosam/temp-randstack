@@ -3,33 +3,38 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
-        <p class="data-value">JHON DOE</p>
+        <p class="data-value">{{myPolicy.policyWithCode.policyHolder.person.firstName}}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nomor Polis</p>
-        <p class="data-value">BLPM20113145</p>
+        <p class="data-value">{{myPolicy.policyWithCode.policyHolder.policyNumber}}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nomor Rekening Saat Ini</p>
-        <p class="data-value">BLPM20113145</p>
+        <!-- <p class="data-value">BLPM20113145</p> -->
+        <p class="data-value">-</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">
           Nama Pemilik Nomor Rekening Manfaat Saat Ini
         </p>
-        <p class="data-value">JHON DOE</p>
+        <!-- <p class="data-value">JHON DOE</p> -->
+        <p class="data-value">-</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nomor Polis</p>
-        <p class="data-value">BLPM20113145</p>
+        <!-- <p class="data-value">BLPM20113145</p> -->
+        <p class="data-value">-</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Cabang Bank Saat Ini</p>
-        <p class="data-value">BLPM20113145</p>
+        <!-- <p class="data-value">BLPM20113145</p> -->
+        <p class="data-value">-</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Pengiriman Polis</p>
-        <p class="data-value">04/08/2020</p>
+        <!-- <p class="data-value">04/08/2020</p> -->
+        <p class="data-value">-</p>
       </div>
     </div>
     <div class="row">
@@ -39,10 +44,8 @@
           <v-data-table
             :headers="table.headers"
             :items="coveragesSelected"
-            :page.sync="page"
             mobile-breakpoint="480"
             hide-default-footer
-            @page-count="pageCount = $event"
           >
             <template v-slot:item.itemId="{ item }">
               <v-simple-checkbox
@@ -54,10 +57,10 @@
               {{ $moment(item.issueDate).format("DD/MM/Y") }}
             </template>
             <template v-slot:item.nextPremium.sumAssured="{ item }">
-              {{ convertToRupiah(item.nextPremium.sumAssured) }}
+              {{ $convertCurrency(item.nextPremium.sumAssured) }}
             </template>
             <template v-slot:item.currentPremium.totalPremAf="{ item }">
-              {{ convertToRupiah(item.currentPremium.totalPremAf) }}
+              {{ $convertCurrency(item.currentPremium.totalPremAf) }}
             </template>
             <template v-slot:item.expiryDate="{ item }">
               {{ $moment(item.expiryDate).format("DD/MM/Y") }}
@@ -196,9 +199,14 @@ export default {
     SaveIcon,
     InfoIcon,
   },
-  mounted() {},
+  mounted() {
+  },
   data() {
     return {
+      title: {
+        name:'',
+        description: '',
+      },
       accepted: false,
       showMe: true,
       selected: [],
@@ -206,33 +214,6 @@ export default {
         src: "",
         show: false,
       },
-      items: ["321321321 - BNI", "321321322 - BNI"],
-      problems_type: [
-        "Masalah Pengiriman Polis",
-        "Manfaat Produk",
-        "Penjelasan yang kurang jelas oleh pemasar",
-        "Alasan Keluarga",
-        "Kesulitan Finansial / Butuh Uang",
-        "Untuk SPAJ Baru",
-        "Memiliki Banyak Asuransi",
-      ],
-      data_investments: [
-        {
-          id: 1,
-          fund_name: "DANA MAKSIMA",
-          topup_value: 1000000,
-        },
-        {
-          id: 2,
-          fund_name: "DANA CEMERLANG",
-          topup_value: 2000000,
-        },
-        {
-          id: "",
-          fund_name: "Total",
-          topup_value: 3000000,
-        },
-      ],
       table: {
         headers: [
           {
@@ -273,25 +254,7 @@ export default {
             value: "product_type",
           },
         ],
-        items: [
-          {
-            id: 2,
-            product_name: "BNI LIFE MULTI PLAN PRO",
-            benefit: 100,
-            premium: 10000,
-            start_date: "07/06/2021",
-            insured_name: "JOHN DAN",
-            product_status: "Active",
-            end_date: "07/06/2045",
-            product_type: "Tambahan",
-            selected: true,
-          },
-        ],
       },
-      page: 1,
-      pageCount: 0,
-      itemsPerPage: 5,
-      limitPages: [5, 10, 15, 20, 25],
     };
   },
   computed: {
@@ -302,11 +265,13 @@ export default {
       return this.$store.getters["submission_transaction/getSelfieKtpFile"];
     },
     coveragesSelected() {
-      // console.log(this.$store.getters['submission_transaction/getCoveragesSelected']);
       return this.$store.getters["submission_transaction/getCoveragesSelected"];
     },
     reasonSelected() {
       return this.$store.getters["submission_transaction/getReasonSelected"];
+    },
+    myPolicy(){
+      return this.$store.getters["submission_transaction/getMyPolicy"];
     },
   },
   watch: {
@@ -320,17 +285,14 @@ export default {
   },
   methods: {
     submit: async function () {
-      // patch to action
       const result = await this.$store.dispatch(
         "submission_transaction/submitTransactionProposalSurrender"
       )
-      if(result){
+      if(result.success == true){
         this.$router.push({ path: "./thankyou" });
+      }else{
+        // check validation error
       }
-    },
-    addInvestment: async function () {},
-    selectData: function (item) {
-      console.log(item);
     },
     showKtpPreview: function () {
       if (this.ktpFile) {
@@ -343,12 +305,6 @@ export default {
         this.image_preview.src = URL.createObjectURL(this.selfieKtpFile);
         this.image_preview.show = true;
       }
-    },
-    convertToRupiah(amount) {
-      return new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-      }).format(amount);
     },
   },
 };

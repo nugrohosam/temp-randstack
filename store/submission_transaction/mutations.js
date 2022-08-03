@@ -4,12 +4,14 @@ export default {
     // console.log(state.menus_search);
   },
   setUploadKtpFile(state, data){
-    state.cancellation_main_product.upload.ktp.file = data;
-    state.cancellation_main_product.upload.ktp.name = data.name
+    state.cancellation_main_product.upload.ktp.file = data.stream;
+    state.cancellation_main_product.upload.ktp.name = data.stream.name
+    state.cancellation_main_product.upload.ktp.upload_filename = data.upload;
   },
   setUploadSelfieKtpFile(state, data){
-    state.cancellation_main_product.upload.selfie_ktp.file = data;
-    state.cancellation_main_product.upload.selfie_ktp.name = data.name
+    state.cancellation_main_product.upload.selfie_ktp.file = data.stream;
+    state.cancellation_main_product.upload.selfie_ktp.name = data.stream.name;
+    state.cancellation_main_product.upload.selfie_ktp.upload_filename = data.upload;
   },
   setCoveragesSelected(state, data){
     state.cancellation_main_product.coverages_selected = data;
@@ -17,8 +19,8 @@ export default {
   setReasonSelected(state, data){
     state.cancellation_main_product.reason_selected = data;
   },
-  saveCustomerInfoChanged(state, data){
-    state.customerInfo.changed = data;
+  setCustomerInfoChanged(state, data){
+    state.customerInfo.resume = data;
   },
   setMyPolicy(state, data){
     state.myPolicy = data;

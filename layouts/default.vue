@@ -4,124 +4,145 @@
       fixed
       app
     > -->
+    <template v-if="isChecked">
+      <div class="navbar-container desktop">
+        <div class="navbar desktop">
+          <div class="logo_container">
+            <img src="~/assets/icon/main_bni_life.svg" alt="logo" />
+          </div>
+          <div class="list-container">
+            <v-list>
+              <v-list-item router to="/transaction/submission">
+                <v-list-item-action>
+                  <refresh-cw-icon
+                    size="1.5x"
+                    class="custom-class"
+                  ></refresh-cw-icon>
+                </v-list-item-action>
 
-    <div class="navbar-container desktop">
-      <div class="navbar desktop">
-        <div class="logo_container">
-          <img src="~/assets/icon/main_bni_life.svg" alt="logo" />
-        </div>
-        <div class="list-container">
-          <v-list>
-            <v-list-item router to="/transaction/submission">
-              <v-list-item-action>
-                <refresh-cw-icon
-                  size="1.5x"
-                  class="custom-class"
-                ></refresh-cw-icon>
-              </v-list-item-action>
-
-              <v-list-item-content>
-                <v-list-item-title v-text="'Pengajuan Transaksi'" />
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item router to="/transaction/status">
-              <v-list-item-action>
-                <activity-icon size="1.5x" class="custom-class"></activity-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title v-text="'Status Transaksi'" />
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item router to="/polis/information">
-              <v-list-item-action>
-                <clipboard-icon size="1.5x"></clipboard-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title v-text="'Informasi Data Polis'" />
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </div>
-        <div class="logout-container" @click="signOut()">
-          <v-list>
-            <v-list-item router exact>
-              <v-list-item-action>
-                <v-icon>mdi-logout</v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title v-text="'Logout'" />
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
+                <v-list-item-content>
+                  <v-list-item-title v-text="'Pengajuan Transaksi'" />
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item router to="/transaction/status">
+                <v-list-item-action>
+                  <activity-icon
+                    size="1.5x"
+                    class="custom-class"
+                  ></activity-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title v-text="'Status Transaksi'" />
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item router to="/polis/information">
+                <v-list-item-action>
+                  <clipboard-icon size="1.5x"></clipboard-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title v-text="'Informasi Data Polis'" />
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </div>
+          <div class="logout-container" @click="signOut()">
+            <v-list>
+              <v-list-item router exact>
+                <v-list-item-action>
+                  <v-icon>mdi-logout</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title v-text="'Logout'" />
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </div>
         </div>
       </div>
-    </div>
-
-    <template>
-      <v-bottom-navigation class="navbar mobile" fixed color="#F15921" grow>
-        <v-btn
-          :to="'/transaction/submission'"
-          :ripple="false"
-          dark
-          plain
-          router
-          exact
-        >
-          <span>Pengajuan</span>
-          <repeat-icon size="1.5x" class="custom-class"></repeat-icon>
-        </v-btn>
-        <v-btn :to="'/transaction/status'" :ripple="false" router plain exact>
-          <span>Status</span>
-          <activity-icon size="1.5x" class="custom-class"></activity-icon>
-        </v-btn>
-        <v-btn :to="'/polis/information'" :ripple="false" router plain exact>
-          <span>Info Polis</span>
-          <clipboard-icon size="1.5x" class="custom-class"></clipboard-icon>
-        </v-btn>
-        <v-btn :to="'/notification/'" :ripple="false" router plain exact>
-          <span></span>
-          <bell-icon size="1.5x" class="custom-class"></bell-icon>
-        </v-btn>
-        <v-btn :to="'/profile/'" :ripple="false" router plain exact>
-          <span>Profil</span>
-          <user-icon size="1.5x" class="custom-class"></user-icon>
-        </v-btn>
-      </v-bottom-navigation>
-    </template>
-    <v-main>
-      <div class="app-drawer">
-        <div class="action-container">
-          <span>
-            <a href="">
-              <bell-icon size="1.5x"></bell-icon>
-            </a>
-          </span>
-          <span>
-            <a href="">
-              <help-circle-icon size="1.5x"></help-circle-icon>
-            </a>
-          </span>
-          <span>
-            <div class="small-profile">
-              <div class="sec-title">
-                <p class="_policy">3105202299</p>
-                <p class="_name">Jhon Doe</p>
-              </div>
-              <div class="sec-image">
-                <div class="_ellipse-image">
-                  <img src="https://image.akurat.co/uploads/gallery/2021/09/gal_615280331d9202-33976211-68748998.jpeg" alt="">
+      <template>
+        <v-bottom-navigation class="navbar mobile" fixed color="#F15921" grow>
+          <v-btn
+            :to="'/transaction/submission'"
+            :ripple="false"
+            dark
+            plain
+            router
+            exact
+          >
+            <span>Pengajuan</span>
+            <repeat-icon size="1.5x" class="custom-class"></repeat-icon>
+          </v-btn>
+          <v-btn :to="'/transaction/status'" :ripple="false" router plain exact>
+            <span>Status</span>
+            <activity-icon size="1.5x" class="custom-class"></activity-icon>
+          </v-btn>
+          <v-btn :to="'/polis/information'" :ripple="false" router plain exact>
+            <span>Info Polis</span>
+            <clipboard-icon size="1.5x" class="custom-class"></clipboard-icon>
+          </v-btn>
+          <v-btn :to="'/notification/'" :ripple="false" router plain exact>
+            <span></span>
+            <bell-icon size="1.5x" class="custom-class"></bell-icon>
+          </v-btn>
+          <v-btn :to="'/profile/'" :ripple="false" router plain exact>
+            <span>Profil</span>
+            <user-icon size="1.5x" class="custom-class"></user-icon>
+          </v-btn>
+        </v-bottom-navigation>
+      </template>
+      <v-main>
+        <div class="app-drawer">
+          <div class="action-container">
+            <span>
+              <a href="">
+                <bell-icon size="1.5x"></bell-icon>
+              </a>
+            </span>
+            <span>
+              <a href="">
+                <help-circle-icon size="1.5x"></help-circle-icon>
+              </a>
+            </span>
+            <span>
+              <div class="small-profile">
+                <div class="sec-title">
+                  <p class="_policy">3105202299</p>
+                  <p class="_name">Jhon Doe</p>
+                </div>
+                <div class="sec-image">
+                  <div class="_ellipse-image">
+                    <img
+                      src="https://image.akurat.co/uploads/gallery/2021/09/gal_615280331d9202-33976211-68748998.jpeg"
+                      alt=""
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          </span>
+            </span>
+          </div>
         </div>
+        <v-container>
+          <Nuxt />
+          <ResponseAlert @closeModal="modal.show = false" />
+          <OverlayLoading />
+        </v-container>
+      </v-main>
+    </template>
+    <template v-else>
+       <div
+        style="
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width:100%;
+        "
+      >
+        <v-progress-circular indeterminate size="64" color="#F15921" width="7">
+        </v-progress-circular>
+        <p style="color: black">Mohon tunggu, sedang memuat data...</p>
       </div>
-      <v-container>
-        <Nuxt />
-        <ResponseAlert @closeModal="modal.show = false" />
-        <OverlayLoading />
-      </v-container>
-    </v-main>
+    </template>
 
     <!-- <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
@@ -148,7 +169,7 @@ export default {
     UserIcon,
     BellIcon,
     RepeatIcon,
-    HelpCircleIcon
+    HelpCircleIcon,
   },
   watch: {
     windowWidth(newWidth, oldWidth) {
@@ -172,6 +193,7 @@ export default {
   },
   data() {
     return {
+      isChecked: false,
       modal: {
         message: "",
         show: false,
@@ -225,10 +247,24 @@ export default {
 
     check: async function () {
       const isAuthenticated = await this.$store.dispatch("auth/check");
-      if (!isAuthenticated) {
+      if (isAuthenticated) {
+        this.getMyPolicy();
+      } else if (!isAuthenticated) {
         this.$router.push({
           path: "/auth/login",
         });
+      }
+    },
+
+    getMyPolicy: async function () {
+      let result = await this.$store.dispatch(
+        "submission_transaction/getMyPolicy"
+      );
+      if (result.success == true) {
+        this.isChecked = true;
+      } else {
+        //
+
       }
     },
   },

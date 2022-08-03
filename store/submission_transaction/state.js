@@ -94,7 +94,15 @@ export default {
     coverages_selected: [],
     reason_selected: null,
   },
-  changeCustomerInfo: {
-    changed: null,
+  customerInfo: {
+    // resume: {
+    //   holderName: null,
+    //   policyNumber: null,
+    //   selectedPolicy: null,
+    //   emailAddress: null,
+    //   address: null,
+    //   phonerNumber: null,
+    // },
+    resume: null
   }
 }

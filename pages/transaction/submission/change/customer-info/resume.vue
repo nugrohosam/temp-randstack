@@ -4,24 +4,28 @@
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemegang Polis</p>
-          <p class="data-value">JHON DOE</p>
+          <p class="data-value">{{
+              customerInformation.person.firstName ? customerInformation.person.firstName : "" + " " +
+              customerInformation.person.midName ? customerInformation.person.midName : "" + " " +
+              customerInformation.person.lastName ? customerInformation.person.lastName : ""
+          }}</p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Polis</p>
-          <p class="data-value">BLPM20113145</p>
+          <p class="data-value">{{customerInformation.proposalNumber}}</p>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-1">Identitas yang diubah</p>
-          <p class="data-value">Pemegang Polis</p>
+          <p class="data-value">{{customerInformation.identityType.name}}</p>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <p class="data-title mb-2">Email Address</p>
           <div class="d-flex justify-sm-space-between">
-            <p class="data-value">johndoe@mail.com</p>
+            <p class="data-value">{{customerInformation.person.email ? customerInformation.person.email : "-"}}</p>
           </div>
         </div>
       </div>
@@ -42,27 +46,35 @@
                   <div class="row">
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Provinsi</p>
-                      <p class="data-value">DKI JAKARTA</p>
+                      <p class="data-value">{{customerInformation.address.province ? customerInformation.address.province : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Kota</p>
-                      <p class="data-value">JAKARTA TIMUR</p>
+                      <p class="data-value">{{customerInformation.address.city ? customerInformation.address.city : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Kecamatan</p>
-                      <p class="data-value">PULO GADUNG</p>
+                      <p class="data-value">{{customerInformation.address.street ? customerInformation.address.street : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Kelurahan</p>
-                      <p class="data-value">RAWAMANGUN</p>
+                      <p class="data-value"> {{customerInformation.address.village ? customerInformation.address.village : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Alamat</p>
-                      <p class="data-value">Jl Jenderal Ahmad Yani By Pass</p>
+                      <p class="data-value">{{customerInformation.address.address1 ? customerInformation.address.address1 : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Blok</p>
-                      <p class="data-value">F66</p>
+                      <p class="data-value"> {{customerInformation.address.address2 ? customerInformation.address.address2 : "-"}}</p>
+                    </div>
+                    <div class="col-lg-4 col-sm-12">
+                      <p class="data-title">Blok / No Jalan</p>
+                      <p class="data-value"> {{customerInformation.address.address2 ? customerInformation.address.address2 : "-"}}</p>
+                    </div>
+                    <div class="col-lg-4 col-sm-12">
+                      <p class="data-title">RT/RW</p>
+                      <p class="data-value"> {{customerInformation.address.address3 ? customerInformation.address.address3 : "-"}}</p>
                     </div>
                   </div>
                 </div>
@@ -84,25 +96,25 @@
                   <div class="row">
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Nomor Telepon Saat Ini 1</p>
-                      <p class="data-value">08123456789</p>
+                      <p class="data-value">{{customerInformation.person.mobile ? customerInformation.person.mobile : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Nomor Telepon Saat Ini 2</p>
-                      <p class="data-value">081987654321</p>
+                      <p class="data-value">{{customerInformation.person.mobile2 ? customerInformation.person.mobile2 : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Normor Telepon Kantor Saat Ini</p>
-                      <p class="data-value">482657</p>
+                      <p class="data-value">{{customerInformation.person.officeTel ? customerInformation.person.officeTel : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">
                         Normor Telepon Lain Kantor Saat Ini
                       </p>
-                      <p class="data-value">482112</p>
+                      <p class="data-value">{{customerInformation.person.officeTel2 ? customerInformation.person.officeTel2 : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Nomor Telepon Rumah Saat Ini</p>
-                      <p class="data-value">482111</p>
+                      <p class="data-value"> {{customerInformation.person.homeTel ? customerInformation.person.homeTel : "-"}}</p>
                     </div>
                   </div>
                 </div>
@@ -112,17 +124,17 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-lg-6 col-sm-12">
-          <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
-          <button
-            class="btn btn-primary-outlined"
-            @click.prevent="upload()"
-          >
-            Lihat
-          </button>
-        </div>
+     <div class="row">
+      <div class="col-lg-6 col-sm-12">
+        <p class="data-title mb-2">Lihat Foto Selfie dengan KTP</p>
+        <button
+          class="btn btn-primary-outlined"
+          @click.prevent="showSelfieKtpPreview"
+        >
+          Lihat Foto
+        </button>
       </div>
+    </div>
       <div class="row">
         <div class="col-lg-12 col-sm-12">
           <div class="message-bar rounded-lg">
@@ -161,7 +173,11 @@
         </div>
       </div>
     </div>
-    <NuxtChild />
+    <ModalImagePreview
+      :src="image_preview.src"
+      :show="image_preview.show"
+      @closeImagePreview="image_preview.show = false"
+    />
   </div>
 </template>
 <script>
@@ -173,18 +189,19 @@ export default {
     InfoIcon,
   },
   mounted() {
-    console.log($nuxt.$route.name);
     if ($nuxt.$route.name != "transaction-submission-change-payer") {
       this.showMe = false;
     } else {
       this.showMe = true;
-      // this.current_header_title = this.default_header_title;
     }
   },
   data() {
     return {
       accepted: false,
-      investment_types: ["UANG SEKOLAH", "ASURANSI"],
+      image_preview: {
+        src: "",
+        show: false,
+      },
     };
   },
   watch: {
@@ -198,13 +215,31 @@ export default {
       }
     },
   },
+  computed: {
+    customerInformation(){
+      return this.$store.getters['submission_transaction/getCustomerInfoChanged'];
+    },
+    selfieKtpFile() {
+      return this.$store.getters["submission_transaction/getSelfieKtpFile"];
+    },
+  },
   methods: {
     submit: async function () {
       // patch to action
-      this.$router.push({ path: "./payer/resume" });
+      const result = await this.$store.dispatch(
+        "submission_transaction/updateCustomerInformation"
+      )
+      if(result.success == true){
+        this.$router.push({ path: "./thankyou" });
+      }else{
+        // check validation error
+      }
     },
-    upload: async function(){
-
+    showSelfieKtpPreview: function () {
+      if (this.selfieKtpFile) {
+        this.image_preview.src = URL.createObjectURL(this.selfieKtpFile);
+        this.image_preview.show = true;
+      }
     }
   },
 };

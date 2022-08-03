@@ -6,42 +6,41 @@
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nama Pemegang Polis</p>
             <p class="data-value">
-              {{
-                my_policy != null
-                  ? my_policy.policyWithCode.policyHolder.person.firstName
-                  : ""
-              }}
+              {{myPolicy.policyWithCode.policyHolder.person.firstName}}
             </p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nomor Polis</p>
             <p class="data-value">
-              {{
-                my_policy != null ? my_policy.policyWithCode.policyNumber : ""
-              }}
+              {{myPolicy.policyWithCode.policyHolder.policyNumber}}
             </p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title">Nomor Rekening Saat Ini</p>
-            <p class="data-value">BLPM20113145</p>
+            <!-- <p class="data-value">BLPM20113145</p> -->
+            <p class="data-value">-</p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">
               Nama Pemilik Nomor Rekening Manfaat Saat Ini
             </p>
-            <p class="data-value">JHON DOE</p>
+            <!-- <p class="data-value">JHON DOE</p> -->
+            <p class="data-value">-</p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nama Bank Saat Ini</p>
-            <p class="data-value">BLPM20113145</p>
+            <!-- <p class="data-value">BLPM20113145</p> -->
+            <p class="data-value">-</p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Cabang Bank Saat Ini</p>
-            <p class="data-value">BLPM20113145</p>
+            <!-- <p class="data-value">BLPM20113145</p> -->
+            <p class="data-value">-</p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Tanggal Pengiriman Polis</p>
-            <p class="data-value">04/08/2020</p>
+            <!-- <p class="data-value">04/08/2020</p> -->
+            <p class="data-value">-</p>
           </div>
         </div>
         <div class="row">
@@ -53,10 +52,8 @@
               <v-data-table
                 :headers="table.headers"
                 :items="my_policy.policyWithCode.coverages"
-                :page.sync="page"
                 mobile-breakpoint="480"
                 hide-default-footer
-                @page-count="pageCount = $event"
               >
                 <template v-slot:item.itemId="{ item }">
                   <v-simple-checkbox
@@ -68,10 +65,10 @@
                   {{ $moment(item.issueDate).format("DD/MM/Y") }}
                 </template>
                 <template v-slot:item.nextPremium.sumAssured="{ item }">
-                  {{ convertToRupiah(item.nextPremium.sumAssured) }}
+                  {{ $convertCurrency(item.nextPremium.sumAssured) }}
                 </template>
                 <template v-slot:item.currentPremium.totalPremAf="{ item }">
-                  {{ convertToRupiah(item.currentPremium.totalPremAf) }}
+                  {{ $convertCurrency(item.currentPremium.totalPremAf) }}
                 </template>
                 <template v-slot:item.expiryDate="{ item }">
                   {{ $moment(item.expiryDate).format("DD/MM/Y") }}
@@ -234,6 +231,7 @@
 </template>
 <script>
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
+import {mapGetters} from 'vuex';
 export default {
   name: "cancellation-main-product",
   components: {
@@ -249,25 +247,10 @@ export default {
       this.showMe = false;
     } else {
       this.showMe = true;
-      // this.current_header_title = this.default_header_title;
     }
   },
   data() {
     return {
-      cancellation_main_product: {
-        upload: {
-          ktp: {
-            file: null,
-            name: "",
-            preview: "",
-          },
-          selfie_ktp: {
-            file: null,
-            name: "",
-            preview: "",
-          },
-        },
-      },
       my_policy: null,
       reasons: [
         {
@@ -278,23 +261,6 @@ export default {
       ],
       showMe: true,
       selected: [],
-      data_investments: [
-        {
-          id: 1,
-          fund_name: "DANA MAKSIMA",
-          topup_value: 1000000,
-        },
-        {
-          id: 2,
-          fund_name: "DANA CEMERLANG",
-          topup_value: 2000000,
-        },
-        {
-          id: "",
-          fund_name: "Total",
-          topup_value: 3000000,
-        },
-      ],
       coverages: [],
       coverages_selected: [],
       table: {
@@ -337,49 +303,7 @@ export default {
             value: "productType",
           },
         ],
-        items: [
-          {
-            id: 1,
-            product_name: "BNI LIFE MULTI PLAN PRO",
-            benefit: 100,
-            premium: 10000,
-            start_date: "07/06/2021",
-            insured_name: "JOHN DAN",
-            product_status: "Active",
-            end_date: "07/06/2045",
-            product_type: "Utama",
-            selected: false,
-          },
-          {
-            id: 2,
-            product_name: "BNI LIFE MULTI PLAN PRO",
-            benefit: 100,
-            premium: 10000,
-            start_date: "07/06/2021",
-            insured_name: "JOHN DAN",
-            product_status: "Active",
-            end_date: "07/06/2045",
-            product_type: "Tambahan",
-            selected: true,
-          },
-          {
-            id: 3,
-            product_name: "BNI LIFE MULTI PLAN PRO",
-            benefit: 100,
-            premium: 10000,
-            start_date: "07/06/2021",
-            insured_name: "JOHN DAN",
-            product_status: "Active",
-            end_date: "07/06/2045",
-            product_type: "Tambahan",
-            selected: false,
-          },
-        ],
       },
-      page: 1,
-      pageCount: 0,
-      itemsPerPage: 5,
-      limitPages: [5, 10, 15, 20, 25],
     };
   },
   watch: {
@@ -398,55 +322,51 @@ export default {
     selfieKtpFileName() {
       return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
     },
+    myPolicy(){
+      return this.$store.getters["submission_transaction/getMyPolicy"];
+    },
   },
   methods: {
     myPolicy: async function () {
-      let data = await this.$store.dispatch(
+      let result = await this.$store.dispatch(
         "submission_transaction/getMyPolicy"
       );
 
-      console.log(data);
-      let productIds = [], products = [];
-      data.policyWithCode.coverages.forEach((v, i) => {
-        productIds.push(v.productId);
-        data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
-        data.policyWithCode.coverages[i].productName = ""
-        if(i == 0){
-          data.policyWithCode.coverages[i].productType = "Utama";
-        }else{
-          data.policyWithCode.coverages[i].productType = "Tambahan";
-        }
-        if(this.$moment(v.expiryDate).diff() >= 0){
-          data.policyWithCode.coverages[i].productStatus = "Aktif"
-        }else{
-          data.policyWithCode.coverages[i].productStatus = "Tidak Aktif"
-        }
-      });
-      products =  await this.$store.dispatch("submission_transaction/getProducts", productIds.join());
-      data.policyWithCode.coverages.forEach((v, i) => {
-        v.productName = products[i].name;
-      })
+      if(result.success == true){
+        let data = result.data;
+        let productIds = [], products = [];
+        data.policyWithCode.coverages.forEach((v, i) => {
+          productIds.push(v.productId);
+          data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
+          data.policyWithCode.coverages[i].productName = ""
+          if(i == 0){
+            data.policyWithCode.coverages[i].productType = "Utama";
+          }else{
+            data.policyWithCode.coverages[i].productType = "Tambahan";
+          }
+          if(this.$moment(v.expiryDate).diff() >= 0){
+            data.policyWithCode.coverages[i].productStatus = "Aktif"
+          }else{
+            data.policyWithCode.coverages[i].productStatus = "Tidak Aktif"
+          }
+        });
+        products =  await this.$store.dispatch("submission_transaction/getProducts", productIds.join());
+        data.policyWithCode.coverages.forEach((v, i) => {
+          v.productName = products[i].name;
+        })
 
-      if(data){
-        this.my_policy = data;
+        if(data){
+          this.my_policy = data;
+        }
       }
     },
     surrenderReason: async function(){
-      let reasons = await this.$store.dispatch(
+      this.reasons = await this.$store.dispatch(
         "submission_transaction/getSurrenderReasons"
       );
-      this.reasons = reasons;
     },
     save: async function () {
-
       this.$router.push({ path: "./cancellation-main-product/resume" });
-    },
-    addInvestment: async function () {},
-    convertToRupiah(amount) {
-      return new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-      }).format(amount);
     },
     addKtpImage: function (e) {
       this.$store.dispatch(
@@ -463,7 +383,6 @@ export default {
       );
     },
     coverageSelected: function (item) {
-
       if (
         this.coverages_selected.find((items) => items.itemId == item.itemId)
       ) {

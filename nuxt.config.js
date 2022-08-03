@@ -47,6 +47,10 @@ export default {
     {
       src: '~/plugins/axios.js'
     },
+    {
+      src: '~/plugins/prototype.js'
+    },
+
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

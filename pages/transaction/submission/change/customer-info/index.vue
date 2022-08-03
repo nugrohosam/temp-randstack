@@ -431,11 +431,15 @@ export default {
         default:
           break;
       }
+      this.selectedPolicy.proposalNumber = this.myPolicy.policyWithCode.proposalNumber;
+      this.selectedPolicy.identityType = this.selectedIdentityType;
     },
     save: async function () {
       // patch to action
-      this.$store.dispatch("submission_transaction/saveCustomerInfoChanged", this.selectedPolicy);
-      this.$router.push({ path: "./payer/resume" });
+      this.$store.dispatch("submission_transaction/saveCustomerinfo", this.selectedPolicy).then((res) => {
+        this.$router.push({ path: "./customer-info/resume" });
+        // console.log(this.selectedPolicy);
+      });
     },
     addSelfieKtpImage: function (e) {
       this.$store.dispatch(
