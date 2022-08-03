@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="myPolicy">
+    <template v-if="!isLoading">
       <div v-show="showMe">
         <div class="row">
           <div class="col-lg-4 col-sm-6">
@@ -363,11 +363,11 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       showMe: true,
       addressEditable: false,
       phoneEditable: false,
       emailEditable: false,
-      myPolicy: null,
       selectedPolicy: null,
       identityType: [
         {
@@ -388,6 +388,9 @@ export default {
     selfieKtpFileName() {
       return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
     },
+    myPolicy(){
+      return this.$store.getters["submission_transaction/getMyPolicy"];
+    }
   },
   watch: {
     $route(to, from) {
@@ -400,39 +403,26 @@ export default {
   },
   methods: {
     getMyPolicy: async function () {
-      let data = await this.$store.dispatch(
-        "submission_transaction/getMyPolicy"
-      );
-
-      data.policyWithCode.coverages.forEach((v, i) => {
-        data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
-      });
-
-      if (data) {
-        this.myPolicy = data;
-        this.switchType(this.identityType[0].type);
-      }
-
-      // this.myPolicy = await new Promise((res, rej) => {
-      //   setTimeout(() => {
-      //     res("Done")
-      //   }, 2000)
-      // })
+      await this.switchType(this.identityType[0].type);
+      this.isLoading = false;
     },
-    switchType: function (type) {
-      this.selectedIdentityType = this.identityType.find((v,i) => v.type == type);
-      switch (this.selectedIdentityType.type) {
-        case 1:
-          this.selectedPolicy = this.myPolicy.policyWithCode.policyHolder;
-          break;
-        case 2:
-          this.selectedPolicy = this.myPolicy.policyWithCode.insureds[0];
-          break;
-        default:
-          break;
-      }
-      this.selectedPolicy.proposalNumber = this.myPolicy.policyWithCode.proposalNumber;
-      this.selectedPolicy.identityType = this.selectedIdentityType;
+    switchType: async function (type) {
+      return new Promise((res, rej) => {
+        this.selectedIdentityType = this.identityType.find((v,i) => v.type == type);
+        switch (this.selectedIdentityType.type) {
+          case 1:
+            this.selectedPolicy = this.myPolicy.policyWithCode.policyHolder;
+            break;
+          case 2:
+            this.selectedPolicy = this.myPolicy.policyWithCode.insureds[0];
+            break;
+          default:
+            break;
+        }
+        this.selectedPolicy.proposalNumber = this.myPolicy.policyWithCode.proposalNumber;
+        this.selectedPolicy.identityType = this.selectedIdentityType;
+        res("Done")
+      })
     },
     save: async function () {
       // patch to action

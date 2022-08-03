@@ -84,11 +84,13 @@ export default {
         file: null,
         name: '',
         preview: '',
+        upload_filename: ''
       },
       selfie_ktp: {
         file: null,
         name: '',
         preview: '',
+        upload_filename: ''
       }
     },
     coverages_selected: [],

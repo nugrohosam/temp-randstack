@@ -91,7 +91,7 @@ export default {
     return response;
   },
 
-  async submitTransactionProposalSurrender({rootGetters, getters, dispatch}, data){
+  async submitTransactionProposalSurrender({rootGetters, getters, dispatch, commit}, data){
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const items = []
     // getters.getCoveragesSelected.forEach((v,i) => items.push({
@@ -114,13 +114,15 @@ export default {
       .$post("/api/v1/transaction-proposal/surrender", form)
       .then((response) => {
         dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, {root:true});
+        commit('clearUploadSelfieKtpFile');
+        commit('clearUploadKtpFile');
+        commit('clearCoveragesSelected');
+        // commit('clearReasonSelected');
         return response;
       })
       .catch((error) => {
         return error;
       });
-
-    console.log(form);
     return response;
 
 

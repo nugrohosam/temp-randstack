@@ -24,5 +24,22 @@ export default {
   },
   setMyPolicy(state, data){
     state.myPolicy = data;
-  }
+  },
+  clearUploadSelfieKtpFile(state){
+    state.cancellation_main_product.upload.selfie_ktp.file = null;
+    state.cancellation_main_product.upload.selfie_ktp.name = '';
+    state.cancellation_main_product.upload.selfie_ktp.upload_filename = '';
+  },
+  clearUploadKtpFile(state){
+    state.cancellation_main_product.upload.ktp.file = null;
+    state.cancellation_main_product.upload.ktp.name = '';
+    state.cancellation_main_product.upload.ktp.upload_filename = '';
+  },
+  clearCoveragesSelected(state){
+    state.cancellation_main_product.coverages_selected = [];
+  },
+  clearReasonSelected(state){
+    state.cancellation_main_product.reason_selected = null;
+    console.log(state.cancellation_main_product);
+  },
 }
