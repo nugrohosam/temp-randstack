@@ -1,8 +1,8 @@
 export default {
-  searchMenu({dispatch, commit}, data){
+  searchMenu({ dispatch, commit }, data) {
     commit('setMenuKeyword', data)
   },
-  async getMyPolicy({rootGetters, commit}){
+  async getMyPolicy({ rootGetters, commit }) {
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await this.$axios
       .$get("/api/v1/policy/get-my-policy")
@@ -19,7 +19,7 @@ export default {
     return response;
   },
 
-  async getSurrenderReasons({rootGetters}, data){
+  async getSurrenderReasons({ rootGetters }, data) {
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await this.$axios
       .$get("/api/v1/reasons")
@@ -35,12 +35,12 @@ export default {
     return response;
   },
 
-  async uploadKtpFile({rootGetters, commit, dispatch}, data){
+  async uploadKtpFile({ rootGetters, commit, dispatch }, data) {
     let formData = new FormData();
     formData.append("File", data.file);
-    formData.append("Type","KTP")
+    formData.append("Type", "KTP")
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
-    dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
+    dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, { root: true });
     const response = await this.$axios
       .$post("/api/v1/attachments", formData)
       .then((response) => {
@@ -52,7 +52,7 @@ export default {
               upload: response.data.name
             }
           );
-          dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, {root:true});
+          dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, { root: true });
           return response.data;
         }
         // return response;
@@ -63,12 +63,12 @@ export default {
     return response;
   },
 
-  async uploadSelieKtpFile({rootGetters, commit, dispatch}, data){
+  async uploadSelieKtpFile({ rootGetters, commit, dispatch }, data) {
     let formData = new FormData();
     formData.append("File", data.file);
-    formData.append("Type","KTPSELFIE")
+    formData.append("Type", "KTPSELFIE")
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
-    dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
+    dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, { root: true });
     const response = await this.$axios
       .$post("/api/v1/attachments", formData)
       .then((response) => {
@@ -80,7 +80,7 @@ export default {
               upload: response.data.name
             }
           );
-          dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, {root:true});
+          dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, { root: true });
           return response.data;
         }
         // return response;
@@ -91,29 +91,24 @@ export default {
     return response;
   },
 
-  async submitTransactionProposalSurrender({rootGetters, getters, dispatch, commit}, data){
+  async submitTransactionProposalSurrender({ rootGetters, getters, dispatch, commit }, data) {
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const items = []
-    // getters.getCoveragesSelected.forEach((v,i) => items.push({
-    //   itemId: v.itemId
-    // }));
+    getters.getCoveragesSelected.forEach((v, i) => items.push({
+      itemId: v.itemId
+    }));
 
     const form = {
-      // items: items,
-      items: [
-        {
-          itemId: 175427
-        }
-      ],
+      items: items,
       cancel_reason: getters.getReasonSelected[0].reasonId,
       ktp_attachment: getters.getKtpUploadFileName,
       ktp_selfie_attachment: getters.getSelfieKtpUploadFileName,
     }
-    dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
+    dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, { root: true });
     const response = await this.$axios
       .$post("/api/v1/transaction-proposal/surrender", form)
       .then((response) => {
-        dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, {root:true});
+        dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, { root: true });
         commit('clearUploadSelfieKtpFile');
         commit('clearUploadKtpFile');
         commit('clearCoveragesSelected');
@@ -128,7 +123,7 @@ export default {
 
   },
 
-  async getProducts({rootGetters, dispatch, commit}, data){
+  async getProducts({ rootGetters, dispatch, commit }, data) {
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await this.$axios
       .$get(`/api/v1/products?ids=${data}`)
@@ -144,11 +139,11 @@ export default {
     return response;
   },
 
-  async saveCustomerinfo({rootGetters, dispatch, commit}, data){
+  async saveCustomerinfo({ rootGetters, dispatch, commit }, data) {
     commit('setCustomerInfoChanged', data);
   },
 
-  async updateCustomerInformation({rootGetters, dispatch, commit, getters}){
+  async updateCustomerInformation({ rootGetters, dispatch, commit, getters }) {
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const customerInformation = getters.getCustomerInfoChanged;
     const form = {
@@ -177,11 +172,11 @@ export default {
       ktp_selfie_attachment: getters.getSelfieKtpUploadFileName,
     }
 
-    dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
+    dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, { root: true });
     const response = await this.$axios
       .$post("/api/v1/policy/change-customer-info", form)
       .then((response) => {
-        dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, {root:true});
+        dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, { root: true });
         return response;
       })
       .catch((error) => {
