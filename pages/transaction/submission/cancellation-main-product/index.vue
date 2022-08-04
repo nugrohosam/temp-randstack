@@ -6,13 +6,13 @@
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nama Pemegang Polis</p>
             <p class="data-value">
-              {{myPolicy.policyWithCode.policyHolder.person.firstName}}
+              {{ myPolicy.policyWithCode.policyHolder.person.firstName }}
             </p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nomor Polis</p>
             <p class="data-value">
-              {{myPolicy.policyWithCode.policyNumber}}
+              {{ myPolicy.policyWithCode.policyNumber }}
             </p>
           </div>
           <div class="col-lg-4 col-sm-6">
@@ -51,7 +51,14 @@
             <template>
               <v-data-table
                 :headers="table.headers"
-                :items="my_policy.policyWithCode.coverages"
+                :items="[
+                  my_policy.policyWithCode.coverages.filter(
+                    (item) => item.masterProduct == null
+                  )[0],
+                  ...my_policy.policyWithCode.coverages.filter(
+                    (item) => item.masterProduct != null
+                  ),
+                ]"
                 mobile-breakpoint="480"
                 hide-default-footer
               >
@@ -205,8 +212,8 @@
             <div class="validation-bar d-flex rounded-lg">
               <info-icon class="ic-primary mr-2"></info-icon>
               <ul>
-                <li v-for="(value,key) in validationMessage" :key="key">
-                  {{value}}
+                <li v-for="(value, key) in validationMessage" :key="key">
+                  {{ value }}
                 </li>
               </ul>
             </div>
@@ -244,7 +251,7 @@
 </template>
 <script>
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
-import {mapGetters} from 'vuex';
+import { mapGetters } from "vuex";
 export default {
   name: "cancellation-main-product",
   components: {
@@ -272,7 +279,7 @@ export default {
           id: "",
           reason_id: "",
           name: "",
-        }
+        },
       ],
       showMe: true,
       coverages: [],
@@ -322,7 +329,7 @@ export default {
         ktp_selfie: null,
         ktp: null,
         reason_selected: null,
-      }
+      },
     };
   },
   watch: {
@@ -341,37 +348,40 @@ export default {
     selfieKtpFileName() {
       return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
     },
-    myPolicy(){
+    myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
   },
   methods: {
     getData: async function () {
-        let data = this.myPolicy;
-        let productIds = [], products = [];
-        data.policyWithCode.coverages.forEach((v, i) => {
-          productIds.push(v.productId);
-          data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
-          data.policyWithCode.coverages[i].productName = ""
-          if(i == 0){
-            data.policyWithCode.coverages[i].productType = "Utama";
-          }else{
-            data.policyWithCode.coverages[i].productType = "Tambahan";
-          }
-          if(this.$moment(v.expiryDate).diff() >= 0){
-            data.policyWithCode.coverages[i].productStatus = "Aktif"
-          }else{
-            data.policyWithCode.coverages[i].productStatus = "Tidak Aktif"
-          }
-        });
-        products =  await this.$store.dispatch("submission_transaction/getProducts", productIds.join());
-        data.policyWithCode.coverages.forEach((v, i) => {
-          v.productName = products[i].name;
-        })
-        this.my_policy = data;
-        this.isLoading = false;
+      let data = this.myPolicy;
+      let productIds = [],
+        products = [];
+      data.policyWithCode.coverages.forEach((v, i) => {
+        productIds.push(v.productId);
+        data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
+        data.policyWithCode.coverages[i].productName = "";
+        data.policyWithCode.coverages[i].productType =
+        data.policyWithCode.coverages[i].masterProduct == null
+          ? "Utama"
+          : "Tambahan";
+        if (this.$moment(v.expiryDate).diff() >= 0) {
+          data.policyWithCode.coverages[i].productStatus = "Aktif";
+        } else {
+          data.policyWithCode.coverages[i].productStatus = "Tidak Aktif";
+        }
+      });
+      products = await this.$store.dispatch(
+        "submission_transaction/getProducts",
+        productIds.join()
+      );
+      data.policyWithCode.coverages.forEach((v, i) => {
+        v.productName = products[i].name;
+      });
+      this.my_policy = data;
+      this.isLoading = false;
     },
-    surrenderReason: async function(){
+    surrenderReason: async function () {
       this.reasons = await this.$store.dispatch(
         "submission_transaction/getSurrenderReasons"
       );
@@ -379,45 +389,49 @@ export default {
     save: async function () {
       this.validate();
       // if(this.validationMessage.length <= 0){
-      this.$store.commit("submission_transaction/setReasonSelected", this.form.reason_selected)
-      this.$store.commit("submission_transaction/setCoveragesSelected",this.form.coverages_selected);
+      this.$store.commit(
+        "submission_transaction/setReasonSelected",
+        this.form.reason_selected
+      );
+      this.$store.commit(
+        "submission_transaction/setCoveragesSelected",
+        this.form.coverages_selected
+      );
       this.$router.push({ path: "./cancellation-main-product/resume" });
       // }
     },
     addKtpImage: function (e) {
       this.form.ktp = e.target.files[0];
-      this.$store.dispatch(
-        "submission_transaction/uploadKtpFile",{
-          file: e.target.files[0]
-        }
-      );
+      this.$store.dispatch("submission_transaction/uploadKtpFile", {
+        file: e.target.files[0],
+      });
     },
     addSelfieKtpImage: function (e) {
       this.form.ktp_selfie = e.target.files[0];
-      this.$store.dispatch(
-        "submission_transaction/uploadSelieKtpFile",{
-          file: e.target.files[0]
-        }
-      );
+      this.$store.dispatch("submission_transaction/uploadSelieKtpFile", {
+        file: e.target.files[0],
+      });
     },
-    validate: async function(){
+    validate: async function () {
       this.validationMessage = [];
-      // if(this.form.coverages_selected.length <= 0){
-      //   this.validationMessage.push('Pilih minimal 1 produk')
-      // }
-      // if(this.form.ktp == null){
-      //   this.validationMessage.push('Unggah KTP diperlukan')
-      // }
-      // if(this.form.ktp_selfie == null){
-      //   this.validationMessage.push('Unggah Selfie + KTP diperlukan')
-      // }
-      if(this.form.reason_selected == null){
-        this.validationMessage.push('Pilih salah satu alasan')
+      if (this.form.coverages_selected.length <= 0) {
+        this.validationMessage.push("Pilih minimal 1 produk");
+      }
+      if (this.form.ktp == null) {
+        this.validationMessage.push("Unggah KTP diperlukan");
+      }
+      if (this.form.ktp_selfie == null) {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+      }
+      if (this.form.reason_selected == null) {
+        this.validationMessage.push("Pilih salah satu alasan");
       }
     },
     coverageSelected: function (item) {
       if (
-        this.form.coverages_selected.find((items) => items.itemId == item.itemId)
+        this.form.coverages_selected.find(
+          (items) => items.itemId == item.itemId
+        )
       ) {
         this.form.coverages_selected = this.form.coverages_selected.filter(
           (items) => items.itemId !== item.itemId
@@ -426,9 +440,11 @@ export default {
         this.form.coverages_selected.push(item);
       }
     },
-    reasonSelected: function(reason_id){
-      this.form.reason_selected = this.reasons.filter(items => items.reasonId == reason_id);
-    }
+    reasonSelected: function (reason_id) {
+      this.form.reason_selected = this.reasons.filter(
+        (items) => items.reasonId == reason_id
+      );
+    },
   },
 };
 </script>
