@@ -137,7 +137,7 @@
           class="btn btn-primary-outlined"
           @click.prevent="showKtpPreview"
         >
-          Lihat KTP
+          Lihat
         </button>
       </div>
     </div>
@@ -148,7 +148,7 @@
           class="btn btn-primary-outlined"
           @click.prevent="showSelfieKtpPreview"
         >
-          Lihat Foto Selfie + KTP
+          Lihat
         </button>
       </div>
     </div>
