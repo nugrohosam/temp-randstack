@@ -100,7 +100,7 @@ export default {
 
     const form = {
       items: items,
-      cancel_reason: getters.getReasonSelected[0].reasonId,
+      cancel_reason: getters.getReasonSelected[0].name,
       ktp_attachment: getters.getKtpUploadFileName,
       ktp_selfie_attachment: getters.getSelfieKtpUploadFileName,
     }
