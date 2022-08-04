@@ -8,7 +8,7 @@ export default {
       icon: "ic_cuti_premi.svg",
     },
     {
-      name: "Pembatalan Produk Utama",
+      name: "Penutupan/Pembatalan Produk",
       link: "/transaction/submission/cancellation-main-product",
       icon: "ic_minus_circle.svg",
     },
