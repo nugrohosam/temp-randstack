@@ -61,9 +61,10 @@ export default {
   watch: {
     auth(isAuth) {
       if (isAuth) {
-        this.$router.push({
-          path: "/transaction/submission",
-        });
+        window.location.href = "/transaction/submission";
+        // this.$router.push({
+        //   path: "/transaction/submission",
+        // });
       }
     },
     otp_timer: function (value) {
