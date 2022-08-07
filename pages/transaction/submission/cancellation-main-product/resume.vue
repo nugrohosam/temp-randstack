@@ -3,11 +3,13 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
-        <p class="data-value">{{myPolicy.policyWithCode.policyHolder.person.firstName}}</p>
+        <p class="data-value">
+          {{ myPolicy.policyWithCode.policyHolder.person.firstName }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nomor Polis</p>
-        <p class="data-value">{{myPolicy.policyWithCode.policyNumber}}</p>
+        <p class="data-value">{{ myPolicy.policyWithCode.policyNumber }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nomor Rekening Saat Ini</p>
@@ -199,13 +201,12 @@ export default {
     SaveIcon,
     InfoIcon,
   },
-  mounted() {
-  },
+  mounted() {},
   data() {
     return {
       title: {
-        name:'',
-        description: '',
+        name: "",
+        description: "",
       },
       accepted: false,
       showMe: true,
@@ -270,7 +271,7 @@ export default {
     reasonSelected() {
       return this.$store.getters["submission_transaction/getReasonSelected"];
     },
-    myPolicy(){
+    myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
   },
@@ -287,10 +288,13 @@ export default {
     submit: async function () {
       const result = await this.$store.dispatch(
         "submission_transaction/submitTransactionProposalSurrender"
-      )
-      if(result.success == true){
-        this.$router.push({ path: "./thankyou" });
-      }else{
+      );
+      if (result.success == true) {
+        let transactionIds = result.data.transactionIds;
+        this.$router.push({
+          path: "./thankyou?transaction_ids=" + transactionIds.join(","),
+        });
+      } else {
         // check validation error
       }
     },
