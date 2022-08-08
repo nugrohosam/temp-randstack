@@ -1,7 +1,9 @@
 <template>
   <div>
+
     <div class="row">
       <div class="col-12">
+
         <!-- Head -->
         <div class="row">
           <div class="col-12">
@@ -14,6 +16,7 @@
           <!-- Search -->
           <div class="col-12">
             <div class="page-body">
+              <template v-if="table.items">
               <!-- Transaction Status Menu -->
               <div class="row">
                 <div class="col-lg-6 col-md-12">
@@ -46,18 +49,22 @@
                     >
                       <template v-slot:item.actions="{ item }">
                         <button
+                          v-if="item.status == 3"
                           class="btn btn-primary btn-table"
                           @click="showUpload(item)"
                         >
                           Lengkapi
                         </button>
                       </template>
-                      <template v-slot:item.status="{ item }">
+                      <!-- <template v-slot:item.status="{ item }">
                         <a
                           @click.prevent="showDetail(item)"
                           class="bni-primary"
                           >{{ item.status }}</a
                         >
+                      </template> -->
+                      <template v-slot:item.createdAt="{ item }">
+                        {{ $moment(item.createdAt).format("DD/MM/Y") }}
                       </template>
                       <template v-slot:item.name="{ item }">
                         <a
@@ -100,10 +107,28 @@
                   </div>
                 </div>
               </div>
+              </template>
+               <template v-else>
+                    <div
+                      style="
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                      "
+                    >
+                    <v-progress-circular indeterminate size="64" color="#F15921" width="7">
+                    </v-progress-circular>
+                    <p style="color: black">Mohon Tunggu...</p>
+                  </div>
+                </template>
             </div>
+
           </div>
         </div>
       </div>
+
+
     </div>
     <!-- <div class="text-center">
 
@@ -150,6 +175,8 @@
       </v-card>
     </v-dialog>
 
+
+
     <!-- Temp Overlay Loading -->
     <!-- <div class="text-center">
       <v-overlay :value="overlay" color="rgba(250, 250, 250, 0.9)">
@@ -190,20 +217,21 @@ export default {
         bank: "",
         status: "",
       },
+
       table: {
         headers: [
           {
             text: "ID Pengajuan",
             align: "start",
-            value: "submission_id",
+            value: "pengajuanTransactionId",
           },
-          { text: "Tgl Pengajuan", value: "date" },
-          { text: "Nama Transaksi", value: "name" },
+          { text: "Tgl Pengajuan", value: "createdAt" },
+          { text: "Nama Transaksi", value: "transactionName" },
           { text: "Status", value: "status" },
-          { text: "Dokumen", value: "document" },
+          { text: "Dokumen", value: "documentAttachment" },
           { text: "Edit", value: "actions" },
         ],
-        items: [],
+        items: null,
       },
     };
   },
@@ -231,9 +259,8 @@ export default {
       const list = await this.$store.dispatch(
         "transaction_status/getTransactionStatusList"
       );
-      console.log(list);
       // mapping if list has different format with response
-      this.table.items = list;
+      this.table.items = list.items;
     },
   },
 };

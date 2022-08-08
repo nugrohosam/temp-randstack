@@ -6,66 +6,79 @@ export default {
     commit("setTableData", data);
   },
 
-  async getTransactionStatusList({ dispatch, commit }) {
+  async getTransactionStatusList({ dispatch, commit, rootGetters }) {
     // axios
-    const result = [
-      {
-        submission_id: 12,
-        date: "30/12/1996",
-        name: "Azhar Ogi",
-        status: "Pending",
-        document: "Dokumen.doc"
-      },
-      {
-        submission_id: 11,
-        date: "30/12/1996",
-        name: "Azhar GGWP",
-        status: "Success",
-        document: "Dokumen.doc"
-      },
-      {
-        submission_id: 10,
-        date: "30/12/1996",
-        name: "Azhar GGWP",
-        status: "Success",
-        document: "Dokumen.doc"
-      },
-      {
-        submission_id: 9,
-        date: "30/12/1996",
-        name: "Azhar GGWP",
-        status: "Success",
-        document: "Dokumen.doc"
-      },
-      {
-        submission_id: 8,
-        date: "30/12/1996",
-        name: "Azhar GGWP",
-        status: "Success",
-        document: "Dokumen.doc"
-      },
-      {
-        submission_id: 7,
-        date: "30/12/1996",
-        name: "Azhar GGWP",
-        status: "Success",
-        document: "Dokumen.doc"
-      },
-      {
-        submission_id: 6,
-        date: "30/12/1996",
-        name: "Azhar GGWP",
-        status: "Success",
-        document: "Dokumen.doc"
-      },
-      {
-        submission_id: 5,
-        date: "30/12/1996",
-        name: "Azhar GGWP",
-        status: "Success",
-        document: "Dokumen.doc"
-      },
-    ];
+    this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
+    const response = await this.$axios
+      .$get(`/api/v1/transaction-proposal?order=desc&order_by=transaction_name`)
+      .then((response) => {
+        if (response.success) {
+          return response.data;
+        }
+        // return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+    return response;
+    // const result = [
+    //   {
+    //     submission_id: 12,
+    //     date: "30/12/1996",
+    //     name: "Azhar Ogi",
+    //     status: "Pending",
+    //     document: "Dokumen.doc"
+    //   },
+    //   {
+    //     submission_id: 11,
+    //     date: "30/12/1996",
+    //     name: "Azhar GGWP",
+    //     status: "Success",
+    //     document: "Dokumen.doc"
+    //   },
+    //   {
+    //     submission_id: 10,
+    //     date: "30/12/1996",
+    //     name: "Azhar GGWP",
+    //     status: "Success",
+    //     document: "Dokumen.doc"
+    //   },
+    //   {
+    //     submission_id: 9,
+    //     date: "30/12/1996",
+    //     name: "Azhar GGWP",
+    //     status: "Success",
+    //     document: "Dokumen.doc"
+    //   },
+    //   {
+    //     submission_id: 8,
+    //     date: "30/12/1996",
+    //     name: "Azhar GGWP",
+    //     status: "Success",
+    //     document: "Dokumen.doc"
+    //   },
+    //   {
+    //     submission_id: 7,
+    //     date: "30/12/1996",
+    //     name: "Azhar GGWP",
+    //     status: "Success",
+    //     document: "Dokumen.doc"
+    //   },
+    //   {
+    //     submission_id: 6,
+    //     date: "30/12/1996",
+    //     name: "Azhar GGWP",
+    //     status: "Success",
+    //     document: "Dokumen.doc"
+    //   },
+    //   {
+    //     submission_id: 5,
+    //     date: "30/12/1996",
+    //     name: "Azhar GGWP",
+    //     status: "Success",
+    //     document: "Dokumen.doc"
+    //   },
+    // ];
 
     commit('setTransactionStatusList',result);
     return result;

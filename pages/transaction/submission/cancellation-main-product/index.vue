@@ -61,13 +61,16 @@
                 ]"
                 mobile-breakpoint="480"
                 hide-default-footer
+                v-model="form.coverages_selected"
+                item-key="itemId"
+                show-select
+                class="elevation-1"
               >
-                <template v-slot:item.itemId="{ item }">
+                <!-- <template v-slot:item.itemId="{ item }">
                   <v-simple-checkbox
-                    v-model="item.selected"
-                    @input="coverageSelected(item)"
+
                   ></v-simple-checkbox>
-                </template>
+                </template> -->
                 <template v-slot:item.issueDate="{ item }">
                   {{ $moment(item.issueDate).format("DD/MM/Y") }}
                 </template>
@@ -359,6 +362,7 @@ export default {
         products = [];
       data.policyWithCode.coverages.forEach((v, i) => {
         productIds.push(v.productId);
+        // data.policyWithCode.coverages[i].selected = true;
         data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
         data.policyWithCode.coverages[i].productName = "";
         data.policyWithCode.coverages[i].productType =
@@ -428,17 +432,19 @@ export default {
       }
     },
     coverageSelected: function (item) {
-      if (
-        this.form.coverages_selected.find(
-          (items) => items.itemId == item.itemId
-        )
-      ) {
-        this.form.coverages_selected = this.form.coverages_selected.filter(
-          (items) => items.itemId !== item.itemId
-        );
-      } else {
-        this.form.coverages_selected.push(item);
-      }
+      console.log(item);
+      item.selected = false;
+      // if (
+      //   this.form.coverages_selected.find(
+      //     (items) => items.itemId == item.itemId
+      //   )
+      // ) {
+      //   this.form.coverages_selected = this.form.coverages_selected.filter(
+      //     (items) => items.itemId !== item.itemId
+      //   );
+      // } else {
+      //   this.form.coverages_selected.push(item);
+      // }
     },
     reasonSelected: function (reason_id) {
       this.form.reason_selected = this.reasons.filter(

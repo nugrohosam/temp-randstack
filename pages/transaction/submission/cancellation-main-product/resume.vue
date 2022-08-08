@@ -50,10 +50,11 @@
             hide-default-footer
           >
             <template v-slot:item.itemId="{ item }">
-              <v-simple-checkbox
-                v-model="item.selected"
-                @input="coverageSelected(item)"
-              ></v-simple-checkbox>
+              <v-checkbox
+                input-value="true"
+                value
+                disabled
+              ></v-checkbox>
             </template>
             <template v-slot:item.issueDate="{ item }">
               {{ $moment(item.issueDate).format("DD/MM/Y") }}
