@@ -65,6 +65,7 @@
                 item-key="itemId"
                 show-select
                 class="elevation-1"
+                @item-selected="selectCoverage"
               >
                 <!-- <template v-slot:item.itemId="{ item }">
                   <v-simple-checkbox
@@ -431,9 +432,11 @@ export default {
         this.validationMessage.push("Pilih salah satu alasan");
       }
     },
-    coverageSelected: function (item) {
-      console.log(item);
-      item.selected = false;
+    selectCoverage: function (coverage) {
+      if(coverage.item.productType == "Utama" && coverage.value){
+        this.form.coverages_selected = this.my_policy.policyWithCode.coverages;
+      }
+      // item.selected = false;
       // if (
       //   this.form.coverages_selected.find(
       //     (items) => items.itemId == item.itemId
