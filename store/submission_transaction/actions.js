@@ -93,10 +93,18 @@ export default {
 
   async submitTransactionProposalSurrender({ rootGetters, getters, dispatch, commit }, data) {
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
-    const items = []
-    getters.getCoveragesSelected.forEach((v, i) => items.push({
-      itemId: v.itemId
-    }));
+    let items = [];
+    if(getters.getCoveragesSelected.find((v) => v.productType == "Utama")){
+      items.push({
+        itemId: getters.getCoveragesSelected.find((v) => v.productType == "Utama").itemId
+      });
+    }else{
+      getters.getCoveragesSelected.forEach((v, i) =>
+      items.push({
+        itemId: v.itemId
+      }));
+    }
+
 
     const form = {
       items: items,

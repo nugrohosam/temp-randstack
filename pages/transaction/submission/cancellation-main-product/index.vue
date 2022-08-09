@@ -66,6 +66,7 @@
                 show-select
                 class="elevation-1"
                 @item-selected="selectCoverage"
+                selectable-key="isSelectable"
               >
                 <!-- <template v-slot:item.itemId="{ item }">
                   <v-simple-checkbox
@@ -366,6 +367,7 @@ export default {
         // data.policyWithCode.coverages[i].selected = true;
         data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
         data.policyWithCode.coverages[i].productName = "";
+        data.policyWithCode.coverages[i].isSelectable = true;
         data.policyWithCode.coverages[i].productType =
         data.policyWithCode.coverages[i].masterProduct == null
           ? "Utama"
@@ -434,7 +436,20 @@ export default {
     },
     selectCoverage: function (coverage) {
       if(coverage.item.productType == "Utama" && coverage.value){
+        this.my_policy.policyWithCode.coverages.filter((v) => {
+          if(v.productType != "Utama"){
+            v.isSelectable = false;
+          }
+        })
         this.form.coverages_selected = this.my_policy.policyWithCode.coverages;
+      }
+
+      if(coverage.item.productType == "Utama" && !coverage.value){
+        this.my_policy.policyWithCode.coverages.filter((v) => {
+          if(v.productType != "Utama"){
+            v.isSelectable = true;
+          }
+        })
       }
       // item.selected = false;
       // if (
