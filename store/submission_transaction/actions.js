@@ -106,6 +106,7 @@ export default {
     }
     dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, { root: true });
     const response = await this.$axios
+      // .$post("/api/v1/transaction-proposal/surrender", form)
       .$post("/api/v1/transaction-proposal/surrender", form)
       .then((response) => {
         dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, { root: true });
