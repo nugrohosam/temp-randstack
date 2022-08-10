@@ -54,6 +54,7 @@
                 hide-default-footer
                 v-model="form.coverages_selected"
                 item-key="itemId"
+                single-select
                 show-select
                 class="elevation-1"
                 @item-selected="selectCoverage"
@@ -236,17 +237,19 @@ export default {
       coverages: [],
       table: {
         headers: [
-          {
-            text: "Pilihan",
-            align: "start",
-            value: "itemId",
-          },
+          // {
+          //   text: "Pilihan",
+          //   align: "start",
+          //   value: "itemId",
+          // },
           {
             text: "Nama Produk",
+            align: "center",
             value: "productName",
           },
           {
             text: "Uang Pertangguhan/Benefit",
+            align: "center",
             value: "nextPremium.sumAssured",
           },
           {
