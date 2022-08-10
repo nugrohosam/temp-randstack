@@ -13,29 +13,20 @@
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nomor Rekening Saat Ini</p>
-        <!-- <p class="data-value">BLPM20113145</p> -->
-        <p class="data-value">-</p>
+        <p class="data-value">{{ myPolicy.policyWithCode.payerBankAccount[0].accountId }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">
           Nama Pemilik Nomor Rekening Manfaat Saat Ini
         </p>
-        <!-- <p class="data-value">JHON DOE</p> -->
-        <p class="data-value">-</p>
+        <p class="data-value">{{ myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nomor Polis</p>
-        <!-- <p class="data-value">BLPM20113145</p> -->
-        <p class="data-value">-</p>
-      </div>
-      <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Cabang Bank Saat Ini</p>
-        <!-- <p class="data-value">BLPM20113145</p> -->
-        <p class="data-value">-</p>
+        <p class="data-value">{{ myPolicy.policyWithCode.payerBankAccount[0].bankCode }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Pengiriman Polis</p>
-        <!-- <p class="data-value">04/08/2020</p> -->
         <p class="data-value">-</p>
       </div>
     </div>
@@ -89,50 +80,6 @@
         </template>
       </div>
     </div>
-    <!-- <div class="row">
-      <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-1">Data Pengajuan Top Up Sekaligus</p>
-        <v-simple-table>
-          <template v-slot:default>
-            <thead>
-              <tr>
-                <th class="text-left">No</th>
-                <th class="text-left">Nama Fund</th>
-                <th class="text-left">Nilai Top Up</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, i) in data_investments" :key="item.name">
-                <template v-if="i < data_investments.length - 1">
-                  <td>{{ i + 1 }}</td>
-                  <td>{{ item.fund_name }}</td>
-                  <td>{{ item.topup_value }}</td>
-                </template>
-                <template v-else>
-                  <td></td>
-                  <td>
-                    <b>{{ item.fund_name }}</b>
-                  </td>
-                  <td>
-                    <b>{{ item.topup_value }}</b>
-                  </td>
-                </template>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-1">Estimasi Nilai Tunai</p>
-        <h3>Rp 16.000.000</h3>
-      </div>
-      <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-1">Estimasi Pengembalian Dana COP</p>
-        <h3>Rp 4.000.000</h3>
-      </div>
-    </div> -->
     <div class="row">
       <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">KTP Pemegang Polis</p>
