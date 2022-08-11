@@ -344,7 +344,7 @@ export default {
         productIds.join()
       );
       data.policyWithCode.coverages.forEach((v, i) => {
-        v.productName = products[i].name;
+        v.productName = products.filter((product) => product.id == v.productId)[0].name;
       });
       this.my_policy = data;
       this.isLoading = false;
