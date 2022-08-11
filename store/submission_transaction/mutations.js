@@ -1,7 +1,6 @@
 export default {
   setMenuKeyword(state, data){
     state.menus_search = data.keywords
-    // console.log(state.menus_search);
   },
   setUploadKtpFile(state, data){
     state.cancellation_main_product.upload.ktp.file = data.stream;
@@ -40,6 +39,5 @@ export default {
   },
   clearReasonSelected(state){
     state.cancellation_main_product.reason_selected = null;
-    console.log(state.cancellation_main_product);
   },
 }
