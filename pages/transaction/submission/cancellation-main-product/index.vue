@@ -326,7 +326,7 @@ export default {
       let productIds = [],
         products = [];
       data.policyWithCode.coverages = data.policyWithCode.coverages.filter(
-        (coverage) => coverage.insureds[0].activeStatus == 2
+        (coverage) => coverage.insureds[0].activeStatus != 3
       );
       data.policyWithCode.coverages.forEach((v, i) => {
         productIds.push(v.productId);
