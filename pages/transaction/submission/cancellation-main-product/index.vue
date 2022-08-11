@@ -17,21 +17,35 @@
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title">Nomor Rekening Saat Ini</p>
-            <p class="data-value"> {{ myPolicy.policyWithCode.payerBankAccount[0].accountId }}</p>
+            <p class="data-value">
+              {{ myPolicy.policyWithCode.payerBankAccount[0].accountId }}
+            </p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">
               Nama Pemilik Nomor Rekening Manfaat Saat Ini
             </p>
-            <p class="data-value">{{ myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName }}</p>
+            <p class="data-value">
+              {{ myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName }}
+            </p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nama Bank Saat Ini</p>
-            <p class="data-value">{{ myPolicy.policyWithCode.payerBankAccount[0].bankCode }}</p>
+            <p class="data-value">
+              {{ myPolicy.policyWithCode.payerBankAccount[0].bankCode }}
+            </p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Tanggal Pengiriman Polis</p>
-            <p class="data-value">{{myPolicy.policyWithCode.despatchDate ? $moment(myPolicy.policyWithCode.despatchDate).format("DD/MM/Y") : "-"}}</p>
+            <p class="data-value">
+              {{
+                myPolicy.policyWithCode.despatchDate
+                  ? $moment(myPolicy.policyWithCode.despatchDate).format(
+                      "DD/MM/Y"
+                    )
+                  : "-"
+              }}
+            </p>
           </div>
         </div>
         <div class="row">
@@ -311,20 +325,19 @@ export default {
       let data = this.myPolicy;
       let productIds = [],
         products = [];
+      data.policyWithCode.coverages = data.policyWithCode.coverages.filter(
+        (coverage) => coverage.insureds[0].activeStatus == 2
+      );
       data.policyWithCode.coverages.forEach((v, i) => {
         productIds.push(v.productId);
         data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
         data.policyWithCode.coverages[i].productName = "";
         data.policyWithCode.coverages[i].isSelectable = true;
         data.policyWithCode.coverages[i].productType =
-        data.policyWithCode.coverages[i].masterProduct == null
-          ? "Utama"
-          : "Tambahan";
-        if (this.$moment(v.expiryDate).diff() >= 0) {
-          data.policyWithCode.coverages[i].productStatus = "Aktif";
-        } else {
-          data.policyWithCode.coverages[i].productStatus = "Tidak Aktif";
-        }
+          data.policyWithCode.coverages[i].masterProduct == null
+            ? "Utama"
+            : "Tambahan";
+        data.policyWithCode.coverages[i].productStatus = "Aktif";
       });
       products = await this.$store.dispatch(
         "submission_transaction/getProducts",
@@ -383,21 +396,21 @@ export default {
       }
     },
     selectCoverage: function (coverage) {
-      if(coverage.item.productType == "Utama" && coverage.value){
+      if (coverage.item.productType == "Utama" && coverage.value) {
         this.my_policy.policyWithCode.coverages.filter((v) => {
-          if(v.productType != "Utama"){
+          if (v.productType != "Utama") {
             v.isSelectable = false;
           }
-        })
+        });
         this.form.coverages_selected = this.my_policy.policyWithCode.coverages;
       }
 
-      if(coverage.item.productType == "Utama" && !coverage.value){
+      if (coverage.item.productType == "Utama" && !coverage.value) {
         this.my_policy.policyWithCode.coverages.filter((v) => {
-          if(v.productType != "Utama"){
+          if (v.productType != "Utama") {
             v.isSelectable = true;
           }
-        })
+        });
       }
     },
 
