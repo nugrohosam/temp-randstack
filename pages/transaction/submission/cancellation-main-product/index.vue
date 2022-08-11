@@ -68,7 +68,6 @@
                 hide-default-footer
                 v-model="form.coverages_selected"
                 item-key="itemId"
-                single-select
                 show-select
                 class="elevation-1"
                 @item-selected="selectCoverage"
@@ -79,6 +78,9 @@
 
                   ></v-simple-checkbox>
                 </template> -->
+                <template #header.data-table-select>
+                  Pilihan
+                </template>
                 <template v-slot:item.issueDate="{ item }">
                   {{ $moment(item.issueDate).format("DD/MM/Y") }}
                 </template>
@@ -323,8 +325,7 @@ export default {
   methods: {
     getData: async function () {
       let data = this.myPolicy;
-      let productIds = [],
-        products = [];
+      let productIds = [], products = [];
       data.policyWithCode.coverages = data.policyWithCode.coverages.filter(
         (coverage) => coverage.insureds[0].activeStatus == 1
       );
@@ -339,13 +340,16 @@ export default {
             : "Tambahan";
         data.policyWithCode.coverages[i].productStatus = "Aktif";
       });
+
       products = await this.$store.dispatch(
         "submission_transaction/getProducts",
         productIds.join()
       );
+
       data.policyWithCode.coverages.forEach((v, i) => {
         v.productName = products.filter((product) => product.id == v.productId)[0].name;
       });
+
       this.my_policy = data;
       this.isLoading = false;
     },
@@ -356,17 +360,17 @@ export default {
     },
     save: async function () {
       this.validate();
-      // if(this.validationMessage.length <= 0){
-      this.$store.commit(
-        "submission_transaction/setReasonSelected",
-        this.form.reason_selected
-      );
-      this.$store.commit(
-        "submission_transaction/setCoveragesSelected",
-        this.form.coverages_selected
-      );
-      this.$router.push({ path: "./cancellation-main-product/resume" });
-      // }
+      if(this.validationMessage.length <= 0){
+        this.$store.commit(
+          "submission_transaction/setReasonSelected",
+          this.form.reason_selected
+        );
+        this.$store.commit(
+          "submission_transaction/setCoveragesSelected",
+          this.form.coverages_selected
+        );
+        this.$router.push({ path: "./cancellation-main-product/resume" });
+      }
     },
     addKtpImage: function (e) {
       this.form.ktp = e.target.files[0];
@@ -385,10 +389,10 @@ export default {
       if (this.form.coverages_selected.length <= 0) {
         this.validationMessage.push("Pilih minimal 1 produk");
       }
-      if (this.form.ktp == null) {
+      if (this.ktpFileName == "") {
         this.validationMessage.push("Unggah KTP diperlukan");
       }
-      if (this.form.ktp_selfie == null) {
+      if (this.selfieKtpFileName == "") {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
       }
       if (this.form.reason_selected == null) {
