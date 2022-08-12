@@ -16,7 +16,7 @@
           <div class="logo-container">
             <img
               style="width: 180px"
-              src="~/assets/svg/epos_individual.svg"
+              src="~/assets/svg/ipos_digital.svg"
               alt=""
             />
             <p>Layanan Kepemilikan Polis Individual</p>
