@@ -32,7 +32,9 @@
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nama Bank Saat Ini</p>
             <p class="data-value">
-              {{ myPolicy.policyWithCode.payerBankAccount[0].bankCode }}
+              {{
+                $getBankName(myPolicy.policyWithCode.payerBankAccount[0].bankCode)
+              }}
             </p>
           </div>
           <div class="col-lg-4 col-sm-6">
@@ -157,7 +159,7 @@
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-1">Alasan</p>
             <v-select
-              :items="reasons"
+              :items="reasons_filtered"
               item-text="name"
               item-value="reasonId"
               placeholder="Pilih Alasan"
@@ -249,15 +251,17 @@ export default {
           name: "",
         },
       ],
+      reasons_filtered: [
+        {
+          id: "",
+          reason_id: "",
+          name: "",
+        }
+      ],
       showMe: true,
       coverages: [],
       table: {
         headers: [
-          // {
-          //   text: "Pilihan",
-          //   align: "start",
-          //   value: "itemId",
-          // },
           {
             text: "Nama Produk",
             align: "center",
@@ -357,6 +361,7 @@ export default {
       this.reasons = await this.$store.dispatch(
         "submission_transaction/getSurrenderReasons"
       );
+
     },
     save: async function () {
       this.validate();
@@ -400,6 +405,7 @@ export default {
       }
     },
     selectCoverage: function (coverage) {
+
       if (coverage.item.productType == "Utama" && coverage.value) {
         this.my_policy.policyWithCode.coverages.filter((v) => {
           if (v.productType != "Utama") {
@@ -415,6 +421,20 @@ export default {
             v.isSelectable = true;
           }
         });
+      }
+
+      if(this.form.coverages_selected.find((v) => v.productType == "Utama")){
+        this.reasons_filtered = this.reasons;
+      }else if(!this.form.coverages_selected.find((v) => v.productType == "Utama")){
+        this.reasons_filtered = this.reasons.filter((reason) => reason.name == "Tidak Ada" || reason.name == "Masalah Pengiriman Polis")
+      }else if(this.form.coverages_selected.length <= 0){
+        this.reasons_filtered = [
+          {
+            id: "",
+            reason_id: "",
+            name: "",
+          }
+        ]
       }
     },
 

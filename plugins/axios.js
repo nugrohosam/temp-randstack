@@ -1,4 +1,4 @@
-export default function ({ store, $axios}) {
+export default function ({store, $axios}) {
   $axios.setToken(store.getters['auth/getAuthAccessToken'], 'Bearer');
   $axios.onError((error) => {
     console.log("INI ERROR " , error);
