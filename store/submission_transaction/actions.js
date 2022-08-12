@@ -19,6 +19,7 @@ export default {
     return response;
   },
 
+
   async getSurrenderReasons({ rootGetters }, data) {
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await this.$axios
