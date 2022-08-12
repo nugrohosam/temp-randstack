@@ -328,9 +328,9 @@ export default {
     getData: async function () {
       let data = this.myPolicy;
       let productIds = [], products = [];
-      // data.policyWithCode.coverages = data.policyWithCode.coverages.filter(
-      //   (coverage) => coverage.riskStatus != 3
-      // );
+      data.policyWithCode.coverages = data.policyWithCode.coverages.filter(
+        (coverage) => coverage.riskStatus == 1
+      );
       data.policyWithCode.coverages.forEach((v, i) => {
         productIds.push(v.productId);
         data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
