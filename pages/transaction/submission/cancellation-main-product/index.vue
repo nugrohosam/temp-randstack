@@ -32,9 +32,7 @@
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nama Bank Saat Ini</p>
             <p class="data-value">
-              {{
-                $getBankName(myPolicy.policyWithCode.payerBankAccount[0].bankCode)
-              }}
+              {{ myPolicy.policyWithCode.payerBankAccount[0].bankName }}
             </p>
           </div>
           <div class="col-lg-4 col-sm-6">
@@ -343,8 +341,10 @@ export default {
             ? "Utama"
             : "Tambahan";
         data.policyWithCode.coverages[i].productStatus = "Aktif";
+
       });
 
+      data.policyWithCode.payerBankAccount[0].bankName = this.$getBankName(data.policyWithCode.payerBankAccount[0].bankCode)
       products = await this.$store.dispatch(
         "submission_transaction/getProducts",
         productIds.join()
@@ -405,7 +405,6 @@ export default {
       }
     },
     selectCoverage: function (coverage) {
-
       if (coverage.item.productType == "Utama" && coverage.value) {
         this.my_policy.policyWithCode.coverages.filter((v) => {
           if (v.productType != "Utama") {
