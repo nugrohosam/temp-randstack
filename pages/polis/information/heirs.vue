@@ -17,11 +17,28 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in desserts" :key="item.name">
-                  <td>{{ item.name }}</td>
-                  <td>{{ item.percentage }}</td>
-                  <td>{{ item.gender }}</td>
-                  <td>{{ item.role }}</td>
+                <tr
+                  v-for="item in information_policy
+                    ? information_policy.policy_with_code.beneficiaries
+                    : []"
+                  :key="item.name"
+                >
+                  <td>
+                    {{
+                      (item.person.first_name != null
+                        ? item.person.first_name + " "
+                        : "") +
+                      (item.person.mid_name != null
+                        ? item.person.mid_name + " "
+                        : "") +
+                      (item.person.last_name != null
+                        ? item.person.last_name + " "
+                        : "")
+                    }}
+                  </td>
+                  <td>{{ item.share_rate * 100 }}%</td>
+                  <td>{{ item.gender == "F" ? "PEREMPUAN" : "LAKI LAKI" }}</td>
+                  <td>{{ item.designation }}</td>
                 </tr>
               </tbody>
             </template>
@@ -29,7 +46,8 @@
         </div>
       </div>
     </div>
-    <div class="col-12">
+
+    <!-- <div class="col-12">
       <div class="page-body">
         <h4>Nilai Polis</h4>
         <br />
@@ -69,60 +87,57 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
 export default {
+  mounted() {
+    this.getInformationPolicyList();
+  },
   data() {
     return {
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          percentage: 30,
-          gender: "LAKI LAKI",
-          role: "ANAK",
-        },
-        {
-          name: "Frozen Yogurt",
-          percentage: 50,
-          gender: "PEREMPUAN",
-          role: "ANAK",
-        },
-        {
-          name: "Frozen Yogurt",
-          percentage: 20,
-          gender: "LAKI LAKI",
-          role: "SUAMI",
-        },
-      ],
-      items: [
-        {
-          investment_type: "BNI LIFE MAXIMA",
-          currency: "Rp",
-          total_unit: "1000",
-          price_unit: "100,000",
-          date_nab: "10/10/2010",
-          investment_total: "100.000,00",
-        },
-        {
-          investment_type: "BNI LIFE ENDAVO",
-          currency: "Rp",
-          total_unit: "1000",
-          price_unit: "100,000",
-          date_nab: "10/10/2010",
-          investment_total: "100.000,00",
-        },
-        {
-          investment_type: "BNI LIFE MAXIMA",
-          currency: "Rp",
-          total_unit: "1000",
-          price_unit: "100,000",
-          date_nab: "10/10/2010",
-          investment_total: "100.000,00",
-        },
-      ],
+      information_policy: null,
+
+      // items: [
+      //   {
+      //     investment_type: "BNI LIFE MAXIMA",
+      //     currency: "Rp",
+      //     total_unit: "1000",
+      //     price_unit: "100,000",
+      //     date_nab: "10/10/2010",
+      //     investment_total: "100.000,00",
+      //   },
+      //   {
+      //     investment_type: "BNI LIFE ENDAVO",
+      //     currency: "Rp",
+      //     total_unit: "1000",
+      //     price_unit: "100,000",
+      //     date_nab: "10/10/2010",
+      //     investment_total: "100.000,00",
+      //   },
+      //   {
+      //     investment_type: "BNI LIFE MAXIMA",
+      //     currency: "Rp",
+      //     total_unit: "1000",
+      //     price_unit: "100,000",
+      //     date_nab: "10/10/2010",
+      //     investment_total: "100.000,00",
+      //   },
+      // ],
+      
     };
+  },
+  computed: {
+    informationPolicyList() {
+      return this.$store.getters["information_policy/getInformationPolicyList"];
+    },
+  },
+  methods: {
+    getInformationPolicyList: async function () {
+      await this.$store.dispatch("information_policy/getInformationPolicyList");
+      this.information_policy = this.informationPolicyList;
+    },
   },
 };
 </script>
