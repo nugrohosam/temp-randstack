@@ -6,14 +6,14 @@
         <div class="row">
           <div class="col-12">
             <div class="page-header">
-              <h3 class="page-title">{{current_header_title}}</h3>
+              <h3 class="page-title">{{ current_header_title }}</h3>
             </div>
           </div>
         </div>
         <div class="row">
           <!-- Search -->
           <div class="col-12 page-container">
-            <div class="page-body" >
+            <div class="page-body">
               <div class="row" v-show="showMenu">
                 <div class="col-lg-6 col-md-12">
                   <!-- <v-toolbar> -->
@@ -64,9 +64,9 @@
 import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   mounted() {
-    if($nuxt.$route.name != "transaction-submission"){
+    if ($nuxt.$route.name != "transaction-submission") {
       this.showMenu = false;
-    }else{
+    } else {
       this.showMenu = true;
       this.current_header_title = this.default_header_title;
     }
@@ -74,9 +74,9 @@ export default {
   data() {
     return {
       showMenu: true,
-      default_header_title: 'Pengajuan Transaksi',
-      current_header_title: '',
-      menu_search: '',
+      default_header_title: "Pengajuan Transaksi",
+      current_header_title: "",
+      menu_search: "",
       // dialog: true,
       // menus: [
       //   {
@@ -91,13 +91,13 @@ export default {
     $route(to, from) {
       if (to.name != "transaction-submission") {
         this.showMenu = false;
-      }else{
+      } else {
         this.showMenu = true;
         this.current_header_title = this.default_header_title;
       }
     },
-    menu_search(keyword){
-      this.searchMenu({'keywords' : keyword})
+    menu_search(keyword) {
+      this.searchMenu({ keywords: keyword });
       // let menu_filtered = this.menus.filter(function(item){
       //   let name = item['name'];
       //   if(name.includes(keyword)){
@@ -105,7 +105,7 @@ export default {
       //   }
       // })
       // this.menus = menu_filtered;
-    }
+    },
   },
   computed: {
     ...mapGetters({
@@ -114,9 +114,9 @@ export default {
   },
   methods: {
     ...mapActions({
-      searchMenu: 'submission_transaction/searchMenu'
-    })
-  }
+      searchMenu: "submission_transaction/searchMenu",
+    }),
+  },
 };
 </script>
 <style lang="scss" scoped>
