@@ -685,7 +685,6 @@ export default {
     onInputDistrict: async function(){
       this.village.page = 1;
       this.village.collection = this.village.selected = [];
-      console.log(this.district.selected);
       this.selectedPolicy.address.street = this.district.selected.name;
       this.getVillage();
     },
