@@ -3,6 +3,7 @@ export default function ({ app, store, $axios }, inject) {
   const isNull = (text) => {
     return text === null ? "" : text;
   };
+
   const isNullWithSpace = (text) => {
     if(text === null){
       return "";

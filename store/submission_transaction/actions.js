@@ -7,6 +7,7 @@ export default {
     const response = await this.$axios
       .$get("/api/v1/policy/get-my-policy")
       .then((response) => {
+        console.log(response);
         if (response.success) {
           commit('setMyPolicy', response.data);
           // return response.data;

@@ -9,36 +9,11 @@
           <div class="col-md-4 col-sm-6">
             <p class="data-title">Nama</p>
             <p class="data-value mb-3">
-              {{
-                information_policy
-                  ? (information_policy.policy_with_code.insureds[0].person
-                      .first_name != null
-                      ? (information_policy.policy_with_code.insureds[0].person
-                          .first_name + " ")
-                      : "") +
-                    (information_policy.policy_with_code.insureds[0].person
-                      .mid_name != null
-                      ? (information_policy.policy_with_code.insureds[0].person
-                          .mid_name + " ")
-                      : "") +
-                    (information_policy.policy_with_code.insureds[0].person
-                      .last_name != null
-                      ? (information_policy.policy_with_code.insureds[0].person
-                          .last_name + " ")
-                      : "")
-                  : "memuat..."
-              }}
+              {{ $isNullWithSpace(myPolicy.policyWithCode.insureds[0].person.firstName) + $isNullWithSpace(myPolicy.policyWithCode.insureds[0].person.midName) + $isNullWithSpace(myPolicy.policyWithCode.insureds[0].person.lastName) }}
             </p>
             <p class="data-title">Jenis Kelamin</p>
             <p class="data-value mb-3">
-              {{
-                information_policy
-                  ? information_policy.policy_with_code.insureds[0].gender ==
-                    "F"
-                    ? "PEREMPUAN"
-                    : "LAKI LAKI"
-                  : "memuat..."
-              }}
+              {{myPolicy.policyWithCode.insureds[0].gender =="F" ? "PEREMPUAN" : "LAKI LAKI"}}
             </p>
           </div>
           <div class="col-md-4 col-sm-6">
@@ -46,22 +21,13 @@
             <p class="data-value mb-3">-</p>
             <p class="data-title">Tanggal Lahir</p>
             <p class="data-value mb-3">
-              {{
-                information_policy
-                  ? information_policy.policy_with_code.insureds[0].birth_date
-                  : "memuat..."
-              }}
+              {{ $moment(myPolicy.policyWithCode.insureds[0].birthDate).format("DD/MM/Y")  }}
             </p>
           </div>
           <div class="col-md-4 col-sm-6">
             <p class="data-title">Jenis Pekerjaan</p>
             <p class="data-value mb-3">
-              {{
-                information_policy
-                  ? information_policy.policy_with_code.insureds[0].occup_cate
-                  : "memuat..."
-              }}
-            </p>
+              {{myPolicy.policyWithCode.insureds[0].occupCate }}
             <p class="data-title">Jenis Tertanggung</p>
             <p class="data-value mb-3">UTAMA</p>
           </div>
@@ -72,23 +38,9 @@
 </template>
 <script>
 export default {
-  mounted() {
-    this.getInformationPolicyList();
-  },
-  data() {
-    return {
-      information_policy: null,
-    };
-  },
   computed: {
-    informationPolicyList() {
-      return this.$store.getters["information_policy/getInformationPolicyList"];
-    },
-  },
-  methods: {
-    getInformationPolicyList: async function () {
-      await this.$store.dispatch("information_policy/getInformationPolicyList");
-      this.information_policy = this.informationPolicyList;
+     myPolicy(){
+      return this.$store.getters["submission_transaction/getMyPolicy"];
     },
   },
 };
