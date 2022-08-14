@@ -81,12 +81,12 @@ export default {
     // Simple proxy
     "/api/v1/": {
       // target: "http://34.143.254.25:8888",
-      target: "http://34.124.156.103:5020/",
+      target: "http://34.124.156.103:8888/",
       pathRewrite: { "^/api/v1/": "/api/v1/" }
     },
     "/test/v1/": {
       // target: "http://34.143.254.25:8888",
-      target: "http://34.124.156.103:5020/",
+      target: "http://34.124.156.103:8888/",
       pathRewrite: { "^/test/v1/": "/test/v1/" }
     },
   },
