@@ -5,27 +5,27 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemegang Polis</p>
           <p class="data-value">{{
-              customerInformation.person.firstName ? customerInformation.person.firstName : "" + " " +
-              customerInformation.person.midName ? customerInformation.person.midName : "" + " " +
-              customerInformation.person.lastName ? customerInformation.person.lastName : ""
+              customerInformation.selectedPolicy.person.firstName ? customerInformation.selectedPolicy.person.firstName : "" + " " +
+              customerInformation.selectedPolicy.person.midName ? customerInformation.selectedPolicy.person.midName : "" + " " +
+              customerInformation.selectedPolicy.person.lastName ? customerInformation.selectedPolicy.person.lastName : ""
           }}</p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Polis</p>
-          <p class="data-value">{{customerInformation.proposalNumber}}</p>
+          <p class="data-value">{{customerInformation.selectedPolicy.proposalNumber}}</p>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-1">Identitas yang diubah</p>
-          <p class="data-value">{{customerInformation.identityType.name}}</p>
+          <p class="data-value">{{customerInformation.selectedPolicy.identityType.name}}</p>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <p class="data-title mb-2">Email Address</p>
           <div class="d-flex justify-sm-space-between">
-            <p class="data-value">{{customerInformation.person.email ? customerInformation.person.email : "-"}}</p>
+            <p class="data-value">{{customerInformation.selectedPolicy.person.email ? customerInformation.selectedPolicy.person.email : "-"}}</p>
           </div>
         </div>
       </div>
@@ -46,35 +46,35 @@
                   <div class="row">
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Provinsi</p>
-                      <p class="data-value">{{customerInformation.address.province ? customerInformation.address.province : "-"}}</p>
+                      <p class="data-value">{{customerInformation.selectedPolicy.address.province ? customerInformation.selectedPolicy.address.province : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Kota</p>
-                      <p class="data-value">{{customerInformation.address.city ? customerInformation.address.city : "-"}}</p>
+                      <p class="data-value">{{customerInformation.selectedPolicy.address.city ? customerInformation.selectedPolicy.address.city : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Kecamatan</p>
-                      <p class="data-value">{{customerInformation.address.street ? customerInformation.address.street : "-"}}</p>
+                      <p class="data-value">{{customerInformation.selectedPolicy.address.street ? customerInformation.selectedPolicy.address.street : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Kelurahan</p>
-                      <p class="data-value"> {{customerInformation.address.village ? customerInformation.address.village : "-"}}</p>
+                      <p class="data-value"> {{customerInformation.selectedPolicy.address.village ? customerInformation.selectedPolicy.address.village : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Alamat</p>
-                      <p class="data-value">{{customerInformation.address.address1 ? customerInformation.address.address1 : "-"}}</p>
+                      <p class="data-value">{{customerInformation.selectedPolicy.address.address1 ? customerInformation.selectedPolicy.address.address1 : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Blok</p>
-                      <p class="data-value"> {{customerInformation.address.address2 ? customerInformation.address.address2 : "-"}}</p>
+                      <p class="data-value"> {{customerInformation.selectedPolicy.address.address2 ? customerInformation.selectedPolicy.address.address2 : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Blok / No Jalan</p>
-                      <p class="data-value"> {{customerInformation.address.address2 ? customerInformation.address.address2 : "-"}}</p>
+                      <p class="data-value"> {{customerInformation.selectedPolicy.address.address2 ? customerInformation.selectedPolicy.address.address2 : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">RT/RW</p>
-                      <p class="data-value"> {{customerInformation.address.address3 ? customerInformation.address.address3 : "-"}}</p>
+                      <p class="data-value"> {{customerInformation.selectedPolicy.address.address3 ? customerInformation.selectedPolicy.address.address3 : "-"}}</p>
                     </div>
                   </div>
                 </div>
@@ -96,25 +96,25 @@
                   <div class="row">
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Nomor Telepon Saat Ini 1</p>
-                      <p class="data-value">{{customerInformation.person.mobile ? customerInformation.person.mobile : "-"}}</p>
+                      <p class="data-value">{{customerInformation.selectedPolicy.person.mobile ? customerInformation.selectedPolicy.person.mobile : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Nomor Telepon Saat Ini 2</p>
-                      <p class="data-value">{{customerInformation.person.mobile2 ? customerInformation.person.mobile2 : "-"}}</p>
+                      <p class="data-value">{{customerInformation.selectedPolicy.person.mobile2 ? customerInformation.selectedPolicy.person.mobile2 : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Normor Telepon Kantor Saat Ini</p>
-                      <p class="data-value">{{customerInformation.person.officeTel ? customerInformation.person.officeTel : "-"}}</p>
+                      <p class="data-value">{{customerInformation.selectedPolicy.person.officeTel ? customerInformation.selectedPolicy.person.officeTel : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">
                         Normor Telepon Lain Kantor Saat Ini
                       </p>
-                      <p class="data-value">{{customerInformation.person.officeTel2 ? customerInformation.person.officeTel2 : "-"}}</p>
+                      <p class="data-value">{{customerInformation.selectedPolicy.person.officeTel2 ? customerInformation.selectedPolicy.person.officeTel2 : "-"}}</p>
                     </div>
                     <div class="col-lg-4 col-sm-12">
                       <p class="data-title">Nomor Telepon Rumah Saat Ini</p>
-                      <p class="data-value"> {{customerInformation.person.homeTel ? customerInformation.person.homeTel : "-"}}</p>
+                      <p class="data-value"> {{customerInformation.selectedPolicy.person.homeTel ? customerInformation.selectedPolicy.person.homeTel : "-"}}</p>
                     </div>
                   </div>
                 </div>

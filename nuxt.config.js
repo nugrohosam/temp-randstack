@@ -50,6 +50,9 @@ export default {
     {
       src: '~/plugins/prototype.js'
     },
+    {
+      src: '~/plugins/vue-select.js'
+    },
 
   ],
 
@@ -60,7 +63,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    '@nuxtjs/moment'
+    '@nuxtjs/moment',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

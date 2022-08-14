@@ -1,6 +1,7 @@
 @import 'mixins';
 @import 'colors';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import 'vue-select/dist/vue-select.css';
 /*
   breakpoint mobile <960px,
   breakpoint tablet <1264px
@@ -35,7 +36,7 @@ tbody tr:nth-of-type(even) {
 .v-data-table{
   border: thin solid rgba(0, 0, 0, 0.12)!important;
   th{
-    font-size: 16px!important;
+    font-size: 15px!important;
     background-color: rgba(0, 0, 0, .1);
     &:not(:last-child){
       border-right: thin solid rgba(0, 0, 0, 0.12)!important;
@@ -300,6 +301,7 @@ p.data-value {
   /* Text/Normal */
   color: #2e343d;
   margin-bottom: 30px!important;
+  overflow-wrap: break-word;
 }
 p.data-title {
   font-weight: 400;

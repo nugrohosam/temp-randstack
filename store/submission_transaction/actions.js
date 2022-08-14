@@ -150,6 +150,7 @@ export default {
   },
 
   async saveCustomerinfo({ rootGetters, dispatch, commit }, data) {
+    console.log(data);
     commit('setCustomerInfoChanged', data);
   },
 
@@ -157,30 +158,31 @@ export default {
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const customerInformation = getters.getCustomerInfoChanged;
     const form = {
-      party_d: this.$isNull(customerInformation.partyId),
+      party_d: this.$isNull(customerInformation.selectedPolicy.partyId),
       party_contract: {
-        email: this.$isNull(customerInformation.person.email),
-        mobile: this.$isNull(customerInformation.person.mobile),
-        mobile_2: this.$isNull(customerInformation.person.mobile2),
-        office_tel: this.$isNull(customerInformation.person.officeTel),
-        office_tel_2: this.$isNull(customerInformation.person.officeTel2),
-        home_tel: this.$isNull(customerInformation.person.homeTel),
+        email: this.$isNull(customerInformation.selectedPolicy.person.email),
+        mobile: this.$isNull(customerInformation.selectedPolicy.person.mobile),
+        mobile_2: this.$isNull(customerInformation.selectedPolicy.person.mobile2),
+        office_tel: this.$isNull(customerInformation.selectedPolicy.person.officeTel),
+        office_tel_2: this.$isNull(customerInformation.selectedPolicy.person.officeTel2),
+        home_tel: this.$isNull(customerInformation.selectedPolicy.person.homeTel),
         contact_tel: "",
-        fax: this.$isNull(customerInformation.person.fax),
-        office_tel_ext: this.$isNull(customerInformation.person.officeTelExt)
+        fax: this.$isNull(customerInformation.selectedPolicy.person.fax),
+        office_tel_ext: this.$isNull(customerInformation.selectedPolicy.person.officeTelExt)
       },
       address: {
-        postCode: this.$isNull(customerInformation.address.postCode),
-        address_1: this.$isNull(customerInformation.address.address1),
-        street: this.$isNull(customerInformation.address.street),
-        rt_rw: this.$isNull(customerInformation.address.address3),
-        province_id: this.$isNull(customerInformation.address.province),
-        city_id: this.$isNull(customerInformation.address.city),
-        district_id: this.$isNull(customerInformation.address.address4),
-        village_id: this.$isNull(customerInformation.address.village)
+        postCode: this.$isNull(customerInformation.selectedPolicy.address.postCode),
+        address_1: this.$isNull(customerInformation.selectedPolicy.address.address1),
+        street: this.$isNull(customerInformation.selectedPolicy.address.street),
+        rt_rw: this.$isNull(customerInformation.selectedPolicy.address.address3),
+        province_id: this.$isNull(customerInformation.selectedProvince.id),
+        city_id: this.$isNull(customerInformation.selectedCity.id),
+        district_id: this.$isNull(customerInformation.selectedDistrict.id),
+        village_id: this.$isNull(customerInformation.selectedVillage.id)
       },
       ktp_selfie_attachment: getters.getSelfieKtpUploadFileName,
     }
+
 
     dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, { root: true });
     const response = await this.$axios
