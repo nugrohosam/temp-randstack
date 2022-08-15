@@ -2,11 +2,7 @@
   <div>
     <template v-if="!isLoading">
       <div v-show="showMe">
-        <template v-if="myPolicy.policyWithCode.riskStatus != 1">
-             <p class="data-title mb-2" style="font-size: 16pt;">Mohon maaf, kamu tidak diperkenankan untuk melakukan pembatalan produk.</p>
-        </template>
-
-        <template v-else>
+        <template v-if="myPolicy.policyWithCode.riskStatus == 1">
           <div class="row">
             <div class="col-lg-4 col-sm-6">
               <p class="data-title mb-2">Nama Pemegang Polis</p>
@@ -202,6 +198,12 @@
       </div>
     </template>
     <NuxtChild />
+    <ModalMessage
+      :message="modal.message"
+      :show="modal.show"
+      :button="modal.button"
+      @closeModal="modal.show = false"
+    />
   </div>
 </template>
 <script>
@@ -211,6 +213,12 @@ export default {
   components: {
     SaveIcon,
     InfoIcon,
+  },
+  beforeMount(){
+    if(this.myPolicy.policyWithCode.riskStatus != 1){
+      this.modal.show = true;
+      this.modal.message = "Transaksi yang dipilih tidak dapat dilakukan, untuk informasi lebih lanjut silahkan menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
+    }
   },
   mounted() {
     this.getData();
@@ -287,6 +295,15 @@ export default {
         ktp_selfie: null,
         ktp: null,
         reason_selected: null,
+      },
+      modal: {
+        message: "",
+        show: false,
+        button: {
+          text: "Tutup",
+          redirect_link: "/transaction/submission",
+          redirect_type: "spa",
+        },
       },
     };
   },
