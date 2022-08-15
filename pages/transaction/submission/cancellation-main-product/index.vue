@@ -339,9 +339,6 @@ export default {
         data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
         data.policyWithCode.coverages[i].productName = "";
         data.policyWithCode.coverages[i].isSelectable = true;
-        if(data.policyWithCode.coverages.length > 0){
-          data.policyWithCode.coverages[i].isSelectable = false;
-        }
         data.policyWithCode.coverages[i].productType =
           data.policyWithCode.coverages[i].masterProduct == null
             ? "Utama"
@@ -357,7 +354,7 @@ export default {
       data.policyWithCode.coverages.forEach((v, i) => {
         v.productName = products.filter((product) => product.id == v.productId)[0].name;
       });
-
+      
       this.my_policy = data;
       this.isLoading = false;
     },
