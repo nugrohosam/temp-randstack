@@ -349,7 +349,7 @@ export default {
         data.policyWithCode.coverages[i].productStatus = "Aktif";
 
       });
-      data.policyWithCode.payerBankAccount[0].bankName = await this.$getBankName(data.policyWithCode.payerBankAccount[0].bankCode).d
+      data.policyWithCode.payerBankAccount[0].bankName = await this.$getBankName(data.policyWithCode.payerBankAccount[0].bankCode)
       products = await this.$store.dispatch(
         "submission_transaction/getProducts",
         productIds.join()
