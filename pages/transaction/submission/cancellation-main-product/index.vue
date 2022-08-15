@@ -89,7 +89,7 @@
                   </template>
                   <template v-slot:item.lifeInsured.insured.person="{ item }">
                     {{
-                      item ? $isNullWithSpace(item.lifeInsured.insured.person.firstName) + isNullWithSpace(item.lifeInsured.insured.person.midName) + $isNullWithSpace(item.lifeInsured.insured.person.lastName) : ""
+                      item ? $isNullWithSpace(item.lifeInsured.insured.person.firstName) + $isNullWithSpace(item.lifeInsured.insured.person.midName) + $isNullWithSpace(item.lifeInsured.insured.person.lastName) : ""
                     }}
                   </template>
                 </v-data-table>
