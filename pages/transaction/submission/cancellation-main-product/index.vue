@@ -19,7 +19,7 @@
             <div class="col-lg-4 col-sm-6">
               <p class="data-title">Nomor Rekening Saat Ini</p>
               <p class="data-value">
-                {{ myPolicy.policyWithCode.payerBankAccount[0].accountId }}
+                {{ myPolicy.policyWithCode.payerBankAccount[0].bankAccount }}
               </p>
             </div>
             <div class="col-lg-4 col-sm-6">

@@ -21,6 +21,26 @@ export default function ({ app, store, $axios }, inject) {
     }
   };
 
+  const labelPaymentMethod = (code) => {
+    let methods = new Array();
+    methods[3] = "Saving Account/Internet Banking"
+    methods[22] = "Lock Box"
+    methods[30] = "Credit Card"
+    methods[93] = "Virtual Account"
+    methods[94] = "Bank Transfer"
+
+    return methods[code];
+  }
+
+  const labelCardType = (code) => {
+    let types = new Array();
+    types[0] = "Both"
+    types[1] = "Debit"
+    types[2] = "Credit"
+
+    return types[code];
+  }
+
   const getBank = async (bankCode) => {
     // $axios.setToken(store.getters['auth/getAuthAccessToken'], 'Bearer');
     const response = await $axios
@@ -97,6 +117,8 @@ export default function ({ app, store, $axios }, inject) {
 
   inject("isNull", isNull);
   inject("isNullWithSpace", isNullWithSpace);
+  inject("labelPaymentMethod", labelPaymentMethod);
+  inject("labelCardType", labelCardType);
   inject("convertCurrency", convertCurrency);
   inject("getBank", getBank);
   inject("getBankName", getBankName);

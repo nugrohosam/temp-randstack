@@ -8,7 +8,7 @@
         <div class="row">
           <div class="col-md-4 col-sm-6">
             <p class="data-title">Nomor Rekening</p>
-            <p class="data-value mb-3">{{ myPolicy.policyWithCode.refundPayeeBankAccount[0].accountId }}</p>
+            <p class="data-value mb-3">{{ myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount }}</p>
             <p class="data-title">Nama Pemilik Rekening</p>
             <p class="data-value mb-3">{{ myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName }}</p>
           </div>
@@ -25,10 +25,16 @@
 </template>
 <script>
 export default {
+  mounted(){
+    // this.getBankName();
+  },
   computed: {
     myPolicy(){
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
+  },
+  methods: {
+
   }
 };
 </script>
