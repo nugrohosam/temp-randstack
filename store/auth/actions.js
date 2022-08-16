@@ -73,18 +73,17 @@ export default {
   },
 
   async otpSubmit({ dispatch, getters, commit }, data) {
-    dispatch('sendMail')
+    // dispatch('sendMail')
     dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
     this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
     const response = await this.$axios
       .$post("/api/v1/auth/otp/check", data)
       .then((response) => {
         dispatch('toggleOverlayLoading', {show: false}, {root:true});
-        // if (response.success) {
-        //   commit("setAuth");
-        //   localStorage.auth = JSON.stringify(getters.getAuthUser);
-
-        // }
+        if (response.success) {
+          commit("setAuth");
+          localStorage.auth = JSON.stringify(getters.getAuthUser);
+        }
         return response;
       })
       .catch((error) => {
@@ -92,17 +91,24 @@ export default {
       });
 
     // force Auth
-    commit("setAuth");
-    localStorage.auth = JSON.stringify(getters.getAuthUser);
+    // commit("setAuth");
+    // localStorage.auth = JSON.stringify(getters.getAuthUser);
     return response;
   },
 
-  async otpResend({ getters, commit }, data) {
+  async otpResend({ getters, commit, dispatch }) {
+    const user = getters.getAuthUser;
     this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
-    let endpoint = "/api/v1/auth/otp/reset";
+    let endpoint = "/api/v1/auth/login";
+    dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
     const response = await this.$axios
-      .$post(endpoint, data)
+      .$post(endpoint, {
+        policy_number: user.policyNumber,
+        phone_number: user.phoneNumber,
+        identity_number: user.identityNumber,
+      })
       .then((response) => {
+        dispatch('toggleOverlayLoading', {show: false}, {root:true});
         return response;
       })
       .catch((error) => {

@@ -106,8 +106,11 @@
             <span>
               <div class="small-profile">
                 <div class="sec-title">
-                  <p class="_policy">3105202299</p>
-                  <p class="_name">Jhon Doe</p>
+                  <p class="_policy">{{myPolicy ? myPolicy.policyWithCode.proposalNumber : "memuat..."}}</p>
+                  <p class="_name">{{myPolicy ?
+                    $isNullWithSpace(myPolicy.policyWithCode.policyHolder.person.firstName) +
+                    $isNullWithSpace(myPolicy.policyWithCode.policyHolder.person.midName) +
+                    $isNullWithSpace(myPolicy.policyWithCode.policyHolder.person.lastName)  : "memuat..."}}</p>
                 </div>
                 <div class="sec-image">
                   <div class="_ellipse-image">
@@ -201,7 +204,11 @@ export default {
       window.addEventListener("resize", this.onResize);
     });
   },
-
+  computed:{
+    myPolicy() {
+      return this.$store.getters["submission_transaction/getMyPolicy"];
+    },
+  },
   beforeMount() {
     this.check();
   },

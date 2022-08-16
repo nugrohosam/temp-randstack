@@ -13,7 +13,7 @@
         <div class="row">
           <!-- Search -->
           <div class="col-12">
-            <template v-if="information_policy">
+            <template v-if="myPolicy">
               <div class="page-body">
                 <!-- Transaction Status Menu -->
                 <div class="row">
@@ -23,10 +23,7 @@
                         <p class="data-title">Nomor Polis</p>
                         <h3>
                           {{
-                            information_policy != null
-                              ? information_policy.policy_with_code
-                                  .policy_number
-                              : ""
+                             myPolicy.policyWithCode.policyNumber
                           }}
                         </h3>
                       </div>
@@ -38,46 +35,33 @@
                             <p class="data-title">Nama</p>
                             <p class="data-value">
                               {{
-                                information_policy != null
-                                  ? information_policy.policy_with_code
-                                      .policy_holder.person.first_name
-                                  : ""
+                                $isNullWithSpace(myPolicy.policyWithCode.policyHolder.person.firstName) +
+                                $isNullWithSpace(myPolicy.policyWithCode.policyHolder.person.midName) +
+                                $isNullWithSpace(myPolicy.policyWithCode.policyHolder.person.lastName)
                               }}
                             </p>
                             <p class="data-title">Jenis Kelamin</p>
                             <p class="data-value">
                               {{
-                                information_policy != null
-                                  ? information_policy.policy_with_code
-                                      .policy_holder.person.gender
-                                  : ""
+                                myPolicy.policyWithCode.policyHolder.person.gender
                               }}
                             </p>
                             <p class="data-title">Jenis Identitas</p>
                             <p class="data-value">
                               {{
-                                information_policy != null
-                                  ? information_policy.policy_with_code
-                                      .policy_holder.person.certi_type
-                                  : ""
+                                myPolicy.policyWithCode.policyHolder.person.certiType
                               }}
                             </p>
                             <p class="data-title">Nomor Identitas</p>
                             <p class="data-value">
                               {{
-                                information_policy != null
-                                  ? information_policy.policy_with_code
-                                      .policy_holder.person.certi_code
-                                  : ""
+                                myPolicy.policyWithCode.policyHolder.person.certiCode
                               }}
                             </p>
                             <p class="data-title">Tanggal Lahir</p>
                             <p class="data-value">
                               {{
-                                information_policy != null
-                                  ? information_policy.policy_with_code
-                                      .policy_holder.person.birthday
-                                  : ""
+                                $moment(myPolicy.policyWithCode.policyHolder.person.birthday).format("DD/MM/Y")
                               }}
                             </p>
                           </div>
@@ -85,10 +69,7 @@
                             <p class="data-title">Alamat KTP</p>
                             <p class="data-value">
                               {{
-                                information_policy != null
-                                  ? information_policy.policy_with_code
-                                      .policy_holder.address.address1
-                                  : ""
+                               myPolicy.policyWithCode.policyHolder.address.address1
                               }}
                             </p>
                             <p class="data-title">Alamat Koresponden</p>
@@ -96,10 +77,7 @@
                             <p class="data-title">Nomor HP</p>
                             <p class="data-value">
                               {{
-                                information_policy != null
-                                  ? information_policy.policy_with_code
-                                      .policy_holder.person.mobile
-                                  : ""
+                                myPolicy.policyWithCode.policyHolder.person.mobile
                               }}
                             </p>
                           </div>
@@ -112,18 +90,17 @@
                       <div class="col-12 main-v-card">
                         <h4>Produk</h4>
                         <br />
-                        <v-expansion-panels
+                        <template v-if="myPolicy.policyWithCode.coverages.length > 0">
+                          <v-expansion-panels
                           focusable
                           multiple
-                          v-if="information_policy"
                         >
                           <v-expansion-panel
-                            v-for="(item, i) in information_policy
-                              .policy_with_code.coverages"
+                            v-for="(item, i) in myPolicy.policyWithCode.coverages"
                             :key="i"
                           >
                             <v-expansion-panel-header>{{
-                              item.product_id
+                              item.productId
                             }}</v-expansion-panel-header>
                             <v-expansion-panel-content>
                               <div class="row">
@@ -131,22 +108,28 @@
                                   <br />
                                   <p class="data-title">Uang Pertanggungan</p>
                                   <p class="data-value mb-3">
-                                    {{ item.current_premium.sum_assured }}
+                                    {{ item.currentPremium.sumAssured }}
                                   </p>
                                   <p class="data-title">Plan</p>
                                   <!-- <p class="data-value mb-3">{{item.pay_plans}}</p> -->
                                   <p class="data-value mb-3">-</p>
                                   <p class="data-title">Premi</p>
                                   <p class="data-value mb-3">
-                                    {{ item.current_premium.std_prem_af }}
+                                    {{ item.currentPremium.stdPremAf }}
                                   </p>
                                   <p class="data-title">Benefit Status</p>
                                   <p class="data-value">-</p>
                                 </div>
                               </div>
                             </v-expansion-panel-content>
-                          </v-expansion-panel>
-                        </v-expansion-panels>
+                            </v-expansion-panel>
+                          </v-expansion-panels>
+                        </template>
+                        <template v-else>
+                          <p class="data-title">
+                            Tidak ada produk terdaftar
+                          </p>
+                        </template>
                       </div>
                     </div>
                   </div>
@@ -208,7 +191,8 @@ export default {
       this.current_header_title = this.default_header_title;
     }
 
-    this.getInformationPolicyList();
+    this.$router.push({path: '/polis/information/insured'})
+    // this.getInformationPolicyList();
   },
   data() {
     return {
@@ -236,16 +220,16 @@ export default {
   watch: {
   },
   computed: {
-    informationPolicyList() {
-      return this.$store.getters["information_policy/getInformationPolicyList"];
+    myPolicy() {
+      return this.$store.getters["submission_transaction/getMyPolicy"];
     },
   },
   methods: {
-    getInformationPolicyList: async function () {
-      await this.$store.dispatch("information_policy/getInformationPolicyList");
-      this.information_policy = this.informationPolicyList;
-      this.$router.push({path: '/polis/information/insured'})
-    },
+    // getInformationPolicyList: async function () {
+    //   await this.$store.dispatch("information_policy/getInformationPolicyList");
+    //   this.information_policy = this.informationPolicyList;
+
+    // },
   },
 };
 </script>

@@ -8,7 +8,7 @@
         <div class="col-lg-12 auth-section-otp">
           <h2>Masukkan kode OTP untuk verifikasi akun anda</h2>
           <p id="otp_sent_to">
-            Kode OTP telah dikirimkan ke nomor +62 812 2233 3444
+            Kode OTP telah dikirimkan ke nomor {{this.$route.query.phonenumber}}
           </p>
           <v-otp-input
             v-model="form.otp_number"
@@ -24,12 +24,20 @@
             Verifikasi Akun
           </button>
           <div id="resend">
-            <a @click.prevent="resend" :class="resend_active ? '' : 'disabled'">
-              {{ is_mobile ? resend_text_mobile : resend_text }} ({{
-                otp_timer
-              }}
-              detik)
-            </a>
+            <template v-if="otp_timer > 0">
+              <a @click.prevent="resend" class="disabled">
+                {{ is_mobile ? resend_text_mobile : resend_text }} ({{
+                  otp_timer
+                }}
+                detik)
+              </a>
+            </template>
+            <template v-else>
+              <a @click.prevent="resend" class="">
+                {{ is_mobile ? resend_text_mobile : resend_text }}
+              </a>
+            </template>
+
           </div>
         </div>
       </div>
@@ -112,7 +120,8 @@ export default {
       submitDisable: true,
       otp_timer: "", //seconds
       otp_counter: null,
-      otp_remaining: 3  ,
+      otp_remaining: 5,
+      otp_resend_remaining: 5,
       resend_active: false,
       resend_text: "Belum menerima OTP? Kirim Ulang OTP ",
       resend_text_mobile: "Resend OTP ",
@@ -125,7 +134,7 @@ export default {
         this.otp_remaining -= 1;
         if (this.otp_remaining <= 0) {
           this.modal.message =
-            "Anda melakukan kesalahan pengisian OTP sebanyak 3 kali. Silahkan melakukan login kembali setelah 5 menit.";
+            "Anda melakukan kesalahan pengisian OTP sebanyak 5 kali. Silahkan melakukan login kembali setelah 5 menit.";
           this.modal.show = true;
         }
       }
@@ -133,17 +142,23 @@ export default {
 
     resend: async function() {
       if (this.otp_timer <= 0) {
-        await this.$store.dispatch('auth/otpResend', {
-          identity: this.form.identity
-        })
-        this.counter();
+        this.otp_resend_remaining -= 1;
+        if (this.otp_resend_remaining <= 0) {
+          this.modal.message =
+            "Anda telah melakukan permintaan ulang OTP sebanyak 5 kali. Silahkan melakukan login kembali setelah 5 menit.";
+          this.modal.show = true;
+        }else{
+          await this.$store.dispatch('auth/otpResend')
+          this.counter();
+        }
+
       } else {
         alert("wait until otp time is 0");
       }
     },
 
     counter() {
-      this.otp_timer = 60; //seconds
+      this.otp_timer = 300; //seconds
       this.otp_counter = setInterval(() => {
         this.otp_timer -= 1;
       }, 1000);

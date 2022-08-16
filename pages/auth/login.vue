@@ -146,7 +146,7 @@ export default {
       const response = await this.$store.dispatch("auth/signIn", this.form);
       if(typeof response.success != "undefined" && response.success){
         this.$router.push({
-          path: "/auth/otp",
+          path: `/auth/otp?phonenumber=${response.data.phoneNumber}`,
         });
       }
 

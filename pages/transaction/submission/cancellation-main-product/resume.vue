@@ -22,8 +22,8 @@
         <p class="data-value">{{ myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Nomor Polis</p>
-        <p class="data-value">{{ myPolicy.policyWithCode.payerBankAccount[0].bankCode }}</p>
+        <p class="data-title mb-2">Nama Bank Saat Ini</p>
+        <p class="data-value">{{ bankName }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Pengiriman Polis</p>
@@ -125,6 +125,18 @@
       </div>
     </div>
     <div class="row">
+      <div class="col-lg-12 col-sm-12">
+        <div class="message-bar rounded-lg">
+          <p><b>Perhatian !</b></p>
+          <ul>
+            <li>
+              Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak silahkan hubungi Customer Care 1-500-045
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-12">
         <button
           class="btn btn-primary btn-save float-right"
@@ -149,13 +161,16 @@ export default {
     SaveIcon,
     InfoIcon,
   },
-  mounted() {},
+  mounted() {
+    this.getBankName();
+  },
   data() {
     return {
       title: {
         name: "",
         description: "",
       },
+      bankName: "",
       accepted: false,
       showMe: true,
       selected: [],
@@ -233,6 +248,9 @@ export default {
     },
   },
   methods: {
+    getBankName: async function(){
+      this.bankName = await this.$getBankName(this.myPolicy.policyWithCode.payerBankAccount[0].bankCode)
+    },
     submit: async function () {
       const result = await this.$store.dispatch(
         "submission_transaction/submitTransactionProposalSurrender"
