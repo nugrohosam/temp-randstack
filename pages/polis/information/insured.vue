@@ -9,25 +9,50 @@
           <div class="col-md-4 col-sm-6">
             <p class="data-title">Nama</p>
             <p class="data-value mb-3">
-              {{ $isNullWithSpace(myPolicy.policyWithCode.insureds[0].person.firstName) + $isNullWithSpace(myPolicy.policyWithCode.insureds[0].person.midName) + $isNullWithSpace(myPolicy.policyWithCode.insureds[0].person.lastName) }}
+              {{
+                $isNullWithSpace(
+                  myPolicy.policyWithCode.insureds[0].person.firstName
+                ) +
+                $isNullWithSpace(
+                  myPolicy.policyWithCode.insureds[0].person.midName
+                ) +
+                $isNullWithSpace(
+                  myPolicy.policyWithCode.insureds[0].person.lastName
+                )
+              }}
             </p>
             <p class="data-title">Jenis Kelamin</p>
             <p class="data-value mb-3">
-              {{myPolicy.policyWithCode.insureds[0].gender =="F" ? "PEREMPUAN" : "LAKI LAKI"}}
+              {{
+                myPolicy.policyWithCode.insureds[0].gender == "F"
+                  ? "PEREMPUAN"
+                  : "LAKI LAKI"
+              }}
             </p>
           </div>
           <div class="col-md-4 col-sm-6">
             <p class="data-title">Jenis Identitas</p>
-            <p class="data-value mb-3">-</p>
+            <p class="data-value mb-3">
+              {{
+                $labelIdentityType(
+                  myPolicy.policyWithCode.policyHolder.person.certiType
+                )
+              }}
+            </p>
             <p class="data-title">Tanggal Lahir</p>
             <p class="data-value mb-3">
-              {{ $moment(myPolicy.policyWithCode.insureds[0].birthDate).format("DD/MM/Y")  }}
+              {{
+                $moment(myPolicy.policyWithCode.insureds[0].birthDate).format(
+                  "DD/MM/Y"
+                )
+              }}
             </p>
           </div>
           <div class="col-md-4 col-sm-6">
             <p class="data-title">Jenis Pekerjaan</p>
             <p class="data-value mb-3">
-              {{myPolicy.policyWithCode.person.occupCateName }}
+              {{ myPolicy.policyWithCode.policyHolder.person.occupCateName }}
+            </p>
             <p class="data-title">Jenis Tertanggung</p>
             <p class="data-value mb-3">UTAMA</p>
           </div>
@@ -39,7 +64,7 @@
 <script>
 export default {
   computed: {
-     myPolicy(){
+    myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
   },
