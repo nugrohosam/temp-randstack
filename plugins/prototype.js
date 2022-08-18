@@ -5,9 +5,9 @@ export default function ({ app, store, $axios }, inject) {
   };
 
   const isNullWithSpace = (text) => {
-    if(text === null){
+    if (text === null) {
       return "";
-    }else{
+    } else {
       return text + " ";
     }
   };
@@ -32,11 +32,64 @@ export default function ({ app, store, $axios }, inject) {
     return methods[code];
   }
 
+
   const labelCardType = (code) => {
     let types = new Array();
     types[0] = "Both"
     types[1] = "Debit"
     types[2] = "Credit"
+
+    return types[code];
+  }
+
+  const labelRelationType = (code) => {
+    let types = new Array();
+    types[1] = "Dirisendiri"
+    types[2] = "Anak"
+    types[3] = "Keponakan"
+    types[4] = "Ayah"
+    types[5] = "Kakak"
+    types[6] = "Adik"
+    types[7] = "Others"
+    types[8] = "Istri"
+    types[9] = "Kakek"
+    types[10] = "Nenek"
+    types[11] = "Karyawan"
+    types[12] = "Suami"
+    types[13] = "Ibu"
+    types[14] = "Cucu"
+    types[15] = "Paman"
+    types[16] = "Bibi"
+    types[17] = "Majikan"
+    types[18] = "Sepupu"
+    types[20] = "Anak angkat"
+    types[21] = "Anak tiri"
+    types[50] = "Calon Pemegang Polis"
+    types[51] = "Calon Tertanggung"
+    types[52] = "Lainnya (Wajib Mengisi Form Beneficiary Owner)"
+    types[19] = "Instansi"
+    types[22] = "Ayah angkat"
+    types[23] = "Ayah tiri"
+    types[24] = "Ibu angkat"
+    types[25] = "Ibu tiri"
+    types[26] = "Yayasan"
+    types[27] = "Perusahaan"
+
+    return types[code];
+  }
+
+  const labelIdentityType = (code) => {
+    let types = new Array();
+    types[1] = "E-KTP"
+    types[2] = "ID WNA"
+    types[3] = "Akta Lahir"
+    types[4] = "SKL"
+    types[5] = "KIM/KITAS"
+    types[6] = "SIM"
+    types[7] = "Passport"
+    types[8] = "KIA"
+    types[9] = "Lainnya"
+
 
     return types[code];
   }
@@ -63,62 +116,64 @@ export default function ({ app, store, $axios }, inject) {
         return bank.message;
       }
     } catch (error) {
-      return  "Terjadi kesalahan."
+      return "Terjadi kesalahan."
     }
   };
 
   const getProvinces = async (page = "", search = "") => {
     const response = await $axios
-    .$get(`/api/v1/address/provinces?page=${page}&search=${search}`)
-    .then((response) => {
-      return response;
-    })
-    .catch((error) => {
-      return error;
-    });
-  return response;
+      .$get(`/api/v1/address/provinces?page=${page}&search=${search}`)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+    return response;
   }
 
   const getCities = async (page = "", province_id = "", search = "") => {
     const response = await $axios
-    .$get(`/api/v1/address/cities?page=${page}&search=${search}&province_id=${province_id}`)
-    .then((response) => {
-      return response;
-    })
-    .catch((error) => {
-      return error;
-    });
+      .$get(`/api/v1/address/cities?page=${page}&search=${search}&province_id=${province_id}`)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
     return response;
   }
 
   const getDistricts = async (page = "", city_id = "", search = "") => {
     const response = await $axios
-    .$get(`/api/v1/address/districts?page=${page}&search=${search}&city_id=${city_id}`)
-    .then((response) => {
-      return response;
-    })
-    .catch((error) => {
-      return error;
-    });
+      .$get(`/api/v1/address/districts?page=${page}&search=${search}&city_id=${city_id}`)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
     return response;
   }
 
   const getVillages = async (page = "", district_id = "", search = "") => {
     const response = await $axios
-    .$get(`/api/v1/address/villages?page=${page}&search=${search}&district_id=${district_id}`)
-    .then((response) => {
-      return response;
-    })
-    .catch((error) => {
-      return error;
-    });
+      .$get(`/api/v1/address/villages?page=${page}&search=${search}&district_id=${district_id}`)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
     return response;
   }
 
   inject("isNull", isNull);
   inject("isNullWithSpace", isNullWithSpace);
   inject("labelPaymentMethod", labelPaymentMethod);
+  inject("labelIdentityType", labelIdentityType);
   inject("labelCardType", labelCardType);
+  inject("labelRelationType", labelRelationType);
   inject("convertCurrency", convertCurrency);
   inject("getBank", getBank);
   inject("getBankName", getBankName);

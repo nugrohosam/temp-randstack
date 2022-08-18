@@ -26,7 +26,7 @@
                   </td>
                   <td>{{ item.shareRate * 100 }}%</td>
                   <td>{{ item.gender == "F" ? "PEREMPUAN" : "LAKI LAKI" }}</td>
-                  <td>{{ item.designation }}</td>
+                  <td>{{ $labelRelationType(item.designation) }}</td>
                 </tr>
               </tbody>
             </template>

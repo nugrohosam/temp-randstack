@@ -43,13 +43,13 @@
                             <p class="data-title">Jenis Kelamin</p>
                             <p class="data-value">
                               {{
-                                myPolicy.policyWithCode.policyHolder.person.gender
+                                myPolicy.policyWithCode.policyHolder.person.gender == "F" ? "PEREMPUAN" : "LAKI LKAI"
                               }}
                             </p>
                             <p class="data-title">Jenis Identitas</p>
                             <p class="data-value">
                               {{
-                                myPolicy.policyWithCode.policyHolder.person.certiType
+                                $labelIdentityType(myPolicy.policyWithCode.policyHolder.person.certiType)
                               }}
                             </p>
                             <p class="data-title">Nomor Identitas</p>
