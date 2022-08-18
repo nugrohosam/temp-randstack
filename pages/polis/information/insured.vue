@@ -27,7 +27,7 @@
           <div class="col-md-4 col-sm-6">
             <p class="data-title">Jenis Pekerjaan</p>
             <p class="data-value mb-3">
-              {{myPolicy.policyWithCode.insureds[0].occupCate }}
+              {{myPolicy.policyWithCode.person.occupCateName }}
             <p class="data-title">Jenis Tertanggung</p>
             <p class="data-value mb-3">UTAMA</p>
           </div>
