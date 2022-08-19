@@ -57,7 +57,11 @@
               <template>
                 <v-data-table
                   :headers="table.headers"
-                  :items="my_policy.policyWithCode.coverages.length > 0 ? my_policy.policyWithCode.coverages : []"
+                  :items="
+                    my_policy.policyWithCode.coverages.length > 0
+                      ? my_policy.policyWithCode.coverages
+                      : []
+                  "
                   mobile-breakpoint="480"
                   hide-default-footer
                   v-model="form.coverages_selected"
@@ -72,24 +76,38 @@
 
                     ></v-simple-checkbox>
                   </template> -->
-                  <template #header.data-table-select>
-                    Pilihan
-                  </template>
+                  <template #header.data-table-select> Pilihan </template>
                   <template v-slot:item.issueDate="{ item }">
                     {{ item ? $moment(item.issueDate).format("DD/MM/Y") : "" }}
                   </template>
                   <template v-slot:item.nextPremium.sumAssured="{ item }">
-                    {{ $convertCurrency(item ? item.nextPremium.sumAssured : "") }}
+                    {{
+                      $convertCurrency(item ? item.nextPremium.sumAssured : "")
+                    }}
                   </template>
                   <template v-slot:item.currentPremium.totalPremAf="{ item }">
-                    {{ $convertCurrency(item ? item.currentPremium.totalPremAf : "") }}
+                    {{
+                      $convertCurrency(
+                        item ? item.currentPremium.totalPremAf : ""
+                      )
+                    }}
                   </template>
                   <template v-slot:item.expiryDate="{ item }">
                     {{ item ? $moment(item.expiryDate).format("DD/MM/Y") : "" }}
                   </template>
                   <template v-slot:item.lifeInsured.insured.person="{ item }">
                     {{
-                      item ? $isNullWithSpace(item.lifeInsured.insured.person.firstName) + $isNullWithSpace(item.lifeInsured.insured.person.midName) + $isNullWithSpace(item.lifeInsured.insured.person.lastName) : ""
+                      item
+                        ? $isNullWithSpace(
+                            item.lifeInsured.insured.person.firstName
+                          ) +
+                          $isNullWithSpace(
+                            item.lifeInsured.insured.person.midName
+                          ) +
+                          $isNullWithSpace(
+                            item.lifeInsured.insured.person.lastName
+                          )
+                        : ""
                     }}
                   </template>
                 </v-data-table>
@@ -214,10 +232,11 @@ export default {
     SaveIcon,
     InfoIcon,
   },
-  beforeMount(){
-    if(this.myPolicy.policyWithCode.riskStatus != 1){
+  beforeMount() {
+    if (this.myPolicy.policyWithCode.riskStatus != 1) {
       this.modal.show = true;
-      this.modal.message = "Transaksi yang dipilih tidak dapat dilakukan, untuk informasi lebih lanjut silahkan menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
+      this.modal.message =
+        "Transaksi yang dipilih tidak dapat dilakukan, untuk informasi lebih lanjut silahkan menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
     }
   },
   mounted() {
@@ -248,7 +267,7 @@ export default {
           id: "",
           reason_id: "",
           name: "",
-        }
+        },
       ],
       showMe: true,
       coverages: [],
@@ -330,7 +349,8 @@ export default {
   methods: {
     getData: async function () {
       let data = this.myPolicy;
-      let productIds = [], products = [];
+      let productIds = [],
+        products = [];
       data.policyWithCode.coverages = data.policyWithCode.coverages.filter(
         (coverage) => coverage.riskStatus == 1
       );
@@ -344,16 +364,31 @@ export default {
             ? "Utama"
             : "Tambahan";
         data.policyWithCode.coverages[i].productStatus = "Aktif";
-
       });
-      data.policyWithCode.payerBankAccount[0].bankName = await this.$getBankName(data.policyWithCode.payerBankAccount[0].bankCode)
+      data.policyWithCode.payerBankAccount[0].bankName =
+        await this.$getBankName(
+          data.policyWithCode.payerBankAccount[0].bankCode
+        );
       products = await this.$store.dispatch(
         "submission_transaction/getProducts",
         productIds.join()
       );
       data.policyWithCode.coverages.forEach((v, i) => {
-        v.productName = products.filter((product) => product.id == v.productId)[0].name;
+        v.productName = products.filter(
+          (product) => product.id == v.productId
+        )[0].name;
       });
+
+      var coverages = [
+        data.policyWithCode.coverages.filter((coverage) => {
+          coverage.masterProduct == null;
+        })[0],
+        ...data.policyWithCode.coverages.filter((coverage) => {
+          coverage.masterProduct != null;
+        }),
+      ];
+
+      data.policyWithCode.coverages = coverages;
 
       this.my_policy = data;
       this.isLoading = false;
@@ -362,11 +397,10 @@ export default {
       this.reasons = await this.$store.dispatch(
         "submission_transaction/getSurrenderReasons"
       );
-
     },
     save: async function () {
       this.validate();
-      if(this.validationMessage.length <= 0){
+      if (this.validationMessage.length <= 0) {
         this.$store.commit(
           "submission_transaction/setReasonSelected",
           this.form.reason_selected
@@ -423,18 +457,24 @@ export default {
         });
       }
 
-      if(this.form.coverages_selected.find((v) => v.productType == "Utama")){
+      if (this.form.coverages_selected.find((v) => v.productType == "Utama")) {
         this.reasons_filtered = this.reasons;
-      }else if(!this.form.coverages_selected.find((v) => v.productType == "Utama")){
-        this.reasons_filtered = this.reasons.filter((reason) => reason.name == "Tidak Ada" || reason.name == "Masalah Pengiriman Polis")
-      }else if(this.form.coverages_selected.length <= 0){
+      } else if (
+        !this.form.coverages_selected.find((v) => v.productType == "Utama")
+      ) {
+        this.reasons_filtered = this.reasons.filter(
+          (reason) =>
+            reason.name == "Tidak Ada" ||
+            reason.name == "Masalah Pengiriman Polis"
+        );
+      } else if (this.form.coverages_selected.length <= 0) {
         this.reasons_filtered = [
           {
             id: "",
             reason_id: "",
             name: "",
-          }
-        ]
+          },
+        ];
       }
     },
 
