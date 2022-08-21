@@ -1,9 +1,7 @@
 <template>
   <div>
-
     <div class="row">
       <div class="col-12">
-
         <!-- Head -->
         <div class="row">
           <div class="col-12">
@@ -49,12 +47,17 @@
                     >
                       <template v-slot:item.actions="{ item }">
                         <button
-                          v-if="item.status == 3"
+                          v-if="item.status == 3 || item.status == 'Pending'"
                           class="btn btn-primary btn-table"
-                          @click="showUpload(item)"
+                          @click="showDetail(item)"
                         >
                           Lengkapi
                         </button>
+                      </template>
+                      <template v-slot:item.status="{ item }">
+                        <a class="bni-primary" @click.prevent="showTransactionStatusDetail(item.status != 'Done' ? item.errorMessage : '')">
+                          <b>{{item.status}}  <info-icon v-if="item.status == 'Gagal'" style="position:relative; bottom:-3px;" size="1.3x" bottom="10px"></info-icon></b>
+                        </a>
                       </template>
                       <!-- <template v-slot:item.status="{ item }">
                         <a
@@ -144,14 +147,42 @@
               {{ transaction_detail.message }}
             </p>
 
-            <p class="detail-title">Nomor Rekening</p>
+            <!-- <p class="detail-title">Nomor Rekening</p>
             <p class="detail-value">{{ transaction_detail.account_number }}</p>
 
             <p class="detail-title">Nama Pemegang Rekening</p>
             <p class="detail-value">{{ transaction_detail.holder_name }}</p>
 
             <p class="detail-title">Bank</p>
-            <p class="detail-value">{{ transaction_detail.bank }}</p>
+            <p class="detail-value">{{ transaction_detail.bank }}</p> -->
+
+            <p class="detail-title">
+              Jika tidak sesuai dapat menghubungi Customer Care 1-500-045
+            </p>
+          </v-card-text>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="statusDetail.show" max-width="500px">
+      <v-card>
+        <v-card-title class="text-h5">Detail</v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-card-text>
+            <p class="detail-value">
+              {{ statusDetail.message }}
+            </p>
+
+            <!-- <p class="detail-title">Nomor Rekening</p>
+            <p class="detail-value">{{ transaction_detail.account_number }}</p>
+
+            <p class="detail-title">Nama Pemegang Rekening</p>
+            <p class="detail-value">{{ transaction_detail.holder_name }}</p>
+
+            <p class="detail-title">Bank</p>
+            <p class="detail-value">{{ transaction_detail.bank }}</p> -->
 
             <p class="detail-title">
               Jika tidak sesuai dapat menghubungi Customer Care 1-500-045
@@ -174,19 +205,24 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
-
-
     <!-- Temp Overlay Loading -->
     <!-- <div class="text-center">
       <v-overlay :value="overlay" color="rgba(250, 250, 250, 0.9)">
         <v-progress-circular indeterminate size="64" color="#F15921"></v-progress-circular>
       </v-overlay>
     </div> -->
+    <!-- <ModalMessage
+      :message="modal.message"
+      :show="modal.show"
+      :button="modal.button"
+      @closeModal="modal.show = false"
+    /> -->
   </div>
+
 </template>
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
+import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
   mounted() {
     this.getData();
@@ -196,6 +232,10 @@ export default {
       this.showMenu = true;
       this.current_header_title = this.default_header_title;
     }
+  },
+  components: {
+    SaveIcon,
+    InfoIcon
   },
   data() {
     return {
@@ -218,6 +258,11 @@ export default {
         status: "",
       },
 
+      statusDetail: {
+        show: false,
+        message: ""
+      },
+
       table: {
         headers: [
           {
@@ -232,6 +277,10 @@ export default {
           { text: "Edit", value: "actions" },
         ],
         items: null,
+      },
+      modal: {
+        message: "",
+        show: false,
       },
     };
   },
@@ -262,6 +311,11 @@ export default {
       // mapping if list has different format with response
       this.table.items = list.items;
     },
+
+    showTransactionStatusDetail: function(message){
+      this.statusDetail.show = true;
+      this.statusDetail.message = message;
+    }
   },
 };
 </script>

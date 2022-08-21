@@ -21,67 +21,6 @@ export default {
         return error;
       });
     return response;
-    // const result = [
-    //   {
-    //     submission_id: 12,
-    //     date: "30/12/1996",
-    //     name: "Azhar Ogi",
-    //     status: "Pending",
-    //     document: "Dokumen.doc"
-    //   },
-    //   {
-    //     submission_id: 11,
-    //     date: "30/12/1996",
-    //     name: "Azhar GGWP",
-    //     status: "Success",
-    //     document: "Dokumen.doc"
-    //   },
-    //   {
-    //     submission_id: 10,
-    //     date: "30/12/1996",
-    //     name: "Azhar GGWP",
-    //     status: "Success",
-    //     document: "Dokumen.doc"
-    //   },
-    //   {
-    //     submission_id: 9,
-    //     date: "30/12/1996",
-    //     name: "Azhar GGWP",
-    //     status: "Success",
-    //     document: "Dokumen.doc"
-    //   },
-    //   {
-    //     submission_id: 8,
-    //     date: "30/12/1996",
-    //     name: "Azhar GGWP",
-    //     status: "Success",
-    //     document: "Dokumen.doc"
-    //   },
-    //   {
-    //     submission_id: 7,
-    //     date: "30/12/1996",
-    //     name: "Azhar GGWP",
-    //     status: "Success",
-    //     document: "Dokumen.doc"
-    //   },
-    //   {
-    //     submission_id: 6,
-    //     date: "30/12/1996",
-    //     name: "Azhar GGWP",
-    //     status: "Success",
-    //     document: "Dokumen.doc"
-    //   },
-    //   {
-    //     submission_id: 5,
-    //     date: "30/12/1996",
-    //     name: "Azhar GGWP",
-    //     status: "Success",
-    //     document: "Dokumen.doc"
-    //   },
-    // ];
-
-    commit('setTransactionStatusList',result);
-    return result;
   },
 
   async getTransactionStatusDetail({dispatch, commit}, data){

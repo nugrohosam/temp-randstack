@@ -22,6 +22,8 @@ import TransactionStatusModules from './transaction_status'
 // Import Information Policy Modules
 import InformationPolicyModules from './information_policy'
 
+// Import Notificatioin Modules
+import NotificationModules from './notification'
 
 Vue.use(Vuex)
 export default () => new Vuex.Store({
@@ -30,6 +32,7 @@ export default () => new Vuex.Store({
       submission_transaction: SubmissionTransactionModules,
       transaction_status: TransactionStatusModules,
       information_policy: InformationPolicyModules,
+      notification: NotificationModules,
   },
   state: state,
   getters: getters,

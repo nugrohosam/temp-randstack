@@ -81,7 +81,7 @@
             <clipboard-icon size="1.5x" class="custom-class"></clipboard-icon>
           </v-btn>
           <v-btn :to="'/notification/'" :ripple="false" router plain exact>
-            <span></span>
+            <span>Notifikasi</span>
             <bell-icon size="1.5x" class="custom-class"></bell-icon>
           </v-btn>
           <v-btn :to="'/profile/'" :ripple="false" router plain exact>
@@ -94,9 +94,16 @@
         <div class="app-drawer">
           <div class="action-container">
             <span>
-              <a href="">
-                <bell-icon size="1.5x"></bell-icon>
-              </a>
+              <VDropdown :distance="6" :skidding="-190">
+                <button>
+                  <bell-icon size="1.5x"></bell-icon>
+                </button>
+                <template #popper>
+                  <div style="width: 480px; border-radius: 40px;">
+                    <NotificationPanel :style="'max-height: 420px;'"/>
+                  </div>
+                </template>
+              </VDropdown>
             </span>
             <span>
               <a href="">
@@ -106,11 +113,29 @@
             <span>
               <div class="small-profile">
                 <div class="sec-title">
-                  <p class="_policy">{{myPolicy ? myPolicy.policyWithCode.proposalNumber : "memuat..."}}</p>
-                  <p class="_name">{{myPolicy ?
-                    $isNullWithSpace(myPolicy.policyWithCode.policyHolder.person.firstName) +
-                    $isNullWithSpace(myPolicy.policyWithCode.policyHolder.person.midName) +
-                    $isNullWithSpace(myPolicy.policyWithCode.policyHolder.person.lastName)  : "memuat..."}}</p>
+                  <p class="_policy">
+                    {{
+                      myPolicy
+                        ? myPolicy.policyWithCode.proposalNumber
+                        : "memuat..."
+                    }}
+                  </p>
+                  <p class="_name">
+                    {{
+                      myPolicy
+                        ? $isNullWithSpace(
+                            myPolicy.policyWithCode.policyHolder.person
+                              .firstName
+                          ) +
+                          $isNullWithSpace(
+                            myPolicy.policyWithCode.policyHolder.person.midName
+                          ) +
+                          $isNullWithSpace(
+                            myPolicy.policyWithCode.policyHolder.person.lastName
+                          )
+                        : "memuat..."
+                    }}
+                  </p>
                 </div>
                 <div class="sec-image">
                   <div class="_ellipse-image">
@@ -142,8 +167,13 @@
             width: 100%;
           "
         >
-          <img v-if="type ? type : 'warning'" src="~/assets/icon/ic_warning_modal.svg" class="modal-icon" alt="">
-          <p style="color: black">{{error.message}}</p>
+          <img
+            v-if="type ? type : 'warning'"
+            src="~/assets/icon/ic_warning_modal.svg"
+            class="modal-icon"
+            alt=""
+          />
+          <p style="color: black">{{ error.message }}</p>
         </div>
       </template>
       <template v-else>
@@ -156,12 +186,16 @@
             width: 100%;
           "
         >
-          <v-progress-circular indeterminate size="64" color="#F15921" width="7">
+          <v-progress-circular
+            indeterminate
+            size="64"
+            color="#F15921"
+            width="7"
+          >
           </v-progress-circular>
           <p style="color: black">Mohon tunggu, sedang memuat data...</p>
         </div>
       </template>
-
     </template>
 
     <!-- <v-footer :absolute="!fixed" app>
@@ -204,7 +238,7 @@ export default {
       window.addEventListener("resize", this.onResize);
     });
   },
-  computed:{
+  computed: {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
@@ -217,7 +251,7 @@ export default {
   },
   data() {
     return {
-      isChecked: false,
+      isChecked: true,
       error: {
         status: false,
         message: "",
@@ -276,7 +310,7 @@ export default {
     check: async function () {
       const isAuthenticated = await this.$store.dispatch("auth/check");
       if (isAuthenticated) {
-        this.getMyPolicy();
+      this.getMyPolicy();
       } else if (!isAuthenticated) {
         this.$router.push({
           path: "/auth/login",
@@ -300,6 +334,10 @@ export default {
           this.error.message = "Terjadi kesalahan, coba lagi.";
         }
       }
+    },
+
+    showNotification: function () {
+      alert("Hello");
     },
   },
 };

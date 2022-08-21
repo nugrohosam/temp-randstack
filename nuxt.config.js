@@ -53,6 +53,9 @@ export default {
     {
       src: '~/plugins/vue-select.js'
     },
+    {
+      src: '~/plugins/floating-vue.js'
+    },
 
   ],
 
