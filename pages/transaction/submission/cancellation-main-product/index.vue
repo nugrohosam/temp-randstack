@@ -350,13 +350,10 @@ export default {
   methods: {
     getData: async function () {
       let data = this.myPolicy;
-      let productIds = [],
-        products = [];
       data.policyWithCode.coverages = data.policyWithCode.coverages.filter(
         (coverage) => coverage.riskStatus == 1
       );
       data.policyWithCode.coverages.forEach((v, i) => {
-        productIds.push(v.productId);
         data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
         data.policyWithCode.coverages[i].productName = "";
         data.policyWithCode.coverages[i].isSelectable = true;
@@ -370,15 +367,6 @@ export default {
         await this.$getBankName(
           data.policyWithCode.payerBankAccount[0].bankCode
         );
-      products = await this.$store.dispatch(
-        "submission_transaction/getProducts",
-        productIds.join()
-      );
-      data.policyWithCode.coverages.forEach((v, i) => {
-        v.productName = products.filter(
-          (product) => product.id == v.productId
-        )[0].name;
-      });
 
       var coverages = [
         data.policyWithCode.coverages.filter((coverage) => {

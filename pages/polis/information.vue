@@ -22,9 +22,7 @@
                       <div class="col-12 main-v-card">
                         <p class="data-title">Nomor Polis</p>
                         <h3>
-                          {{
-                             myPolicy.policyWithCode.policyNumber
-                          }}
+                          {{ myPolicy.policyWithCode.policyNumber }}
                         </h3>
                       </div>
                       <div class="col-12 main-v-card">
@@ -35,33 +33,52 @@
                             <p class="data-title">Nama</p>
                             <p class="data-value">
                               {{
-                                $isNullWithSpace(myPolicy.policyWithCode.policyHolder.person.firstName) +
-                                $isNullWithSpace(myPolicy.policyWithCode.policyHolder.person.midName) +
-                                $isNullWithSpace(myPolicy.policyWithCode.policyHolder.person.lastName)
+                                $isNullWithSpace(
+                                  myPolicy.policyWithCode.policyHolder.person
+                                    .firstName
+                                ) +
+                                $isNullWithSpace(
+                                  myPolicy.policyWithCode.policyHolder.person
+                                    .midName
+                                ) +
+                                $isNullWithSpace(
+                                  myPolicy.policyWithCode.policyHolder.person
+                                    .lastName
+                                )
                               }}
                             </p>
                             <p class="data-title">Jenis Kelamin</p>
                             <p class="data-value">
                               {{
-                                myPolicy.policyWithCode.policyHolder.person.gender == "F" ? "PEREMPUAN" : "LAKI LKAI"
+                                myPolicy.policyWithCode.policyHolder.person
+                                  .gender == "F"
+                                  ? "PEREMPUAN"
+                                  : "LAKI LKAI"
                               }}
                             </p>
                             <p class="data-title">Jenis Identitas</p>
                             <p class="data-value">
                               {{
-                                $labelIdentityType(myPolicy.policyWithCode.policyHolder.person.certiType)
+                                $labelIdentityType(
+                                  myPolicy.policyWithCode.policyHolder.person
+                                    .certiType
+                                )
                               }}
                             </p>
                             <p class="data-title">Nomor Identitas</p>
                             <p class="data-value">
                               {{
-                                myPolicy.policyWithCode.policyHolder.person.certiCode
+                                myPolicy.policyWithCode.policyHolder.person
+                                  .certiCode
                               }}
                             </p>
                             <p class="data-title">Tanggal Lahir</p>
                             <p class="data-value">
                               {{
-                                $moment(myPolicy.policyWithCode.policyHolder.person.birthday).format("DD/MM/Y")
+                                $moment(
+                                  myPolicy.policyWithCode.policyHolder.person
+                                    .birthday
+                                ).format("DD/MM/Y")
                               }}
                             </p>
                           </div>
@@ -69,7 +86,8 @@
                             <p class="data-title">Alamat KTP</p>
                             <p class="data-value">
                               {{
-                               myPolicy.policyWithCode.policyHolder.address.address1
+                                myPolicy.policyWithCode.policyHolder.address
+                                  .address1
                               }}
                             </p>
                             <p class="data-title">Alamat Koresponden</p>
@@ -77,7 +95,8 @@
                             <p class="data-title">Nomor HP</p>
                             <p class="data-value">
                               {{
-                                myPolicy.policyWithCode.policyHolder.person.mobile
+                                myPolicy.policyWithCode.policyHolder.person
+                                  .mobile
                               }}
                             </p>
                           </div>
@@ -90,45 +109,45 @@
                       <div class="col-12 main-v-card">
                         <h4>Produk</h4>
                         <br />
-                        <template v-if="myPolicy.policyWithCode.coverages.length > 0">
-                          <v-expansion-panels
-                          focusable
-                          multiple
+                        <template
+                          v-if="myPolicy.policyWithCode.coverages.length > 0"
                         >
-                          <v-expansion-panel
-                            v-for="(item, i) in myPolicy.policyWithCode.coverages"
-                            :key="i"
-                          >
-                            <v-expansion-panel-header>{{
-                              item.productId
-                            }}</v-expansion-panel-header>
-                            <v-expansion-panel-content>
-                              <div class="row">
-                                <div class="col-12">
-                                  <br />
-                                  <p class="data-title">Uang Pertanggungan</p>
-                                  <p class="data-value mb-3">
-                                    {{ item.currentPremium.sumAssured }}
-                                  </p>
-                                  <p class="data-title">Plan</p>
-                                  <!-- <p class="data-value mb-3">{{item.pay_plans}}</p> -->
-                                  <p class="data-value mb-3">-</p>
-                                  <p class="data-title">Premi</p>
-                                  <p class="data-value mb-3">
-                                    {{ item.currentPremium.stdPremAf }}
-                                  </p>
-                                  <p class="data-title">Benefit Status</p>
-                                  <p class="data-value">-</p>
+                          <v-expansion-panels focusable multiple>
+                            <v-expansion-panel
+                              v-for="(item, i) in myPolicy.policyWithCode
+                                .coverages"
+                              :key="i"
+                            >
+                              <v-expansion-panel-header>{{
+                                item.productName || "Memuat..."
+                              }}</v-expansion-panel-header>
+                              <v-expansion-panel-content>
+                                <div class="row">
+                                  <div class="col-12">
+                                    <br />
+                                    <p class="data-title">Uang Pertanggungan</p>
+                                    <p class="data-value mb-3">
+                                      {{ item.currentPremium.sumAssured }}
+                                    </p>
+                                    <p class="data-title">Plan</p>
+                                    <!-- <p class="data-value mb-3">{{item.pay_plans}}</p> -->
+                                    <p class="data-value mb-3">
+                                      {{ item.benefitLevel }}
+                                    </p>
+                                    <p class="data-title">Premi</p>
+                                    <p class="data-value mb-3">
+                                      {{ item.currentPremium.stdPremAf }}
+                                    </p>
+                                    <p class="data-title">Benefit Status</p>
+                                    <p class="data-value">-</p>
+                                  </div>
                                 </div>
-                              </div>
-                            </v-expansion-panel-content>
+                              </v-expansion-panel-content>
                             </v-expansion-panel>
                           </v-expansion-panels>
                         </template>
                         <template v-else>
-                          <p class="data-title">
-                            Tidak ada produk terdaftar
-                          </p>
+                          <p class="data-title">Tidak ada produk terdaftar</p>
                         </template>
                       </div>
                     </div>
@@ -136,7 +155,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <v-tabs :v-model="'2'" show-arrows color="#F15921" >
+                    <v-tabs :v-model="'2'" show-arrows color="#F15921">
                       <v-tab
                         v-for="item in items"
                         :id="'tab' + item.index"
@@ -144,7 +163,6 @@
                         :key="item.index"
                         :to="item.link"
                         :ripple="false"
-
                         active-class="information-tab-active"
                         class="information-tab"
                       >
@@ -160,7 +178,15 @@
               </div>
             </template>
             <template v-else>
-              <div class="page-body" style="display:flex; flex-direction:column; justify-content: center; align-items:center;">
+              <div
+                class="page-body"
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
                 <v-progress-circular
                   indeterminate
                   size="64"
@@ -191,7 +217,7 @@ export default {
       this.current_header_title = this.default_header_title;
     }
 
-    this.$router.push({path: '/polis/information/insured'})
+    this.$router.push({ path: "/polis/information/insured" });
     // this.getInformationPolicyList();
   },
   data() {
@@ -217,8 +243,7 @@ export default {
       information_policy: null,
     };
   },
-  watch: {
-  },
+  watch: {},
   computed: {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
@@ -228,7 +253,6 @@ export default {
     // getInformationPolicyList: async function () {
     //   await this.$store.dispatch("information_policy/getInformationPolicyList");
     //   this.information_policy = this.informationPolicyList;
-
     // },
   },
 };

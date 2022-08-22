@@ -16,6 +16,42 @@ export default {
       .catch((error) => {
         return error;
       });
+
+    const responseData = response.data;
+    const productIds = responseData.policyWithCode.coverages.map(product => product.productId)
+    let products = [];
+    products = await this.$axios
+      .$get(`/api/v1/products?ids=${productIds.join()}`)
+      .then((response) => {
+        if (response.success) {
+          console.log(response.data);
+          return response.data;
+        }
+        // return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+
+    responseData.policyWithCode.coverages = responseData.policyWithCode.coverages.map((v, i) => {
+
+      const foundProduct = products.filter(
+        (product) => product.id == v.productId
+      )[0];
+      v.productName = foundProduct.name;
+
+      const level = v.currentPremium.benefitLevel ?? null;
+      if (level) {
+        const benefitLevels = foundProduct.benefitLevelInfoVOList.filter((v, i) => v.benefitLevel == level);
+        const foundBenefitLevel = benefitLevels.length > 0 ? benefitLevels[0].levelDescrp : "-";
+        v.benefitLevel = foundBenefitLevel;
+      }
+
+
+      return v;
+    });
+
+    response.data = responseData
     return response;
   },
 
@@ -95,15 +131,15 @@ export default {
   async submitTransactionProposalSurrender({ rootGetters, getters, dispatch, commit }, data) {
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     let items = [];
-    if(getters.getCoveragesSelected.find((v) => v.productType == "Utama")){
+    if (getters.getCoveragesSelected.find((v) => v.productType == "Utama")) {
       items.push({
         itemId: getters.getCoveragesSelected.find((v) => v.productType == "Utama").itemId
       });
-    }else{
+    } else {
       getters.getCoveragesSelected.forEach((v, i) =>
-      items.push({
-        itemId: v.itemId
-      }));
+        items.push({
+          itemId: v.itemId
+        }));
     }
 
 
