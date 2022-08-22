@@ -262,7 +262,7 @@ export default {
   },
   data() {
     return {
-      isChecked: true,
+      isChecked: false,
       error: {
         status: false,
         message: "",

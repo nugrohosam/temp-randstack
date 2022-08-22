@@ -133,6 +133,54 @@ export default function ({ app, store, $axios }, inject) {
     return response;
   }
 
+  const findProvince = async (id) => {
+    const response = await $axios
+      .$get(`/api/v1/address/provinces/${id}`)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+    return response;
+  }
+
+  const findCity = async (id) => {
+    const response = await $axios
+      .$get(`/api/v1/address/cities/${id}`)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+    return response;
+  }
+
+  const findDistrict = async (id) => {
+    const response = await $axios
+      .$get(`/api/v1/address/districts/${id}`)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+    return response;
+  }
+
+  const findVillage = async (id) => {
+    const response = await $axios
+      .$get(`/api/v1/address/villages/${id}`)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+    return response;
+  }
+
   const getCities = async (page = "", province_id = "", search = "") => {
     const response = await $axios
       .$get(`/api/v1/address/cities?page=${page}&search=${search}&province_id=${province_id}`)
@@ -182,4 +230,8 @@ export default function ({ app, store, $axios }, inject) {
   inject("getCities", getCities);
   inject("getDistricts", getDistricts);
   inject("getVillages", getVillages);
+  inject("findProvince", findProvince);
+  inject("findCity", findCity);
+  inject("findDistrict", findDistrict);
+  inject("findVillage", findVillage);
 }

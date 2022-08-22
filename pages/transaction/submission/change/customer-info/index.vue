@@ -74,7 +74,7 @@
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Provinsi</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.province ? selectedPolicy.address.province : "-"}}
+                            {{selectedPolicy.address.province ? findProvince(selectedPolicy.address.province) : "-"}}
                           </p>
                           <div class="form-input" v-show="addressEditable">
                             <v-select-ot
@@ -98,7 +98,7 @@
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Kota</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.city ? selectedPolicy.address.city : "-"}}
+                            {{selectedPolicy.address.city ? findCity(selectedPolicy.address.city) : "-"}}
                           </p>
                           <div class="form-input" v-show="addressEditable">
 
@@ -124,7 +124,7 @@
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Kecamatan</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.street ? selectedPolicy.address.street : "-"}}
+                            {{selectedPolicy.address.street ? findDistrict(selectedPolicy.address.street) : "-"}}
                           </p>
                           <div class="form-input" v-show="addressEditable">
                             <v-select-ot
@@ -148,7 +148,7 @@
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Kelurahan</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.village ? selectedPolicy.address.village : "-"}}
+                            {{selectedPolicy.address.village ? findVillage(selectedPolicy.address.village) : "-"}}
                           </p>
                           <div class="form-input" v-show="addressEditable">
 
@@ -414,7 +414,7 @@ export default {
   },
   mounted() {
     this.getMyPolicy();
-    this.getProvince();
+    this.getProvinces();
 
     this.province.observer = new IntersectionObserver(this.onScrollProvince)
     this.city.observer = new IntersectionObserver(this.onScrollCity)
@@ -442,11 +442,6 @@ export default {
           objectName: "policyHolder",
           name: "Pemegang Polis",
         },
-        // {
-        //   type: 2,
-        //   objectName: "insureds",
-        //   name: "Tertanggung",
-        // },
       ],
       selectedIdentityType: null,
       province: {
@@ -493,10 +488,7 @@ export default {
     },
     myPolicy(){
       return this.$store.getters["submission_transaction/getMyPolicy"];
-    },
-    // hasNextPage() {
-
-    // }
+    }
   },
   watch: {
     $route(to, from) {
@@ -516,17 +508,6 @@ export default {
       return new Promise((res, rej) => {
         this.selectedIdentityType = this.identityType.find((v,i) => v.type == type);
         this.selectedPolicy = this.myPolicy.policyWithCode.policyHolder;
-        // switch (this.selectedPolicy.addressFormat) {
-        //   case "N":
-
-        //     break;
-          // case 2:
-          //   this.selectedPolicy = this.myPolicy.policyWithCode.insureds[0];
-          //   break;
-        //   default:
-        //     break;
-        // }
-        // console.log(this.selectedPolicy);
         this.selectedPolicy.proposalNumber = this.myPolicy.policyWithCode.proposalNumber;
         this.selectedPolicy.identityType = this.selectedIdentityType;
         res("Done")
@@ -554,7 +535,7 @@ export default {
       );
     },
 
-    getProvince: async function(){
+    getProvinces: async function(){
       let response = await this.$getProvinces(this.province.page, this.province.search);
       if(response.success){
         this.province.hasNextPage = response.data.pageInfo.hasNextPage;
@@ -579,7 +560,7 @@ export default {
       this.province.search = value;
       this.province.page = 1;
       this.province.collection = [];
-      this.getProvince();
+      this.getProvinces();
     },
 
     onScrollProvince: async function([{ isIntersecting, target }]) {
@@ -587,7 +568,7 @@ export default {
         const ul = target.offsetParent
         const scrollTop = target.offsetParent.scrollTop
         this.province.page += 1
-        this.getProvince();
+        this.getProvinces();
         await this.$nextTick()
         ul.scrollTop = scrollTop
       }
@@ -599,10 +580,10 @@ export default {
       this.district.collection = this.district.selected = [];
       this.village.collection = this.village.selected = [];
       this.selectedPolicy.address.province = this.province.selected.name;
-      this.getCity();
+      this.getCities();
     },
 
-    getCity: async function(){
+    getCities: async function(){
       let response = await this.$getCities(this.city.page, this.province.selected.id);
       if(response.success){
         this.city.hasNextPage = response.data.pageInfo.hasNextPage;
@@ -632,7 +613,7 @@ export default {
         const ul = target.offsetParent
         const scrollTop = target.offsetParent.scrollTop
         this.city.page += 1
-        this.getCity();
+        this.getCities();
         await this.$nextTick()
         ul.scrollTop = scrollTop
       }
@@ -643,10 +624,10 @@ export default {
       this.district.collection = this.district.selected = [];
       this.village.collection = this.village.selected = [];
       this.selectedPolicy.address.city = this.city.selected.name;
-      this.getDistrict();
+      this.getDistricts();
     },
 
-    getDistrict: async function(){
+    getDistricts: async function(){
       let response = await this.$getDistricts(this.district.page, this.city.selected.id);
       if(response.success){
         this.district.hasNextPage = response.data.pageInfo.hasNextPage;
@@ -676,7 +657,7 @@ export default {
         const ul = target.offsetParent
         const scrollTop = target.offsetParent.scrollTop
         this.district.page += 1
-        this.getDistrict();
+        this.getDistricts();
         await this.$nextTick()
         ul.scrollTop = scrollTop
       }
@@ -686,10 +667,10 @@ export default {
       this.village.page = 1;
       this.village.collection = this.village.selected = [];
       this.selectedPolicy.address.street = this.district.selected.name;
-      this.getVillage();
+      this.getVillages();
     },
 
-    getVillage: async function(){
+    getVillages: async function(){
       let response = await this.$getVillages(this.village.page, this.district.selected.id);
       if(response.success){
         this.village.hasNextPage = response.data.pageInfo.hasNextPage;
@@ -719,7 +700,7 @@ export default {
         const ul = target.offsetParent
         const scrollTop = target.offsetParent.scrollTop
         this.village.page += 1
-        this.getVillage();
+        this.getVillages();
         await this.$nextTick()
         ul.scrollTop = scrollTop
       }
@@ -727,6 +708,39 @@ export default {
 
     onInputVillage: async function(){
       this.selectedPolicy.address.village = this.village.selected.name;
+    },
+
+    findProvince: async function(provinceId = null){
+      let response = await this.$findProvince(provinceId);
+      if(response.success){
+        return response.data.name;
+      }else{
+        return provinceId;
+      }
+    },
+    findCity: async function(cityId){
+      let response = await this.$findCity(cityId);
+      if(response.success){
+        return response.data.name;
+      }else{
+        return cityId;
+      }
+    },
+    findDistrict: async function(districtId){
+      let response = await this.$findDistrict(districtId);
+      if(response.success){
+        return response.data.name;
+      }else{
+        return districtId;
+      }
+    },
+    findVillage: async function(villageId){
+      let response = await this.$findVillage(villageId);
+      if(response.success){
+        return response.data.name;
+      }else{
+        return villageId;
+      }
     },
   },
 };
