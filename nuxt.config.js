@@ -56,6 +56,9 @@ export default {
     {
       src: '~/plugins/floating-vue.js'
     },
+    {
+      src: '~/plugins/idle-vue.js'
+    },
 
   ],
 

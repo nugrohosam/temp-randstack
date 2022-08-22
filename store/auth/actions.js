@@ -23,8 +23,8 @@ export default {
 
   async check({ dispatch, commit }) {
     return new Promise((resolve, reject) => {
-      if (localStorage.auth) {
-        const auth = JSON.parse(localStorage.auth);
+      if (sessionStorage.auth) {
+        const auth = JSON.parse(sessionStorage.auth);
         commit("setUser", auth);
         commit("setAuth");
         resolve(true);
@@ -52,7 +52,7 @@ export default {
       .$post("/api/v1/auth/logout")
       .then((response) => {
         if(response.success){
-          localStorage.removeItem('auth');
+          sessionStorage.removeItem('auth');
           commit('clearAuth');
           window.location.href = "/auth/login";
         }
@@ -64,10 +64,10 @@ export default {
   },
 
   async clearAuth({commit}){
-    if(localStorage.getItem('auth') === null){
+    if(sessionStorage.getItem('auth') === null){
       return;
     }
-    localStorage.removeItem('auth');
+    sessionStorage.removeItem('auth');
     commit('clearAuth');
     window.location.href = "/auth/login";
   },
@@ -82,7 +82,7 @@ export default {
         dispatch('toggleOverlayLoading', {show: false}, {root:true});
         if (response.success) {
           commit("setAuth");
-          localStorage.auth = JSON.stringify(getters.getAuthUser);
+          sessionStorage.auth = JSON.stringify(getters.getAuthUser);
         }
         return response;
       })

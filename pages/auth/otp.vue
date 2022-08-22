@@ -158,7 +158,7 @@ export default {
     },
 
     counter() {
-      this.otp_timer = 300; //seconds
+      this.otp_timer = 30; //seconds
       this.otp_counter = setInterval(() => {
         this.otp_timer -= 1;
       }, 1000);
