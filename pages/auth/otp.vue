@@ -8,7 +8,8 @@
         <div class="col-lg-12 auth-section-otp">
           <h2>Masukkan kode OTP untuk verifikasi akun anda</h2>
           <p id="otp_sent_to">
-            Kode OTP telah dikirimkan ke nomor {{this.$route.query.phonenumber}}
+            Kode OTP telah dikirimkan ke nomor
+            {{ this.$route.query.phonenumber }}
           </p>
           <v-otp-input
             v-model="form.otp_number"
@@ -37,7 +38,6 @@
                 {{ is_mobile ? resend_text_mobile : resend_text }}
               </a>
             </template>
-
           </div>
         </div>
       </div>
@@ -140,20 +140,17 @@ export default {
       }
     },
 
-    resend: async function() {
+    resend: async function () {
       if (this.otp_timer <= 0) {
         this.otp_resend_remaining -= 1;
         if (this.otp_resend_remaining <= 0) {
           this.modal.message =
             "Anda telah melakukan permintaan ulang OTP sebanyak 5 kali. Silahkan melakukan login kembali setelah 5 menit.";
           this.modal.show = true;
-        }else{
-          await this.$store.dispatch('auth/otpReset')
+        } else {
+          await this.$store.dispatch("auth/otpReset");
           this.counter();
         }
-
-      } else {
-        alert("wait until otp time is 0");
       }
     },
 
