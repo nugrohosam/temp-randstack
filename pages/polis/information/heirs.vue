@@ -25,7 +25,7 @@
                     {{ $isNullWithSpace(item.person.firstName) + $isNullWithSpace(item.person.midName) + $isNullWithSpace(item.person.lastName) }}
                   </td>
                   <td>{{ item.shareRate * 100 }}%</td>
-                  <td>{{ item.gender == "F" ? "PEREMPUAN" : "LAKI LAKI" }}</td>
+                  <td>{{ item.person.gender == "F" ? "PEREMPUAN" : "LAKI LAKI" }}</td>
                   <td>{{ $labelRelationType(item.designation) }}</td>
                 </tr>
               </tbody>
