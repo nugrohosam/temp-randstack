@@ -197,7 +197,12 @@
         </div>
       </template>
     </template>
-
+    <ModalMessage
+      :message="idle.message"
+      :show="idle.show"
+      :button="idle.button"
+      @closeModal="idle.show = false"
+    />
     <!-- <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer> -->
@@ -224,6 +229,12 @@ export default {
     BellIcon,
     RepeatIcon,
     HelpCircleIcon,
+  },
+  onIdle() {
+    this.showTimeout();
+    sessionStorage.removeItem('auth');
+  },
+  onActive(){
   },
   watch: {
     windowWidth(newWidth, oldWidth) {
@@ -285,9 +296,35 @@ export default {
       right: true,
       title: "Vuetify.js",
       burgerButton: false,
+      idle: {
+        message: "",
+        show: false,
+        button: {
+          text: "Oke",
+          redirect_link: "/auth/login",
+          redirect_type: "ssr",
+        }
+      },
     };
   },
   methods: {
+    showTimeout: function(){
+       let that = this;
+       let defaultPopup = 5;
+       this.idle.message = "Sistem mendeteksi kamu tidak melakukan aktivitas apapun. Silahkan login kembali";
+       this.idle.show = true;
+
+       setInterval(() => {
+        that.idle.button.text = `Oke (${defaultPopup})`
+        if(defaultPopup > 0){
+          defaultPopup -= 1;
+        }
+       },1000)
+
+       setTimeout(() => {
+        window.location.href = "/auth/login"
+       },6000)
+    },
     onResize() {
       this.windowWidth = window.innerWidth;
       // this.changeAppDrawer(this.windowWidth);
