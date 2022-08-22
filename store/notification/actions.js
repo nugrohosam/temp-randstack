@@ -6,7 +6,6 @@ export default {
     const response = await this.$axios
       .$get(`/api/v1/notifications?page=1&per_page=10`)
       .then((response) => {
-        console.log(response);
         commit('setItems' , response.data.items);
         return response;
       })
