@@ -148,7 +148,7 @@ export default {
             "Anda telah melakukan permintaan ulang OTP sebanyak 5 kali. Silahkan melakukan login kembali setelah 5 menit.";
           this.modal.show = true;
         }else{
-          await this.$store.dispatch('auth/otpResend')
+          await this.$store.dispatch('auth/otpReset')
           this.counter();
         }
 

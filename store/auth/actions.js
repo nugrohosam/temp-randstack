@@ -119,4 +119,27 @@ export default {
     // commit("setAuth");
     return response;
   },
+
+  async otpReset({ getters, commit, dispatch }) {
+    const user = getters.getAuthUser;
+    this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
+    let endpoint = "/api/v1/auth/otp/reset";
+    dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
+    const response = await this.$axios
+      .$post(endpoint, {
+        identity: user.phoneNumber
+      })
+      .then((response) => {
+        dispatch('toggleOverlayLoading', {show: false}, {root:true});
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+
+    // force Auth
+    // commit("setAuth");
+    return response;
+  },
+
 };
