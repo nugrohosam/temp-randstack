@@ -130,6 +130,9 @@ export default {
     grid-template-columns: repeat(3, 1fr);
     grid-row-gap: 0px;
   }
+  @media screen and (max-width: 480px){
+     grid-column-gap: 10px;
+  }
 }
 </style>
 

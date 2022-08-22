@@ -79,6 +79,9 @@ export default {
     @media screen and (max-width: 960px) {
       width: 50px;
     }
+    @media screen and (max-width: 480px){
+      width: 40px;
+    }
     // background-color: #f15921;
     background-color: #f7931d;
     width: -webkit-fit-content;
@@ -100,6 +103,9 @@ export default {
     line-height: 14px;
     color: #2e343d;
     margin-top: 20px;
+    @media screen and (max-width: 480px){
+      font-size: 10px;
+    }
   }
 
   // &:hover{

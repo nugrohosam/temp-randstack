@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="notification-page">
     <notification-panel></notification-panel>
   </div>
 </template>
@@ -9,3 +9,10 @@ export default {
   components: { NotificationPanel },
 };
 </script>
+<style lang="scss" scoped>
+.notification-page{
+  @media screen and (max-width: 480px){
+    padding-bottom: 70px;
+  }
+}
+</style>

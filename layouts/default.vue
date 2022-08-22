@@ -310,7 +310,7 @@ export default {
     check: async function () {
       const isAuthenticated = await this.$store.dispatch("auth/check");
       if (isAuthenticated) {
-      this.getMyPolicy();
+        this.getMyPolicy();
       } else if (!isAuthenticated) {
         this.$router.push({
           path: "/auth/login",

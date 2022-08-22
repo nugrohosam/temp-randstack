@@ -41,7 +41,7 @@
                       :page.sync="page"
                       :items-per-page="itemsPerPage"
                       :search="data_search"
-                      mobile-breakpoint="0"
+                      mobile-breakpoint="480"
                       hide-default-footer
                       @page-count="pageCount = $event"
                     >

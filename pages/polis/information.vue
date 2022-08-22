@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col-12">
             <div class="page-header">
-              <h3 class="page-title">{{ current_header_title }}</h3>
+              <h3 class="page-title">{{ default_header_title }}</h3>
             </div>
           </div>
         </div>
