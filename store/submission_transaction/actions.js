@@ -24,7 +24,6 @@ export default {
       .$get(`/api/v1/products?ids=${productIds.join()}`)
       .then((response) => {
         if (response.success) {
-          console.log(response.data);
           return response.data;
         }
         // return response;
