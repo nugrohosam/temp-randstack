@@ -234,7 +234,7 @@ export default {
     InfoIcon,
   },
   beforeMount() {
-    if (this.myPolicy.policyWithCode.riskStatus != 1 || this.myPolicy.policyWithCode.refundPayeeBankAccount[0] == null) {
+    if (this.myPolicy.policyWithCode.riskStatus != 1) {
       this.modal.show = true;
       this.modal.message =
         "Transaksi yang dipilih tidak dapat dilakukan, untuk informasi lebih lanjut silahkan menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
