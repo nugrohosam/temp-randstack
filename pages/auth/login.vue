@@ -25,7 +25,7 @@
         <div class="col-md-6 col-xs-12 auth-section-form">
           <!-- <div class="row">
               <div class="col-12"> -->
-          <h2 class="d-md-none mobile-logo">ePos</h2>
+          <h2 class="d-md-none mobile-logo">iPos</h2>
           <p class="auth-title-form">Login</p>
           <!-- </div>
             </div> -->
@@ -133,7 +133,7 @@ export default {
         policy_number: "BLMS0000046", //9210000627
         phone_number: "6285692203893", //6288809139413
         identity_number: "3578204808680002", //5315056301790004
-        verified: "",
+        verified: true,
       },
       modal: {
         message: "",
