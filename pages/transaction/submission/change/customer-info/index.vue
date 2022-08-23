@@ -74,7 +74,7 @@
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Provinsi</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.province ? findProvince(selectedPolicy.address.province) : "-"}}
+                            {{selectedPolicy.address.province ? selectedPolicy.address.province : "-"}}
                           </p>
                           <div class="form-input" v-show="addressEditable">
                             <v-select-ot
@@ -98,7 +98,7 @@
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Kota</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.city ? findCity(selectedPolicy.address.city) : "-"}}
+                            {{selectedPolicy.address.city ? selectedPolicy.address.city : "-"}}
                           </p>
                           <div class="form-input" v-show="addressEditable">
 
@@ -124,7 +124,7 @@
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Kecamatan</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.street ? findDistrict(selectedPolicy.address.street) : "-"}}
+                            {{selectedPolicy.address.street ? selectedPolicy.address.street : "-"}}
                           </p>
                           <div class="form-input" v-show="addressEditable">
                             <v-select-ot
@@ -148,7 +148,7 @@
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Kelurahan</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.village ? findVillage(selectedPolicy.address.village) : "-"}}
+                            {{selectedPolicy.address.village ? selectedPolicy.address.village : "-"}}
                           </p>
                           <div class="form-input" v-show="addressEditable">
 
@@ -502,16 +502,24 @@ export default {
   methods: {
     getMyPolicy: async function () {
       await this.switchType(this.identityType[0].type);
+      this.selectedPolicy.address.province = await this.findProvince(this.selectedPolicy.address.province);
+       this.selectedPolicy.address.city = await this.findCity(this.selectedPolicy.address.city);
+      this.selectedPolicy.address.street = await this.findDistrict(this.selectedPolicy.address.street);
+
+      this.selectedPolicy.address.village = await this.findVillage(this.selectedPolicy.address.village);
       this.isLoading = false;
     },
     switchType: async function (type) {
+      const self = this
       return new Promise((res, rej) => {
         this.selectedIdentityType = this.identityType.find((v,i) => v.type == type);
         this.selectedPolicy = this.myPolicy.policyWithCode.policyHolder;
         this.selectedPolicy.proposalNumber = this.myPolicy.policyWithCode.proposalNumber;
         this.selectedPolicy.identityType = this.selectedIdentityType;
+
         res("Done")
       })
+
     },
     save: async function () {
       // patch to action
