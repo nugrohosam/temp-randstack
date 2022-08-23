@@ -350,35 +350,33 @@ export default {
   methods: {
     getData: async function () {
       let data = this.myPolicy;
+      let productIds = [], products = [];
       data.policyWithCode.coverages = data.policyWithCode.coverages.filter(
         (coverage) => coverage.riskStatus == 1
       );
       data.policyWithCode.coverages.forEach((v, i) => {
+        productIds.push(v.productId);
         data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
         data.policyWithCode.coverages[i].productName = "";
         data.policyWithCode.coverages[i].isSelectable = true;
+        if(data.policyWithCode.coverages.length > 0){
+          data.policyWithCode.coverages[i].isSelectable = false;
+        }
         data.policyWithCode.coverages[i].productType =
           data.policyWithCode.coverages[i].masterProduct == null
             ? "Utama"
             : "Tambahan";
         data.policyWithCode.coverages[i].productStatus = "Aktif";
       });
-      data.policyWithCode.payerBankAccount[0].bankName =
-        await this.$getBankName(
-          data.policyWithCode.payerBankAccount[0].bankCode
-        );
-
-      var coverages = [
-        data.policyWithCode.coverages.filter((coverage) => {
-          coverage.masterProduct == null;
-        })[0],
-        ...data.policyWithCode.coverages.filter((coverage) => {
-          coverage.masterProduct != null;
-        }),
-      ];
-
-      data.policyWithCode.coverages = coverages;
-
+      data.policyWithCode.payerBankAccount[0].bankName = await this.$getBankName(data.policyWithCode.payerBankAccount[0].bankCode)
+      products = await this.$store.dispatch(
+        "submission_transaction/getProducts",
+        productIds.join()
+      );
+      data.policyWithCode.coverages.forEach((v, i) => {
+        v.productName = products.filter((product) => product.id == v.productId)[0].name;
+      });
+      
       this.my_policy = data;
       this.isLoading = false;
     },

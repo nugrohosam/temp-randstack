@@ -15,6 +15,7 @@ pids
 *.seed
 *.zip
 *.pid.lock
+.env
 
 Dockerfile
 

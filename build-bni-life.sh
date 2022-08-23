@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cp .env.example .env
+
 mv nuxt.config.js nuxt.config.js.temp
 mv nuxt.config.Development.BNI-Life.js nuxt.config.js
 
