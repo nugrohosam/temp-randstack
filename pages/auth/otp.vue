@@ -11,6 +11,9 @@
             Kode OTP telah dikirimkan ke nomor
             {{ this.$route.query.phonenumber }}
           </p>
+          <p id="otp_sent_to">
+            Akan berakhir dalam {{ Math.floor(otp_expired_time / 60) }} : {{ otp_expired_time % 60 < 10 ? "0" + (otp_expired_time % 60) : otp_expired_time % 60  }} 
+          </p>
           <v-otp-input
             v-model="form.otp_number"
             length="6"
@@ -82,6 +85,12 @@ export default {
         clearInterval(this.otp_counter);
       }
     },
+    otp_expired_time: function (value) {
+      if (value <= 0) {
+        this.otp_expired_time = 0;
+        clearInterval(this.otp_counter_expired_time);
+      }
+    },
     form: {
       handler(value) {
         if (value.otp_number.length == 6) {
@@ -119,7 +128,9 @@ export default {
       },
       submitDisable: true,
       otp_timer: "", //seconds
+      otp_expired_time: 3000, //seconds
       otp_counter: null,
+      otp_counter_expired_time: null,
       otp_remaining: 5,
       otp_resend_remaining: 5,
       resend_active: false,
@@ -156,6 +167,10 @@ export default {
 
     counter() {
       this.otp_timer = 30; //seconds
+      this.otp_expired_time = 3000; //seconds
+      this.otp_counter_expired_time = setInterval(() => {
+        this.otp_expired_time -= 1;
+      }, 1000);
       this.otp_counter = setInterval(() => {
         this.otp_timer -= 1;
       }, 1000);
