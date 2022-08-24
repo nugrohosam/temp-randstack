@@ -37,7 +37,7 @@
               </p>
             </div>
             <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Tanggal Pengiriman Polis</p>
+              <p class="data-title mb-2">Tanggal Penerimaan Polis</p>
               <p class="data-value">
                 {{
                   myPolicy.policyWithCode.despatchDate

@@ -26,8 +26,8 @@
         <p class="data-value">{{ bankName }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Tanggal Pengiriman Polis</p>
-        <p class="data-value">{{myPolicy.policyWithCode.despatchDate ? $moment(myPolicy.policyWithCode.despatchDate).format("DD/MM/Y") : "-"}}</p>
+        <p class="data-title mb-2">Tanggal Penerimaan Polis</p>
+        <p class="data-value">{{myPolicy.policyWithCode.acknowledgeDate ? $moment(myPolicy.policyWithCode.acknowledgeDate).format("DD/MM/Y") : "-"}}</p>
       </div>
     </div>
     <div class="row">
