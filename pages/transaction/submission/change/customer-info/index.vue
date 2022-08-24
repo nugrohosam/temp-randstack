@@ -610,7 +610,6 @@ export default {
         this.selectedPolicy.address.street = await this.findDistrict(
           this.selectedPolicy.address.street
         );
-
         this.selectedPolicy.address.village = await this.findVillage(
           this.selectedPolicy.address.village
         );

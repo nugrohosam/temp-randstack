@@ -40,8 +40,8 @@
               <p class="data-title mb-2">Tanggal Penerimaan Polis</p>
               <p class="data-value">
                 {{
-                  myPolicy.policyWithCode.despatchDate
-                    ? $moment(myPolicy.policyWithCode.despatchDate).format(
+                  myPolicy.policyWithCode.acknowledgeDate
+                    ? $moment(myPolicy.policyWithCode.acknowledgeDate).format(
                         "DD/MM/Y"
                       )
                     : "-"
