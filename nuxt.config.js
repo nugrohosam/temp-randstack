@@ -90,13 +90,13 @@ export default {
     // Simple proxy
     "/api/v1/": {
       // target: "http://34.143.254.25:8888",
-      target: "http://34.124.156.103:8888/",
+      target: "http://localhost:5020/",
       // target: "https://cb5d05f7-d223-4c0a-917b-4d3177f5077c.mock.pstmn.io/",
       pathRewrite: { "^/api/v1/": "/api/v1/" }
     },
     "/test/v1/": {
       // target: "http://34.143.254.25:8888",
-      target: "http://34.124.156.103:8888/",
+      target: "http://localhost:5020/",
       // target: "https://cb5d05f7-d223-4c0a-917b-4d3177f5077c.mock.pstmn.io/",
 
       pathRewrite: { "^/test/v1/": "/test/v1/" }

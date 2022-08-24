@@ -5,14 +5,23 @@
         <div class="row">
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nama Pemegang Polis</p>
-            <p class="data-value">{{
-              selectedPolicy.person.firstName ? selectedPolicy.person.firstName : "" + " " +
-              selectedPolicy.person.midName ? selectedPolicy.person.midName : "" + " " +
-              selectedPolicy.person.lastName ? selectedPolicy.person.lastName : ""}}</p>
+            <p class="data-value">
+              {{
+                selectedPolicy.person.firstName
+                  ? selectedPolicy.person.firstName
+                  : "" + " " + selectedPolicy.person.midName
+                  ? selectedPolicy.person.midName
+                  : "" + " " + selectedPolicy.person.lastName
+                  ? selectedPolicy.person.lastName
+                  : ""
+              }}
+            </p>
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nomor Polis</p>
-            <p class="data-value">{{myPolicy.policyWithCode.proposalNumber}}</p>
+            <p class="data-value">
+              {{ myPolicy.policyWithCode.proposalNumber }}
+            </p>
           </div>
         </div>
         <div class="row">
@@ -52,29 +61,57 @@
                       </button>
                     </div>
                     <br /><br />
-                      <div class="row">
-                        <template v-if="!addressEditable && selectedPolicy.address.addressFormat == 'N'">
-                            <div class="col-lg-12 col-sm-12">
-                              <p class="data-title">Alamat</p>
-                              <p class="data-value" v-show="!addressEditable">
-                                {{ $isNullWithSpace(selectedPolicy.address.province) + $isNullWithSpace(selectedPolicy.address.city) + $isNullWithSpace(selectedPolicy.address.street) + $isNullWithSpace(selectedPolicy.address.village) + $isNullWithSpace(selectedPolicy.address.address1) + $isNullWithSpace(selectedPolicy.address.address2) + $isNullWithSpace(selectedPolicy.address.address3)}}
-                              </p>
-                              <div class="form-input" v-show="addressEditable">
-                                <input
-                                  type="text"
-                                  class="outlined"
-                                  placeholder="Jl Jenderal Ahmad Yani By Pass"
-                                  v-model="selectedPolicy.address.address1 "
-                                />
-                              </div>
-                            </div>
-                        </template>
+                    <div class="row">
+                      <template
+                        v-if="
+                          !addressEditable &&
+                          selectedPolicy.address.addressFormat == 'N'
+                        "
+                      >
+                        <div class="col-lg-12 col-sm-12">
+                          <p class="data-title">Alamat</p>
+                          <p class="data-value" v-show="!addressEditable">
+                            {{
+                              $isNullWithSpace(
+                                selectedPolicy.address.province
+                              ) +
+                              $isNullWithSpace(selectedPolicy.address.city) +
+                              $isNullWithSpace(selectedPolicy.address.street) +
+                              $isNullWithSpace(selectedPolicy.address.village) +
+                              $isNullWithSpace(
+                                selectedPolicy.address.address1
+                              ) +
+                              $isNullWithSpace(
+                                selectedPolicy.address.address2
+                              ) +
+                              $isNullWithSpace(selectedPolicy.address.address3)
+                            }}
+                          </p>
+                          <div class="form-input" v-show="addressEditable">
+                            <input
+                              type="text"
+                              class="outlined"
+                              placeholder="Jl Jenderal Ahmad Yani By Pass"
+                              v-model="selectedPolicy.address.address1"
+                            />
+                          </div>
+                        </div>
+                      </template>
 
-                        <template v-if="selectedPolicy.address.addressFormat == 'Y' || addressEditable" >
+                      <template
+                        v-if="
+                          selectedPolicy.address.addressFormat == 'Y' ||
+                          addressEditable
+                        "
+                      >
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Provinsi</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.province ? selectedPolicy.address.province : "-"}}
+                            {{
+                              selectedPolicy.address.province
+                                ? selectedPolicy.address.province
+                                : "-"
+                            }}
                           </p>
                           <div class="form-input" v-show="addressEditable">
                             <v-select-ot
@@ -88,7 +125,11 @@
                               :clearable="false"
                             >
                               <template #list-footer>
-                                <li v-show="province.hasNextPage" ref="load" class="loader">
+                                <li
+                                  v-show="province.hasNextPage"
+                                  ref="load"
+                                  class="loader"
+                                >
                                   Loading more options...
                                 </li>
                               </template>
@@ -98,10 +139,13 @@
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Kota</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.city ? selectedPolicy.address.city : "-"}}
+                            {{
+                              selectedPolicy.address.city
+                                ? selectedPolicy.address.city
+                                : "-"
+                            }}
                           </p>
                           <div class="form-input" v-show="addressEditable">
-
                             <v-select-ot
                               :options="city.collection"
                               @open="onOpenCity"
@@ -111,10 +155,13 @@
                               class="investment_type_option"
                               v-model="city.selected"
                               :clearable="false"
-
                             >
                               <template #list-footer>
-                                <li v-show="city.hasNextPage" ref="load" class="loader">
+                                <li
+                                  v-show="city.hasNextPage"
+                                  ref="load"
+                                  class="loader"
+                                >
                                   Loading more options...
                                 </li>
                               </template>
@@ -124,7 +171,11 @@
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Kecamatan</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.street ? selectedPolicy.address.street : "-"}}
+                            {{
+                              selectedPolicy.address.street
+                                ? selectedPolicy.address.street
+                                : "-"
+                            }}
                           </p>
                           <div class="form-input" v-show="addressEditable">
                             <v-select-ot
@@ -138,7 +189,11 @@
                               :clearable="false"
                             >
                               <template #list-footer>
-                                <li v-show="district.hasNextPage" ref="load" class="loader">
+                                <li
+                                  v-show="district.hasNextPage"
+                                  ref="load"
+                                  class="loader"
+                                >
                                   Loading more options...
                                 </li>
                               </template>
@@ -148,10 +203,13 @@
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Kelurahan</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.village ? selectedPolicy.address.village : "-"}}
+                            {{
+                              selectedPolicy.address.village
+                                ? selectedPolicy.address.village
+                                : "-"
+                            }}
                           </p>
                           <div class="form-input" v-show="addressEditable">
-
                             <v-select-ot
                               :options="village.collection"
                               @open="onOpenVillage"
@@ -163,7 +221,11 @@
                               :clearable="false"
                             >
                               <template #list-footer>
-                                <li v-show="village.hasNextPage" ref="load" class="loader">
+                                <li
+                                  v-show="village.hasNextPage"
+                                  ref="load"
+                                  class="loader"
+                                >
                                   Loading more options...
                                 </li>
                               </template>
@@ -173,35 +235,47 @@
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Alamat</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.address1 ? selectedPolicy.address.address1 : "-"}}
+                            {{
+                              selectedPolicy.address.address1
+                                ? selectedPolicy.address.address1
+                                : "-"
+                            }}
                           </p>
                           <div class="form-input" v-show="addressEditable">
                             <input
                               type="text"
                               class="outlined w-100"
                               placeholder="Jl Jenderal Ahmad Yani By Pass"
-                              v-model="selectedPolicy.address.address1 "
+                              v-model="selectedPolicy.address.address1"
                             />
                           </div>
                         </div>
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Blok / No Jalan</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.address2 ? selectedPolicy.address.address2 : "-"}}
+                            {{
+                              selectedPolicy.address.address2
+                                ? selectedPolicy.address.address2
+                                : "-"
+                            }}
                           </p>
                           <div class="form-input" v-show="addressEditable">
                             <input
                               type="text"
                               class="outlined w-100"
                               placeholder="F66"
-                              v-model="selectedPolicy.address.address2 "
+                              v-model="selectedPolicy.address.address2"
                             />
                           </div>
                         </div>
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">RT/RW</p>
                           <p class="data-value" v-show="!addressEditable">
-                            {{selectedPolicy.address.address3 ? selectedPolicy.address.address3 : "-"}}
+                            {{
+                              selectedPolicy.address.address3
+                                ? selectedPolicy.address.address3
+                                : "-"
+                            }}
                           </p>
                           <div class="form-input" v-show="addressEditable">
                             <input
@@ -212,8 +286,8 @@
                             />
                           </div>
                         </div>
-                        </template>
-                      </div>
+                      </template>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -245,7 +319,11 @@
                       <div class="col-lg-4 col-sm-12">
                         <p class="data-title">Nomor Telepon Saat Ini 1</p>
                         <p class="data-value" v-show="!phoneEditable">
-                          {{selectedPolicy.person.mobile ? selectedPolicy.person.mobile : "-"}}
+                          {{
+                            selectedPolicy.person.mobile
+                              ? selectedPolicy.person.mobile
+                              : "-"
+                          }}
                         </p>
                         <div class="form-input" v-show="phoneEditable">
                           <input
@@ -259,7 +337,11 @@
                       <div class="col-lg-4 col-sm-12">
                         <p class="data-title">Nomor Telepon Saat Ini 2</p>
                         <p class="data-value" v-show="!phoneEditable">
-                          {{selectedPolicy.person.mobile ? selectedPolicy.person.mobile2 : "-"}}
+                          {{
+                            selectedPolicy.person.mobile
+                              ? selectedPolicy.person.mobile2
+                              : "-"
+                          }}
                         </p>
                         <div class="form-input" v-show="phoneEditable">
                           <input
@@ -273,10 +355,14 @@
                       <div class="col-lg-4 col-sm-12">
                         <p class="data-title">Nomor Telepon Kantor Saat Ini</p>
                         <p class="data-value" v-show="!phoneEditable">
-                          {{selectedPolicy.person.officeTel ? selectedPolicy.person.officeTel : "-"}}
+                          {{
+                            selectedPolicy.person.officeTel
+                              ? selectedPolicy.person.officeTel
+                              : "-"
+                          }}
                         </p>
                         <div class="form-input" v-show="phoneEditable">
-                         <input
+                          <input
                             type="text"
                             class="outlined"
                             placeholder="08123456789"
@@ -285,11 +371,15 @@
                         </div>
                       </div>
                       <div class="col-lg-4 col-sm-12">
-                        <p class="data-title" >
+                        <p class="data-title">
                           Nomor Telepon Lain Kantor Saat Ini
                         </p>
                         <p class="data-value" v-show="!phoneEditable">
-                          {{selectedPolicy.person.officeTel2 ? selectedPolicy.person.officeTel2 : "-"}}
+                          {{
+                            selectedPolicy.person.officeTel2
+                              ? selectedPolicy.person.officeTel2
+                              : "-"
+                          }}
                         </p>
                         <div class="form-input" v-show="phoneEditable">
                           <input
@@ -303,7 +393,11 @@
                       <div class="col-lg-4 col-sm-12">
                         <p class="data-title">Nomor Telepon Rumah Saat Ini</p>
                         <p class="data-value" v-show="!phoneEditable">
-                          {{selectedPolicy.person.homeTel ? selectedPolicy.person.homeTel : "-"}}
+                          {{
+                            selectedPolicy.person.homeTel
+                              ? selectedPolicy.person.homeTel
+                              : "-"
+                          }}
                         </p>
                         <div class="form-input" v-show="phoneEditable">
                           <input
@@ -326,7 +420,11 @@
             <p class="data-title mb-2">Email Address</p>
             <div class="d-flex justify-sm-space-between">
               <p class="data-value" v-show="!emailEditable">
-                {{selectedPolicy.person.email ? selectedPolicy.person.email : "-"}}
+                {{
+                  selectedPolicy.person.email
+                    ? selectedPolicy.person.email
+                    : "-"
+                }}
               </p>
               <div class="form-input" v-show="emailEditable">
                 <input
@@ -416,10 +514,10 @@ export default {
     this.getMyPolicy();
     this.getProvinces();
 
-    this.province.observer = new IntersectionObserver(this.onScrollProvince)
-    this.city.observer = new IntersectionObserver(this.onScrollCity)
-    this.district.observer = new IntersectionObserver(this.onScrollDistrict)
-    this.village.observer = new IntersectionObserver(this.onScrollVillage)
+    this.province.observer = new IntersectionObserver(this.onScrollProvince);
+    this.city.observer = new IntersectionObserver(this.onScrollCity);
+    this.district.observer = new IntersectionObserver(this.onScrollDistrict);
+    this.village.observer = new IntersectionObserver(this.onScrollVillage);
 
     if ($nuxt.$route.name != "transaction-submission-change-customer-info") {
       this.showMe = false;
@@ -447,38 +545,38 @@ export default {
       province: {
         observer: null,
         limit: 10,
-        search: '',
+        search: "",
         page: 1,
         selected: null,
         hasNextPage: false,
-        collection: []
+        collection: [],
       },
       city: {
         observer: null,
         limit: 10,
-        search: '',
+        search: "",
         page: 1,
         selected: null,
         hasNextPage: false,
-        collection: []
+        collection: [],
       },
       district: {
         observer: null,
         limit: 10,
-        search: '',
+        search: "",
         page: 1,
         selected: null,
         hasNextPage: false,
-        collection: []
+        collection: [],
       },
       village: {
         observer: null,
         limit: 10,
-        search: '',
+        search: "",
         page: 1,
         selected: null,
         hasNextPage: false,
-        collection: []
+        collection: [],
       },
     };
   },
@@ -486,9 +584,9 @@ export default {
     selfieKtpFileName() {
       return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
     },
-    myPolicy(){
+    myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
-    }
+    },
   },
   watch: {
     $route(to, from) {
@@ -502,87 +600,101 @@ export default {
   methods: {
     getMyPolicy: async function () {
       await this.switchType(this.identityType[0].type);
-      this.selectedPolicy.address.province = await this.findProvince(this.selectedPolicy.address.province);
-       this.selectedPolicy.address.city = await this.findCity(this.selectedPolicy.address.city);
-      this.selectedPolicy.address.street = await this.findDistrict(this.selectedPolicy.address.street);
+      if (this.selectedPolicy.address.addressFormat == "Y") {
+        this.selectedPolicy.address.province = await this.findProvince(
+          this.selectedPolicy.address.province
+        );
+        this.selectedPolicy.address.city = await this.findCity(
+          this.selectedPolicy.address.city
+        );
+        this.selectedPolicy.address.street = await this.findDistrict(
+          this.selectedPolicy.address.street
+        );
 
-      this.selectedPolicy.address.village = await this.findVillage(this.selectedPolicy.address.village);
+        this.selectedPolicy.address.village = await this.findVillage(
+          this.selectedPolicy.address.village
+        );
+      }
       this.isLoading = false;
     },
     switchType: async function (type) {
-      const self = this
+      const self = this;
       return new Promise((res, rej) => {
-        this.selectedIdentityType = this.identityType.find((v,i) => v.type == type);
+        this.selectedIdentityType = this.identityType.find(
+          (v, i) => v.type == type
+        );
         this.selectedPolicy = this.myPolicy.policyWithCode.policyHolder;
-        this.selectedPolicy.proposalNumber = this.myPolicy.policyWithCode.proposalNumber;
+        this.selectedPolicy.proposalNumber =
+          this.myPolicy.policyWithCode.proposalNumber;
         this.selectedPolicy.identityType = this.selectedIdentityType;
 
-        res("Done")
-      })
-
+        res("Done");
+      });
     },
     save: async function () {
       // patch to action
-      this.$store.dispatch("submission_transaction/saveCustomerinfo", {
-        selectedPolicy: this.selectedPolicy,
-        selectedProvince: this.province.selected,
-        selectedCity: this.city.selected,
-        selectedDistrict: this.district.selected,
-        selectedVillage: this.village.selected
-      }
-      ).then((res) => {
-        this.$router.push({ path: "./customer-info/resume" });
-      });
+      this.$store
+        .dispatch("submission_transaction/saveCustomerinfo", {
+          selectedPolicy: this.selectedPolicy,
+          selectedProvince: this.province.selected,
+          selectedCity: this.city.selected,
+          selectedDistrict: this.district.selected,
+          selectedVillage: this.village.selected,
+        })
+        .then((res) => {
+          this.$router.push({ path: "./customer-info/resume" });
+        });
       // console.log(this.province.selected);
     },
     addSelfieKtpImage: function (e) {
-      this.$store.dispatch(
-        "submission_transaction/uploadSelieKtpFile",{
-          file: e.target.files[0]
-        }
-      );
+      this.$store.dispatch("submission_transaction/uploadSelieKtpFile", {
+        file: e.target.files[0],
+      });
     },
 
-    getProvinces: async function(){
-      let response = await this.$getProvinces(this.province.page, this.province.search);
-      if(response.success){
+    getProvinces: async function () {
+      let response = await this.$getProvinces(
+        this.province.page,
+        this.province.search
+      );
+      if (response.success) {
         this.province.hasNextPage = response.data.pageInfo.hasNextPage;
-        if(this.province.collection.length <= 0){
+        if (this.province.collection.length <= 0) {
           this.province.collection = response.data.items;
-        }else{
+        } else {
           response.data.items.map((item) => {
             this.province.collection.push(item);
-          })
+          });
         }
       }
     },
 
-    onOpenProvince: async function(){
+    onOpenProvince: async function () {
       if (this.province.hasNextPage) {
-        await this.$nextTick()
-        this.province.observer.observe(this.$refs.load)
+        await this.$nextTick();
+        this.province.observer.observe(this.$refs.load);
       }
     },
 
-    onSearchProvince: async function(value){
+    onSearchProvince: async function (value) {
       this.province.search = value;
       this.province.page = 1;
       this.province.collection = [];
       this.getProvinces();
     },
 
-    onScrollProvince: async function([{ isIntersecting, target }]) {
+    onScrollProvince: async function ([{ isIntersecting, target }]) {
       if (isIntersecting) {
-        const ul = target.offsetParent
-        const scrollTop = target.offsetParent.scrollTop
-        this.province.page += 1
+        const ul = target.offsetParent;
+        const scrollTop = target.offsetParent.scrollTop;
+        this.province.page += 1;
         this.getProvinces();
-        await this.$nextTick()
-        ul.scrollTop = scrollTop
+        await this.$nextTick();
+        ul.scrollTop = scrollTop;
       }
     },
 
-    onInputProvince: async function(){
+    onInputProvince: async function () {
       this.city.page = 1;
       this.city.collection = this.city.selected = [];
       this.district.collection = this.district.selected = [];
@@ -591,43 +703,46 @@ export default {
       this.getCities();
     },
 
-    getCities: async function(){
-      let response = await this.$getCities(this.city.page, this.province.selected.id);
-      if(response.success){
+    getCities: async function () {
+      let response = await this.$getCities(
+        this.city.page,
+        this.province.selected.id
+      );
+      if (response.success) {
         this.city.hasNextPage = response.data.pageInfo.hasNextPage;
-        if(this.city.collection.length <= 0){
+        if (this.city.collection.length <= 0) {
           this.city.collection = response.data.items;
-        }else{
+        } else {
           response.data.items.map((item) => {
             this.city.collection.push(item);
-          })
+          });
         }
       }
     },
 
-    onOpenCity: async function(){
+    onOpenCity: async function () {
       if (this.city.hasNextPage) {
-        await this.$nextTick()
-        this.city.observer.observe(this.$refs.load)
+        await this.$nextTick();
+        this.city.observer.observe(this.$refs.load);
       }
     },
 
-    onSearchCity: async function(value){
+    onSearchCity: async function (value) {
       this.city.search = value;
     },
 
-    onScrollCity: async function([{ isIntersecting, target }]) {
+    onScrollCity: async function ([{ isIntersecting, target }]) {
       if (isIntersecting) {
-        const ul = target.offsetParent
-        const scrollTop = target.offsetParent.scrollTop
-        this.city.page += 1
+        const ul = target.offsetParent;
+        const scrollTop = target.offsetParent.scrollTop;
+        this.city.page += 1;
         this.getCities();
-        await this.$nextTick()
-        ul.scrollTop = scrollTop
+        await this.$nextTick();
+        ul.scrollTop = scrollTop;
       }
     },
 
-    onInputCity: async function(){
+    onInputCity: async function () {
       this.district.page = 1;
       this.district.collection = this.district.selected = [];
       this.village.collection = this.village.selected = [];
@@ -635,120 +750,138 @@ export default {
       this.getDistricts();
     },
 
-    getDistricts: async function(){
-      let response = await this.$getDistricts(this.district.page, this.city.selected.id);
-      if(response.success){
+    getDistricts: async function () {
+      let response = await this.$getDistricts(
+        this.district.page,
+        this.city.selected.id
+      );
+      if (response.success) {
         this.district.hasNextPage = response.data.pageInfo.hasNextPage;
-        if(this.district.collection.length <= 0){
+        if (this.district.collection.length <= 0) {
           this.district.collection = response.data.items;
-        }else{
+        } else {
           response.data.items.map((item) => {
             this.district.collection.push(item);
-          })
+          });
         }
       }
     },
 
-    onOpenDistrict: async function(){
+    onOpenDistrict: async function () {
       if (this.district.hasNextPage) {
-        await this.$nextTick()
-        this.district.observer.observe(this.$refs.load)
+        await this.$nextTick();
+        this.district.observer.observe(this.$refs.load);
       }
     },
 
-    onSearchDistrict: async function(value){
+    onSearchDistrict: async function (value) {
       this.district.search = value;
     },
 
-    onScrollDistrict: async function([{ isIntersecting, target }]) {
+    onScrollDistrict: async function ([{ isIntersecting, target }]) {
       if (isIntersecting) {
-        const ul = target.offsetParent
-        const scrollTop = target.offsetParent.scrollTop
-        this.district.page += 1
+        const ul = target.offsetParent;
+        const scrollTop = target.offsetParent.scrollTop;
+        this.district.page += 1;
         this.getDistricts();
-        await this.$nextTick()
-        ul.scrollTop = scrollTop
+        await this.$nextTick();
+        ul.scrollTop = scrollTop;
       }
     },
 
-    onInputDistrict: async function(){
+    onInputDistrict: async function () {
       this.village.page = 1;
       this.village.collection = this.village.selected = [];
       this.selectedPolicy.address.street = this.district.selected.name;
       this.getVillages();
     },
 
-    getVillages: async function(){
-      let response = await this.$getVillages(this.village.page, this.district.selected.id);
-      if(response.success){
+    getVillages: async function () {
+      let response = await this.$getVillages(
+        this.village.page,
+        this.district.selected.id
+      );
+      if (response.success) {
         this.village.hasNextPage = response.data.pageInfo.hasNextPage;
-        if(this.village.collection.length <= 0){
+        if (this.village.collection.length <= 0) {
           this.village.collection = response.data.items;
-        }else{
+        } else {
           response.data.items.map((item) => {
             this.village.collection.push(item);
-          })
+          });
         }
       }
     },
 
-    onOpenVillage: async function(){
+    onOpenVillage: async function () {
       if (this.village.hasNextPage) {
-        await this.$nextTick()
-        this.village.observer.observe(this.$refs.load)
+        await this.$nextTick();
+        this.village.observer.observe(this.$refs.load);
       }
     },
 
-    onSearchVillage: async function(value){
+    onSearchVillage: async function (value) {
       this.village.search = value;
     },
 
-    onScrollVillage: async function([{ isIntersecting, target }]) {
+    onScrollVillage: async function ([{ isIntersecting, target }]) {
       if (isIntersecting) {
-        const ul = target.offsetParent
-        const scrollTop = target.offsetParent.scrollTop
-        this.village.page += 1
+        const ul = target.offsetParent;
+        const scrollTop = target.offsetParent.scrollTop;
+        this.village.page += 1;
         this.getVillages();
-        await this.$nextTick()
-        ul.scrollTop = scrollTop
+        await this.$nextTick();
+        ul.scrollTop = scrollTop;
       }
     },
 
-    onInputVillage: async function(){
+    onInputVillage: async function () {
       this.selectedPolicy.address.village = this.village.selected.name;
     },
 
-    findProvince: async function(provinceId = null){
-      let response = await this.$findProvince(provinceId);
-      if(response.success){
-        return response.data.name;
-      }else{
-        return provinceId;
+    findProvince: async function (provinceId = null) {
+      if (provinceId != null) {
+        let response = await this.$findProvince(provinceId);
+        if (response.success) {
+          return response.data.name;
+        } else {
+          return provinceId;
+        }
       }
+      return null;
     },
-    findCity: async function(cityId){
-      let response = await this.$findCity(cityId);
-      if(response.success){
-        return response.data.name;
-      }else{
-        return cityId;
+    findCity: async function (cityId) {
+      if (cityId != null) {
+        let response = await this.$findCity(cityId);
+        if (response.success) {
+          return response.data.name;
+        } else {
+          return cityId;
+        }
       }
+      return null;
     },
-    findDistrict: async function(districtId){
-      let response = await this.$findDistrict(districtId);
-      if(response.success){
-        return response.data.name;
-      }else{
-        return districtId;
+    findDistrict: async function (districtId) {
+      if (districtId != null) {
+        let response = await this.$findDistrict(districtId);
+        if (response.success) {
+          return response.data.name;
+        } else {
+          return districtId;
+        }
       }
+      return null;
     },
-    findVillage: async function(villageId){
-      let response = await this.$findVillage(villageId);
-      if(response.success){
-        return response.data.name;
-      }else{
-        return villageId;
+    findVillage: async function (villageId) {
+      if (villageId != null) {
+        let response = await this.$findVillage(villageId);
+        if (response.success) {
+          return response.data.name;
+        } else {
+          return villageId;
+        }
       }
+      return null;
     },
   },
 };

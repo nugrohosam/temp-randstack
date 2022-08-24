@@ -209,10 +209,10 @@ export default {
         address_1: this.$isNull(customerInformation.selectedPolicy.address.address1),
         street: this.$isNull(customerInformation.selectedPolicy.address.street),
         rt_rw: this.$isNull(customerInformation.selectedPolicy.address.address3),
-        province_id: this.$isNull(customerInformation.selectedProvince.id),
-        city_id: this.$isNull(customerInformation.selectedCity.id),
-        district_id: this.$isNull(customerInformation.selectedDistrict.id),
-        village_id: this.$isNull(customerInformation.selectedVillage.id)
+        province_id: customerInformation.selectedProvince?.id != null ? this.$isNull(customerInformation.selectedProvince.id) : null,
+        city_id: customerInformation.selectedCity?.id != null ? this.$isNull(customerInformation.selectedCity.id) : null,
+        district_id: customerInformation.selectedDistrict?.id != null ? this.$isNull(customerInformation.selectedDistrict.id) : null,
+        village_id: customerInformation.selectedVillage?.id != null ? this.$isNull(customerInformation.selectedVillage.id) : null
       },
       ktp_selfie_attachment: getters.getSelfieKtpUploadFileName,
     }

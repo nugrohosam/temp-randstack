@@ -10,8 +10,7 @@
           <p id="otp_sent_to">
             Kode OTP telah dikirimkan ke nomor
             {{ this.$route.query.phonenumber }}
-          </p>
-          <p id="otp_sent_to">
+            <br>
             Akan berakhir dalam {{ Math.floor(otp_expired_time / 60) }} : {{ otp_expired_time % 60 < 10 ? "0" + (otp_expired_time % 60) : otp_expired_time % 60  }} 
           </p>
           <v-otp-input
