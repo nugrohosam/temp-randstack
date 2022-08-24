@@ -27,7 +27,7 @@
                 Nama Pemilik Nomor Rekening Manfaat Saat Ini
               </p>
               <p class="data-value">
-                {{ myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName }}
+                {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-" }}
               </p>
             </div>
             <div class="col-lg-4 col-sm-6">
