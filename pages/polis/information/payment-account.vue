@@ -3,7 +3,7 @@
     <!-- Search -->
     <div class="col-12">
       <div class="page-body">
-        <h4>Data Ahli Waris</h4>
+        <h4>Data Rekening Pembayaran</h4>
         <br />
         <div class="row">
           <div class="col-md-4 col-sm-6">

@@ -44,6 +44,8 @@ export default {
         const benefitLevels = foundProduct.benefitLevelInfoVOList.filter((v, i) => v.benefitLevel == level);
         const foundBenefitLevel = benefitLevels.length > 0 ? benefitLevels[0].levelDescrp : "-";
         v.benefitLevel = foundBenefitLevel;
+      } else {
+        v.benefitLevel = "-";
       }
 
 

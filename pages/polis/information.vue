@@ -130,7 +130,6 @@
                                       {{ item.currentPremium.sumAssured }}
                                     </p>
                                     <p class="data-title">Plan</p>
-                                    <!-- <p class="data-value mb-3">{{item.pay_plans}}</p> -->
                                     <p class="data-value mb-3">
                                       {{ item.benefitLevel }}
                                     </p>
@@ -139,7 +138,13 @@
                                       {{ item.currentPremium.stdPremAf }}
                                     </p>
                                     <p class="data-title">Benefit Status</p>
-                                    <p class="data-value">-</p>
+                                    <p class="data-value">
+                                      {{
+                                        item.riskStatus != 1
+                                          ? "Terminated"
+                                          : "Active"
+                                      }}
+                                    </p>
                                   </div>
                                 </div>
                               </v-expansion-panel-content>
