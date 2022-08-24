@@ -50,15 +50,6 @@ export default {
     {
       src: '~/plugins/prototype.js'
     },
-    {
-      src: '~/plugins/vue-select.js'
-    },
-    {
-      src: '~/plugins/floating-vue.js'
-    },
-    {
-      src: '~/plugins/idle-vue.js'
-    },
 
   ],
 
@@ -69,7 +60,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    '@nuxtjs/moment',
+    '@nuxtjs/moment'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -89,16 +80,13 @@ export default {
   proxy: {
     // Simple proxy
     "/api/v1/": {
-      // target: "http://34.143.254.25:8888",
+      // target: "http://172.20.8.75",
       target: "http://34.124.156.103:8888/",
-      // target: "https://cb5d05f7-d223-4c0a-917b-4d3177f5077c.mock.pstmn.io/",
       pathRewrite: { "^/api/v1/": "/api/v1/" }
     },
     "/test/v1/": {
-      // target: "http://34.143.254.25:8888",
+      // target: "http://172.20.8.75",
       target: "http://34.124.156.103:8888/",
-      // target: "https://cb5d05f7-d223-4c0a-917b-4d3177f5077c.mock.pstmn.io/",
-
       pathRewrite: { "^/test/v1/": "/test/v1/" }
     },
   },
@@ -190,7 +178,7 @@ export default {
   },
   // Serve local port
   server: {
-
+    host: '0.0.0.0',
     port: 3000 // default: 3000
   },
 
