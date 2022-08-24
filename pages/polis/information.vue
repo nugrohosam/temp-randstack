@@ -91,7 +91,7 @@
                               }}
                             </p>
                             <p class="data-title">Alamat Koresponden</p>
-                            <p class="data-value">-</p>
+                            <p class="data-value">{{ myPolicy.policyWithCode.policyHolder.address.address1 }}</p>
                             <p class="data-title">Nomor HP</p>
                             <p class="data-value">
                               {{
