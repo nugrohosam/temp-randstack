@@ -128,7 +128,7 @@ export default {
       },
       submitDisable: true,
       otp_timer: "", //seconds
-      otp_expired_time: 3000, //seconds
+      otp_expired_time: 300, //seconds
       otp_counter: null,
       otp_counter_expired_time: null,
       otp_remaining: 5,
@@ -167,7 +167,7 @@ export default {
 
     counter() {
       this.otp_timer = 30; //seconds
-      this.otp_expired_time = 3000; //seconds
+      this.otp_expired_time = 300; //seconds
       this.otp_counter_expired_time = setInterval(() => {
         this.otp_expired_time -= 1;
       }, 1000);
