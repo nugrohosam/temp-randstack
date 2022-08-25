@@ -166,10 +166,6 @@ export default {
 
     counter() {
       this.otp_timer = 30; //seconds
-      this.otp_expired_time = 300; //seconds
-      this.otp_counter_expired_time = setInterval(() => {
-        this.otp_expired_time -= 1;
-      }, 1000);
       this.otp_counter = setInterval(() => {
         this.otp_timer -= 1;
       }, 1000);
