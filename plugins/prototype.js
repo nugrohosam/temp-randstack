@@ -79,6 +79,61 @@ export default function ({ app, store, $axios }, inject) {
     return types[code];
   }
 
+  const currencyName = () => {
+    let currencySymbol = new Array();
+
+    currencySymbol["4"] =
+      "US$"
+    currencySymbol["30"] =
+      "Rp"
+    currencySymbol["27"] =
+      "B$"
+    currencySymbol["29"] =
+      "¤"
+    currencySymbol["1"] =
+      "￥"
+    currencySymbol["2"] =
+      "￡"
+    currencySymbol["3"] =
+      "HK$"
+    currencySymbol["5"] =
+      "¤"
+    currencySymbol["8"] =
+      "S$"
+    currencySymbol["12"] =
+      "￥"
+    currencySymbol["13"] =
+      "C$"
+    currencySymbol["14"] =
+      "A$"
+    currencySymbol["16"] =
+      "€"
+    currencySymbol["18"] =
+      "N$"
+    currencySymbol["20"] =
+      "A$"
+    currencySymbol["21"] =
+      "?"
+    currencySymbol["22"] =
+      "¤"
+    currencySymbol["23"] =
+      "¤"
+    currencySymbol["24"] =
+      "¤"
+    currencySymbol["25"] =
+      "¤"
+    currencySymbol["26"] =
+      "￥"
+    currencySymbol["28"] =
+      "RM"
+    currencySymbol["31"] =
+      "Rs."
+    currencySymbol["32"] =
+      "?"
+
+    return currencySymbol;
+  }
+
   const fundName = (code) => {
     let fundCodeName = new Array();
     fundCodeName["BNLS"] =
