@@ -51,10 +51,16 @@ export default {
       src: '~/plugins/prototype.js'
     },
     {
-      src: '~/plugins/wording-lib.js'
+      src: '~/plugins/vue-select.js'
     },
     {
       src: '~/plugins/floating-vue.js'
+    },
+    {
+      src: '~/plugins/idle-vue.js'
+    },
+    {
+      src: '~/plugins/wording-lib.js'
     },
 
   ],

@@ -13,21 +13,33 @@
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nomor Rekening Saat Ini</p>
-        <p class="data-value">{{ myPolicy.policyWithCode.payerBankAccount[0].accountId }}</p>
+        <p class="data-value">
+          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-"  }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">
           Nama Pemilik Nomor Rekening Manfaat Saat Ini
         </p>
-        <p class="data-value">{{ myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName }}</p>
+        <p class="data-value">
+          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-"  }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Bank Saat Ini</p>
-        <p class="data-value">{{ bankName }}</p>
+        <p class="data-value">{{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Penerimaan Polis</p>
-        <p class="data-value">{{myPolicy.policyWithCode.acknowledgeDate ? $moment(myPolicy.policyWithCode.acknowledgeDate).format("DD/MM/Y") : "-"}}</p>
+        <p class="data-value">
+          {{
+            myPolicy.policyWithCode.acknowledgeDate
+              ? $moment(myPolicy.policyWithCode.acknowledgeDate).format(
+                  "DD/MM/Y"
+                )
+              : "-"
+          }}
+        </p>
       </div>
     </div>
     <div class="row">
@@ -41,11 +53,7 @@
             hide-default-footer
           >
             <template v-slot:item.itemId="{ item }">
-              <v-checkbox
-                input-value="true"
-                value
-                disabled
-              ></v-checkbox>
+              <v-checkbox input-value="true" value disabled></v-checkbox>
             </template>
             <template v-slot:item.issueDate="{ item }">
               {{ $moment(item.issueDate).format("DD/MM/Y") }}
@@ -82,17 +90,6 @@
     </div>
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">KTP Pemegang Polis</p>
-        <button
-          class="btn btn-primary-outlined"
-          @click.prevent="showKtpPreview"
-        >
-          Lihat
-        </button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">Lihat Foto Selfie dengan KTP</p>
         <button
           class="btn btn-primary-outlined"
@@ -117,9 +114,7 @@
           hide-details
         ></v-checkbox>
         <p>
-          Saya telah membaca dan menyetujui seluruh ketentuan transaksi yang
-          diajukan dan resume pengajuan serta memahami risiko atas keputusan
-          yang saya buat.
+          Saya menyetujui transaksi dan kebenaran data yang disampaikan.
           <a class="bni-primary no-border" href="">Baca selengkapnya</a>
         </p>
       </div>
@@ -130,7 +125,8 @@
           <p><b>Perhatian !</b></p>
           <ul>
             <li>
-              Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak silahkan hubungi Customer Care 1-500-045
+              Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
+              silahkan hubungi Customer Care 1-500-045
             </li>
           </ul>
         </div>
@@ -222,9 +218,6 @@ export default {
     };
   },
   computed: {
-    ktpFile() {
-      return this.$store.getters["submission_transaction/getKtpFile"];
-    },
     selfieKtpFile() {
       return this.$store.getters["submission_transaction/getSelfieKtpFile"];
     },
@@ -248,8 +241,10 @@ export default {
     },
   },
   methods: {
-    getBankName: async function(){
-      this.bankName = await this.$getBankName(this.myPolicy.policyWithCode.payerBankAccount[0].bankCode)
+    getBankName: async function () {
+      this.bankName = await this.$getBankName(
+        this.myPolicy.policyWithCode.payerBankAccount[0].bankCode
+      );
     },
     submit: async function () {
       const result = await this.$store.dispatch(
@@ -262,12 +257,6 @@ export default {
         });
       } else {
         // check validation error
-      }
-    },
-    showKtpPreview: function () {
-      if (this.ktpFile) {
-        this.image_preview.src = URL.createObjectURL(this.ktpFile);
-        this.image_preview.show = true;
       }
     },
     showSelfieKtpPreview: function () {

@@ -19,7 +19,7 @@
             <div class="col-lg-4 col-sm-6">
               <p class="data-title">Nomor Rekening Saat Ini</p>
               <p class="data-value">
-                {{ myPolicy.policyWithCode.payerBankAccount[0].bankAccount }}
+                {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-" }}
               </p>
             </div>
             <div class="col-lg-4 col-sm-6">
@@ -27,21 +27,21 @@
                 Nama Pemilik Nomor Rekening Manfaat Saat Ini
               </p>
               <p class="data-value">
-                {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-" }}
+                {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-" }}
               </p>
             </div>
             <div class="col-lg-4 col-sm-6">
               <p class="data-title mb-2">Nama Bank Saat Ini</p>
               <p class="data-value">
-                {{ myPolicy.policyWithCode.payerBankAccount[0].bankName }}
+                {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}
               </p>
             </div>
             <div class="col-lg-4 col-sm-6">
               <p class="data-title mb-2">Tanggal Penerimaan Polis</p>
               <p class="data-value">
                 {{
-                  myPolicy.policyWithCode.despatchDate
-                    ? $moment(myPolicy.policyWithCode.despatchDate).format(
+                  myPolicy.policyWithCode.acknowledgeDate
+                    ? $moment(myPolicy.policyWithCode.acknowledgeDate).format(
                         "DD/MM/Y"
                       )
                     : "-"
@@ -112,25 +112,6 @@
                   </template>
                 </v-data-table>
               </template>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-12 col-sm-12">
-              <p class="data-title mb-2">KTP Pemegang Polis</p>
-              <input
-                type="file"
-                ref="inputKtpImage"
-                v-show="false"
-                accept="image/*"
-                @change="addKtpImage"
-              />
-              <button
-                class="btn btn-primary-outlined"
-                @click.prevent="$refs.inputKtpImage.click()"
-              >
-                Unggah
-              </button>
-              <small>{{ ktpFileName }}</small>
             </div>
           </div>
           <div class="row">
@@ -313,7 +294,6 @@ export default {
       form: {
         coverages_selected: [],
         ktp_selfie: null,
-        ktp: null,
         reason_selected: null,
       },
       modal: {
@@ -337,9 +317,6 @@ export default {
     },
   },
   computed: {
-    ktpFileName() {
-      return this.$store.getters["submission_transaction/getKtpFileName"];
-    },
     selfieKtpFileName() {
       return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
     },
@@ -396,12 +373,6 @@ export default {
         this.$router.push({ path: "./cancellation-main-product/resume" });
       }
     },
-    addKtpImage: function (e) {
-      this.form.ktp = e.target.files[0];
-      this.$store.dispatch("submission_transaction/uploadKtpFile", {
-        file: e.target.files[0],
-      });
-    },
     addSelfieKtpImage: function (e) {
       this.form.ktp_selfie = e.target.files[0];
       this.$store.dispatch("submission_transaction/uploadSelieKtpFile", {
@@ -412,9 +383,6 @@ export default {
       this.validationMessage = [];
       if (this.form.coverages_selected.length <= 0) {
         this.validationMessage.push("Pilih minimal 1 produk");
-      }
-      if (this.ktpFileName == "") {
-        this.validationMessage.push("Unggah KTP diperlukan");
       }
       if (this.selfieKtpFileName == "") {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
