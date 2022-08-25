@@ -1,6 +1,6 @@
 <template>
   <div>
-    Perubahan Premi Dasar dan Topup Berkala Page
+    Perubahan {{$wording("Premi Dasar")}} dan Topup Berkala Page
   </div>
 </template>
 <script>

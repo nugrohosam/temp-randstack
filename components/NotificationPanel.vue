@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="" outlined="false">
+  <v-card class="mx-auto" max-width="" :outlined="false">
     <v-card-title class="card-title">Notification</v-card-title>
     <v-divider class="mx-0"></v-divider>
     <template v-if="items">

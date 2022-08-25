@@ -37,10 +37,10 @@
                     <Menu
                       v-for="(menu, key) in menus"
                       :key="key"
-                      :name="menu.name"
+                      :name="$checkSyariLabel(menu.name)"
                       :icon="menu.icon"
                       :link="menu.link"
-                      @click.native="current_header_title = menu.name"
+                      @click.native="current_header_title = $checkSyariLabel(menu.name)"
                     />
                   </div>
                 </div>

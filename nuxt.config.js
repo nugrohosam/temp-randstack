@@ -50,6 +50,12 @@ export default {
     {
       src: '~/plugins/prototype.js'
     },
+    {
+      src: '~/plugins/wording-lib.js'
+    },
+    {
+      src: '~/plugins/floating-vue.js'
+    },
 
   ],
 
@@ -82,11 +88,13 @@ export default {
     "/api/v1/": {
       // target: "http://172.20.8.75",
       target: "http://34.124.156.103:8888/",
+      // target: "https://cb5d05f7-d223-4c0a-917b-4d3177f5077c.mock.pstmn.io/",
       pathRewrite: { "^/api/v1/": "/api/v1/" }
     },
     "/test/v1/": {
       // target: "http://172.20.8.75",
       target: "http://34.124.156.103:8888/",
+      // target: "https://cb5d05f7-d223-4c0a-917b-4d3177f5077c.mock.pstmn.io/",
       pathRewrite: { "^/test/v1/": "/test/v1/" }
     },
   },
