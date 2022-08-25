@@ -14,7 +14,7 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nomor Rekening Saat Ini</p>
         <p class="data-value">
-          {{ myPolicy.policyWithCode.payerBankAccount[0].accountId }}
+          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-"  }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -22,12 +22,12 @@
           Nama Pemilik Nomor Rekening Manfaat Saat Ini
         </p>
         <p class="data-value">
-          {{ myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName }}
+          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-"  }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Bank Saat Ini</p>
-        <p class="data-value">{{ bankName }}</p>
+        <p class="data-value">{{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Penerimaan Polis</p>
