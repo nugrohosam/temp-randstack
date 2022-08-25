@@ -242,9 +242,11 @@ export default {
   },
   methods: {
     getBankName: async function () {
-      this.bankName = await this.$getBankName(
-        this.myPolicy.policyWithCode.payerBankAccount[0].bankCode
-      );
+      if(this.myPolicy.policyWithCode.refundPayeeBankAccount.legth > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null){
+        this.bankName = await this.$getBankName(
+          this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankCode
+        );
+      } 
     },
     submit: async function () {
       const result = await this.$store.dispatch(

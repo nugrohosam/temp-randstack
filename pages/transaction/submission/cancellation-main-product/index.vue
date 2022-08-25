@@ -342,7 +342,9 @@ export default {
             : "Tambahan";
         data.policyWithCode.coverages[i].productStatus = "Aktif";
       });
-      data.policyWithCode.payerBankAccount[0].bankName = await this.$getBankName(data.policyWithCode.payerBankAccount[0].bankCode)
+      if (data.policyWithCode.refundPayeeBankAccount.length > 0 && data.policyWithCode.refundPayeeBankAccount[0] != null){
+        data.policyWithCode.refundPayeeBankAccount[0].bankName = await this.$getBankName(data.policyWithCode.refundPayeeBankAccount[0].bankCode)
+      }
       products = await this.$store.dispatch(
         "submission_transaction/getProducts",
         productIds.join()
