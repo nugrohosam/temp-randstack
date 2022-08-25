@@ -79,6 +79,130 @@ export default function ({ app, store, $axios }, inject) {
     return types[code];
   }
 
+  const fundName = (code) => {
+    let fundCodeName = new Array();
+    fundCodeName["BNLS"] =
+      "BLife Link Dana Selaras"
+    funCodeName["BNLST"] =
+      "BLife Link Dana Stabil";
+    fundCodeName["BNLSUS"] =
+      "BLife Link Dana Secure USD";
+    fundCodeName["HYEND"] =
+      "Hy End Pro";
+    fundCodeName["BNLDM"] =
+      "Dana Mantap";
+    fundCodeName["BNLDM2"] =
+      "Dana Mantap 2";
+    fundCodeName["BNLDM3"] =
+      "Dana Mantap 3";
+    fundCodeName["BNLDM4"] =
+      "Dana Mantap 4";
+    fundCodeName["BNLDM5"] =
+      "Dana Mantap 5";
+    fundCodeName["BNLDM6"] =
+      "Dana Mantap 6";
+    fundCodeName["BNLDM7"] =
+      "Dana Mantap 7";
+    fundCodeName["BNLDM8"] =
+      "Dana Mantap 8";
+    fundCodeName["BNLDM9"] =
+      "Dana Mantap 9";
+    fundCodeName["BNLDM10"] =
+      "Dana Mantap 10";
+    fundCodeName["BNLDM11"] =
+      "Dana Mantap 11";
+    fundCodeName["BNLDM12"] =
+      "Dana Mantap 12";
+    fundCodeName["BNLDM13"] =
+      "Dana Mantap 13";
+    fundCodeName["BNLDM14"] =
+      "Dana Mantap 14";
+    fundCodeName["BNLDM20"] =
+      "Dana Mantap 20";
+    fundCodeName["BNLDM21"] =
+      "Dana Mantap 21";
+    fundCodeName["BNLDM22"] =
+      "Dana Mantap 22";
+    fundCodeName["01"] =
+      "Cash Fund";
+    fundCodeName["BNLSRT1"] =
+      "Dana SRT Fund1";
+    fundCodeName["BNLSF"] =
+      "Bni Life Syariah  Fixed Income Fund";
+    fundCodeName["BNLSM"] =
+      "Bni Life Syariah  Balance Fund";
+    fundCodeName["BNLSEF"] =
+      "Bni Life Syariah Equity  Fund";
+    fundCodeName["BNLMP"] =
+      "BLife Link Dana Maksima Plus";
+    fundCodeName["BNLA"] =
+      "BLife Link Dana Aktif";
+    fundCodeName["BNLAG"] =
+      "Dana Agresif";
+    fundCodeName["BNLSP"] =
+      "BLife Link Dana Selaras Plus";
+    fundCodeName["BNLK"] =
+      "BLife Link Dana Kombinasi";
+    fundCodeName["BNLSTP"] =
+      "BLife Link Dana Stabil Plus";
+    fundCodeName["BNLMA"] =
+      "Dana Mapan";
+    fundCodeName["BNLC"] =
+      "BLife Link Dana Cemerlang";
+    fundCodeName["BNLDL"] =
+      "Dana Likuid";
+    fundCodeName["BNLM"] =
+      "BLife Link Dana Maksima";
+    fundCodeName["BNLSRT2"] =
+      "Dana SRT Fund2";
+    fundCodeName["BLSEF"] =
+      "BLife Syariah Equity  Fund (BLS0000006)";
+    fundCodeName["BLSF"] =
+      "BLife Syariah  Fixed Income (BLS0000004)";
+    fundCodeName["BLSST"] =
+      "BLIFE STABIL SYARIAH (BLS0000007)";
+    fundCodeName["BNLSK"] =
+      "BLife Link Dana Kombinasi Syariah";
+    fundCodeName["BNLSST"] =
+      "BLIFE SYARIAH STABIL (BLS0000001)";
+    fundCodeName["BNLSAG"] =
+      "Dana Agresif Syariah";
+    fundCodeName["BNLSMF"] =
+      "Bni Life Syariah  Managed Fund";
+    fundCodeName["BNLSUL01"] =
+      "Rekening Variabel";
+    fundCodeName["BNLSUL02"] =
+      "Rekening Investasi Peserta";
+    fundCodeName["BNLSBF"] =
+      "Bni Life Syariah  Berimbang (BLS0000002)";
+    fundCodeName["BNLSOF"] =
+      "Bni Life Syariah  Optimal  (BLS0000003)";
+    fundCodeName["BNLSRTUS1"] =
+      "BLife Dana SRT USD1";
+    fundCodeName["BNLUL01"] =
+      "BLife Saving Account Fund 01 IDR";
+    fundCodeName["BNLUL02"] =
+      "BLife Saving Wadiah Gold Cendekia";
+    fundCodeName["BNLSRTUS2"] =
+      "BLife Dana SRT USD2";
+    fundCodeName["BNLFC"] =
+      "BLife Fund Conformable";
+    fundCodeName["BNLFS"] =
+      "BLife Fund Stable";
+    fundCodeName["BNLF"] =
+      "BLIFE DANA FLEKSIBLE";
+    fundCodeName["BNLL"] =
+      "BLIFE DANA LANCAR";
+    fundCodeName["BNLB"] =
+      "BLIFE DANA BERKEMBANG";
+    fundCodeName["BNLBD"] =
+      "BLIFE DANA BERBUNGA DUA";
+    fundCodeName["BNLUL03"] =
+      "BLife Saving Wadiah Cendekia";
+
+    return fundCodeName[code];
+  }
+
   const labelIdentityType = (code) => {
     let types = new Array();
     types[1] = "E-KTP"
