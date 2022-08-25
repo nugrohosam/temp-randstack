@@ -10,8 +10,13 @@
           <p id="otp_sent_to">
             Kode OTP telah dikirimkan ke nomor
             {{ this.$route.query.phonenumber }}
-            <br>
-            Akan berakhir dalam {{ Math.floor(otp_expired_time / 60) }} : {{ otp_expired_time % 60 < 10 ? "0" + (otp_expired_time % 60) : otp_expired_time % 60  }} 
+            <br />
+            Akan berakhir dalam {{ Math.floor(otp_expired_time / 60) }} :
+            {{
+              otp_expired_time % 60 < 10
+                ? "0" + (otp_expired_time % 60)
+                : otp_expired_time % 60
+            }}
           </p>
           <v-otp-input
             v-model="form.otp_number"
@@ -106,6 +111,11 @@ export default {
     if (window.screen.width < MOBILE_BREAKPOINT) {
       this.is_mobile = true;
     }
+
+    this.otp_expired_time = 30; //seconds
+    this.otp_counter_expired_time = setInterval(() => {
+      this.otp_expired_time -= 1;
+    }, 1000);
   },
   auth(context) {
     return "auth";
