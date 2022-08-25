@@ -8,7 +8,7 @@
         <div class="row">
           <div class="col-12">
             <p class="data-title">Nilai Tunai</p>
-            <h2 class="data-value">Rp {{ myPolicyLoanInfo.financialInfo && myPolicyLoanInfo.financialInfo.netSV }}</h2>
+            <h2 class="data-value">Rp {{ myPolicyLoanInfo && myPolicyLoanInfo.financialInfo && $convertCurrency(myPolicyLoanInfo.financialInfo.netSV) }}</h2>
           </div>
           <div class="col-12">
             <p class="data-title">Jenis dan Dana Investasi yang dimiliki</p>
@@ -29,14 +29,12 @@
                   <tr v-for="(item, index) in myPolicy.policyWithCode.coverages" :key="index">
                     <td>{{ index + 1 }}</td>
                     <td>{{ item.contractInvests[0] && $fundName(item.contractInvests[0].fundCode) || '-' }}</td>
-                    <td>{{ myPolicy.policyWithCode.currency }}</td>
-                    <td>{{ item.contractInvests[0] && item.contractInvests[0].accumUnits || '-' }}</td>
-                    <!-- TODO: get funPrice -->
-                    <td>XXXX</td>
-                    <!-- TODO: masih kosong -->
-                    <td>XXXX</td>
-                    <!-- TODO: Jumlah Unit * Harga Unit -->
-                    <td>XXXX</td>
+                    <td>{{ $currencyName(myPolicy.policyWithCode.currency) }}</td>
+                    <td>{{ item.contractInvests[0] && $convertCurrency(item.contractInvests[0].accumUnits) || 0 }}</td>
+                    <td>{{ $convertCurrency(getFundPrices(myPolicy.policyWithCode.fundPrices, item.contractInvests[0].fundCode)) }}</td>
+                    <!-- TODO: Tanggal NAB masih kosong -->
+                    <td>-</td>
+                    <td>{{ $convertCurrency(item.contractInvests[0].accumUnits * getFundPrices(myPolicy.policyWithCode.fundPrices, item.contractInvests[0].fundCode)) }}</td>
                   </tr>
                 </tbody>
               </template>
@@ -57,6 +55,14 @@ export default {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
+  },
+  methods: {
+    getFundPrices(fundPrices = [], fundCode) {
+      if (!fundPrices.length) return 0
+
+      const found = fundPrices.find((item) => item.fundCode === fundCode)
+      return found ? found.bidPrice : 0
+    }
   }
 };
 </script>

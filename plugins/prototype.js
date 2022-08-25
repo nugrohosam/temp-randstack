@@ -17,7 +17,8 @@ export default function ({ app, store, $axios }, inject) {
       return new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR",
-      }).format(amount);
+        currencyDisplay: 'code'
+      }).format(amount).replace('IDR', '');
     }
   };
 
@@ -138,7 +139,7 @@ export default function ({ app, store, $axios }, inject) {
     let fundCodeName = new Array();
     fundCodeName["BNLS"] =
       "BLife Link Dana Selaras"
-    funCodeName["BNLST"] =
+    fundCodeName["BNLST"] =
       "BLife Link Dana Stabil";
     fundCodeName["BNLSUS"] =
       "BLife Link Dana Secure USD";
