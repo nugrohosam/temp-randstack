@@ -147,7 +147,6 @@ export default {
     const form = {
       items: items,
       cancel_reason: getters.getReasonSelected[0].name,
-      ktp_attachment: getters.getKtpUploadFileName,
       ktp_selfie_attachment: getters.getSelfieKtpUploadFileName,
     }
     dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, { root: true });

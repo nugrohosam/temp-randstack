@@ -90,17 +90,6 @@
     </div>
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">KTP Pemegang Polis</p>
-        <button
-          class="btn btn-primary-outlined"
-          @click.prevent="showKtpPreview"
-        >
-          Lihat
-        </button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">Lihat Foto Selfie dengan KTP</p>
         <button
           class="btn btn-primary-outlined"
@@ -231,9 +220,6 @@ export default {
     };
   },
   computed: {
-    ktpFile() {
-      return this.$store.getters["submission_transaction/getKtpFile"];
-    },
     selfieKtpFile() {
       return this.$store.getters["submission_transaction/getSelfieKtpFile"];
     },
@@ -273,12 +259,6 @@ export default {
         });
       } else {
         // check validation error
-      }
-    },
-    showKtpPreview: function () {
-      if (this.ktpFile) {
-        this.image_preview.src = URL.createObjectURL(this.ktpFile);
-        this.image_preview.show = true;
       }
     },
     showSelfieKtpPreview: function () {
