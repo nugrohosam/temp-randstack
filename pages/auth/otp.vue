@@ -112,7 +112,7 @@ export default {
       this.is_mobile = true;
     }
 
-    this.otp_expired_time = 30; //seconds
+    this.otp_expired_time = 300; //seconds
     this.otp_counter_expired_time = setInterval(() => {
       this.otp_expired_time -= 1;
     }, 1000);
