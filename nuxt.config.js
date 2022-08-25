@@ -62,7 +62,9 @@ export default {
     {
       src: '~/plugins/wording-lib.js'
     },
-
+    {
+      src: '~/plugins/vee-validation.js'
+    },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

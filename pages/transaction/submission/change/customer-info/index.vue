@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <ValidationObserver v-slot="{ handleSubmit }">
     <template v-if="!isLoading">
-      <div v-show="showMe">
+      <form v-show="showMe" @submit.prevent="handleSubmit(save)">
         <div class="row">
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nama Pemegang Polis</p>
@@ -325,14 +325,15 @@
                               : "-"
                           }}
                         </p>
-                        <div class="form-input" v-show="phoneEditable">
+                        <ValidationProvider class="form-input" v-show="phoneEditable" name="Telepon 1" :rules="{ regex: /62[0-9]+$/ }" v-slot="{ errors }">
                           <input
                             type="text"
                             class="outlined"
                             placeholder="08123456789"
                             v-model="selectedPolicy.person.mobile"
-                          />
-                        </div>
+                          /> <br />
+                          <span class="text-error">{{ errors[0] }}</span>
+                        </ValidationProvider>
                       </div>
                       <div class="col-lg-4 col-sm-12">
                         <p class="data-title">Nomor Telepon Saat Ini 2</p>
@@ -343,14 +344,15 @@
                               : "-"
                           }}
                         </p>
-                        <div class="form-input" v-show="phoneEditable">
+                        <ValidationProvider class="form-input" v-show="phoneEditable" name="Telepon 2" :rules="{ regex: /62[0-9]+$/ }" v-slot="{ errors }">
                           <input
                             type="text"
                             class="outlined"
                             placeholder="08123456789"
                             v-model="selectedPolicy.person.mobile2"
-                          />
-                        </div>
+                          /> <br />
+                          <span class="text-error">{{ errors[0] }}</span>
+                        </ValidationProvider>
                       </div>
                       <div class="col-lg-4 col-sm-12">
                         <p class="data-title">Nomor Telepon Kantor Saat Ini</p>
@@ -361,14 +363,15 @@
                               : "-"
                           }}
                         </p>
-                        <div class="form-input" v-show="phoneEditable">
+                        <ValidationProvider class="form-input" v-show="phoneEditable" name="Telepon Kantor" :rules="{ regex: /62[0-9]+$/ }" v-slot="{ errors }">
                           <input
                             type="text"
                             class="outlined"
                             placeholder="08123456789"
                             v-model="selectedPolicy.person.officeTel"
-                          />
-                        </div>
+                          /> <br />
+                          <span class="text-error">{{ errors[0] }}</span>
+                        </ValidationProvider>
                       </div>
                       <div class="col-lg-4 col-sm-12">
                         <p class="data-title">
@@ -381,14 +384,15 @@
                               : "-"
                           }}
                         </p>
-                        <div class="form-input" v-show="phoneEditable">
+                        <ValidationProvider class="form-input" v-show="phoneEditable" name="Telepon Kantor Lain" :rules="{ regex: /62[0-9]+$/ }" v-slot="{ errors }">
                           <input
                             type="text"
                             class="outlined"
                             placeholder="08123456789"
                             v-model="selectedPolicy.person.officeTel2"
-                          />
-                        </div>
+                          /> <br />
+                          <span class="text-error">{{ errors[0] }}</span>
+                        </ValidationProvider>
                       </div>
                       <div class="col-lg-4 col-sm-12">
                         <p class="data-title">Nomor Telepon Rumah Saat Ini</p>
@@ -427,12 +431,15 @@
                 }}
               </p>
               <div class="form-input" v-show="emailEditable">
-                <input
-                  type="text"
-                  class="outlined"
-                  placeholder="200.000"
-                  v-model="selectedPolicy.person.email"
-                />
+                <ValidationProvider name="Email" rules="email" v-slot="{ errors }">
+                  <input
+                    type="text"
+                    class="outlined"
+                    placeholder="200.000"
+                    v-model="selectedPolicy.person.email"
+                  /> <br />
+                  <span class="text-error">{{ errors[0] }}</span>
+                </ValidationProvider>
               </div>
               <button
                 class="btn btn-primary-outlined btn-mini"
@@ -466,13 +473,13 @@
           <div class="col-12">
             <button
               class="btn btn-primary btn-save float-right"
-              @click.prevent="save()"
+              type="submit"
             >
               Simpan
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </template>
     <template v-else>
       <div
@@ -489,7 +496,7 @@
       </div>
     </template>
     <NuxtChild />
-  </div>
+  </ValidationObserver>
 </template>
 <script>
 import { SaveIcon, InfoIcon } from "vue-feather-icons";

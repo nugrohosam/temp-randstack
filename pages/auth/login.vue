@@ -3,7 +3,7 @@
     <div class="col-12 d-md-none bni_logo">
       <img src="~/assets/icon/main_bni_life.svg" alt="logo" />
     </div>
-    <div class="col-md-12 col-xs-8">
+    <ValidationObserver v-slot="{ handleSubmit }" class="col-md-12 col-xs-8">
       <div
         class="row v-card-auth-body"
         style="justify-content: center; width: 100%; max-width: 1020px"
@@ -29,7 +29,7 @@
           <p class="auth-title-form">Login</p>
           <!-- </div>
             </div> -->
-          <form action="">
+          <form @submit.prevent="handleSubmit(signIn)">
             <div class="form-input auth">
               <label>Nomor Polis</label>
               <input
@@ -39,15 +39,16 @@
                 placeholder="9210000627"
               />
             </div>
-            <div class="form-input auth">
+            <ValidationProvider class="form-input auth" name="Nomor Hp" :rules="{ regex: /62[0-9]+$/ }" v-slot="{ errors }">
               <label>Nomor HP</label>
               <input
                 type="text"
                 class="w-100"
                 v-model="form.phone_number"
                 placeholder="6288809139413"
-              />
-            </div>
+              /> <br />
+              <span class="text-error">{{ errors[0] }}</span>
+            </ValidationProvider>
             <div class="form-input auth" style="margin-bottom: 66px">
               <label>Nomor Identitas</label>
               <input
@@ -68,7 +69,7 @@
             <button
               class="btn btn-primary w-100 mt-12"
               :disabled="signInDisable"
-              @click.prevent="signIn"
+              type="submit"
             >
               Sign In
             </button>
@@ -80,7 +81,7 @@
           </form>
         </div>
       </div>
-    </div>
+    </ValidationObserver>
     <!-- Modal Message -->
     <ModalMessage
       :message="modal.message"
@@ -133,7 +134,7 @@ export default {
         policy_number: "BLMS0000046", //9210000627
         phone_number: "6285692203893", //6288809139413
         identity_number: "3578204808680002", //5315056301790004
-        verified: "",
+        verified: true,
       },
       modal: {
         message: "",
