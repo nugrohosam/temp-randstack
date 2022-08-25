@@ -53,7 +53,7 @@
                                 myPolicy.policyWithCode.policyHolder.person
                                   .gender == "F"
                                   ? "PEREMPUAN"
-                                  : "LAKI LKAI"
+                                  : "LAKI LAKI"
                               }}
                             </p>
                             <p class="data-title">Jenis Identitas</p>
