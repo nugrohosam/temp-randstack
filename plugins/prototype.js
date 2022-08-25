@@ -79,7 +79,7 @@ export default function ({ app, store, $axios }, inject) {
     return types[code];
   }
 
-  const currencyName = () => {
+  const currencyName = (id) => {
     let currencySymbol = new Array();
 
     currencySymbol["4"] =
@@ -131,7 +131,7 @@ export default function ({ app, store, $axios }, inject) {
     currencySymbol["32"] =
       "?"
 
-    return currencySymbol;
+    return currencySymbol[id];
   }
 
   const fundName = (code) => {
