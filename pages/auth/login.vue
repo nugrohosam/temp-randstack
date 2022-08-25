@@ -39,16 +39,18 @@
                 placeholder="9210000627"
               />
             </div>
-            <ValidationProvider class="form-input auth" name="Nomor Hp" :rules="{ regex: /62[0-9]+$/ }" v-slot="{ errors }">
-              <label>Nomor HP</label>
-              <input
-                type="text"
-                class="w-100"
-                v-model="form.phone_number"
-                placeholder="6288809139413"
-              /> <br />
-              <span class="text-error">{{ errors[0] }}</span>
-            </ValidationProvider>
+            <div class="form-input auth">
+              <ValidationProvider name="Nomor Hp" :rules="{ regex: /62[0-9]+$/ }" v-slot="{ errors }">
+                <label>Nomor HP</label>
+                <input
+                  type="text"
+                  class="w-100"
+                  v-model="form.phone_number"
+                  placeholder="6288809139413"
+                /> <br />
+                <span class="text-error">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </div>
             <div class="form-input auth" style="margin-bottom: 66px">
               <label>Nomor Identitas</label>
               <input
