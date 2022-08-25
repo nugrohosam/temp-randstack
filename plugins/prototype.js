@@ -413,5 +413,6 @@ export default function ({ app, store, $axios }, inject) {
   inject("findCity", findCity);
   inject("findDistrict", findDistrict);
   inject("findVillage", findVillage);
-  inject("fundName", isNullWithSpace);
+  inject("fundName", fundName);
+  inject("currencyName", currencyName);
 }
