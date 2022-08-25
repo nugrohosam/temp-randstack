@@ -56,6 +56,21 @@ export default {
     return response;
   },
 
+  async getMyPolicyLoanInfo({ rootGetters, commit }) {
+    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+    return await this.$axios
+      .$get("/api/v1/policy/get-my-policy-loan-info")
+      .then((response) => {
+        if (response.success) {
+          commit("setMyPolicyLoanInfo", response.data);
+          // return response.data;
+        }
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+  },
 
   async getSurrenderReasons({ rootGetters }, data) {
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');

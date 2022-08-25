@@ -1,6 +1,7 @@
 export default {
   menus_search: '',
   myPolicy: null,
+  myPolicyLoanInfo: null,
   menus: [
     {
       name: "Cuti Premi",

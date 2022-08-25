@@ -15,6 +15,9 @@ export default {
   getMyPolicy: (state) => {
     return state.myPolicy;
   },
+  getMyPolicyLoanInfo: (state) => {
+    return state.myPolicyLoanInfo;
+  },
   getKtpFile: (state) => {
     return state.cancellation_main_product.upload.ktp.file
   },

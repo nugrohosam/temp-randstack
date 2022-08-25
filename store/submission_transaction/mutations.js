@@ -24,6 +24,9 @@ export default {
   setMyPolicy(state, data){
     state.myPolicy = data;
   },
+  setMyPolicyLoanInfo(state, data) {
+    state.myPolicyLoanInfo = data;
+  },
   clearUploadSelfieKtpFile(state){
     state.cancellation_main_product.upload.selfie_ktp.file = null;
     state.cancellation_main_product.upload.selfie_ktp.name = '';

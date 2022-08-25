@@ -13,6 +13,7 @@
         <div class="row">
           <!-- Search -->
           <div class="col-12">
+            acmslakm
             <template v-if="myPolicy">
               <div class="page-body">
                 <!-- Transaction Status Menu -->
@@ -91,7 +92,12 @@
                               }}
                             </p>
                             <p class="data-title">Alamat Koresponden</p>
-                            <p class="data-value">{{ myPolicy.policyWithCode.policyHolder.address.address1 }}</p>
+                            <p class="data-value">
+                              {{
+                                myPolicy.policyWithCode.policyHolder.address
+                                  .address1
+                              }}
+                            </p>
                             <p class="data-title">Nomor HP</p>
                             <p class="data-value">
                               {{
@@ -243,6 +249,11 @@ export default {
           index: 3,
           tab: "Data Rekening Manfaat",
           link: "/polis/information/benefit-account",
+        },
+        {
+          index: 4,
+          tab: "Nilai Polis",
+          link: "/polis/information/polis-value",
         },
       ],
       information_policy: null,
