@@ -463,17 +463,6 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-12 col-sm-12">
-            <div class="message-bar rounded-lg">
-              <p><b>Perhatian !</b></p>
-              <ul>
-                <li>Polis tidak dalam masa Cuti Premi Otomatis</li>
-                <li>Polis tidak dalam masa Must Pay Period</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="row">
           <div class="col-12">
             <button
               class="btn btn-primary btn-save float-right"

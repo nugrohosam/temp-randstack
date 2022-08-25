@@ -235,17 +235,6 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-12 col-sm-12">
-          <div class="message-bar rounded-lg">
-            <p><b>Perhatian !</b></p>
-            <ul>
-              <li>Polis tidak dalam masa Cuti Premi Otomatis</li>
-              <li>Polis tidak dalam masa Must Pay Period</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="row">
         <div class="col-lg-6 col-sm-12 d-flex">
           <v-checkbox
             v-model="accepted"
@@ -254,9 +243,7 @@
             hide-details
           ></v-checkbox>
           <p>
-            Saya telah membaca dan menyetujui seluruh ketentuan transaksi yang
-            diajukan dan resume pengajuan serta memahami risiko atas keputusan
-            yang saya buat.
+            Saya menyetujui transaksi dan kebenaran data yang disampaikan.
             <a class="bni-primary no-border" href="">Baca selengkapnya</a>
           </p>
         </div>
