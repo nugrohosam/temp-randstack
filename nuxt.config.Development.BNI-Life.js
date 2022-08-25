@@ -38,7 +38,8 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{
+  plugins: [
+    {
       src: '~/plugins/vue-recaptcha.js'
     },
     {
@@ -59,7 +60,12 @@ export default {
     {
       src: '~/plugins/idle-vue.js'
     },
-
+    {
+      src: '~/plugins/wording-lib.js'
+    },
+    {
+      src: '~/plugins/vee-validation.js'
+    },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

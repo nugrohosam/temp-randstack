@@ -28,7 +28,7 @@
                 <tbody>
                   <tr v-for="(item, index) in myPolicy.policyWithCode.coverages" :key="index">
                     <td>{{ index + 1 }}</td>
-                    <td>{{ item.contractInvests[0] && item.contractInvests[0].fundCode || '-' }}</td>
+                    <td>{{ item.contractInvests[0] && $fundName(item.contractInvests[0].fundCode) || '-' }}</td>
                     <td>{{ myPolicy.policyWithCode.currency }}</td>
                     <td>{{ item.contractInvests[0] && item.contractInvests[0].accumUnits || '-' }}</td>
                     <!-- TODO: get funPrice -->
