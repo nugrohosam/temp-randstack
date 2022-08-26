@@ -133,7 +133,7 @@
                                     <br />
                                     <p class="data-title">Uang Pertanggungan</p>
                                     <p class="data-value mb-3">
-                                      {{ $convertCurrency(item.currentPremium.sumAssured) }}
+                                      {{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.currentPremium.sumAssured) }}
                                     </p>
                                     <p class="data-title">Plan</p>
                                     <p class="data-value mb-3">
@@ -141,7 +141,7 @@
                                     </p>
                                     <p class="data-title">Premi</p>
                                     <p class="data-value mb-3">
-                                      {{ $convertCurrency(item.currentPremium.stdPremAf) }}
+                                      {{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.currentPremium.stdPremAf) }}
                                     </p>
                                     <p class="data-title">Benefit Status</p>
                                     <p class="data-value">
