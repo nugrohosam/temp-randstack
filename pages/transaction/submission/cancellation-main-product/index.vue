@@ -352,7 +352,7 @@ export default {
       data.policyWithCode.coverages.forEach((v, i) => {
         v.productName = products.filter((product) => product.id == v.productId)[0].name;
       });
-      
+      data.policyWithCode.coverages = [data.policyWithCode.coverages.find(cov => cov.masterProduct == null), ...data.policyWithCode.coverages.filter(cov => cov.masterProduct != null)]
       this.my_policy = data;
       this.isLoading = false;
     },
