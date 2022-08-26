@@ -418,6 +418,7 @@ export default {
       ) {
         this.reasons_filtered = this.reasons.filter(
           (reason) =>
+            reason.name == "Lainnya" ||
             reason.name == "Tidak Ada" ||
             reason.name == "Masalah Pengiriman Polis"
         );
