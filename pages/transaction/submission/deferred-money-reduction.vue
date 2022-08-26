@@ -1,11 +1,18 @@
 <template>
   <div>
-    Penurunan Uang Pertangguhan
+    <!-- <div>Penurunan Uang Pertangguhan</div> -->
+    <NuxtChild />
+    <ModalMessage
+      :message="modal.message"
+      :show="modal.show"
+      :button="modal.button"
+      @closeModal="modal.show = false"
+    />
   </div>
 </template>
 <script>
 export default {
-  name: 'deferred-money-reduction',
+  name: "deferred-money-reduction",
   beforeMount() {
     this.modal.show = true;
     this.modal.message = "Menu yang anda pilih masih dalam tahap pengembangan";
@@ -23,5 +30,5 @@ export default {
       },
     };
   },
-}
+};
 </script>

@@ -1,11 +1,18 @@
 <template>
   <div>
-    Cuti Premi Page
+    <!-- <div>Cuti Premi Page</div> -->
+    <NuxtChild />
+    <ModalMessage
+      :message="modal.message"
+      :show="modal.show"
+      :button="modal.button"
+      @closeModal="modal.show = false"
+    />
   </div>
 </template>
 <script>
 export default {
-  name: 'cuti-premi',
+  name: "cuti-premi",
   beforeMount() {
     this.modal.show = true;
     this.modal.message = "Menu yang anda pilih masih dalam tahap pengembangan";
@@ -23,5 +30,5 @@ export default {
       },
     };
   },
-}
+};
 </script>

@@ -165,7 +165,7 @@ export default {
       width: 40px;
     }
     // background-color: #f15921;
-    background-color: #f7931d;
+    background-color: grey;
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: 50px;

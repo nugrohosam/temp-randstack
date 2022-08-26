@@ -73,6 +73,12 @@
       </div>
     </div>
     <NuxtChild />
+    <ModalMessage
+      :message="modal.message"
+      :show="modal.show"
+      :button="modal.button"
+      @closeModal="modal.show = false"
+    />
   </div>
 </template>
 <script>
@@ -80,10 +86,22 @@ export default {
   name: "new-policy-loan",
   data() {
     return {
+      modal: {
+        message: "",
+        show: false,
+        button: {
+          text: "Tutup",
+          redirect_link: "/transaction/submission",
+          redirect_type: "spa",
+        },
+      },
       showMe: true,
     };
   },
-
+  beforeMount() {
+    this.modal.show = true;
+    this.modal.message = "Menu yang anda pilih masih dalam tahap pengembangan";
+  },
   mounted() {
     console.log($nuxt.$route.name);
     if ($nuxt.$route.name != "transaction-submission-new-policy-loan") {
