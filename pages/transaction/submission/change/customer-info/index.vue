@@ -630,22 +630,26 @@ export default {
     getMyPolicy: async function () {
       await this.switchType(this.addressType[0].type);
       if (this.selectedPolicy.address.addressFormat == "Y") {
-        if (parseInt(this.selectedPolicy.address.province) != "NaN") {
+        if (parseInt(this.selectedPolicy.address.province) != NaN) {
+          console.log(parseInt(this.selectedPolicy.address.province));
           this.selectedPolicy.address.province = await this.findProvince(
             this.selectedPolicy.address.province
           );
         }
-        if (parseInt(this.selectedPolicy.address.city) != "NaN") {
+        if (parseInt(this.selectedPolicy.address.city) != NaN) {
+          console.log(parseInt(this.selectedPolicy.address.city));
           this.selectedPolicy.address.city = await this.findCity(
             this.selectedPolicy.address.city
           );
         }
-        if (parseInt(this.selectedPolicy.address.street) != "NaN") {
+        if (parseInt(this.selectedPolicy.address.street) != NaN) {
+          console.log(parseInt(this.selectedPolicy.address.street));
           this.selectedPolicy.address.street = await this.findDistrict(
             this.selectedPolicy.address.street
           );
         }
-        if (parseInt(this.selectedPolicy.address.village) != "NaN") {
+        if (parseInt(this.selectedPolicy.address.village) != NaN) {
+          console.log(parseInt(this.selectedPolicy.address.village));
           this.selectedPolicy.address.village = await this.findVillage(
             this.selectedPolicy.address.village
           );
@@ -680,7 +684,7 @@ export default {
         .then((res) => {
           this.$router.push({ path: "./customer-info/resume" });
         });
-      // console.log(this.province.selected);
+      // console.log(parseInt(this.selectedPolicy.address.city)
     },
     addSelfieKtpImage: function (e) {
       if (e.target.files[0]) {
@@ -878,7 +882,7 @@ export default {
     },
 
     findProvince: async function (provinceId = null) {
-      if (provinceId != null && parseInt(provinceId) != "NaN") {
+      if (provinceId != null && parseInt(provinceId) != NaN) {
         let response = await this.$findProvince(provinceId);
         if (response.success) {
           return response.data.name;
@@ -889,7 +893,7 @@ export default {
       return null;
     },
     findCity: async function (cityId) {
-      if (cityId != null && parseInt(cityId) != "NaN") {
+      if (cityId != null && parseInt(cityId) != NaN) {
         let response = await this.$findCity(cityId);
         if (response.success) {
           return response.data.name;
@@ -900,7 +904,7 @@ export default {
       return null;
     },
     findDistrict: async function (districtId) {
-      if (districtId != null && parseInt(districtId) != "NaN") {
+      if (districtId != null && parseInt(districtId) != NaN) {
         let response = await this.$findDistrict(districtId);
         if (response.success) {
           return response.data.name;
@@ -911,7 +915,7 @@ export default {
       return null;
     },
     findVillage: async function (villageId) {
-      if (villageId != null && parseInt(villageId) != "NaN") {
+      if (villageId != null && parseInt(villageId) != NaN) {
         let response = await this.$findVillage(villageId);
         if (response.success) {
           return response.data.name;
