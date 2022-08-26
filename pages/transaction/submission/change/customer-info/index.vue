@@ -645,9 +645,11 @@ export default {
       // console.log(this.province.selected);
     },
     addSelfieKtpImage: function (e) {
-      this.$store.dispatch("submission_transaction/uploadSelieKtpFile", {
-        file: e.target.files[0],
-      });
+      if (e.target.files[0]) {
+        this.$store.dispatch("submission_transaction/uploadSelieKtpFile", {
+          file: e.target.files[0],
+        });
+      }
     },
 
     getProvinces: async function () {
