@@ -228,7 +228,8 @@ export default {
         province_id: customerInformation.selectedProvince?.id != null ? this.$isNull(customerInformation.selectedProvince.id) : null,
         city_id: customerInformation.selectedCity?.id != null ? this.$isNull(customerInformation.selectedCity.id) : null,
         district_id: customerInformation.selectedDistrict?.id != null ? this.$isNull(customerInformation.selectedDistrict.id) : null,
-        village_id: customerInformation.selectedVillage?.id != null ? this.$isNull(customerInformation.selectedVillage.id) : null
+        village_id: customerInformation.selectedVillage?.id != null ? this.$isNull(customerInformation.selectedVillage.id) : null,
+        address_type: this.$isNull(customerInformation.selectedPolicy.addressType.type.toString())
       },
       ktp_selfie_attachment: getters.getSelfieKtpUploadFileName,
     }

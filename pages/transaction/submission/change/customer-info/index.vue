@@ -26,15 +26,15 @@
         </div>
         <div class="row">
           <div class="col-lg-4 col-sm-6">
-            <p class="data-title mb-1">Identitas yang diubah</p>
+            <p class="data-title mb-1">Alamat yang diubah</p>
             <v-select
-              :items="identityType"
+              :items="addressType"
               dense
               outlined
               item-value="type"
               item-text="name"
               class="investment_type_option"
-              v-model="selectedIdentityType"
+              v-model="selectedAddressType"
               @input="switchType"
             ></v-select>
           </div>
@@ -530,14 +530,17 @@ export default {
       phoneEditable: false,
       emailEditable: false,
       selectedPolicy: null,
-      identityType: [
+      addressType: [
         {
-          type: 1,
-          objectName: "policyHolder",
-          name: "Pemegang Polis",
+          type: 4,
+          name: "Alamat ID",
         },
+        {
+          type: 7,
+          name: "Alamat Koresponden"
+        }
       ],
-      selectedIdentityType: null,
+      selectedAddressType: null,
       province: {
         observer: null,
         limit: 10,
@@ -595,7 +598,7 @@ export default {
   },
   methods: {
     getMyPolicy: async function () {
-      await this.switchType(this.identityType[0].type);
+      await this.switchType(this.addressType[0].type);
       if (this.selectedPolicy.address.addressFormat == "Y") {
         this.selectedPolicy.address.province = await this.findProvince(
           this.selectedPolicy.address.province
@@ -615,13 +618,13 @@ export default {
     switchType: async function (type) {
       const self = this;
       return new Promise((res, rej) => {
-        this.selectedIdentityType = this.identityType.find(
+        this.selectedAddressType = this.addressType.find(
           (v, i) => v.type == type
         );
         this.selectedPolicy = this.myPolicy.policyWithCode.policyHolder;
         this.selectedPolicy.proposalNumber =
           this.myPolicy.policyWithCode.proposalNumber;
-        this.selectedPolicy.identityType = this.selectedIdentityType;
+        this.selectedPolicy.addressType = this.selectedAddressType;
 
         res("Done");
       });
