@@ -13,7 +13,6 @@
         <div class="row">
           <!-- Search -->
           <div class="col-12">
-            acmslakm
             <template v-if="myPolicy">
               <div class="page-body">
                 <!-- Transaction Status Menu -->

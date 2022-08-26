@@ -407,7 +407,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="200.000"
+                            placeholder="08123456789"
                             v-model="selectedPolicy.person.homeTel"
                           />
                         </div>
@@ -435,7 +435,7 @@
                   <input
                     type="text"
                     class="outlined"
-                    placeholder="200.000"
+                    placeholder="Email..."
                     v-model="selectedPolicy.person.email"
                   /> <br />
                   <span class="text-error">{{ errors[0] }}</span>

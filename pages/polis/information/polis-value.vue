@@ -31,10 +31,10 @@
                     <td>{{ item.contractInvests[0] && $fundName(item.contractInvests[0].fundCode) || '-' }}</td>
                     <td>{{ $currencyName(myPolicy.policyWithCode.currency) }}</td>
                     <td>{{ item.contractInvests[0] && $convertCurrency(item.contractInvests[0].accumUnits) || 0 }}</td>
-                    <td>{{ $convertCurrency(getFundPrices(myPolicy.policyWithCode.fundPrices, item.contractInvests[0].fundCode)) }}</td>
+                    <td>{{ $convertCurrency(getFundPrices(myPolicy.policyWithCode.fundPrices, item.contractInvests[0] && item.contractInvests[0].fundCode)) }}</td>
                     <!-- TODO: Tanggal NAB masih kosong -->
                     <td>-</td>
-                    <td>{{ $convertCurrency(item.contractInvests[0].accumUnits * getFundPrices(myPolicy.policyWithCode.fundPrices, item.contractInvests[0].fundCode)) }}</td>
+                    <td>{{ $convertCurrency(item.contractInvests[0] && item.contractInvests[0].accumUnits * getFundPrices(myPolicy.policyWithCode.fundPrices, item.contractInvests[0] && item.contractInvests[0].fundCode)) }}</td>
                   </tr>
                 </tbody>
               </template>
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     getFundPrices(fundPrices = [], fundCode) {
-      if (!fundPrices.length) return 0
+      if (!fundPrices.length || !fundCode) return 0
 
       const found = fundPrices.find((item) => item.fundCode === fundCode)
       return found ? found.bidPrice : 0
