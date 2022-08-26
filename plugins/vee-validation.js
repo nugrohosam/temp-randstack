@@ -5,16 +5,20 @@ import * as rules from 'vee-validate/dist/rules';
 import { messages } from 'vee-validate/dist/locale/en.json';
 
 Object.keys(rules).forEach(rule => {
+  let message = messages[rule]
+  if (rule === 'email') {
+    message = 'Format email tidak sesuai.'
+  }
+
   extend(rule, {
     ...rules[rule], // copies rule configuration
-    message: messages[rule] // assign message
+    message: message // assign message
   });
 });
 
-extend('phone-number', {
-  validate: value => {
-    return value % 2 !== 0;
-  }
+extend('phone', {
+  message: 'Nomor harus diawali 62.',
+  validate: value => (new RegExp(/62[0-9]+$/g)).test(value)
 });
 
 Vue.component('ValidationObserver', ValidationObserver);

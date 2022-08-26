@@ -40,7 +40,7 @@
               />
             </div>
             <div class="form-input auth">
-              <ValidationProvider name="Nomor Hp" :rules="{ regex: /62[0-9]+$/ }" v-slot="{ errors }">
+              <ValidationProvider name="Nomor Hp" rules="phone" v-slot="{ errors }">
                 <label>Nomor HP</label>
                 <input
                   type="text"
