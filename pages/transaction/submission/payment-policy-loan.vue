@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="showMe">
+    <!-- <div v-show="showMe">
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemegang Polis</p>
@@ -67,15 +67,35 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
     <NuxtChild />
+    <ModalMessage
+      :message="modal.message"
+      :show="modal.show"
+      :button="modal.button"
+      @closeModal="modal.show = false"
+    />
   </div>
 </template>
 <script>
 export default {
   name: "payment-policy-loan",
+  beforeMount() {
+    this.modal.show = true;
+    this.modal.message =
+      "Menu yang anda pilih masih dalam tahap pengembangan"
+  },
   data() {
     return {
+      modal: {
+        message: "",
+        show: false,
+        button: {
+          text: "Tutup",
+          redirect_link: "/transaction/submission",
+          redirect_type: "spa",
+        },
+      },
       showMe: true,
       banks: ["BNI"],
     };

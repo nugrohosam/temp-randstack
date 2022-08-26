@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="showMe">
+    <!-- <div v-show="showMe">
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemegang Polis</p>
@@ -18,16 +18,12 @@
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Informasi Virtual Account</p>
-          <v-select
-            :items="virtual_accounts"
-            dense
-            outlined
-          ></v-select>
+          <v-select :items="virtual_accounts" dense outlined></v-select>
         </div>
       </div>
       <div class="row">
-        <div class="col-12">
-          <!-- <p class="data-title mb-1">Jenis dan Dana Investasi yang dimiliki</p> -->
+        <div class="col-12"> 
+          <p class="data-title mb-1">Jenis dan Dana Investasi yang dimiliki</p>
           <template>
             <v-data-table
               :headers="table.headers"
@@ -39,12 +35,14 @@
               @page-count="pageCount = $event"
             >
               <template v-slot:item.id="{ item, index }">
-                <v-simple-checkbox v-model="item.selected" v-if="index < table.items.length - 1"></v-simple-checkbox>
+                <v-simple-checkbox
+                  v-model="item.selected"
+                  v-if="index < table.items.length - 1"
+                ></v-simple-checkbox>
               </template>
               <template v-slot:item.product_status="{ item }">
-                <b>{{item.product_status}}</b>
+                <b>{{ item.product_status }}</b>
               </template>
-
             </v-data-table>
           </template>
         </div>
@@ -63,8 +61,9 @@
       <div class="row">
         <div class="col-lg-12 col-sm-12">
           <div class="message-bar d-flex rounded-lg">
-            <info-icon class="ic-primary mr-2 "></info-icon>
-            Pemulihan polis hanya berlaku jika usia dibawah atau sama dengan 2 tahun sejak tanggal  <b>&nbsp; lapsed date</b>
+            <info-icon class="ic-primary mr-2"></info-icon>
+            Pemulihan polis hanya berlaku jika usia dibawah atau sama dengan 2
+            tahun sejak tanggal <b>&nbsp; lapsed date</b>
           </div>
         </div>
       </div>
@@ -78,8 +77,14 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
     <NuxtChild />
+    <ModalMessage
+      :message="modal.message"
+      :show="modal.show"
+      :button="modal.button"
+      @closeModal="modal.show = false"
+    />
   </div>
 </template>
 <script>
@@ -90,8 +95,12 @@ export default {
     SaveIcon,
     InfoIcon,
   },
+  beforeMount() {
+    this.modal.show = true;
+    this.modal.message =
+      "Menu yang anda pilih masih dalam tahap pengembangan"
+  },
   mounted() {
-    console.log($nuxt.$route.name);
     if ($nuxt.$route.name != "transaction-submission-policy-recovery") {
       this.showMe = false;
     } else {
@@ -110,6 +119,15 @@ export default {
         "132432456 - BCA",
         "111222333 - BRI",
       ],
+      modal: {
+        message: "",
+        show: false,
+        button: {
+          text: "Tutup",
+          redirect_link: "/transaction/submission",
+          redirect_type: "spa",
+        },
+      },
       data_investments: [
         {
           id: 1,
