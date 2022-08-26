@@ -631,25 +631,21 @@ export default {
       await this.switchType(this.addressType[0].type);
       if (this.selectedPolicy.address.addressFormat == "Y") {
         if (parseInt(this.selectedPolicy.address.province) != NaN) {
-          console.log(parseInt(this.selectedPolicy.address.province));
           this.selectedPolicy.address.province = await this.findProvince(
             this.selectedPolicy.address.province
           );
         }
         if (parseInt(this.selectedPolicy.address.city) != NaN) {
-          console.log(parseInt(this.selectedPolicy.address.city));
           this.selectedPolicy.address.city = await this.findCity(
             this.selectedPolicy.address.city
           );
         }
         if (parseInt(this.selectedPolicy.address.street) != NaN) {
-          console.log(parseInt(this.selectedPolicy.address.street));
           this.selectedPolicy.address.street = await this.findDistrict(
             this.selectedPolicy.address.street
           );
         }
         if (parseInt(this.selectedPolicy.address.village) != NaN) {
-          console.log(parseInt(this.selectedPolicy.address.village));
           this.selectedPolicy.address.village = await this.findVillage(
             this.selectedPolicy.address.village
           );
