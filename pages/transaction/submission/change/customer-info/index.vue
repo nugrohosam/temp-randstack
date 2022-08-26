@@ -325,13 +325,20 @@
                               : "-"
                           }}
                         </p>
-                        <ValidationProvider class="form-input" v-if="phoneEditable" name="Telepon 1" rules="phone" v-slot="{ errors }">
+                        <ValidationProvider
+                          class="form-input"
+                          v-if="phoneEditable"
+                          name="Telepon 1"
+                          rules="phone"
+                          v-slot="{ errors }"
+                        >
                           <input
                             type="text"
                             class="outlined"
                             placeholder="08123456789"
                             v-model="selectedPolicy.person.mobile"
-                          /> <br />
+                          />
+                          <br />
                           <span class="text-error">{{ errors[0] }}</span>
                         </ValidationProvider>
                       </div>
@@ -344,13 +351,20 @@
                               : "-"
                           }}
                         </p>
-                        <ValidationProvider class="form-input" v-if="phoneEditable" name="Telepon 2" rules="phone" v-slot="{ errors }">
+                        <ValidationProvider
+                          class="form-input"
+                          v-if="phoneEditable"
+                          name="Telepon 2"
+                          rules="phone"
+                          v-slot="{ errors }"
+                        >
                           <input
                             type="text"
                             class="outlined"
                             placeholder="08123456789"
                             v-model="selectedPolicy.person.mobile2"
-                          /> <br />
+                          />
+                          <br />
                           <span class="text-error">{{ errors[0] }}</span>
                         </ValidationProvider>
                       </div>
@@ -363,13 +377,20 @@
                               : "-"
                           }}
                         </p>
-                        <ValidationProvider class="form-input" v-if="phoneEditable" name="Telepon Kantor" rules="phone" v-slot="{ errors }">
+                        <ValidationProvider
+                          class="form-input"
+                          v-if="phoneEditable"
+                          name="Telepon Kantor"
+                          rules="phone"
+                          v-slot="{ errors }"
+                        >
                           <input
                             type="text"
                             class="outlined"
                             placeholder="08123456789"
                             v-model="selectedPolicy.person.officeTel"
-                          /> <br />
+                          />
+                          <br />
                           <span class="text-error">{{ errors[0] }}</span>
                         </ValidationProvider>
                       </div>
@@ -384,13 +405,20 @@
                               : "-"
                           }}
                         </p>
-                        <ValidationProvider class="form-input" v-if="phoneEditable" name="Telepon Kantor Lain" rules="phone" v-slot="{ errors }">
+                        <ValidationProvider
+                          class="form-input"
+                          v-if="phoneEditable"
+                          name="Telepon Kantor Lain"
+                          rules="phone"
+                          v-slot="{ errors }"
+                        >
                           <input
                             type="text"
                             class="outlined"
                             placeholder="08123456789"
                             v-model="selectedPolicy.person.officeTel2"
-                          /> <br />
+                          />
+                          <br />
                           <span class="text-error">{{ errors[0] }}</span>
                         </ValidationProvider>
                       </div>
@@ -431,13 +459,18 @@
                 }}
               </p>
               <div class="form-input" v-show="emailEditable">
-                <ValidationProvider name="Email" rules="email" v-slot="{ errors }">
+                <ValidationProvider
+                  name="Email"
+                  rules="email"
+                  v-slot="{ errors }"
+                >
                   <input
                     type="text"
                     class="outlined"
                     placeholder="Email..."
                     v-model="selectedPolicy.person.email"
-                  /> <br />
+                  />
+                  <br />
                   <span class="text-error">{{ errors[0] }}</span>
                 </ValidationProvider>
               </div>
@@ -471,10 +504,7 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <button
-              class="btn btn-primary btn-save float-right"
-              type="submit"
-            >
+            <button class="btn btn-primary btn-save float-right" type="submit">
               Simpan
             </button>
           </div>
@@ -537,8 +567,8 @@ export default {
         },
         {
           type: 7,
-          name: "Alamat Koresponden"
-        }
+          name: "Alamat Koresponden",
+        },
       ],
       selectedAddressType: null,
       province: {
@@ -600,18 +630,26 @@ export default {
     getMyPolicy: async function () {
       await this.switchType(this.addressType[0].type);
       if (this.selectedPolicy.address.addressFormat == "Y") {
-        this.selectedPolicy.address.province = await this.findProvince(
-          this.selectedPolicy.address.province
-        );
-        this.selectedPolicy.address.city = await this.findCity(
-          this.selectedPolicy.address.city
-        );
-        this.selectedPolicy.address.street = await this.findDistrict(
-          this.selectedPolicy.address.street
-        );
-        this.selectedPolicy.address.village = await this.findVillage(
-          this.selectedPolicy.address.village
-        );
+        if (parseInt(this.selectedPolicy.address.province) != "NaN") {
+          this.selectedPolicy.address.province = await this.findProvince(
+            this.selectedPolicy.address.province
+          );
+        }
+        if (parseInt(this.selectedPolicy.address.city) != "NaN") {
+          this.selectedPolicy.address.city = await this.findCity(
+            this.selectedPolicy.address.city
+          );
+        }
+        if (parseInt(this.selectedPolicy.address.street) != "NaN") {
+          this.selectedPolicy.address.street = await this.findDistrict(
+            this.selectedPolicy.address.street
+          );
+        }
+        if (parseInt(this.selectedPolicy.address.village) != "NaN") {
+          this.selectedPolicy.address.village = await this.findVillage(
+            this.selectedPolicy.address.village
+          );
+        }
       }
       this.isLoading = false;
     },
@@ -840,7 +878,7 @@ export default {
     },
 
     findProvince: async function (provinceId = null) {
-      if (provinceId != null && parseInt(provinceId)!='NaN') {
+      if (provinceId != null && parseInt(provinceId) != "NaN") {
         let response = await this.$findProvince(provinceId);
         if (response.success) {
           return response.data.name;
@@ -851,7 +889,7 @@ export default {
       return null;
     },
     findCity: async function (cityId) {
-      if (cityId != null && parseInt(cityId)!='NaN') {
+      if (cityId != null && parseInt(cityId) != "NaN") {
         let response = await this.$findCity(cityId);
         if (response.success) {
           return response.data.name;
@@ -862,7 +900,7 @@ export default {
       return null;
     },
     findDistrict: async function (districtId) {
-      if (districtId != null && parseInt(districtId)!='NaN') {
+      if (districtId != null && parseInt(districtId) != "NaN") {
         let response = await this.$findDistrict(districtId);
         if (response.success) {
           return response.data.name;
@@ -873,7 +911,7 @@ export default {
       return null;
     },
     findVillage: async function (villageId) {
-      if (villageId != null && parseInt(villageId)!='NaN') {
+      if (villageId != null && parseInt(villageId) != "NaN") {
         let response = await this.$findVillage(villageId);
         if (response.success) {
           return response.data.name;
