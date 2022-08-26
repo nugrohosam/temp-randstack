@@ -14,7 +14,7 @@
           >
             <p class="data-title">Nilai Tunai</p>
             <h2 class="data-value">
-              Rp
+              {{ $currencyName(myPolicy.policyWithCode.currency) }}
               {{
                 myPolicyLoanInfo &&
                 myPolicyLoanInfo.financialInfo &&
