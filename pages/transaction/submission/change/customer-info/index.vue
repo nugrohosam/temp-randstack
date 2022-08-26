@@ -325,7 +325,7 @@
                               : "-"
                           }}
                         </p>
-                        <ValidationProvider class="form-input" v-show="phoneEditable" name="Telepon 1" :rules="{ regex: /62[0-9]+$/ }" v-slot="{ errors }">
+                        <ValidationProvider class="form-input" v-show="phoneEditable" name="Telepon 1" rules="phone" v-slot="{ errors }">
                           <input
                             type="text"
                             class="outlined"
@@ -344,7 +344,7 @@
                               : "-"
                           }}
                         </p>
-                        <ValidationProvider class="form-input" v-show="phoneEditable" name="Telepon 2" :rules="{ regex: /62[0-9]+$/ }" v-slot="{ errors }">
+                        <ValidationProvider class="form-input" v-show="phoneEditable" name="Telepon 2" rules="phone" v-slot="{ errors }">
                           <input
                             type="text"
                             class="outlined"
@@ -363,7 +363,7 @@
                               : "-"
                           }}
                         </p>
-                        <ValidationProvider class="form-input" v-show="phoneEditable" name="Telepon Kantor" :rules="{ regex: /62[0-9]+$/ }" v-slot="{ errors }">
+                        <ValidationProvider class="form-input" v-show="phoneEditable" name="Telepon Kantor" rules="phone" v-slot="{ errors }">
                           <input
                             type="text"
                             class="outlined"
@@ -384,7 +384,7 @@
                               : "-"
                           }}
                         </p>
-                        <ValidationProvider class="form-input" v-show="phoneEditable" name="Telepon Kantor Lain" :rules="{ regex: /62[0-9]+$/ }" v-slot="{ errors }">
+                        <ValidationProvider class="form-input" v-show="phoneEditable" name="Telepon Kantor Lain" rules="phone" v-slot="{ errors }">
                           <input
                             type="text"
                             class="outlined"
@@ -407,7 +407,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="200.000"
+                            placeholder="08123456789"
                             v-model="selectedPolicy.person.homeTel"
                           />
                         </div>
@@ -435,7 +435,7 @@
                   <input
                     type="text"
                     class="outlined"
-                    placeholder="200.000"
+                    placeholder="Email..."
                     v-model="selectedPolicy.person.email"
                   /> <br />
                   <span class="text-error">{{ errors[0] }}</span>
