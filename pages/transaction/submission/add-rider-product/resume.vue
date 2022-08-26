@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
@@ -122,7 +121,7 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-1">Alasan</p>
-        <p class="data-value ">Alasan Keluarga</p>
+        <p class="data-value">Alasan Keluarga</p>
       </div>
     </div>
     <div class="row">
@@ -159,9 +158,12 @@ export default {
     SaveIcon,
     InfoIcon,
   },
-  mounted() {
-
+  beforeMount() {
+    this.modal.show = true;
+    this.modal.message =
+      "Transaksi yang dipilih tidak dapat dilakukan, untuk informasi lebih lanjut silahkan menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
   },
+  mounted() {},
   data() {
     return {
       showMe: true,
@@ -246,7 +248,6 @@ export default {
             product_type: "Tambahan",
             selected: true,
           },
-
         ],
       },
       page: 1,

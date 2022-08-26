@@ -7,6 +7,7 @@ export default {
           return item["name"];
         }
       });
+
       return menu_filtered;
     }else{
       return state.menus;

@@ -4,39 +4,46 @@
       <div class="col-12">
         <div class="menu-grid">
           <Menu
+            :isActive="true"
+            :name="'Informasi Customer'"
+            :icon="'ic_cuti_premi.svg'"
+            :link="'./change/customer-info'"
+          />
+          <Menu
+            :isActive="false"
             :name="'Pembayar'"
             :icon="'ic_cuti_premi.svg'"
             :link="'./change/payer'"
           />
           <Menu
+            :isActive="false"
             :name="'Data Tertanggung'"
             :icon="'ic_cuti_premi.svg'"
             :link="'./new-policy-loan'"
           />
           <Menu
+            :isActive="false"
             :name="'Pemegang Polis'"
             :icon="'ic_cuti_premi.svg'"
             :link="'./new-policy-loan'"
           />
           <Menu
+            :isActive="false"
             :name="'Ahli Waris'"
             :icon="'ic_cuti_premi.svg'"
             :link="'./new-policy-loan'"
           />
           <Menu
+            :isActive="false"
             :name="'Tanggal Lahir dan Jenis Kelamin Tertanggung'"
             :icon="'ic_cuti_premi.svg'"
             :link="'./new-policy-loan'"
           />
           <Menu
+            :isActive="false"
             :name="'Pekerjaan Tertanggung'"
             :icon="'ic_cuti_premi.svg'"
             :link="'./new-policy-loan'"
-          />
-          <Menu
-            :name="'Informasi Customer'"
-            :icon="'ic_cuti_premi.svg'"
-            :link="'./change/customer-info'"
           />
         </div>
       </div>
