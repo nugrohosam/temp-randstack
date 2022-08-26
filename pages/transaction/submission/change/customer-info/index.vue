@@ -835,7 +835,7 @@ export default {
     },
 
     findProvince: async function (provinceId = null) {
-      if (provinceId != null) {
+      if (provinceId != null && parseInt(provinceId)!='NaN') {
         let response = await this.$findProvince(provinceId);
         if (response.success) {
           return response.data.name;
@@ -846,7 +846,7 @@ export default {
       return null;
     },
     findCity: async function (cityId) {
-      if (cityId != null) {
+      if (cityId != null && parseInt(cityId)!='NaN') {
         let response = await this.$findCity(cityId);
         if (response.success) {
           return response.data.name;
@@ -857,7 +857,7 @@ export default {
       return null;
     },
     findDistrict: async function (districtId) {
-      if (districtId != null) {
+      if (districtId != null && parseInt(districtId)!='NaN') {
         let response = await this.$findDistrict(districtId);
         if (response.success) {
           return response.data.name;
@@ -868,7 +868,7 @@ export default {
       return null;
     },
     findVillage: async function (villageId) {
-      if (villageId != null) {
+      if (villageId != null && parseInt(villageId)!='NaN') {
         let response = await this.$findVillage(villageId);
         if (response.success) {
           return response.data.name;
