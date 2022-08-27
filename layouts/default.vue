@@ -49,7 +49,7 @@
             <v-list>
               <v-list-item router exact>
                 <v-list-item-action>
-                  <v-icon>mdi-logout</v-icon>
+                  <log-out-icon size="1.5x"></log-out-icon>
                 </v-list-item-action>
                 <v-list-item-content>
                   <v-list-item-title v-text="'Logout'" />
@@ -84,9 +84,9 @@
             <span>Notifikasi</span>
             <bell-icon size="1.5x" class="custom-class"></bell-icon>
           </v-btn>
-          <v-btn :to="'/profile/'" :ripple="false" router plain exact>
-            <span>Profil</span>
-            <user-icon size="1.5x" class="custom-class"></user-icon>
+          <v-btn :ripple="false" router plain exact @click="signOut()">
+            <span>Logout</span>
+            <log-out-icon size="1.5x" class="custom-class"></log-out-icon>
           </v-btn>
         </v-bottom-navigation>
       </template>
@@ -214,7 +214,7 @@ import {
   ActivityIcon,
   RefreshCwIcon,
   ClipboardIcon,
-  UserIcon,
+  LogOutIcon,
   BellIcon,
   RepeatIcon,
   HelpCircleIcon,
@@ -225,7 +225,7 @@ export default {
     ActivityIcon,
     RefreshCwIcon,
     ClipboardIcon,
-    UserIcon,
+    LogOutIcon,
     BellIcon,
     RepeatIcon,
     HelpCircleIcon,
