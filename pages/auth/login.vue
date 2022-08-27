@@ -36,7 +36,7 @@
                 type="text"
                 class="w-100"
                 v-model="form.policy_number"
-                placeholder="9210000627"
+                placeholder="Nomor Polis"
               />
             </div>
             <div class="form-input auth">
@@ -46,7 +46,7 @@
                   type="text"
                   class="w-100"
                   v-model="form.phone_number"
-                  placeholder="6288809139413"
+                  placeholder="Nomor HP"
                 /> <br />
                 <span class="text-error">{{ errors[0] }}</span>
               </ValidationProvider>
@@ -57,7 +57,7 @@
                 type="text"
                 class="w-100"
                 v-model="form.identity_number"
-                placeholder="5315056301790004"
+                placeholder="Nomor Identitas"
               />
             </div>
 

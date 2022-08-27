@@ -335,7 +335,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="08123456789"
+                            placeholder="628123456789"
                             v-model="selectedPolicy.person.mobile"
                           />
                           <br />
@@ -361,7 +361,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="08123456789"
+                            placeholder="628123456789"
                             v-model="selectedPolicy.person.mobile2"
                           />
                           <br />
@@ -387,7 +387,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="08123456789"
+                            placeholder="628123456789"
                             v-model="selectedPolicy.person.officeTel"
                           />
                           <br />
@@ -415,7 +415,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="08123456789"
+                            placeholder="628123456789"
                             v-model="selectedPolicy.person.officeTel2"
                           />
                           <br />
@@ -435,7 +435,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="08123456789"
+                            placeholder="628123456789"
                             v-model="selectedPolicy.person.homeTel"
                           />
                         </div>
@@ -467,7 +467,7 @@
                   <input
                     type="text"
                     class="outlined"
-                    placeholder="Email..."
+                    placeholder="email@gmail.com"
                     v-model="selectedPolicy.person.email"
                   />
                   <br />
@@ -485,21 +485,28 @@
         </div>
         <div class="row">
           <div class="col-lg-6 col-sm-12">
-            <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
-            <input
-              type="file"
-              ref="inputSelfieKtpImage"
-              v-show="false"
-              accept="image/*"
-              @change="addSelfieKtpImage"
-            />
-            <button
-              class="btn btn-primary-outlined"
-              @click.prevent="$refs.inputSelfieKtpImage.click()"
-            >
-              Unggah
-            </button>
-            <small>{{ selfieKtpFileName }}</small>
+            <ValidationProvider rules="required|image" v-slot="{ validate, errors }">
+              <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+              <input
+                type="file"
+                ref="inputSelfieKtpImage"
+                v-show="false"
+                accept="image/*"
+                @change="(e) => {
+                  validate(e)
+                  addSelfieKtpImage(e)
+                }"
+              />
+              <button
+                class="btn btn-primary-outlined"
+                @click.prevent="$refs.inputSelfieKtpImage.click()"
+              >
+                Unggah
+              </button>
+              <small>{{ selfieKtpFileName }}</small>
+              <br />
+              <span class="text-error">{{ errors[0] }}</span>
+            </ValidationProvider>
           </div>
         </div>
         <div class="row">
