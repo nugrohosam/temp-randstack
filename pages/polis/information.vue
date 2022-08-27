@@ -140,7 +140,7 @@
                                     </p>
                                     <p class="data-title">Premi</p>
                                     <p class="data-value mb-3">
-                                      {{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.currentPremium.stdPremAf) }}
+                                      {{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(totalPremAll(item)) }}
                                     </p>
                                     <p class="data-title">Benefit Status</p>
                                     <p class="data-value">
@@ -265,6 +265,9 @@ export default {
     },
   },
   methods: {
+    totalPremAll: (item) => {
+      return item.currentPremium.stdPremAf + (item.recurringTopup?.topupAmount || 0);
+    }
     // getInformationPolicyList: async function () {
     //   await this.$store.dispatch("information_policy/getInformationPolicyList");
     //   this.information_policy = this.informationPolicyList;
