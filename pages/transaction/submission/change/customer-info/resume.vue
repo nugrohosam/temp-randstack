@@ -317,7 +317,10 @@ export default {
         "submission_transaction/updateCustomerInformation"
       );
       if (result.success == true) {
-        this.$router.push({ path: "./thankyou" });
+        let transactionIds = result.data.transactionIds;
+        this.$router.push({
+          path: "./thankyou?transaction_ids=" + transactionIds.join(","),
+        });
       } else {
         // check validation error
       }
