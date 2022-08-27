@@ -5,9 +5,17 @@ import * as rules from 'vee-validate/dist/rules';
 import { messages } from 'vee-validate/dist/locale/en.json';
 
 Object.keys(rules).forEach(rule => {
-  let message = messages[rule]
-  if (rule === 'email') {
-    message = 'Format email tidak sesuai.'
+  let message
+  switch (rule) {
+    case 'email':
+      message = 'Format email tidak sesuai.'
+      break;
+    case 'required':
+      message = 'Field harus diisi.'
+      break;
+    default:
+      message = messages[rule]
+      break;
   }
 
   extend(rule, {

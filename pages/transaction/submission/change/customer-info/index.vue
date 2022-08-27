@@ -452,21 +452,28 @@
         </div>
         <div class="row">
           <div class="col-lg-6 col-sm-12">
-            <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
-            <input
-              type="file"
-              ref="inputSelfieKtpImage"
-              v-show="false"
-              accept="image/*"
-              @change="addSelfieKtpImage"
-            />
-            <button
-              class="btn btn-primary-outlined"
-              @click.prevent="$refs.inputSelfieKtpImage.click()"
-            >
-              Unggah
-            </button>
-            <small>{{ selfieKtpFileName }}</small>
+            <ValidationProvider rules="required|image" v-slot="{ validate, errors }">
+              <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+              <input
+                type="file"
+                ref="inputSelfieKtpImage"
+                v-show="false"
+                accept="image/*"
+                @change="(e) => {
+                  validate(e)
+                  addSelfieKtpImage(e)
+                }"
+              />
+              <button
+                class="btn btn-primary-outlined"
+                @click.prevent="$refs.inputSelfieKtpImage.click()"
+              >
+                Unggah
+              </button>
+              <small>{{ selfieKtpFileName }}</small>
+              <br />
+              <span class="text-error">{{ errors[0] }}</span>
+            </ValidationProvider>
           </div>
         </div>
         <div class="row">
