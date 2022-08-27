@@ -377,9 +377,11 @@ export default {
     },
     addSelfieKtpImage: function (e) {
       this.form.ktp_selfie = e.target.files[0];
-      this.$store.dispatch("submission_transaction/uploadSelieKtpFile", {
-        file: e.target.files[0],
-      });
+      if (e.target.files[0]) {
+        this.$store.dispatch("submission_transaction/uploadSelieKtpFile", {
+          file: e.target.files[0],
+        });
+      }
     },
     validate: async function () {
       this.validationMessage = [];
