@@ -329,7 +329,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="08123456789"
+                            placeholder="628123456789"
                             v-model="selectedPolicy.person.mobile"
                           /> <br />
                           <span class="text-error">{{ errors[0] }}</span>
@@ -348,7 +348,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="08123456789"
+                            placeholder="628123456789"
                             v-model="selectedPolicy.person.mobile2"
                           /> <br />
                           <span class="text-error">{{ errors[0] }}</span>
@@ -367,7 +367,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="08123456789"
+                            placeholder="628123456789"
                             v-model="selectedPolicy.person.officeTel"
                           /> <br />
                           <span class="text-error">{{ errors[0] }}</span>
@@ -388,7 +388,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="08123456789"
+                            placeholder="628123456789"
                             v-model="selectedPolicy.person.officeTel2"
                           /> <br />
                           <span class="text-error">{{ errors[0] }}</span>
@@ -407,7 +407,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="08123456789"
+                            placeholder="628123456789"
                             v-model="selectedPolicy.person.homeTel"
                           />
                         </div>
@@ -435,7 +435,7 @@
                   <input
                     type="text"
                     class="outlined"
-                    placeholder="Email..."
+                    placeholder="email@gmail.com"
                     v-model="selectedPolicy.person.email"
                   /> <br />
                   <span class="text-error">{{ errors[0] }}</span>
