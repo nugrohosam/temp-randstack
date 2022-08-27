@@ -130,7 +130,7 @@
                                 <div class="row">
                                   <div class="col-12">
                                     <br />
-                                    <p class="data-title">Uang Pertanggungan</p>
+                                    <p class="data-title">{{ myPolicy.policyWithCode.isSyariah ? 'Satuan Asuransi' : 'Uang Pertanggungan' }}</p>
                                     <p class="data-value mb-3">
                                       {{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.currentPremium.sumAssured) }}
                                     </p>
@@ -138,7 +138,7 @@
                                     <p class="data-value mb-3">
                                       {{ item.benefitLevel }}
                                     </p>
-                                    <p class="data-title">Premi</p>
+                                    <p class="data-title">{{ myPolicy.policyWithCode.isSyariah ? 'Kontribusi' : 'Premi' }}</p>
                                     <p class="data-value mb-3">
                                       {{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.currentPremium.stdPremAf) }}
                                     </p>
@@ -237,7 +237,7 @@ export default {
       current_header_title: "",
       tab: 1,
       items: [
-        { index: 0, tab: "Tertanggung", link: "/polis/information/insured" },
+        { index: 0, tab: myPolicy.policyWithCode.isSyariah ? "Peserta Yang Diasuransikan" : "Tertanggung", link: "/polis/information/insured" },
         { index: 1, tab: "Data Ahli Waris", link: "/polis/information/heirs" },
         {
           index: 2,
