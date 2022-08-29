@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col-12">
             <div class="page-header">
-              <h3 class="page-title">{{ default_header_title }}</h3>
+              <!-- <h3 class="page-title">{{ default_header_title }}</h3> -->
             </div>
           </div>
         </div>
@@ -165,24 +165,25 @@
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <v-tabs :v-model="'2'" show-arrows color="#F15921">
-                      <v-tab
-                        v-for="item in items"
-                        :id="'tab' + item.index"
-                        :ref="'tab' + item.index"
-                        :key="item.index"
-                        :to="item.link"
-                        :ripple="false"
-                        active-class="information-tab-active"
-                        class="information-tab"
-                      >
-                        {{ item.tab }}
-                      </v-tab>
-                    </v-tabs>
-                    <br />
-                    <v-tabs-items v-model="tab">
-                      <NuxtChild />
-                    </v-tabs-items>
+                      <v-tabs :v-model="'2'" show-arrows color="#F15921">
+                        <v-tab
+                          v-for="item in myitems"
+                          :id="'tab' + item.index"
+                          :ref="'tab' + item.index"
+                          :key="item.index"
+                          :to="item.link"
+                          :ripple="false"
+                          active-class="information-tab-active"
+                          class="information-tab"
+                        >
+                          {{ myPolicy.policyWithCode.isSyariah ? "Peserta Yang Diasuransikan" : item.tab }}
+                        </v-tab>
+                      </v-tabs>
+                      <br />
+                      <v-tabs-items v-model="tab">
+                        <NuxtChild />
+                      </v-tabs-items>
+
                   </div>
                 </div>
               </div>
@@ -217,27 +218,23 @@
   </div>
 </template>
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   mounted() {
     if ($nuxt.$route.name != "polis-information") {
       this.showMenu = false;
     } else {
       this.showMenu = true;
-      this.current_header_title = this.default_header_title;
     }
-
     this.$router.push({ path: "/polis/information/insured" });
-    // this.getInformationPolicyList();
   },
   data() {
     return {
       showMenu: true,
       default_header_title: "Informasi Data Polis",
-      current_header_title: "",
       tab: 1,
-      items: [
-        { index: 0, tab: myPolicy.policyWithCode.isSyariah ? "Peserta Yang Diasuransikan" : "Tertanggung", link: "/polis/information/insured" },
+      insured_title: "Tertanggung", //Peserta Yang Diasuransikan
+      myitems: [
+        { index: 0, tab: "Tertanggung", link: "/polis/information/insured" },
         { index: 1, tab: "Data Ahli Waris", link: "/polis/information/heirs" },
         {
           index: 2,

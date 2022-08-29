@@ -36,7 +36,7 @@
                 type="text"
                 class="w-100"
                 v-model="form.policy_number"
-                placeholder="Nomor Polis"
+                placeholder="BLMSXXXXX..."
               />
             </div>
             <div class="form-input auth">
@@ -46,7 +46,7 @@
                   type="text"
                   class="w-100"
                   v-model="form.phone_number"
-                  placeholder="Nomor HP"
+                  placeholder="628xxxxx...."
                 /> <br />
                 <span class="text-error">{{ errors[0] }}</span>
               </ValidationProvider>
@@ -57,7 +57,7 @@
                 type="text"
                 class="w-100"
                 v-model="form.identity_number"
-                placeholder="Nomor Identitas"
+                placeholder="357xxx..."
               />
             </div>
 
@@ -133,9 +133,9 @@ export default {
     return {
       signInDisable: true,
       form: {
-        policy_number: "BLMS0000046", //9210000627
-        phone_number: "6285692203893", //6288809139413
-        identity_number: "3578204808680002", //5315056301790004
+        policy_number: "", //9210000627,BLMS0000046
+        phone_number: "", //6288809139413,6285692203893
+        identity_number: "", //5315056301790004,3578204808680002
         verified: "",
       },
       modal: {
