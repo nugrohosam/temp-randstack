@@ -3,7 +3,7 @@
     <!-- Search -->
     <div class="col-12">
       <div class="page-body">
-        <h4>Nilai Polis</h4>
+        <h4>{{$syariGeneralLabel('Nilai Polis')}} </h4>
         <br />
         <div class="row">
           <div

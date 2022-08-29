@@ -176,7 +176,7 @@
                           active-class="information-tab-active"
                           class="information-tab"
                         >
-                          {{ myPolicy.policyWithCode.isSyariah ? "Peserta Yang Diasuransikan" : item.tab }}
+                          {{ myPolicy.policyWithCode.isSyariah ? $syariGeneralLabel(item.tab) : item.tab }}
                         </v-tab>
                       </v-tabs>
                       <br />

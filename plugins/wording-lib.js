@@ -93,8 +93,21 @@ export default function ({ app, store, $axios }, inject) {
           break;
       }
     }
-
     return word;
+  }
+
+  const syariGeneralLabel = (str) => {
+    let label = {
+      "Premi" : "Kontribusi",
+      "Tertanggung" : "Peserta Yang Diasuransikan",
+      "Uang Pertanggungan" : "Santunan Asuransi"
+    }
+
+    if(typeof label[str]  !== 'undefined'){
+      return label[str];
+    }else{
+      return str;
+    }
   }
 
   const checkSyariLabel = (str) => {
@@ -167,4 +180,5 @@ export default function ({ app, store, $axios }, inject) {
 
   inject("wording", wording);
   inject("checkSyariLabel", checkSyariLabel);
+  inject("syariGeneralLabel", syariGeneralLabel);
 }
