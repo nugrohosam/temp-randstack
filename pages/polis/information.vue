@@ -130,7 +130,7 @@
                                 <div class="row">
                                   <div class="col-12">
                                     <br />
-                                    <p class="data-title">{{ myPolicy.policyWithCode.isSyariah ? 'Satuan Asuransi' : 'Uang Pertanggungan' }}</p>
+                                    <p class="data-title">{{ myPolicy.policyWithCode.isSyariah ? 'Santunan Asuransi' : 'Uang Pertanggungan' }}</p>
                                     <p class="data-value mb-3">
                                       {{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.currentPremium.sumAssured) }}
                                     </p>

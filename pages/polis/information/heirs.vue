@@ -3,7 +3,7 @@
     <!-- Search -->
     <div class="col-12">
       <div class="page-body">
-        <h4>Data {{$syariGeneralLabel('Ahli Waris')}} </h4>
+        <h4>Data {{myPolicy.policyWithCode.isSyariah ? $syariGeneralLabel('Ahli Waris') : "Ahli Waris"}} </h4>
         <br />
         <div class="row">
           <v-simple-table>
