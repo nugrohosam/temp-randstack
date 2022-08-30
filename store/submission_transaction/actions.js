@@ -48,7 +48,6 @@ export default {
         v.benefitLevel = "-";
       }
 
-
       return v;
     });
 

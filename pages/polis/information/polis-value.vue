@@ -51,10 +51,7 @@
                   >
                     <td>{{ index + 1 }}</td>
                     <td>
-                      {{
-                        (item.fundCode && $fundName(item.fundCode)) ||
-                        "-"
-                      }}
+                      {{ (item.fundCode && $fundName(item.fundCode)) || "-" }}
                     </td>
                     <td>
                       {{ $currencyName(myPolicy.policyWithCode.currency) }}
@@ -74,7 +71,14 @@
                       }}
                     </td>
                     <!-- TODO: Tanggal NAB masih kosong -->
-                    <td>-</td>
+                    <td>
+                      {{
+                        getFundPriceDate(
+                          myPolicy.policyWithCode.fundPrices,
+                          item.fundCode
+                        )
+                      }}
+                    </td>
                     <td>
                       {{
                         item &&
@@ -125,6 +129,12 @@ export default {
 
       const found = fundPrices.find((item) => item.fundCode === fundCode);
       return found ? found.bidPrice : 0;
+    },
+    getFundPriceDate(fundPrices = [], fundCode) {
+      if (!fundPrices.length) return 0;
+
+      const found = fundPrices.find((item) => item.fundCode === fundCode);
+      return found ? found.pricingDate : "-";
     },
   },
 };
