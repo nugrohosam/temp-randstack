@@ -15,14 +15,14 @@
                 )
               }}
             </p>
-            <p class="data-title">Jenis Kartu</p>
+            <!-- <p class="data-title">Jenis Kartu</p>
             <p class="data-value mb-3">
               {{
                 payerBankAccount.debitCreditType != "-"
                   ? $labelCardType(payerBankAccount.debitCreditType)
                   : "-"
               }}
-            </p>
+            </p> -->
             <p class="data-title">Nomor Rekening/Kartu Kredit</p>
             <p class="data-value mb-3">{{ payerBankAccount.bankAccount }}</p>
           </div>

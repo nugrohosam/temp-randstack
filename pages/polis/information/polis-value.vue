@@ -134,7 +134,7 @@ export default {
       if (!fundPrices.length) return 0;
 
       const found = fundPrices.find((item) => item.fundCode === fundCode);
-      return found ? found.pricingDate : "-";
+      return found ? this.$moment(found.pricingDate).format("DD/MM/Y") : "-";
     },
   },
 };

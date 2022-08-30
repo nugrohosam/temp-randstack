@@ -335,7 +335,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="628123456789"
+                            placeholder="628xxx..."
                             v-model="selectedPolicy.person.mobile"
                           />
                           <br />
@@ -361,7 +361,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="628123456789"
+                            placeholder="628xxx..."
                             v-model="selectedPolicy.person.mobile2"
                           />
                           <br />
@@ -387,7 +387,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="628123456789"
+                            placeholder="628xxx..."
                             v-model="selectedPolicy.person.officeTel"
                           />
                           <br />
@@ -415,7 +415,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="628123456789"
+                            placeholder="628xxx..."
                             v-model="selectedPolicy.person.officeTel2"
                           />
                           <br />
@@ -435,7 +435,7 @@
                           <input
                             type="text"
                             class="outlined"
-                            placeholder="628123456789"
+                            placeholder="021xxx..."
                             v-model="selectedPolicy.person.homeTel"
                           />
                         </div>

@@ -45,7 +45,7 @@
             <div class="col-md-4 col-sm-6">
               <p class="data-title">Jenis Pekerjaan</p>
               <p class="data-value mb-3">
-                {{ item.person.occupCateName }}
+                {{ item.occupCateName }}
               </p>
               <p class="data-title">Jenis Tertanggung</p>
               <p class="data-value mb-3">{{ item.insuredNo == 0 ? "UTAMA" : "TAMBAHAN" }}</p>
