@@ -45,10 +45,10 @@
             <div class="col-md-4 col-sm-6">
               <p class="data-title">Jenis Pekerjaan</p>
               <p class="data-value mb-3">
-                {{ myPolicy.policyWithCode.policyHolder.person.occupCateName }}
+                {{ item.person.occupCateName }}
               </p>
               <p class="data-title">Jenis Tertanggung</p>
-              <p class="data-value mb-3">{{ item.memberType == "1" ? "UTAMA" : "TAMBAHAN" }}</p>
+              <p class="data-value mb-3">{{ item.insuredNo == 0 ? "UTAMA" : "TAMBAHAN" }}</p>
             </div>
           </div>
           <div v-if="i != myPolicy.policyWithCode.insureds.length - 1">

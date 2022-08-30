@@ -569,11 +569,11 @@ export default {
       selectedPolicy: null,
       addressType: [
         {
-          type: 4,
+          type: 7,
           name: "Alamat ID",
         },
         {
-          type: 7,
+          type: 4,
           name: "Alamat Koresponden",
         },
       ],
