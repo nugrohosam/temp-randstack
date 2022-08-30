@@ -359,9 +359,6 @@ export default {
       let result = await this.$store.dispatch(
         "submission_transaction/getMyPolicy"
       );
-      await this.$store.dispatch(
-        "submission_transaction/getMyPolicyLoanInfo"
-      );
       if (result.success == true) {
         this.isChecked = true;
       } else {
