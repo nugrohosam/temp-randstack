@@ -3,7 +3,7 @@
     <!-- Search -->
     <div class="col-12">
       <div class="page-body">
-        <h4>{{$syariGeneralLabel('Nilai Polis')}} </h4>
+        <h4>{{ $syariGeneralLabel("Nilai Polis") }}</h4>
         <br />
         <div class="row">
           <div
@@ -44,18 +44,15 @@
                 </thead>
                 <tbody>
                   <tr
-                    v-for="(
-                      item, index
-                    ) in myPolicy.policyWithCode.coverages.filter(
-                      (cov) => cov.contractInvests[0] != null
+                    v-for="(item, index) in contractInvests(
+                      myPolicy.policyWithCode.coverages
                     )"
                     :key="index"
                   >
                     <td>{{ index + 1 }}</td>
                     <td>
                       {{
-                        (item.contractInvests[0] &&
-                          $fundName(item.contractInvests[0].fundCode)) ||
+                        (item.fundCode && $fundName(item.fundCode)) ||
                         "-"
                       }}
                     </td>
@@ -63,21 +60,15 @@
                       {{ $currencyName(myPolicy.policyWithCode.currency) }}
                     </td>
                     <td>
-                      {{
-                        (item.contractInvests[0] &&
-                          $convertCurrency(
-                            item.contractInvests[0].accumUnits
-                          )) ||
-                        0
-                      }}
+                      {{ (item && $convertCurrency(item.accumUnits)) || 0 }}
                     </td>
                     <td>
                       {{
-                        item.contractInvests[0] &&
+                        item &&
                         $convertCurrency(
                           getFundPrices(
                             myPolicy.policyWithCode.fundPrices,
-                            item.contractInvests[0].fundCode
+                            item.fundCode
                           )
                         )
                       }}
@@ -86,12 +77,12 @@
                     <td>-</td>
                     <td>
                       {{
-                        item.contractInvests[0] &&
+                        item &&
                         $convertCurrency(
-                          item.contractInvests[0].accumUnits *
+                          item.accumUnits *
                             getFundPrices(
                               myPolicy.policyWithCode.fundPrices,
-                              item.contractInvests[0].fundCode
+                              item.fundCode
                             )
                         )
                       }}
@@ -118,6 +109,17 @@ export default {
     },
   },
   methods: {
+    contractInvests(coverages) {
+      var contractInvest = [];
+
+      coverages.forEach((item) => {
+        if (item.contractInvests.length > 0) {
+          contractInvest = contractInvest.concat(item.contractInvests);
+        }
+      });
+
+      return contractInvest;
+    },
     getFundPrices(fundPrices = [], fundCode) {
       if (!fundPrices.length) return 0;
 
