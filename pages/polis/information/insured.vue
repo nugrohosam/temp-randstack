@@ -3,58 +3,58 @@
     <!-- Search -->
     <div class="col-12">
       <div class="page-body">
-        <h4>Data {{ myPolicy.policyWithCode.isSyariah ? $syariGeneralLabel('Tertanggung') : "Tertanggung" }} </h4>
+        <h4>
+          Data
+          {{
+            myPolicy.policyWithCode.isSyariah
+              ? $syariGeneralLabel("Tertanggung")
+              : "Tertanggung"
+          }}
+        </h4>
         <br />
-        <div class="row">
-          <div class="col-md-4 col-sm-6">
-            <p class="data-title">Nama</p>
-            <p class="data-value mb-3">
-              {{
-                $isNullWithSpace(
-                  myPolicy.policyWithCode.insureds[0].person.firstName
-                ) +
-                $isNullWithSpace(
-                  myPolicy.policyWithCode.insureds[0].person.midName
-                ) +
-                $isNullWithSpace(
-                  myPolicy.policyWithCode.insureds[0].person.lastName
-                )
-              }}
-            </p>
-            <p class="data-title">Jenis Kelamin</p>
-            <p class="data-value mb-3">
-              {{
-                myPolicy.policyWithCode.insureds[0].gender == "F"
-                  ? "PEREMPUAN"
-                  : "LAKI LAKI"
-              }}
-            </p>
+        <div v-for="(item, i) in myPolicy.policyWithCode.insureds" :key="i">
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+              <p class="data-title">Nama</p>
+              <p class="data-value mb-3">
+                {{
+                  $isNullWithSpace(item.person.firstName) +
+                  $isNullWithSpace(item.person.midName) +
+                  $isNullWithSpace(item.person.lastName)
+                }}
+              </p>
+              <p class="data-title">Jenis Kelamin</p>
+              <p class="data-value mb-3">
+                {{ item.gender == "F" ? "PEREMPUAN" : "LAKI LAKI" }}
+              </p>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <p class="data-title">Jenis Identitas</p>
+              <p class="data-value mb-3">
+                {{
+                  $labelIdentityType(
+                    item.person.certiType
+                  )
+                }}
+              </p>
+              <p class="data-title">Tanggal Lahir</p>
+              <p class="data-value mb-3">
+                {{ $moment(item.birthDate).format("DD/MM/Y") }}
+              </p>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <p class="data-title">Jenis Pekerjaan</p>
+              <p class="data-value mb-3">
+                {{ myPolicy.policyWithCode.policyHolder.person.occupCateName }}
+              </p>
+              <p class="data-title">Jenis Tertanggung</p>
+              <p class="data-value mb-3">{{ item.memberType == "1" ? "UTAMA" : "TAMBAHAN" }}</p>
+            </div>
           </div>
-          <div class="col-md-4 col-sm-6">
-            <p class="data-title">Jenis Identitas</p>
-            <p class="data-value mb-3">
-              {{
-                $labelIdentityType(
-                  myPolicy.policyWithCode.policyHolder.person.certiType
-                )
-              }}
-            </p>
-            <p class="data-title">Tanggal Lahir</p>
-            <p class="data-value mb-3">
-              {{
-                $moment(myPolicy.policyWithCode.insureds[0].birthDate).format(
-                  "DD/MM/Y"
-                )
-              }}
-            </p>
-          </div>
-          <div class="col-md-4 col-sm-6">
-            <p class="data-title">Jenis Pekerjaan</p>
-            <p class="data-value mb-3">
-              {{ myPolicy.policyWithCode.policyHolder.person.occupCateName }}
-            </p>
-            <p class="data-title">Jenis Tertanggung</p>
-            <p class="data-value mb-3">UTAMA</p>
+          <div v-if="i != myPolicy.policyWithCode.insureds.length - 1">
+            <br />
+            <hr />
+            <br />
           </div>
         </div>
       </div>
