@@ -2,7 +2,7 @@ export default {
   searchMenu({ dispatch, commit }, data) {
     commit('setMenuKeyword', data)
   },
-  async getMyPolicy({ rootGetters, commit }) {
+  async getMyPolicy({ rootGetters, commit, dispatch }) {
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await this.$axios
       .$get("/api/v1/policy/get-my-policy")
@@ -16,6 +16,8 @@ export default {
       .catch((error) => {
         return error;
       });
+
+    dispatch("getMyPolicyLoanInfo")
 
     const responseData = response.data;
     const productIds = responseData.policyWithCode.coverages.map(product => product.productId)
@@ -170,6 +172,7 @@ export default {
       .$post("/api/v1/transaction-proposal/surrender", form)
       .then((response) => {
         dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, { root: true });
+        const result = dispatch('getMyPolicy');
         commit('clearUploadSelfieKtpFile');
         commit('clearUploadKtpFile');
         commit('clearCoveragesSelected');
@@ -240,7 +243,7 @@ export default {
       .$post("/api/v1/policy/change-customer-info", form)
       .then((response) => {
         dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, { root: true });
-        dispatch('getMyPolicy');
+        const result = dispatch('getMyPolicy');
         return response;
       })
       .catch((error) => {
