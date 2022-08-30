@@ -95,13 +95,15 @@ export default {
   proxy: {
     // Simple proxy
     "/api/v1/": {
-      // target: "http://172.20.8.75",
+      // target: "http://172.20.8.75/",
       target: "http://34.124.156.103:8888/",
+      // target: "http://localhost:5020/",
       pathRewrite: { "^/api/v1/": "/api/v1/" }
     },
     "/test/v1/": {
-      // target: "http://172.20.8.75",
+      // target: "http://172.20.8.75/",
       target: "http://34.124.156.103:8888/",
+      // target: "http://localhost:5020/",
       pathRewrite: { "^/test/v1/": "/test/v1/" }
     },
   },

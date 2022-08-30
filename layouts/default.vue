@@ -105,11 +105,11 @@
                 </template>
               </VDropdown>
             </span>
-            <span>
+            <!-- <span>
               <a href="">
                 <help-circle-icon size="1.5x"></help-circle-icon>
               </a>
-            </span>
+            </span> -->
             <span>
               <div class="small-profile">
                 <div class="sec-title">
@@ -140,7 +140,7 @@
                 <div class="sec-image">
                   <div class="_ellipse-image">
                     <img
-                      src="https://image.akurat.co/uploads/gallery/2021/09/gal_615280331d9202-33976211-68748998.jpeg"
+                      src="~/assets/img/dummy-profile.webp"
                       alt=""
                     />
                   </div>

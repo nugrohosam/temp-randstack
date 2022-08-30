@@ -77,23 +77,13 @@
                     ></v-simple-checkbox>
                   </template> -->
                   <template #header.data-table-select> Pilihan </template>
-                  <template v-slot:item.issueDate="{ item }">
-                    {{ item ? $moment(item.issueDate).format("DD/MM/Y") : "" }}
-                  </template>
                   <template v-slot:item.nextPremium.sumAssured="{ item }">
                     {{
                       $convertCurrency(item ? item.nextPremium.sumAssured : "")
                     }}
                   </template>
-                  <template v-slot:item.currentPremium.totalPremAf="{ item }">
-                    {{
-                      $convertCurrency(
-                        item ? item.currentPremium.totalPremAf : ""
-                      )
-                    }}
-                  </template>
-                  <template v-slot:item.expiryDate="{ item }">
-                    {{ item ? $moment(item.expiryDate).format("DD/MM/Y") : "" }}
+                  <template v-slot:item.issueDate="{ item }">
+                    {{ item ? $moment(item.issueDate).format("DD/MM/Y") : "" }}
                   </template>
                   <template v-slot:item.lifeInsured.insured.person="{ item }">
                     {{
@@ -266,24 +256,12 @@ export default {
             value: "nextPremium.sumAssured",
           },
           {
-            text: "Premium",
-            value: "currentPremium.totalPremAf",
-          },
-          {
             text: "Masa mulai produk",
             value: "issueDate",
           },
           {
             text: "Nama Tertanggung",
             value: "lifeInsured.insured.person",
-          },
-          {
-            text: "Status Produk",
-            value: "productStatus",
-          },
-          {
-            text: "Akhir masa produk",
-            value: "expiryDate",
           },
           {
             text: "Jenis produk",

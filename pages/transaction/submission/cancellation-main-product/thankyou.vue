@@ -9,7 +9,7 @@
           <p class="mb-0">Berikut adalah nomor transaksi.</p>
           <p class="mb-10">Mohon Disimpan</p>
           <p class="mb-0">
-            Notifikasi akan dikirim melalui WA/SMS, Email dan Landing Page,
+            Notifikasi akan dikirim melalui WA/SMS dan Email,
           </p>
           <p>
             Terimakasih
