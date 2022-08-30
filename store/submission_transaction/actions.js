@@ -240,6 +240,7 @@ export default {
       .$post("/api/v1/policy/change-customer-info", form)
       .then((response) => {
         dispatch('toggleOverlayLoading', { show: false, message: 'Mohon Tunggu...' }, { root: true });
+        dispatch('getMyPolicy');
         return response;
       })
       .catch((error) => {
