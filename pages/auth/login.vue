@@ -31,7 +31,7 @@
             </div> -->
           <form @submit.prevent="handleSubmit(signIn)">
             <div class="form-input auth">
-              <label>Nomor Polis</label>
+              <label style="color: black"><b>Nomor Polis</b></label>
               <input
                 type="text"
                 class="w-100"
@@ -41,7 +41,7 @@
             </div>
             <div class="form-input auth">
               <ValidationProvider name="Nomor Hp" rules="phone" v-slot="{ errors }">
-                <label>Nomor HP</label>
+                <label style="color: black"><b>Nomor HP</b></label>
                 <input
                   type="text"
                   class="w-100"
@@ -52,7 +52,7 @@
               </ValidationProvider>
             </div>
             <div class="form-input auth" style="margin-bottom: 66px">
-              <label>Nomor Identitas</label>
+              <label style="color: black"><b>Nomor Identitas</b></label>
               <input
                 type="text"
                 class="w-100"
