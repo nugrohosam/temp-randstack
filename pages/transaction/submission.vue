@@ -38,6 +38,7 @@
                       v-for="(menu, key) in menus"
                       :key="key"
                       :isActive="menu.active"
+                      :hidden="menu.hidden"
                       :name="$checkSyariLabel(menu.name)"
                       :icon="menu.icon"
                       :link="menu.link"
