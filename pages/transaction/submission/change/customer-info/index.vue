@@ -504,6 +504,7 @@
                 Unggah
               </button>
               <small>{{ selfieKtpFileName }}</small>
+              <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
               <br />
               <span class="text-error">{{ errors[0] }}</span>
             </ValidationProvider>
