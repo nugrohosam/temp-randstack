@@ -14,30 +14,37 @@
             {{ myPolicy.policyWithCode.policyNumber }}
           </p>
         </div>
-      </div>
-
-      <div class="row">
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title">Nomor Rekening Manfaat</p>
+          <p class="data-title">Informasi Virtual Account</p>
           <p class="data-value">
-            {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-" }}
+            xxxxxxxx
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title">Nama Pemegang Rekening Manfaat</p>
+          <p class="data-title">Hutang Pinjaman Polis</p>
           <p class="data-value">
-            {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-" }}
+            xxxxxxxx
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Nama Bank</p>
+          <p class="data-title mb-2">Tanggal Pinjaman Polis</p>
           <p class="data-value">
-            {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}
+            xx/xx/xxxx
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Batas Pinjaman Polis</p>
-          <p class="data-value">Rp 12.000.000</p>
+          <div class="data-value">
+            <v-select
+              :items="[
+                { text: 'BNI', value: '1234' }
+              ]"
+              :value="itemsPerPage"
+              @change="itemsPerPage = parseInt($event, 10)"
+              label="Solo field"
+              solo
+            ></v-select>
+          </div>
         </div>
       </div>
   
@@ -96,10 +103,10 @@
             <p><b>Perhatian !</b></p>
             <ul>
               <li>
-                Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak silahkan hubungi Customer Care 1-500-045
+                Pembayaran dilakukan di hari yang sama
               </li>
               <li>
-                Pinjaman Polis akan dikenakan biaya bunga
+                Pembayaran bisa dilakukan melalui pemindahbukuan/transfer dari Bank mana saja atau melalui ATM bersama, dengan mengisikan nomor rekening tujuan Virtual Account tersebut
               </li>
             </ul>
           </div>
@@ -126,13 +133,10 @@ export default {
   data () {
     return {
       form: {
-        loanAmount: null,
+        bank: null,
         ktpSelfieAttachment: ''
       }
     }
-  },
-  mounted() {
-    this.$checkSyariLabel('Pinjaman Polis')
   },
   methods: {
     async addSelfieKtpImage (e) {

@@ -14,46 +14,36 @@
           {{ myPolicy.policyWithCode.policyNumber }}
         </p>
       </div>
-    </div>
-
-    <div class="row">
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title">Nomor Rekening Manfaat</p>
+        <p class="data-title">Informasi Virtual Account</p>
         <p class="data-value">
-          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-" }}
+          xxxxxxxx
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title">Nama Pemegang Rekening Manfaat</p>
+        <p class="data-title">Hutang Pinjaman Polis</p>
         <p class="data-value">
-          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-" }}
+          xxxxxxxx
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Nama Bank</p>
+        <p class="data-title mb-2">Tanggal Pinjaman Polis</p>
         <p class="data-value">
-          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}
+          xx/xx/xxxx
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Batas Pinjaman Polis</p>
-        <p class="data-value">Rp 12.000.000</p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Pinjaman</p>
         <div class="data-value">
-          <div class="form-input">
-            <input
-              type="text"
-              class="outlined"
-              placeholder="200.000"
-              :value="getPaymentPolicyLoan.loanAmount"
-              disabled
-            />
-          </div>
+          <v-select
+            :items="[
+              { text: 'BNI', value: '1234' }
+            ]"
+            :value="itemsPerPage"
+            @change="itemsPerPage = parseInt($event, 10)"
+            label="Solo field"
+            solo
+          ></v-select>
         </div>
       </div>
     </div>

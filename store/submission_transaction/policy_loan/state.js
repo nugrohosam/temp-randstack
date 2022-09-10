@@ -1,5 +1,5 @@
 export default {
-    paymentPolicyLoan: {
+    requestPolicyLoan: {
         loanAmount:  null,
         ktpSelfieAttachment: null
     }

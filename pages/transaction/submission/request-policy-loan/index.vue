@@ -122,7 +122,7 @@
 
 <script>
 export default {
-  name: "payment-policy-loan",
+  name: "request-policy-loan",
   data () {
     return {
       form: {
@@ -130,9 +130,6 @@ export default {
         ktpSelfieAttachment: ''
       }
     }
-  },
-  mounted() {
-    this.$checkSyariLabel('Pinjaman Polis')
   },
   methods: {
     async addSelfieKtpImage (e) {
@@ -145,7 +142,7 @@ export default {
     },
     save () {
       // patch to action
-      this.$store.commit('submission_transaction/payment_policy_loan/setPaymentPolicyLoan', this.form)
+      this.$store.commit('submission_transaction/policy_loan/setRequestPolicyLoan', this.form)
       this.$router.push({ path: "./request-policy-loan/resume" });
     },
   },

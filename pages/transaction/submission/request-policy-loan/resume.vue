@@ -50,7 +50,7 @@
               type="text"
               class="outlined"
               placeholder="200.000"
-              :value="getPaymentPolicyLoan.loanAmount"
+              :value="getRequestPolicyLoan.loanAmount"
               disabled
             />
           </div>
@@ -62,7 +62,7 @@
       <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
         <p class="data-value">
-          {{ getPaymentPolicyLoan.ktpSelfieAttachment }}
+          {{ getRequestPolicyLoan.ktpSelfieAttachment }}
         </p>
       </div>
     </div>
@@ -98,16 +98,16 @@
 
 <script>
 export default {
-  name: "payment-policy-loan-resume",
+  name: "request-policy-loan-resume",
   computed: {
-    getPaymentPolicyLoan () {
-      return this.$store.getters["submission_transaction/payment_policy_loan/getPaymentPolicyLoan"];
+    getRequestPolicyLoan () {
+      return this.$store.getters["submission_transaction/policy_loan/getRquestPolicyLoan"];
     }
   },
   methods: {
     async submit () {
       const result = await this.$store.dispatch(
-        "submission_transaction/payment_policy_loan/applyPolicyLoan"
+        "submission_transaction/policy_loan/applyPolicyLoan"
       );
       console.log('result ', result)
       if (result && result.success == true) {

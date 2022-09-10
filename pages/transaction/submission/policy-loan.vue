@@ -29,7 +29,8 @@ export default {
         {
           title: 'Pengajuan',
           icon: 'ic_minus_circle.svg',
-          link: './request-policy-loan'
+          link: './reque,st-policy-loan',
+          isActive: true
         }
       ]
     };
