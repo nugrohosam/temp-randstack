@@ -29,7 +29,7 @@ export default {
         {
           title: 'Pengajuan',
           icon: 'ic_minus_circle.svg',
-          link: './new-policy-loan'
+          link: './request-policy-loan'
         }
       ]
     };
