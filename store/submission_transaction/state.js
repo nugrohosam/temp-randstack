@@ -102,7 +102,7 @@ export default {
       icon: "ic_edit_3.svg",
     },
     {
-      active: false,
+      active: true,
       hidden: false,
       name: "Pinjaman Polis",
       link: "/transaction/submission/policy-loan",

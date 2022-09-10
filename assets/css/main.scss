@@ -583,3 +583,11 @@ input{
 .text-error {
   color: #f39c12;
 }
+
+.btn-save {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 150px;
+  justify-content: center;
+}

@@ -1,51 +1,38 @@
 <template>
   <div>
-    <!-- <div class="row">
+    <div class="row">
       <div class="col-12">
         <div class="menu-grid">
           <Menu
-            :isActive="false"
-            :name="'Pembayaran'"
-            :icon="'ic_cuti_premi.svg'"
-            :link="'./payment-policy-loan'"
-          />
-          <Menu
-            :isActive="false"
-            :name="'Pengajuan'"
-            :icon="'ic_cuti_premi.svg'"
-            :link="'./new-policy-loan'"
+            v-for="(item, index) in menus"
+            :key="index"
+            v-bind="item"
           />
         </div>
       </div>
-    </div> -->
-    <NuxtChild />
-    <ModalMessage
-      :message="modal.message"
-      :show="modal.show"
-      :button="modal.button"
-      @closeModal="modal.show = false"
-    />
+    </div>
   </div>
 </template>
+
 <script>
 export default {
   name: "policy-loan",
-  beforeMount() {
-    this.modal.show = true;
-    this.modal.message =
-      "Menu yang anda pilih masih dalam tahap pengembangan"
-  },
   data() {
     return {
-      modal: {
-        message: "",
-        show: false,
-        button: {
-          text: "Tutup",
-          redirect_link: "/transaction/submission",
-          redirect_type: "spa",
+      menus: [
+        {
+          title: 'Pembayaran',
+          icon: 'ic_cuti_premi.svg',
+          link: './payment-policy-loan',
+          isActive: true
         },
-      },};
+        {
+          title: 'Pengajuan',
+          icon: 'ic_minus_circle.svg',
+          link: './new-policy-loan'
+        }
+      ]
+    };
   },
 };
 </script>
