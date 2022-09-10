@@ -36,12 +36,9 @@
         <p class="data-title mb-2">Batas Pinjaman Polis</p>
         <div class="data-value">
           <v-select
-            :items="[
-              { text: 'BNI', value: '1234' }
-            ]"
-            :value="itemsPerPage"
-            @change="itemsPerPage = parseInt($event, 10)"
-            label="Solo field"
+            :items="bankList"
+            v-model="getPaymentPolicyLoan.bankId"
+            label="Nama Bank"
             solo
           ></v-select>
         </div>
@@ -90,19 +87,31 @@
 export default {
   name: "payment-policy-loan-resume",
   computed: {
+    myPolicy () {
+      return this.$store.getters["submission_transaction/getMyPolicy"];
+    },
+    bankList () {
+      if (this.myPolicy.policyWithCode.payerBankAccount.length) {
+        return this.myPolicy.policyWithCode.payerBankAccount.map((item) => ({
+          text: item.bankName,
+          value: item.bankCode
+        }))
+      }
+      return []
+    },
     getPaymentPolicyLoan () {
-      return this.$store.getters["submission_transaction/payment_policy_loan/getPaymentPolicyLoan"];
+      return this.$store.getters["submission_transaction/policy_loan/getPaymentPolicyLoan"];
     }
   },
   methods: {
     async submit () {
       const result = await this.$store.dispatch(
-        "submission_transaction/payment_policy_loan/applyPolicyLoan"
+        "submission_transaction/policy_loan/repaymentPolicyLoan"
       );
       console.log('result ', result)
       if (result && result.success == true) {
         this.$router.push({
-          path: "./payment-policy-loan/thankyou",
+          path: "/transaction/submission/payment-policy-loan/thankyou",
         });
       }
     },

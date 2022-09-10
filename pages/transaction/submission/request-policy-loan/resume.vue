@@ -20,19 +20,19 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nomor Rekening Manfaat</p>
         <p class="data-value">
-          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-" }}
+          {{ myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-" }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nama Pemegang Rekening Manfaat</p>
         <p class="data-value">
-          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-" }}
+          {{ myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-" }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Bank</p>
         <p class="data-value">
-          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}
+          {{ myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -100,6 +100,9 @@
 export default {
   name: "request-policy-loan-resume",
   computed: {
+    myPolicy () {
+      return this.$store.getters["submission_transaction/getMyPolicy"];
+    },
     getRequestPolicyLoan () {
       return this.$store.getters["submission_transaction/policy_loan/getRquestPolicyLoan"];
     }
@@ -109,10 +112,9 @@ export default {
       const result = await this.$store.dispatch(
         "submission_transaction/policy_loan/applyPolicyLoan"
       );
-      console.log('result ', result)
       if (result && result.success == true) {
         this.$router.push({
-          path: "./request-policy-loan/thankyou",
+          path: "/transaction/submission/request-policy-loan/thankyou",
         });
       }
     },

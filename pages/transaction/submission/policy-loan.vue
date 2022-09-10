@@ -21,15 +21,15 @@ export default {
     return {
       menus: [
         {
-          title: 'Pembayaran',
+          name: 'Pembayaran',
           icon: 'ic_cuti_premi.svg',
           link: './payment-policy-loan',
           isActive: true
         },
         {
-          title: 'Pengajuan',
+          name: 'Pengajuan',
           icon: 'ic_minus_circle.svg',
-          link: './reque,st-policy-loan',
+          link: './request-policy-loan',
           isActive: true
         }
       ]

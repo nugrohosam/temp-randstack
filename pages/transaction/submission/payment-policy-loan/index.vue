@@ -33,37 +33,18 @@
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Batas Pinjaman Polis</p>
-          <div class="data-value">
-            <v-select
-              :items="[
-                { text: 'BNI', value: '1234' }
-              ]"
-              :value="itemsPerPage"
-              @change="itemsPerPage = parseInt($event, 10)"
-              label="Solo field"
-              solo
-            ></v-select>
-          </div>
-        </div>
-      </div>
-  
-      <div class="row">
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Pinjaman</p>
-          <div class="data-value">
-            <div class="form-input">
-              <ValidationProvider rules="required" v-slot="{ errors }">
-                <input
-                  type="number"
-                  class="outlined"
-                  v-model="form.loanAmount"
-                  placeholder="200.000"
-                />
-                <br />
-                <span class="text-error">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </div>
+          <p class="data-title mb-2">Nama Bank</p>
+          <div>
+            <ValidationProvider rules="required" v-slot="{ errors }">
+              <v-select
+                :items="bankList"
+                v-model="form.bankId"
+                label="Nama Bank"
+                solo
+              ></v-select>
+              <br />
+              <span class="text-error">{{ errors[0] }}</span>
+            </ValidationProvider>
           </div>
         </div>
       </div>
@@ -133,9 +114,23 @@ export default {
   data () {
     return {
       form: {
-        bank: null,
+        bankId: null,
         ktpSelfieAttachment: ''
       }
+    }
+  },
+  computed: {
+    myPolicy () {
+      return this.$store.getters["submission_transaction/getMyPolicy"];
+    },
+    bankList () {
+      if (this.myPolicy.policyWithCode.payerBankAccount.length) {
+        return this.myPolicy.policyWithCode.payerBankAccount.map((item) => ({
+          text: item.bankName,
+          value: item.bankCode
+        }))
+      }
+      return []
     }
   },
   methods: {
@@ -149,8 +144,8 @@ export default {
     },
     save () {
       // patch to action
-      this.$store.commit('submission_transaction/payment_policy_loan/setPaymentPolicyLoan', this.form)
-      this.$router.push({ path: "./payment-policy-loan/resume" });
+      this.$store.commit('submission_transaction/policy_loan/setPaymentPolicyLoan', this.form)
+      this.$router.push({ path: "/transaction/submission/payment-policy-loan/resume" });
     },
   },
 };
