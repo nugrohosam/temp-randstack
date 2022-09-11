@@ -37,7 +37,7 @@
         <div class="data-value">
           <v-select
             :items="bankList"
-            v-model="getPaymentPolicyLoan.bankId"
+            v-model="getPaymentPolicyLoan.accontId"
             label="Nama Bank"
             solo
           ></v-select>
@@ -94,7 +94,7 @@ export default {
       if (this.myPolicy.policyWithCode.payerBankAccount.length) {
         return this.myPolicy.policyWithCode.payerBankAccount.map((item) => ({
           text: item.bankName,
-          value: item.bankCode
+          value: item.accountId
         }))
       }
       return []
