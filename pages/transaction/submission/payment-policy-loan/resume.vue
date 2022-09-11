@@ -22,14 +22,12 @@
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Hutang Pinjaman Polis</p>
-        <p class="data-value">
-          xxxxxxxx
-        </p>
+        <p class="data-value">{{ $convertCurrency(loanAmount()) }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Pinjaman Polis</p>
         <p class="data-value">
-          xx/xx/xxxx
+          {{ loanDate() }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -55,11 +53,10 @@
           <p><b>Perhatian !</b></p>
           <ul>
             <li>
-              Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak silahkan hubungi Customer Care 1-500-045
+              Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
+              silahkan hubungi Customer Care 1-500-045
             </li>
-            <li>
-              Pinjaman Polis akan dikenakan biaya bunga
-            </li>
+            <li>Pinjaman Polis akan dikenakan biaya bunga</li>
           </ul>
         </div>
       </div>
@@ -82,21 +79,43 @@
 export default {
   name: "payment-policy-loan-resume",
   computed: {
-    myPolicy () {
+    myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
-    getPaymentPolicyLoan () {
-      return this.$store.getters["submission_transaction/policy_loan/getPaymentPolicyLoan"];
-    }
+    getPaymentPolicyLoan() {
+      return this.$store.getters[
+        "submission_transaction/policy_loan/getPaymentPolicyLoan"
+      ];
+    },
+    myPolicyLoanInfo() {
+      return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
+    },
   },
   methods: {
-    bankName (virtualAccountNumber) {
-      if (this.myPolicy.policyWithCode.virtualAccountInfo.length) {
-        return this.myPolicy.policyWithCode.virtualAccountInfo.find(x => x.virtualAccountNumber == virtualAccountNumber).bankName
-      }
-      return "-"
+    loan() {
+      return (
+        this.myPolicyLoanInfo.loanAndDepositInfo?.loanAccountInfo?.find(
+          (x) =>
+            x.accountId ==
+            this.myPolicy.policyWithCode.policyAccounts[0].accountId
+        ) ?? null
+      );
     },
-    async submit () {
+    loanDate() {
+      return this.loan()?.creationDate ?? "-";
+    },
+    loanAmount() {
+      return this.loan()?.capitalBalance ?? "-";
+    },
+    bankName(virtualAccountNumber) {
+      if (this.myPolicy.policyWithCode.virtualAccountInfo.length) {
+        return this.myPolicy.policyWithCode.virtualAccountInfo.find(
+          (x) => x.virtualAccountNumber == virtualAccountNumber
+        ).bankName;
+      }
+      return "-";
+    },
+    async submit() {
       const result = await this.$store.dispatch(
         "submission_transaction/policy_loan/repaymentPolicyLoan"
       );
