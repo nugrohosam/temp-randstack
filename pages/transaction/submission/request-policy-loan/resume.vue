@@ -20,24 +20,45 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nomor Rekening Manfaat</p>
         <p class="data-value">
-          {{ myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-" }}
+          {{
+            myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+            myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+              ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount
+              : "-"
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nama Pemegang Rekening Manfaat</p>
         <p class="data-value">
-          {{ myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-" }}
+          {{
+            myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+            myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+              ? myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName
+              : "-"
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Bank</p>
         <p class="data-value">
-          {{ myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}
+          {{
+            myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+            myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+              ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName
+              : "-"
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Batas Pinjaman Polis</p>
-        <p class="data-value">Rp 12.000.000</p>
+        <p class="data-value">
+          {{
+            myPolicyLoanInfo
+              ? $convertCurrency(myPolicyLoanInfo.financialInfo.netLoan)
+              : "0"
+          }}
+        </p>
       </div>
     </div>
 
@@ -45,15 +66,7 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Pinjaman</p>
         <div class="data-value">
-          <div class="form-input">
-            <input
-              type="text"
-              class="outlined"
-              placeholder="200.000"
-              :value="getRequestPolicyLoan.loanAmount"
-              disabled
-            />
-          </div>
+          {{ $convertCurrency(getRequestPolicyLoan.loanAmount) }}
         </div>
       </div>
     </div>
@@ -73,11 +86,10 @@
           <p><b>Perhatian !</b></p>
           <ul>
             <li>
-              Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak silahkan hubungi Customer Care 1-500-045
+              Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
+              silahkan hubungi Customer Care 1-500-045
             </li>
-            <li>
-              Pinjaman Polis akan dikenakan biaya bunga
-            </li>
+            <li>Pinjaman Polis akan dikenakan biaya bunga</li>
           </ul>
         </div>
       </div>
@@ -100,15 +112,20 @@
 export default {
   name: "request-policy-loan-resume",
   computed: {
-    myPolicy () {
+    myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
-    getRequestPolicyLoan () {
-      return this.$store.getters["submission_transaction/policy_loan/getRquestPolicyLoan"];
-    }
+    myPolicyLoanInfo() {
+      return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
+    },
+    getRequestPolicyLoan() {
+      return this.$store.getters[
+        "submission_transaction/policy_loan/getRequestPolicyLoan"
+      ];
+    },
   },
   methods: {
-    async submit () {
+    async submit() {
       const result = await this.$store.dispatch(
         "submission_transaction/policy_loan/applyPolicyLoan"
       );

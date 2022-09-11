@@ -37,7 +37,7 @@
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Batas Pinjaman Polis</p>
-          <p class="data-value">Rp 12.000.000</p>
+          <p class="data-value">{{ myPolicyLoanInfo ? $convertCurrency(myPolicyLoanInfo.financialInfo.netLoan) : "0"}}</p>
         </div>
       </div>
   
@@ -51,7 +51,7 @@
                   type="number"
                   class="outlined"
                   v-model="form.loanAmount"
-                  placeholder="200.000"
+                  placeholder="200.xxx.xxx"
                 />
                 <br />
                 <span class="text-error">{{ errors[0] }}</span>
@@ -134,6 +134,9 @@ export default {
   computed: {
     myPolicy () {
       return this.$store.getters["submission_transaction/getMyPolicy"];
+    },
+    myPolicyLoanInfo() {
+      return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
     },
   },
   methods: {

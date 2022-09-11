@@ -36,7 +36,7 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-1">Nomor Rekening Manfaat Baru</p>
           <div class="form-input">
-            <input type="text" class="outlined" placeholder="200.000" />
+            <input type="text" class="outlined" placeholder="200.xxx.xxx" />
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -51,13 +51,13 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-1">Nama Pemilik Rekening Manfaat</p>
           <div class="form-input">
-            <input type="text" class="outlined" placeholder="200.000" />
+            <input type="text" class="outlined" placeholder="200.xxx.xxx" />
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-1">Cabang</p>
           <div class="form-input">
-            <input type="text" class="outlined" placeholder="200.000" />
+            <input type="text" class="outlined" placeholder="200.xxx.xxx" />
           </div>
         </div>
       </div>

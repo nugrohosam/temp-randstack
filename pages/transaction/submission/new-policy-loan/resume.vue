@@ -41,7 +41,7 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Pinjaman</p>
         <div class="form-input">
-          <input type="text" class="outlined" placeholder="200.000" disabled/>
+          <input type="text" class="outlined" placeholder="200.xxx.xxx" disabled/>
         </div>
       </div>
     </div>
