@@ -21,7 +21,7 @@ export default {
   },
   async repaymentPolicyLoan ({ rootGetters, state, commit, dispatch }) {
     const form = {
-      bank_id: state.paymentPolicyLoan.bankId,
+      virtual_account_number: state.paymentPolicyLoan.virtualAccountNumber,
       ktp_selfie_attachment: state.paymentPolicyLoan.ktpSelfieAttachment
     }
 

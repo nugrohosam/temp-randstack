@@ -17,7 +17,7 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Informasi Virtual Account</p>
         <p class="data-value">
-          xxxxxxxx
+          {{ getPaymentPolicyLoan.virtualAccountNumber }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -33,15 +33,10 @@
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Batas Pinjaman Polis</p>
-        <div class="data-value">
-          <v-select
-            :items="bankList"
-            v-model="getPaymentPolicyLoan.accontId"
-            label="Nama Bank"
-            solo
-          ></v-select>
-        </div>
+        <p class="data-title mb-2">Nama Bank</p>
+        <p class="data-value">
+          {{ bankName(getPaymentPolicyLoan.virtualAccountNumber) }}
+        </p>
       </div>
     </div>
 
@@ -90,25 +85,21 @@ export default {
     myPolicy () {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
-    bankList () {
-      if (this.myPolicy.policyWithCode.payerBankAccount.length) {
-        return this.myPolicy.policyWithCode.payerBankAccount.map((item) => ({
-          text: item.bankName,
-          value: item.accountId
-        }))
-      }
-      return []
-    },
     getPaymentPolicyLoan () {
       return this.$store.getters["submission_transaction/policy_loan/getPaymentPolicyLoan"];
     }
   },
   methods: {
+    bankName (virtualAccountNumber) {
+      if (this.myPolicy.policyWithCode.virtualAccountInfo.length) {
+        return this.myPolicy.policyWithCode.virtualAccountInfo.find(x => x.virtualAccountNumber == virtualAccountNumber).bankName
+      }
+      return "-"
+    },
     async submit () {
       const result = await this.$store.dispatch(
         "submission_transaction/policy_loan/repaymentPolicyLoan"
       );
-      console.log('result ', result)
       if (result && result.success == true) {
         this.$router.push({
           path: "/transaction/submission/payment-policy-loan/thankyou",
