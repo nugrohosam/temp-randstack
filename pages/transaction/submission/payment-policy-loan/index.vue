@@ -38,7 +38,7 @@
             <ValidationProvider rules="required" v-slot="{ errors }">
               <v-select
                 :items="bankList"
-                v-model="form.bankId"
+                v-model="form.paymentBankAccountId"
                 label="Nama Bank"
                 solo
               ></v-select>
@@ -114,7 +114,7 @@ export default {
   data () {
     return {
       form: {
-        bankId: null,
+        paymentBankAccountId: null,
         ktpSelfieAttachment: ''
       }
     }
@@ -127,7 +127,7 @@ export default {
       if (this.myPolicy.policyWithCode.payerBankAccount.length) {
         return this.myPolicy.policyWithCode.payerBankAccount.map((item) => ({
           text: item.bankName,
-          value: item.bankCode
+          value: item.accountId
         }))
       }
       return []
