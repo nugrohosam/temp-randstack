@@ -25,7 +25,7 @@ export default {
       icon: "ic_cuti_premi.svg",
     },
     {
-      active: false,
+      active: true,
       hidden: false,
       name: "Pemulihan Polis",
       link: "/transaction/submission/policy-recovery",

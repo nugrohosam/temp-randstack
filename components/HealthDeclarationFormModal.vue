@@ -22,7 +22,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-8 d-flex" style="align-items: center;">
-                <h4>{{item.question}}</h4>
+                <h4>{{item.pertanyaan}}</h4>
               </div>
               <div class="col-2">
                 <v-radio-group v-if="!isUndefined(item.tertanggung)" v-model="item.tertanggung" row>
@@ -50,7 +50,7 @@
               <div v-for="(child, index) in item.childs" :key="index" class="row">
                 <div class="col-8 d-flex" style="align-items: center;">
                   <ul>
-                    <li>{{child.question}}</li>
+                    <li>{{child.pertanyaan}}</li>
                   </ul>
                 </div>
                 <div class="col-2">
@@ -107,6 +107,7 @@
       <div class="d-flex flex-row-reverse">
         <button
           class="btn btn-primary btn-save mb-0"
+          @click="submit"
         >
           Submit
         </button>
@@ -127,92 +128,92 @@ export default {
       ],
       formOptions: [
         {
-          question: 'Apakah Tertanggung/Pemegang Polis sekarang dalam keadaaan sehat?',
-          tertanggung: false,
-          pemegang_polis: false
+          pertanyaan: 'Apakah Tertanggung/Pemegang Polis sekarang dalam keadaaan sehat?',
+          tertanggung: null,
+          pemegang_polis: null
         },
         {
-          question: 'Sejak Polis tersebut di atas berlaku apakah Tertanggung/Pemegang Polis',
+          pertanyaan: 'Sejak Polis tersebut di atas berlaku apakah Tertanggung/Pemegang Polis',
           childs: [
             {
-              question: 'Pernah berkonsultasi dengan dokter, dirawat di Rumah Sakit, menjalani operasi atau mendapat perawatan?',
-              tertanggung: false,
-              pemegang_polis: false
+              pertanyaan: 'Pernah berkonsultasi dengan dokter, dirawat di Rumah Sakit, menjalani operasi atau mendapat perawatan?',
+              tertanggung: null,
+              pemegang_polis: null
             },
             {
-              question: 'Pernah dianjurkan oleh dokter atau pernah melakukan pemeriksaan kesehatan diagnostic, check up seperti : sinar X, MRI, USG, CT scan,',
-              tertanggung: false,
-              pemegang_polis: false
+              pertanyaan: 'Pernah dianjurkan oleh dokter atau pernah melakukan pemeriksaan kesehatan diagnostic, check up seperti : sinar X, MRI, USG, CT scan,',
+              tertanggung: null,
+              pemegang_polis: null
             },
             {
-              question: 'Menderita cacat atau kelainan fisik?',
-              tertanggung: false,
-              pemegang_polis: false
+              pertanyaan: 'Menderita cacat atau kelainan fisik?',
+              tertanggung: null,
+              pemegang_polis: null
             }
           ]
         },
         {
-          question: 'Apakah Tertanggung/Pemegang Polis mempunyai kebiasaan sebagai berikut:',
+          pertanyaan: 'Apakah Tertanggung/Pemegang Polis mempunyai kebiasaan sebagai berikut:',
           childs: [
             {
-              question: 'Merokok? Jika YA, berapa batang dalam sehari?',
-              tertanggung: false,
-              pemegang_polis: false,
+              pertanyaan: 'Merokok? Jika YA, berapa batang dalam sehari?',
+              tertanggung: null,
+              pemegang_polis: null,
               pemegang_polis_number: null
             },
             {
-              question: 'Menggunakan obat bius/narkotik ,obat/zat terlarang?',
-              tertanggung: false,
-              pemegang_polis: false
+              pertanyaan: 'Menggunakan obat bius/narkotik ,obat/zat terlarang?',
+              tertanggung: null,
+              pemegang_polis: null
             },
             {
-              question: 'Minum alkohol? Jika YA, berapa banyak dalam seminggu?',
-              tertanggung: false,
-              pemegang_polis: false,
+              pertanyaan: 'Minum alkohol? Jika YA, berapa banyak dalam seminggu?',
+              tertanggung: null,
+              pemegang_polis: null,
               tertanggung_number: null
             }
           ]
         },
         {
-          question: 'Apakah kondisi kesehatan Tertanggung/Pemegang Polis sekarang dalam keadaan terganggu, memerlukan atau dianjurkan operasi atau dalam perawatan dokter /makan obat untuk alasan apapun?',
-          tertanggung: true,
-          pemegang_polis: false
+          pertanyaan: 'Apakah kondisi kesehatan Tertanggung/Pemegang Polis sekarang dalam keadaan terganggu, memerlukan atau dianjurkan operasi atau dalam perawatan dokter /makan obat untuk alasan apapun?',
+          tertanggung: null,
+          pemegang_polis: null
         },
         {
           childs: [
             {
-              question: 'Apakah Tertanggung sering melakukan kegiatan penerbangan komersial/non-komersial?',
-              tertanggung: true,
-              pemegang_polis: false
+              pertanyaan: 'Apakah Tertanggung sering melakukan kegiatan penerbangan komersial/non-komersial?',
+              tertanggung: null,
+              pemegang_polis: null
             },
             {
-              question: 'Apakah Tertanggung pernah atau bermaksud ikut dalam olah raga yang beresiko tinggi ? (Balap mobil, terjun payung, dll) /',
-              tertanggung: true,
-              pemegang_polis: false
+              pertanyaan: 'Apakah Tertanggung pernah atau bermaksud ikut dalam olah raga yang beresiko tinggi ? (Balap mobil, terjun payung, dll) /',
+              tertanggung: null,
+              pemegang_polis: null
             }
           ]
         },
         {
-          question: 'Hanya untuk wanita',
+          pertanyaan: 'Hanya untuk wanita',
           childs: [
             {
-              question: 'Apakah Anda sekarang sedang hamil ? bila YA, bulan',
-              tertanggung: true,
-              pemegang_polis: false,
+              pertanyaan: 'Apakah Anda sekarang sedang hamil ? bila YA, bulan',
+              tertanggung: null,
+              pemegang_polis: null,
               pemegang_polis_number: null
             },
             {
-              question: 'Apakah ada gangguan menstruasi atau menstruasi tidak teratur?',
-              tertanggung: true,
-              pemegang_polis: false,
+              pertanyaan: 'Apakah ada gangguan menstruasi atau menstruasi tidak teratur?',
+              tertanggung: null,
+              pemegang_polis: null,
             },
             {
-              question: 'Tanggal terakhir menstruasi:',
+              pertanyaan: 'Tanggal terakhir menstruasi:',
               tertanggung_date: null,
               pemegang_polis_date: null
             },
             {
-              question: 'Tanggal terakhir Anda melahirkan:',
+              pertanyaan: 'Tanggal terakhir Anda melahirkan:',
               tertanggung_date: null,
               pemegang_polis_date: null
             }
@@ -221,14 +222,14 @@ export default {
         {
           childs: [
             {
-              question: 'Tinggi Badan (cm)',
-              tertanggung_number: true,
-              pemegang_polis_number: false,
+              pertanyaan: 'Tinggi Badan (cm)',
+              tertanggung_number: null,
+              pemegang_polis_number: null,
             },
             {
-              question: 'Berat Badan (kg)',
-              tertanggung_number: true,
-              pemegang_polis_number: false,     
+              pertanyaan: 'Berat Badan (kg)',
+              tertanggung_number: null,
+              pemegang_polis_number: null,     
             }
           ]
         }
@@ -239,10 +240,28 @@ export default {
     show(value) {
       this.isShow = this.show;
     },
+    isShow(value) {
+      if (!value) this.$emit("close")
+    }
   },
   methods: {
     isUndefined (value) {
       return typeof value === "undefined"
+    },
+    submit() {
+      let healthQuestionaire = []
+      this.formOptions.forEach(item => {
+        if (item.childs && item.childs.length) {
+          item.childs.forEach((child) => {
+            healthQuestionaire.push((child))
+          })
+        } else {
+          healthQuestionaire.push(item)
+        }
+      })
+
+      this.$emit('submit', healthQuestionaire)
+      this.$emit("close")
     }
   }
 }
