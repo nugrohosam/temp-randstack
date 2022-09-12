@@ -11,7 +11,7 @@ export default {
       icon: "ic_user.svg",
     },
     {
-      active: true,
+      active: false,
       hidden: true,
       name: "Penutupan/Pembatalan Produk",
       link: "/transaction/submission/cancellation-main-product",
@@ -102,7 +102,7 @@ export default {
       icon: "ic_edit_3.svg",
     },
     {
-      active: true,
+      active: false,
       hidden: false,
       name: "Pinjaman Polis",
       link: "/transaction/submission/policy-loan",
