@@ -150,6 +150,7 @@
 
     <HealthDeclarationFormModal
       :show="showModalHealth"
+      :default-value="form.healthQuestionaire"
       @submit="form.healthQuestionaire = $event"
       @close="showModalHealth = false"
     />
@@ -167,7 +168,7 @@ export default {
         transferAttachment: "",
         ktpSelfieAttachment: "",
       },
-      showModalHealth: false
+      showModalHealth: false,
     };
   },
   computed: {
