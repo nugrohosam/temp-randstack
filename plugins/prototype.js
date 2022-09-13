@@ -1,5 +1,6 @@
 // import axios from 'axios';
-export default function ({ app, store, $axios }, inject) {
+export default function ({ app, $axios }, inject) {
+
   const isNull = (text) => {
     return text === null ? "" : text;
   };
@@ -277,7 +278,7 @@ export default function ({ app, store, $axios }, inject) {
 
   const getBank = async (bankCode) => {
     // $axios.setToken(store.getters['auth/getAuthAccessToken'], 'Bearer');
-    const response = await $axios
+    const response = await this.$axios
       .$get(`/api/v1/banks/${bankCode}`)
       .then((response) => {
         return response;
