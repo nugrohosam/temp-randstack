@@ -1,0 +1,139 @@
+<template>
+  <div>
+    <div class="row">
+      <div class="col-lg-4 col-sm-6">
+        <p class="data-title mb-2">Nama Pemegang Polis</p>
+        <p class="data-value">
+          {{ myPolicy.policyWithCode.policyHolder.person.firstName }}
+        </p>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <p class="data-title mb-2">Nomor Polis</p>
+        <p class="data-value">
+          {{ myPolicy.policyWithCode.policyNumber }}
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 col-sm-6">
+        <p class="data-title mb-2">Tanggal Jatuh Tempo</p>
+        <p class="data-value">xx/xx/xxxx</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 col-sm-6">
+        <p class="data-title mb-2">Status Cuti Premi</p>
+        <p class="data-value">XX</p>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <p class="data-title mb-2">Masa Akhir Pembayaran Premi</p>
+        <p class="data-value">xx/xx/xxxx</p>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <p class="data-title mb-2">Masa Wajib Bayar Premi</p>
+        <p class="data-value">xx/xx/xxxx</p>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <p class="data-title mb-2">Masa Wajib Bayar Premi</p>
+        <p class="data-value">xx/xx/xxxx</p>
+      </div>
+    </div>
+
+    <hr class="my-4" />
+
+    <div class="row">
+      <div class="col-lg-4 col-sm-6">
+        <p class="data-title mb-2">Tanggal Awal Cuti Premi</p>
+        <p class="data-value">{{ getCutiPremi.startPremiumHolidayDate }}</p>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <p class="data-title mb-2">Tanggal Akhir Cuti Premi</p>
+        <p class="data-value">{{ getCutiPremi.endPremiumHolidayDate }}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 col-sm-12">
+        <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+        <div class="data-value">
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showSelfieKtpPreview"
+          >
+            Lihat
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 col-sm-12">
+        <div class="message-bar rounded-lg">
+          <p><b>Perhatian !</b></p>
+          <ul>
+            <li>Polis tidak dalam masa Cuti Premi Otomatis</li>
+            <li>Polis tidak dalam masa Must Pay Period</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <button class="btn btn-primary btn-save float-right" @click="submit">
+          Simpan
+        </button>
+      </div>
+    </div>
+    <ModalImagePreview
+      :src="image_preview.src"
+      :show="image_preview.show"
+      @closeImagePreview="image_preview.show = false"
+    />
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      image_preview: {
+        src: "",
+        show: false,
+      },
+    };
+  },
+  computed: {
+    myPolicy() {
+      return this.$store.getters["submission_transaction/getMyPolicy"];
+    },
+    getCutiPremi() {
+      return this.$store.getters[
+        "submission_transaction/cuti_premi/getCutiPremi"
+      ];
+    },
+  },
+  methods: {
+    showSelfieKtpPreview: function () {
+      if (this.getCutiPremi.ktpSelfieAttachment) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getCutiPremi.ktpSelfieAttachment
+        );
+        this.image_preview.show = true;
+      }
+    },
+    async submit() {
+      const result = await this.$store.dispatch(
+        "submission_transaction/cuti_premi/changePremiumHoliday"
+      );
+      if (result && result.success == true) {
+        this.$router.push({
+          path: "/transaction/submission/cuti-premi/thankyou",
+        });
+      }
+    },
+  },
+};
+</script>

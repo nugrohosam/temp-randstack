@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="isShow" :max-width="1000">
-    <div class="modal">
+    <div class="modal-health">
       <h2>Formulir Pernyataan Kesehatan</h2>
 
       <hr class="my-4" />
@@ -316,7 +316,7 @@ export default {
 </script>
 
 <style scoped>
-.modal {
+.modal-health {
   background-color: white;
   padding: 2rem;
 }
