@@ -68,7 +68,7 @@
             >
               Unggah
             </button>
-            <small>{{ form.ktpSelfieAttachment }}</small>
+            <small>{{ form.ktpSelfieAttachment.name }}</small>
             <br />
             <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
             <br />
@@ -111,7 +111,7 @@ export default {
     return {
       form: {
         virtualAccountNumber: null,
-        ktpSelfieAttachment: "",
+        ktpSelfieAttachment: {},
       },
     };
   },
@@ -154,11 +154,12 @@ export default {
       if (e.target.files[0]) {
         const result = await this.$store.dispatch(
           "submission_transaction/uploadSelieKtpFile",
-          {
-            file: e.target.files[0],
-          }
+          { file: e.target.files[0] }
         );
-        this.form.ktpSelfieAttachment = result.name;
+        this.form.ktpSelfieAttachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
       }
     },
     save() {

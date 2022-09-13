@@ -20,27 +20,48 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title">Nomor Rekening Manfaat</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-" }}
+            {{
+              myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+              myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+                ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount
+                : "-"
+            }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title">Nama Pemegang Rekening Manfaat</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-" }}
+            {{
+              myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+              myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+                ? myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName
+                : "-"
+            }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Bank</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}
+            {{
+              myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+              myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+                ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName
+                : "-"
+            }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Batas Pinjaman Polis</p>
-          <p class="data-value">{{ myPolicyLoanInfo ? $convertCurrency(myPolicyLoanInfo.financialInfo.netLoan) : "0"}}</p>
+          <p class="data-value">
+            {{
+              myPolicyLoanInfo
+                ? $convertCurrency(myPolicyLoanInfo.financialInfo.netLoan)
+                : "0"
+            }}
+          </p>
         </div>
       </div>
-  
+
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Pinjaman</p>
@@ -52,6 +73,7 @@
                   class="outlined"
                   v-model="form.loanAmount"
                   placeholder="200.xxx.xxx"
+                  min="0"
                 />
                 <br />
                 <span class="text-error">{{ errors[0] }}</span>
@@ -60,20 +82,25 @@
           </div>
         </div>
       </div>
-  
+
       <div class="row">
         <div class="col-12">
           <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
-          <ValidationProvider rules="required|image" v-slot="{ validate, errors }">
+          <ValidationProvider
+            rules="required|image"
+            v-slot="{ validate, errors }"
+          >
             <input
               type="file"
               ref="inputSelfieKtpImage"
               v-show="false"
               accept="image/*"
-              @change="(e) => {
-                validate(e)
-                addSelfieKtpImage(e)
-              }"
+              @change="
+                (e) => {
+                  validate(e);
+                  addSelfieKtpImage(e);
+                }
+              "
             />
             <button
               class="btn btn-primary-outlined"
@@ -81,7 +108,7 @@
             >
               Unggah
             </button>
-            <small>{{ form.ktpSelfieAttachment }}</small>
+            <small>{{ form.ktpSelfieAttachment.name }}</small>
             <br />
             <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
             <br />
@@ -89,18 +116,17 @@
           </ValidationProvider>
         </div>
       </div>
-  
+
       <div class="row">
         <div class="col-lg-12 col-sm-12">
           <div class="message-bar rounded-lg">
             <p><b>Perhatian !</b></p>
             <ul>
               <li>
-                Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak silahkan hubungi Customer Care 1-500-045
+                Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
+                silahkan hubungi Customer Care 1-500-045
               </li>
-              <li>
-                Pinjaman Polis akan dikenakan biaya bunga
-              </li>
+              <li>Pinjaman Polis akan dikenakan biaya bunga</li>
             </ul>
           </div>
         </div>
@@ -108,10 +134,7 @@
 
       <div class="row">
         <div class="col-12">
-          <button
-            class="btn btn-primary btn-save float-right"
-            type="submit"
-          >
+          <button class="btn btn-primary btn-save float-right" type="submit">
             Simpan
           </button>
         </div>
@@ -123,16 +146,16 @@
 <script>
 export default {
   name: "request-policy-loan",
-  data () {
+  data() {
     return {
       form: {
         loanAmount: null,
-        ktpSelfieAttachment: ''
-      }
-    }
+        ktpSelfieAttachment: {},
+      },
+    };
   },
   computed: {
-    myPolicy () {
+    myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
     myPolicyLoanInfo() {
@@ -140,18 +163,29 @@ export default {
     },
   },
   methods: {
-    async addSelfieKtpImage (e) {
+    async addSelfieKtpImage(e) {
       if (e.target.files[0]) {
-        const result = await this.$store.dispatch("submission_transaction/uploadSelieKtpFile", {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadSelieKtpFile",
+          {
+            file: e.target.files[0],
+          }
+        );
+        this.form.ktpSelfieAttachment = {
           file: e.target.files[0],
-        });
-        this.form.ktpSelfieAttachment = result.name
+          name: result.name,
+        };
       }
     },
-    save () {
+    save() {
       // patch to action
-      this.$store.commit('submission_transaction/policy_loan/setRequestPolicyLoan', this.form)
-      this.$router.push({ path: "/transaction/submission/request-policy-loan/resume" });
+      this.$store.commit(
+        "submission_transaction/policy_loan/setRequestPolicyLoan",
+        this.form
+      );
+      this.$router.push({
+        path: "/transaction/submission/request-policy-loan/resume",
+      });
     },
   },
 };
