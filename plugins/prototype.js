@@ -1,5 +1,6 @@
 // import axios from 'axios';
-export default function ({ app, store, $axios }, inject) {
+export default function ({ app, $axios }, inject) {
+
   const isNull = (text) => {
     return text === null ? "" : text;
   };
@@ -302,7 +303,6 @@ export default function ({ app, store, $axios }, inject) {
   };
 
   const getProvinces = async (page = "", search = "") => {
-    $axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await $axios
       .$get(`/api/v1/address/provinces?page=${page}&search=${search}`)
       .then((response) => {
@@ -315,7 +315,6 @@ export default function ({ app, store, $axios }, inject) {
   }
 
   const findProvince = async (id) => {
-    $axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await $axios
       .$get(`/api/v1/address/provinces/${id}`)
       .then((response) => {
@@ -328,7 +327,6 @@ export default function ({ app, store, $axios }, inject) {
   }
 
   const findCity = async (id) => {
-    $axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await $axios
       .$get(`/api/v1/address/cities/${id}`)
       .then((response) => {
@@ -341,7 +339,6 @@ export default function ({ app, store, $axios }, inject) {
   }
 
   const findDistrict = async (id) => {
-    $axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await $axios
       .$get(`/api/v1/address/districts/${id}`)
       .then((response) => {
@@ -354,7 +351,6 @@ export default function ({ app, store, $axios }, inject) {
   }
 
   const findVillage = async (id) => {
-    $axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await $axios
       .$get(`/api/v1/address/villages/${id}`)
       .then((response) => {
@@ -367,7 +363,6 @@ export default function ({ app, store, $axios }, inject) {
   }
 
   const getCities = async (page = "", province_id = "", search = "") => {
-    $axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await $axios
       .$get(`/api/v1/address/cities?page=${page}&search=${search}&province_id=${province_id}`)
       .then((response) => {
@@ -380,7 +375,6 @@ export default function ({ app, store, $axios }, inject) {
   }
 
   const getDistricts = async (page = "", city_id = "", search = "") => {
-    $axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await $axios
       .$get(`/api/v1/address/districts?page=${page}&search=${search}&city_id=${city_id}`)
       .then((response) => {
@@ -393,7 +387,6 @@ export default function ({ app, store, $axios }, inject) {
   }
 
   const getVillages = async (page = "", district_id = "", search = "") => {
-    $axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await $axios
       .$get(`/api/v1/address/villages?page=${page}&search=${search}&district_id=${district_id}`)
       .then((response) => {
