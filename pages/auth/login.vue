@@ -136,7 +136,7 @@ export default {
         policy_number: "", //9210000627,BLMS0000046
         phone_number: "", //6288809139413,6285692203893
         identity_number: "", //5315056301790004,3578204808680002
-        verified: true,
+        verified: "",
       },
       modal: {
         message: "",
