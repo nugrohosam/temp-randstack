@@ -42,6 +42,18 @@
     </div>
 
     <div class="row">
+      <div class="col-12">
+        <p class="data-title mb-2">Isi Formulir Kesehatan</p>
+        <button
+          class="btn btn-primary-outlined"
+          @click.prevent="showModalHealth = !showModalHealth"
+        >
+          Lihat
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">Unggah Bukti Transfer</p>
         <p class="data-value">
@@ -152,6 +164,13 @@
       :show="image_preview.show"
       @closeImagePreview="image_preview.show = false"
     />
+
+    <HealthDeclarationFormModal
+      :show="showModalHealth"
+      :default-value="getPolicyRecovery.healthQuestionaire"
+      preview
+      @close="showModalHealth = false"
+    />
   </div>
 </template>
 
@@ -160,6 +179,7 @@ export default {
   name: "policy-recovery-resume",
   data() {
     return {
+      showModalHealth: false,
       image_preview: {
         src: "",
         show: false,

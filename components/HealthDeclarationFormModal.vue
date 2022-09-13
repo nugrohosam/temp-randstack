@@ -460,7 +460,7 @@
         </div>
       </div>
 
-      <div class="d-flex flex-row-reverse">
+      <div v-if="!preview" class="d-flex flex-row-reverse">
         <button class="btn btn-primary btn-save mb-0" @click="submit">
           Submit
         </button>
@@ -479,6 +479,10 @@ export default {
     defaultValue: {
       type: Array,
       default: () => [],
+    },
+    preview: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -585,6 +589,9 @@ export default {
   watch: {
     show(value) {
       this.isShow = this.show;
+      if (this.show && this.defaultValue.length) {
+        this.healthQuestionaire = this.defaultValue;
+      }
     },
     isShow(value) {
       if (!value) this.$emit("close");
