@@ -24,7 +24,9 @@
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tanggal Pinjaman Polis</p>
-          <p class="data-value">{{ loanDate() }}</p>
+          <p class="data-value">
+            {{ $formatDate(loan() && loan().creationDate) }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Bank</p>
@@ -35,9 +37,8 @@
                 v-model="form.virtualAccountNumber"
                 label="Pilih Bank"
                 solo
+                :error-messages="errors[0]"
               ></v-select>
-              <br />
-              <span class="text-error">{{ errors[0] }}</span>
             </ValidationProvider>
           </div>
         </div>
@@ -101,6 +102,13 @@
         </div>
       </div>
     </form>
+
+    <ModalMessage
+      :message="modal.message"
+      :show="modal.show"
+      :button="modal.button"
+      @closeModal="modal.show = false"
+    />
   </ValidationObserver>
 </template>
 
@@ -112,6 +120,15 @@ export default {
       form: {
         virtualAccountNumber: null,
         ktpSelfieAttachment: {},
+      },
+      modal: {
+        message: "",
+        show: false,
+        button: {
+          text: "Tutup",
+          redirect_link: "/transaction/submission/policy-loan",
+          redirect_type: "spa",
+        },
       },
     };
   },
@@ -134,10 +151,18 @@ export default {
       return [];
     },
   },
+  beforeMount() {
+    if (
+      this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo?.length === 0
+    ) {
+      this.modal.show = true;
+      this.modal.message = "Maaf anda tidak dapat melakukan pembayaran.";
+    }
+  },
   methods: {
     loan() {
       return (
-        this.myPolicyLoanInfo.loanAndDepositInfo?.loanAccountInfo?.find(
+        this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo?.find(
           (x) =>
             x.accountId ==
             this.myPolicy.policyWithCode.policyAccounts[0].accountId
