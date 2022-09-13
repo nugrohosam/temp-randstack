@@ -161,13 +161,7 @@ export default {
   },
   methods: {
     loan() {
-      return (
-        this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo?.find(
-          (x) =>
-            x.accountId ==
-            this.myPolicy.policyWithCode.policyAccounts[0].accountId
-        ) ?? null
-      );
+      return this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo.length > 0 ? this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo[0] : null;
     },
     loanDate() {
       return this.loan()?.creationDate ?? "-";
