@@ -117,9 +117,9 @@ export default {
   },
   methods: {
     showSelfieKtpPreview: function () {
-      if (this.getCutiPremi.ktpSelfieAttachment) {
+      if (this.getCutiPremi.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
-          this.getCutiPremi.ktpSelfieAttachment
+          this.getCutiPremi.ktpSelfieAttachment.file
         );
         this.image_preview.show = true;
       }

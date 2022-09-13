@@ -78,7 +78,7 @@
             >
               Unggah
             </button>
-            <small>{{ form.transferAttachment }}</small>
+            <small>{{ form.transferAttachment.name }}</small>
             <br />
             <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
             <br />
@@ -112,7 +112,7 @@
             >
               Unggah
             </button>
-            <small>{{ form.ktpSelfieAttachment }}</small>
+            <small>{{ form.ktpSelfieAttachment.name }}</small>
             <br />
             <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
             <br />
@@ -165,8 +165,8 @@ export default {
       form: {
         healthQuestionaire: [],
         virtualAccountNumber: null,
-        transferAttachment: "",
-        ktpSelfieAttachment: "",
+        transferAttachment: {},
+        ktpSelfieAttachment: {},
       },
       showModalHealth: false,
     };
@@ -201,7 +201,10 @@ export default {
           "submission_transaction/uploadAttachment",
           { file: e.target.files[0], type: "TRANSFER" }
         );
-        this.form.transferAttachment = result.name;
+        this.form.transferAttachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
       }
     },
     async addSelfieKtpImage(e) {
@@ -210,7 +213,10 @@ export default {
           "submission_transaction/uploadAttachment",
           { file: e.target.files[0], type: "KTPSELFIE" }
         );
-        this.form.ktpSelfieAttachment = result.name;
+        this.form.ktpSelfieAttachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
       }
     },
   },

@@ -190,7 +190,10 @@ export default {
           "submission_transaction/uploadAttachment",
           { file: e.target.files[0], type: "KTPSELFIE" }
         );
-        this.form.ktpSelfieAttachment = e.target.files[0];
+        this.form.ktpSelfieAttachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
       }
     },
     save() {

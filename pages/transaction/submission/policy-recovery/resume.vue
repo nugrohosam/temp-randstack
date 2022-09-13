@@ -43,9 +43,14 @@
 
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+        <p class="data-title mb-2">Unggah Bukti Transfer</p>
         <p class="data-value">
-          {{ getPolicyRecovery.transferAttachment }}
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showTransferAttachmentPreview"
+          >
+            Lihat
+          </button>
         </p>
       </div>
     </div>
@@ -54,7 +59,12 @@
       <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
         <p class="data-value">
-          {{ getPolicyRecovery.ktpSelfieAttachment }}
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showSelfieKtpPreview"
+          >
+            Lihat
+          </button>
         </p>
       </div>
     </div>
@@ -136,12 +146,26 @@
         </button>
       </div>
     </div>
-    <NuxtChild />
+
+    <ModalImagePreview
+      :src="image_preview.src"
+      :show="image_preview.show"
+      @closeImagePreview="image_preview.show = false"
+    />
   </div>
 </template>
+
 <script>
 export default {
   name: "policy-recovery-resume",
+  data() {
+    return {
+      image_preview: {
+        src: "",
+        show: false,
+      },
+    };
+  },
   computed: {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
@@ -162,6 +186,22 @@ export default {
     },
   },
   methods: {
+    showTransferAttachmentPreview() {
+      if (this.getPolicyRecovery.transferAttachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getPolicyRecovery.transferAttachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
+    showSelfieKtpPreview: function () {
+      if (this.getPolicyRecovery.ktpSelfieAttachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getPolicyRecovery.ktpSelfieAttachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
     async submit() {
       const result = await this.$store.dispatch(
         "submission_transaction/policy_recovery/reinstatement"
