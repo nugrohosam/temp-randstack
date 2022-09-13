@@ -1,5 +1,5 @@
 export default {
-  menus_search: '',
+  menus_search: "",
   myPolicy: null,
   myPolicyLoanInfo: null,
   menus: [
@@ -18,7 +18,7 @@ export default {
       icon: "ic_minus_circle.svg",
     },
     {
-      active: false,
+      active: true,
       hidden: false,
       name: "Cuti Premi",
       link: "/transaction/submission/cuti-premi",
@@ -113,16 +113,16 @@ export default {
     upload: {
       ktp: {
         file: null,
-        name: '',
-        preview: '',
-        upload_filename: ''
+        name: "",
+        preview: "",
+        upload_filename: "",
       },
       selfie_ktp: {
         file: null,
-        name: '',
-        preview: '',
-        upload_filename: ''
-      }
+        name: "",
+        preview: "",
+        upload_filename: "",
+      },
     },
     coverages_selected: [],
     reason_selected: null,
@@ -136,6 +136,6 @@ export default {
     //   address: null,
     //   phonerNumber: null,
     // },
-    resume: null
-  }
-}
+    resume: null,
+  },
+};
