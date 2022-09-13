@@ -27,7 +27,7 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Pinjaman Polis</p>
         <p class="data-value">
-          {{ loanDate() }}
+          {{ $formatDate(loan() && loan().creationDate) }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -57,11 +57,7 @@
         <div class="message-bar rounded-lg">
           <p><b>Perhatian !</b></p>
           <ul>
-            <li>
-              Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
-              silahkan hubungi Customer Care 1-500-045
-            </li>
-            <li>Pinjaman Polis akan dikenakan biaya bunga</li>
+            <li>Pembayaran dilakukan di hari yang sama</li>
           </ul>
         </div>
       </div>
