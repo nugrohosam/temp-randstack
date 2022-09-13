@@ -18,67 +18,77 @@
 
       <div class="row">
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title">Nomor Rekening Manfaat</p>
-          <p class="data-value">
-            {{
-              myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
-              myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
-                ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount
-                : "-"
-            }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title">Nama Pemegang Rekening Manfaat</p>
-          <p class="data-value">
-            {{
-              myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
-              myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
-                ? myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName
-                : "-"
-            }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Nama Bank</p>
-          <p class="data-value">
-            {{
-              myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
-              myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
-                ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName
-                : "-"
-            }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Batas Pinjaman Polis</p>
-          <p class="data-value">
-            {{
-              myPolicyLoanInfo
-                ? $convertCurrency(myPolicyLoanInfo.financialInfo.netLoan)
-                : "0"
-            }}
-          </p>
+          <p class="data-title mb-2">Tanggal Jatuh Tempo</p>
+          <p class="data-value">xx/xx/xxxx</p>
         </div>
       </div>
 
       <div class="row">
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Pinjaman</p>
+          <p class="data-title mb-2">Status Cuti Premi</p>
+          <p class="data-value">XX</p>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Masa Akhir Pembayaran Premi</p>
+          <p class="data-value">xx/xx/xxxx</p>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Masa Wajib Bayar Premi</p>
+          <p class="data-value">xx/xx/xxxx</p>
+        </div>
+      </div>
+
+      <hr class="my-4" />
+
+      <div class="row">
+        <div class="col-12">
+          <ValidationProvider
+            v-if="!isSetHoliday"
+            rules="required"
+            v-slot="{ errors }"
+          >
+            <v-radio-group v-model="form.status" row>
+              <v-radio
+                v-for="(item, index) in radios"
+                :key="index"
+                color="#F15921"
+                v-bind="item"
+              ></v-radio>
+            </v-radio-group>
+            <span class="text-error">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Tanggal Awal Cuti Premi</p>
           <div class="data-value">
-            <div class="form-input">
-              <ValidationProvider rules="required" v-slot="{ errors }">
-                <input
-                  type="number"
-                  class="outlined"
-                  v-model="form.loanAmount"
-                  placeholder="200.xxx.xxx"
-                  min="0"
-                />
-                <br />
-                <span class="text-error">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </div>
+            <ValidationProvider rules="required" v-slot="{ errors }">
+              <input
+                type="date"
+                class="outlined form-control"
+                v-model="form.startPremiumHolidayDate"
+              />
+              <span class="text-error">{{ errors[0] }}</span>
+            </ValidationProvider>
+            <br />
+            <p class="data-title">
+              Awal cuti Premi tidak boleh kurang dari Tanggal sistem / Hari ini
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Tanggal Akhir Cuti Premi</p>
+          <div class="data-value">
+            <ValidationProvider rules="required" v-slot="{ errors }">
+              <input
+                type="date"
+                class="outlined form-control"
+                v-model="form.endPremiumHolidayDate"
+              />
+              <span class="text-error">{{ errors[0] }}</span>
+            </ValidationProvider>
           </div>
         </div>
       </div>
@@ -122,11 +132,8 @@
           <div class="message-bar rounded-lg">
             <p><b>Perhatian !</b></p>
             <ul>
-              <li>
-                Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
-                silahkan hubungi Customer Care 1-500-045
-              </li>
-              <li>Pinjaman Polis akan dikenakan biaya bunga</li>
+              <li>Polis tidak dalam masa Cuti Premi Otomatis</li>
+              <li>Polis tidak dalam masa Must Pay Period</li>
             </ul>
           </div>
         </div>
@@ -145,31 +152,43 @@
 
 <script>
 export default {
-  name: "request-policy-loan",
+  name: "cuti-premi",
   data() {
     return {
       form: {
-        loanAmount: null,
+        status: "",
+        startPremiumHolidayDate: "",
+        endPremiumHolidayDate: "",
         ktpSelfieAttachment: {},
       },
+      radios: [
+        { label: "Perubahan Tanggal Cuti", value: "change" },
+        { label: "Pembatalan Cuti Premi", value: "cancel" },
+      ],
     };
   },
   computed: {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
-    myPolicyLoanInfo() {
-      return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
+    isSetHoliday() {
+      return this.myPolicy.policyWithCode.holidayIndi === "N";
+    },
+  },
+  watch: {
+    isSetHoliday: {
+      handler() {
+        this.form.status = this.isSetHoliday ? "set" : "change";
+      },
+      immediate: true,
     },
   },
   methods: {
     async addSelfieKtpImage(e) {
       if (e.target.files[0]) {
         const result = await this.$store.dispatch(
-          "submission_transaction/uploadSelieKtpFile",
-          {
-            file: e.target.files[0],
-          }
+          "submission_transaction/uploadAttachment",
+          { file: e.target.files[0], type: "KTPSELFIE" }
         );
         this.form.ktpSelfieAttachment = {
           file: e.target.files[0],
@@ -178,13 +197,12 @@ export default {
       }
     },
     save() {
-      // patch to action
       this.$store.commit(
-        "submission_transaction/policy_loan/setRequestPolicyLoan",
+        "submission_transaction/cuti_premi/setCutiPremi",
         this.form
       );
       this.$router.push({
-        path: "/transaction/submission/request-policy-loan/resume",
+        path: "/transaction/submission/cuti-premi/resume",
       });
     },
   },

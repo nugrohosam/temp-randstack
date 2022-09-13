@@ -75,7 +75,12 @@
       <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
         <p class="data-value">
-          {{ getRequestPolicyLoan.ktpSelfieAttachment }}
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showSelfieKtpPreview"
+          >
+            Lihat
+          </button>
         </p>
       </div>
     </div>
@@ -105,12 +110,26 @@
         </button>
       </div>
     </div>
+
+    <ModalImagePreview
+      :src="image_preview.src"
+      :show="image_preview.show"
+      @closeImagePreview="image_preview.show = false"
+    />
   </div>
 </template>
 
 <script>
 export default {
   name: "request-policy-loan-resume",
+  data() {
+    return {
+      image_preview: {
+        src: "",
+        show: false,
+      },
+    };
+  },
   computed: {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
@@ -125,6 +144,14 @@ export default {
     },
   },
   methods: {
+    showSelfieKtpPreview: function () {
+      if (this.getRequestPolicyLoan.ktpSelfieAttachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getRequestPolicyLoan.ktpSelfieAttachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
     async submit() {
       const result = await this.$store.dispatch(
         "submission_transaction/policy_loan/applyPolicyLoan"
