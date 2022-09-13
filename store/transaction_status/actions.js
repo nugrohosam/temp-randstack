@@ -10,7 +10,7 @@ export default {
     // axios
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
     const response = await this.$axios
-      .$get(`/api/v1/transaction-proposal?order=desc&order_by=transaction_name`)
+      .$get(`/api/v1/transaction-proposal?order=desc&order_by=created_at`)
       .then((response) => {
         if (response.success) {
           return response.data;
