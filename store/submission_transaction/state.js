@@ -138,4 +138,8 @@ export default {
     // },
     resume: null,
   },
+  currentHeaderTitle: {
+    title: "",
+    sub: "",
+  },
 };
