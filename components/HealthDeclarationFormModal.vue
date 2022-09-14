@@ -159,6 +159,7 @@
                 ></v-radio>
               </v-radio-group>
               <input
+                v-if="healthQuestionaire[4].tertanggung"
                 class="outlined form-control"
                 type="number"
                 v-model="healthQuestionaire[4].tertanggung_number"
@@ -224,6 +225,7 @@
                 ></v-radio>
               </v-radio-group>
               <input
+                v-if="healthQuestionaire[6].pemegang_polis"
                 class="outlined form-control"
                 type="number"
                 v-model="healthQuestionaire[6].pemegang_polis_number"
@@ -346,6 +348,7 @@
               ></v-radio>
             </v-radio-group>
             <input
+              v-if="healthQuestionaire[10].pemegang_polis"
               class="outlined form-control"
               type="number"
               v-model="healthQuestionaire[10].pemegang_polis_number"
