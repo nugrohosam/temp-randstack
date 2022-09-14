@@ -32,6 +32,13 @@ export default {
       icon: "ic_life_buoy.svg",
     },
     {
+      active: true,
+      hidden: false,
+      name: "Pinjaman Polis",
+      link: "/transaction/submission/policy-loan",
+      icon: "ic_package.svg",
+    },
+    {
       active: false,
       hidden: false,
       name: "Penambahan Dana Investasi",
@@ -100,13 +107,6 @@ export default {
       name: "Perubahan Premi Dasar dan Topup Berkala",
       link: "/transaction/submission/basic-premi-change-and-topup",
       icon: "ic_edit_3.svg",
-    },
-    {
-      active: true,
-      hidden: false,
-      name: "Pinjaman Polis",
-      link: "/transaction/submission/policy-loan",
-      icon: "ic_package.svg",
     },
   ],
   cancellation_main_product: {

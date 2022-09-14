@@ -107,7 +107,6 @@
           <div class="row">
             <div class="col-lg-12 col-sm-12">
               <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
-
               <input
                 type="file"
                 ref="inputSelfieKtpImage"
