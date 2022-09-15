@@ -337,7 +337,7 @@
                           v-slot="{ errors }"
                         >
                           <input
-                            type="text"
+                            type="number"
                             class="outlined"
                             placeholder="628xxx..."
                             v-model="selectedPolicy.person.mobile"
@@ -363,7 +363,7 @@
                           v-slot="{ errors }"
                         >
                           <input
-                            type="text"
+                            type="number"
                             class="outlined"
                             placeholder="628xxx..."
                             v-model="selectedPolicy.person.mobile2"
@@ -389,7 +389,7 @@
                           v-slot="{ errors }"
                         >
                           <input
-                            type="text"
+                            type="number"
                             class="outlined"
                             placeholder="628xxx..."
                             v-model="selectedPolicy.person.officeTel"
@@ -417,7 +417,7 @@
                           v-slot="{ errors }"
                         >
                           <input
-                            type="text"
+                            type="number"
                             class="outlined"
                             placeholder="628xxx..."
                             v-model="selectedPolicy.person.officeTel2"
