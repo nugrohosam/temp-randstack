@@ -15,8 +15,6 @@
           <div class="col-md-4 col-sm-6">
             <p class="data-title">Nama Bank</p>
             <p class="data-value mb-3">{{ refundPayeeBankAccount.bankName }}</p>
-            <!-- <p class="data-title">Cabang Bank</p>
-            <p class="data-value mb-3">JAKARTA TIMOER</p> -->
           </div>
         </div>
       </div>

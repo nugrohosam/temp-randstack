@@ -194,7 +194,6 @@ export default function ({ app, $axios }, inject) {
   };
 
   const getBank = async (bankCode) => {
-    // $axios.setToken(store.getters['auth/getAuthAccessToken'], 'Bearer');
     const response = await this.$axios
       .$get(`/api/v1/banks/${bankCode}`)
       .then((response) => {
@@ -215,7 +214,7 @@ export default function ({ app, $axios }, inject) {
         return bank.message;
       }
     } catch (error) {
-      return "Terjadi kesalahan.";
+      return "N/A";
     }
   };
 

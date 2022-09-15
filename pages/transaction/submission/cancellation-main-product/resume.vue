@@ -158,9 +158,6 @@ export default {
     SaveIcon,
     InfoIcon,
   },
-  mounted() {
-    this.getBankName();
-  },
   data() {
     return {
       title: {
@@ -242,13 +239,6 @@ export default {
     },
   },
   methods: {
-    getBankName: async function () {
-      if(this.myPolicy.policyWithCode.refundPayeeBankAccount.legth > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null){
-        this.bankName = await this.$getBankName(
-          this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankCode
-        );
-      } 
-    },
     submit: async function () {
       const result = await this.$store.dispatch(
         "submission_transaction/submitTransactionProposalSurrender"
