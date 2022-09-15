@@ -19,7 +19,14 @@
             <div class="col-lg-4 col-sm-6">
               <p class="data-title">Nomor Rekening Saat Ini</p>
               <p class="data-value">
-                {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-" }}
+                {{
+                  this.myPolicy.policyWithCode.refundPayeeBankAccount.length >
+                    0 &&
+                  this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+                    ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0]
+                        .bankAccount
+                    : "-"
+                }}
               </p>
             </div>
             <div class="col-lg-4 col-sm-6">
@@ -27,13 +34,27 @@
                 Nama Pemilik Nomor Rekening Manfaat Saat Ini
               </p>
               <p class="data-value">
-                {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-" }}
+                {{
+                  this.myPolicy.policyWithCode.refundPayeeBankAccount.length >
+                    0 &&
+                  this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+                    ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0]
+                        .accoName
+                    : "-"
+                }}
               </p>
             </div>
             <div class="col-lg-4 col-sm-6">
               <p class="data-title mb-2">Nama Bank Saat Ini</p>
               <p class="data-value">
-                {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}
+                {{
+                  this.myPolicy.policyWithCode.refundPayeeBankAccount.length >
+                    0 &&
+                  this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+                    ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0]
+                        .bankName
+                    : "-"
+                }}
               </p>
             </div>
             <div class="col-lg-4 col-sm-6">
@@ -70,6 +91,7 @@
                   class="elevation-1"
                   @item-selected="selectCoverage"
                   selectable-key="isSelectable"
+                  :single-select="true"
                 >
                   <!-- <template v-slot:item.itemId="{ item }">
                     <v-simple-checkbox
@@ -304,7 +326,8 @@ export default {
   methods: {
     getData: async function () {
       let data = this.myPolicy;
-      let productIds = [], products = [];
+      let productIds = [],
+        products = [];
       data.policyWithCode.coverages = data.policyWithCode.coverages.filter(
         (coverage) => coverage.riskStatus == 1
       );
@@ -324,9 +347,16 @@ export default {
         productIds.join()
       );
       data.policyWithCode.coverages.forEach((v, i) => {
-        v.productName = products.filter((product) => product.id == v.productId)[0].name;
+        v.productName = products.filter(
+          (product) => product.id == v.productId
+        )[0].name;
       });
-      data.policyWithCode.coverages = [data.policyWithCode.coverages.find(cov => cov.masterProduct == null), ...data.policyWithCode.coverages.filter(cov => cov.masterProduct != null)]
+      data.policyWithCode.coverages = [
+        data.policyWithCode.coverages.find((cov) => cov.masterProduct == null),
+        ...data.policyWithCode.coverages.filter(
+          (cov) => cov.masterProduct != null
+        ),
+      ];
       this.my_policy = data;
       this.isLoading = false;
     },
@@ -387,7 +417,17 @@ export default {
         });
       }
 
-      if (this.form.coverages_selected.find((v) => v.productType == "Utama")) {
+      if (!coverage.value) {
+        this.reasons_filtered = [
+          {
+            id: "",
+            reason_id: "",
+            name: "",
+          },
+        ];
+      } else if (
+        this.form.coverages_selected.find((v) => v.productType == "Utama")
+      ) {
         this.reasons_filtered = this.reasons;
       } else if (
         !this.form.coverages_selected.find((v) => v.productType == "Utama")
@@ -398,14 +438,6 @@ export default {
             reason.name == "Tidak Ada" ||
             reason.name == "Masalah Pengiriman Polis"
         );
-      } else if (this.form.coverages_selected.length <= 0) {
-        this.reasons_filtered = [
-          {
-            id: "",
-            reason_id: "",
-            name: "",
-          },
-        ];
       }
     },
 
