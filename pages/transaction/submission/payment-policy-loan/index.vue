@@ -152,12 +152,19 @@ export default {
     },
   },
   beforeMount() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: "Pembayaran Pinjaman Polis",
+      sub: "Pengajuan Pinjaman Nilai Tunai Polis",
+    });
     if (
       this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo?.length === 0
     ) {
       this.modal.show = true;
       this.modal.message = "Maaf anda tidak dapat melakukan pembayaran.";
     }
+  },
+  destroyed() {
+    this.$store.commit("submission_transaction/removeCurrentHeaderTitle");
   },
   methods: {
     loan() {

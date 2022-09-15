@@ -8,17 +8,10 @@
           <p class="mb-0"><b>#XXXXXXX</b></p>
           <p class="mb-0">Berikut adalah nomor transaksi.</p>
           <p class="mb-10">Mohon Disimpan</p>
-          <p class="mb-0">
-            Notifikasi akan dikirim melalui WA/SMS dan Email,
-          </p>
-          <p>
-            Terimakasih
-          </p>
+          <p class="mb-0">Notifikasi akan dikirim melalui WA/SMS dan Email,</p>
+          <p>Terimakasih</p>
         </div>
-        <button
-          class="btn btn-primary mt-6"
-          @click.prevent="home()"
-        >
+        <button class="btn btn-primary mt-6" @click.prevent="home()">
           Kembali ke Halaman Utama
         </button>
       </div>
@@ -35,10 +28,19 @@ export default {
   data() {
     return {};
   },
+  beforeMount() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: "Resume Pembayaran Pinjaman Polis",
+      sub: "Pengajuan Pinjaman Nilai Tunai Polis",
+    });
+  },
+  destroyed() {
+    this.$store.commit("submission_transaction/removeCurrentHeaderTitle");
+  },
   methods: {
-    home: function(){
-      this.$router.push({path: '/transaction/submission'})
-    }
+    home: function () {
+      this.$router.push({ path: "/transaction/submission" });
+    },
   },
 };
 </script>

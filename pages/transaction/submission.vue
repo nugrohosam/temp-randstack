@@ -6,7 +6,12 @@
         <div class="row">
           <div class="col-12">
             <div class="page-header">
-              <h3 class="page-title">{{ current_header_title }}</h3>
+              <h3 class="page-title">
+                {{ vuexCurrentHeaderTitle.title || current_header_title }}
+              </h3>
+              <p v-if="vuexCurrentHeaderTitle.sub" style="color: #fff">
+                {{ vuexCurrentHeaderTitle.sub }}
+              </p>
             </div>
           </div>
         </div>
@@ -42,7 +47,9 @@
                       :name="$checkSyariLabel(menu.name)"
                       :icon="menu.icon"
                       :link="menu.link"
-                      @click.native="current_header_title = $checkSyariLabel(menu.name)"
+                      @click.native="
+                        current_header_title = $checkSyariLabel(menu.name)
+                      "
                     />
                   </div>
                 </div>
@@ -112,6 +119,7 @@ export default {
   computed: {
     ...mapGetters({
       menus: "submission_transaction/getMenus",
+      vuexCurrentHeaderTitle: "submission_transaction/getCurrentHeaderTitle",
     }),
   },
   methods: {
@@ -132,9 +140,8 @@ export default {
     grid-template-columns: repeat(3, 1fr);
     grid-row-gap: 0px;
   }
-  @media screen and (max-width: 480px){
-     grid-column-gap: 10px;
+  @media screen and (max-width: 480px) {
+    grid-column-gap: 10px;
   }
 }
 </style>
-

@@ -105,6 +105,15 @@ export default {
       return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
     },
   },
+  beforeMount() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: "Resume Pembayaran Pinjaman Polis",
+      sub: "Pengajuan Pinjaman Nilai Tunai Polis",
+    });
+  },
+  destroyed() {
+    this.$store.commit("submission_transaction/removeCurrentHeaderTitle");
+  },
   methods: {
     loan() {
       return this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo.length > 0 ? this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo[0] : null;
