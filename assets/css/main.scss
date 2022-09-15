@@ -452,11 +452,12 @@ input {
 }
 .btn {
   padding: 0 10px;
-  height: 48px;
   border-radius: 4px;
   margin-bottom: 12px;
+  padding: 0.5rem 1rem;
   &.btn-mini {
-    height: 30px !important;
+    font-size: 12px;
+    padding: 0.25rem;
   }
   &.btn-primary {
     background: #f15921;
