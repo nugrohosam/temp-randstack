@@ -85,10 +85,7 @@
                           <div class="col-md-6 col-xs-12">
                             <p class="data-title">Alamat</p>
                             <p class="data-value">
-                              {{
-                                myPolicy.policyWithCode.policyHolder.address
-                                  .address1
-                              }}
+                              {{ getAddress() }}
                             </p>
                             <!-- <p class="data-title">Alamat Koresponden</p>
                             <p class="data-value">
@@ -291,6 +288,17 @@ export default {
     },
   },
   methods: {
+    getAddress() {
+      const address = this.myPolicy.policyWithCode.policyHolder.address;
+      let result = "";
+      for (let index = 1; index <= 7; index++) {
+        const addressNow = address[`address${index}`];
+        if (addressNow) {
+          result += `, ${addressNow}`;
+        }
+      }
+      return result;
+    },
     totalPremAll: (item) => {
       return (
         item.currentPremium.stdPremAf + (item.recurringTopup?.topupAmount || 0)

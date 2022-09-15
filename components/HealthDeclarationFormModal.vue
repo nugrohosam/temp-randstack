@@ -1,9 +1,9 @@
 <template>
-  <v-dialog v-model="isShow" :max-width="1000">
-    <div class="modal-health">
+  <v-dialog v-model="isShow" :max-width="1000" content-class="modal-health">
+    <div class="modal-health-body">
       <h2>Formulir Pernyataan Kesehatan</h2>
 
-      <br /><br />
+      <br />
 
       <div class="d-none d-md-block">
         <div class="row">
@@ -658,10 +658,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .modal-health {
+  margin: 0;
+}
+
+.modal-health-body {
   background-color: white;
-  padding: 2rem;
+  padding: 1rem;
+
+  @media screen and (min-width: 480px) {
+    padding: 2rem;
+  }
 }
 
 .outlined {
