@@ -372,8 +372,7 @@ export default {
       );
       // patch to action
       this.$router.push({ path: "./widthdrawal-partial-investment-fund/resume" });
-    },
-    add: async function () {},
+    }
   },
 };
 </script>
