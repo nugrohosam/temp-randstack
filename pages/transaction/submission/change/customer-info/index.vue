@@ -584,10 +584,6 @@ export default {
           type: 7,
           name: "Alamat ID",
         },
-        {
-          type: 4,
-          name: "Alamat Koresponden",
-        },
       ],
       selectedAddressType: null,
       province: {
