@@ -11,8 +11,8 @@ export default {
       icon: "ic_user.svg",
     },
     {
-      active: false,
-      hidden: true,
+      active: true,
+      hidden: false,
       name: "Penutupan/Pembatalan Produk",
       link: "/transaction/submission/cancellation-main-product",
       icon: "ic_minus_circle.svg",
