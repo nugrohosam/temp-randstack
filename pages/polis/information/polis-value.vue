@@ -29,72 +29,56 @@
             "
           >
             <p class="data-title">Jenis dan Dana Investasi yang dimiliki</p>
-            <v-simple-table>
-              <template v-slot:default>
-                <thead>
-                  <tr>
-                    <th class="text-left">No</th>
-                    <th class="text-left">Jenis Dana Investasi</th>
-                    <th class="text-left">Mata Uang</th>
-                    <th class="text-left">Jumlah Unit</th>
-                    <th class="text-left">Harga Unit</th>
-                    <th class="text-left">Tanggal NAB</th>
-                    <th class="text-left">Total Investasi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="(item, index) in contractInvests(
-                      myPolicy.policyWithCode.coverages
-                    )"
-                    :key="index"
-                  >
-                    <td>{{ index + 1 }}</td>
-                    <td>
-                      {{ (item.fundCode && $fundName(item.fundCode)) || "-" }}
-                    </td>
-                    <td>
-                      {{ $currencyName(myPolicy.policyWithCode.currency) }}
-                    </td>
-                    <td>
-                      {{ (item && $convertCurrency(item.accumUnits)) || 0 }}
-                    </td>
-                    <td>
-                      {{
-                        item &&
-                        $convertCurrency(
-                          getFundPrices(
-                            myPolicy.policyWithCode.fundPrices,
-                            item.fundCode
-                          )
-                        )
-                      }}
-                    </td>
-                    <!-- TODO: Tanggal NAB masih kosong -->
-                    <td>
-                      {{
-                        getFundPriceDate(
-                          myPolicy.policyWithCode.fundPrices,
-                          item.fundCode
-                        )
-                      }}
-                    </td>
-                    <td>
-                      {{
-                        item &&
-                        $convertCurrency(
-                          item.accumUnits *
-                            getFundPrices(
-                              myPolicy.policyWithCode.fundPrices,
-                              item.fundCode
-                            )
-                        )
-                      }}
-                    </td>
-                  </tr>
-                </tbody>
+            <v-data-table
+              :headers="table.headers"
+              mobile-breakpoint="480"
+              hide-default-footer
+              :items="contractInvests(myPolicy.policyWithCode.coverages)"
+            >
+              <template v-slot:item.no="{ index }">
+                {{ index + 1 }}
               </template>
-            </v-simple-table>
+              <template v-slot:item.investmentType="{ item }">
+                {{ (item.fundCode && $fundName(item.fundCode)) || "-" }}
+              </template>
+              <template v-slot:item.currency="{ item }">
+                {{ $currencyName(myPolicy.policyWithCode.currency) }}
+              </template>
+              <template v-slot:item.totalUnit="{ item }">
+                {{ (item && $convertCurrency(item.accumUnits)) || 0 }}
+              </template>
+              <template v-slot:item.priceUnit="{ item }">
+                {{
+                  item &&
+                  $convertCurrency(
+                    getFundPrices(
+                      myPolicy.policyWithCode.fundPrices,
+                      item.fundCode
+                    )
+                  )
+                }}
+              </template>
+              <template v-slot:item.nabDate="{ item }">
+                {{
+                  getFundPriceDate(
+                    myPolicy.policyWithCode.fundPrices,
+                    item.fundCode
+                  )
+                }}
+              </template>
+              <template v-slot:item.totalInvestment="{ item }">
+                {{
+                  item &&
+                  $convertCurrency(
+                    item.accumUnits *
+                      getFundPrices(
+                        myPolicy.policyWithCode.fundPrices,
+                        item.fundCode
+                      )
+                  )
+                }}
+              </template>
+            </v-data-table>
           </div>
         </div>
       </div>
@@ -104,6 +88,21 @@
 
 <script>
 export default {
+  data() {
+    return {
+      table: {
+        headers: [
+          { text: "No", value: "no" },
+          { text: "Jenis Dana Investasi", value: "investmentType" },
+          { text: "Mata Uang", value: "currency" },
+          { text: "Jumlah Unit", value: "totalUnit" },
+          { text: "Harga Unit", value: "priceUnit" },
+          { text: "Tanggal NAB", value: "nabDate" },
+          { text: "Total Investasi", value: "totalInvestment" },
+        ],
+      },
+    };
+  },
   computed: {
     myPolicyLoanInfo() {
       return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
