@@ -5,8 +5,8 @@
         <check-circle-icon class="ic-primary" size="4.5x"></check-circle-icon>
         <div class="thankyou-message">
           <p class="mb-10">Pengajuan Sudah kami terima dan akan kami proses</p>
-          <p class="mb-0"><b>#XXXXXXX</b></p>
-          <p class="mb-0">Berikut adalah nomor transaksi.</p>
+          <p class="mb-0"><b>{{ this.$route.query.transaction_ids.split(',').map((id) => "#" + id).join(', ') }}</b></p>
+           <p class="mb-0">Berikut adalah nomor transaksi.</p>
           <p class="mb-10">Mohon Disimpan</p>
           <p class="mb-0">Notifikasi akan dikirim melalui WA/SMS dan Email,</p>
           <p>Terimakasih</p>

@@ -177,8 +177,9 @@ export default {
         "submission_transaction/withdraw_partial_investment_fund/withdrawPartialInvestmentFund"
       );
       if (result && result.success == true) {
+        let transactionIds = result.data.transactionIds;
         this.$router.push({
-          path: "/transaction/submission/withdraw-partial-investment-fund/thankyou",
+          path: "/transaction/submission/withdraw-partial-investment-fund/thankyou?transaction_ids=" + transactionIds.join(","),
         });
       }
     },

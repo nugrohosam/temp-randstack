@@ -145,8 +145,9 @@ export default {
         "submission_transaction/policy_loan/repaymentPolicyLoan"
       );
       if (result && result.success == true) {
+        let transactionIds = result.data.transactionIds;
         this.$router.push({
-          path: "/transaction/submission/payment-policy-loan/thankyou",
+          path: "/transaction/submission/payment-policy-loan/thankyou?transaction_ids=" + transactionIds.join(","),
         });
       }
     },

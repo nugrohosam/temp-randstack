@@ -129,8 +129,9 @@ export default {
         "submission_transaction/cuti_premi/changePremiumHoliday"
       );
       if (result && result.success == true) {
+        let transactionIds = result.data.transactionIds;
         this.$router.push({
-          path: "/transaction/submission/cuti-premi/thankyou",
+          path: "/transaction/submission/cuti-premi/thankyou?transaction_ids=" + transactionIds.join(","),
         });
       }
     },

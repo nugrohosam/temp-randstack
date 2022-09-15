@@ -227,8 +227,9 @@ export default {
         "submission_transaction/policy_recovery/reinstatement"
       );
       if (result && result.success == true) {
+        let transactionIds = result.data.transactionIds;
         this.$router.push({
-          path: "/transaction/submission/policy-recovery/thankyou",
+          path: "/transaction/submission/policy-recovery/thankyou?transaction_ids=" + transactionIds.join(","),
         });
       }
     },
