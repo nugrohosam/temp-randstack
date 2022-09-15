@@ -83,20 +83,20 @@
                             </p>
                           </div>
                           <div class="col-md-6 col-xs-12">
-                            <p class="data-title">Alamat KTP</p>
+                            <p class="data-title">Alamat</p>
                             <p class="data-value">
                               {{
                                 myPolicy.policyWithCode.policyHolder.address
                                   .address1
                               }}
                             </p>
-                            <p class="data-title">Alamat Koresponden</p>
+                            <!-- <p class="data-title">Alamat Koresponden</p>
                             <p class="data-value">
                               {{
                                 myPolicy.policyWithCode.policyHolder.address
                                   .address1
                               }}
-                            </p>
+                            </p> -->
                             <p class="data-title">Nomor HP</p>
                             <p class="data-value">
                               {{
@@ -130,17 +130,43 @@
                                 <div class="row">
                                   <div class="col-12">
                                     <br />
-                                    <p class="data-title">{{ myPolicy.policyWithCode.isSyariah ? 'Santunan Asuransi' : 'Uang Pertanggungan' }}</p>
+                                    <p class="data-title">
+                                      {{
+                                        myPolicy.policyWithCode.isSyariah
+                                          ? "Santunan Asuransi"
+                                          : "Uang Pertanggungan"
+                                      }}
+                                    </p>
                                     <p class="data-value mb-3">
-                                      {{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.currentPremium.sumAssured) }}
+                                      {{
+                                        $currencyName(
+                                          myPolicy.policyWithCode.currency
+                                        )
+                                      }}
+                                      {{
+                                        $convertCurrency(
+                                          item.currentPremium.sumAssured
+                                        )
+                                      }}
                                     </p>
                                     <p class="data-title">Plan</p>
                                     <p class="data-value mb-3">
                                       {{ item.benefitLevel }}
                                     </p>
-                                    <p class="data-title">{{ myPolicy.policyWithCode.isSyariah ? 'Kontribusi' : 'Premi' }}</p>
+                                    <p class="data-title">
+                                      {{
+                                        myPolicy.policyWithCode.isSyariah
+                                          ? "Kontribusi"
+                                          : "Premi"
+                                      }}
+                                    </p>
                                     <p class="data-value mb-3">
-                                      {{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(totalPremAll(item)) }}
+                                      {{
+                                        $currencyName(
+                                          myPolicy.policyWithCode.currency
+                                        )
+                                      }}
+                                      {{ $convertCurrency(totalPremAll(item)) }}
                                     </p>
                                     <p class="data-title">Benefit Status</p>
                                     <p class="data-value">
@@ -165,25 +191,28 @@
                 </div>
                 <div class="row">
                   <div class="col-12">
-                      <v-tabs :v-model="'2'" show-arrows color="#F15921">
-                        <v-tab
-                          v-for="item in myitems"
-                          :id="'tab' + item.index"
-                          :ref="'tab' + item.index"
-                          :key="item.index"
-                          :to="item.link"
-                          :ripple="false"
-                          active-class="information-tab-active"
-                          class="information-tab"
-                        >
-                          {{ myPolicy.policyWithCode.isSyariah ? $syariGeneralLabel(item.tab) : item.tab }}
-                        </v-tab>
-                      </v-tabs>
-                      <br />
-                      <v-tabs-items v-model="tab">
-                        <NuxtChild />
-                      </v-tabs-items>
-
+                    <v-tabs :v-model="'2'" show-arrows color="#F15921">
+                      <v-tab
+                        v-for="item in myitems"
+                        :id="'tab' + item.index"
+                        :ref="'tab' + item.index"
+                        :key="item.index"
+                        :to="item.link"
+                        :ripple="false"
+                        active-class="information-tab-active"
+                        class="information-tab"
+                      >
+                        {{
+                          myPolicy.policyWithCode.isSyariah
+                            ? $syariGeneralLabel(item.tab)
+                            : item.tab
+                        }}
+                      </v-tab>
+                    </v-tabs>
+                    <br />
+                    <v-tabs-items v-model="tab">
+                      <NuxtChild />
+                    </v-tabs-items>
                   </div>
                 </div>
               </div>
@@ -263,8 +292,10 @@ export default {
   },
   methods: {
     totalPremAll: (item) => {
-      return item.currentPremium.stdPremAf + (item.recurringTopup?.topupAmount || 0);
-    }
+      return (
+        item.currentPremium.stdPremAf + (item.recurringTopup?.topupAmount || 0)
+      );
+    },
     // getInformationPolicyList: async function () {
     //   await this.$store.dispatch("information_policy/getInformationPolicyList");
     //   this.information_policy = this.informationPolicyList;
