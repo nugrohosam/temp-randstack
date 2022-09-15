@@ -454,9 +454,7 @@
         <div class="row">
           <div class="col-lg-6 col-sm-12">
             <p class="data-title mb-2">Email Address</p>
-            <div
-              class="d-flex flex-column flex-md-row justify-sm-space-between"
-            >
+            <div class="d-flex flex-column flex-md-row">
               <p class="data-value" v-show="!emailEditable">
                 {{
                   selectedPolicy.person.email
@@ -481,7 +479,7 @@
                 </ValidationProvider>
               </div>
               <button
-                class="btn btn-primary-outlined btn-mini"
+                class="btn btn-primary-outlined btn-mini ml-md-4"
                 @click.prevent="emailEditable = emailEditable ? false : true"
               >
                 {{ !emailEditable ? "Ubah Email" : "Kembali" }}
