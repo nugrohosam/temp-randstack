@@ -67,12 +67,12 @@ export default {
         this.payerBankAccount.bankName =
           this.myPolicy.policyWithCode.virtualAccountInfo[0].bankName;
       } else if (this.myPolicy.policyWithCode.payerBankAccount.length > 0 && this.myPolicy.policyWithCode.payerBankAccount[0] != null) {
-        this.myPolicy.policyWithCode.payerBankAccount[0].bankName =
-          await this.$getBankName(
-            this.myPolicy.policyWithCode.payerBankAccount[0].bankCode
-          );
-        this.payerBankAccount =
-          this.myPolicy.policyWithCode.payerBankAccount[0];
+        this.payerBankAccount.bankAccount =
+          this.myPolicy.policyWithCode.payerBankAccount[0].bankAccount
+        this.payerBankAccount.accoName =
+          this.myPolicy.policyWithCode.payerBankAccount[0].accoName
+        this.payerBankAccount.bankName = 
+          this.myPolicy.policyWithCode.payerBankAccount[0].bankName
       }
     },
   },
