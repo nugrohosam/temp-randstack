@@ -294,7 +294,7 @@ export default {
       for (let index = 1; index <= 7; index++) {
         const addressNow = address[`address${index}`];
         if (addressNow) {
-          result += `, ${addressNow}`;
+          result += `${index != 1 ? ", " : ""}${addressNow}`;
         }
       }
       return result;
