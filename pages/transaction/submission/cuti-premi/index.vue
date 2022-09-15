@@ -47,7 +47,7 @@
             rules="required"
             v-slot="{ errors }"
           >
-            <v-radio-group v-model="form.status" row>
+            <v-radio-group v-model="form.status" row @change="changeStatus">
               <v-radio
                 v-for="(item, index) in radios"
                 :key="index"
@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div v-if="form.status != 'cancel'" class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tanggal Awal Cuti Premi</p>
           <div class="data-value">
@@ -70,12 +70,15 @@
                 class="outlined form-control"
                 v-model="form.startPremiumHolidayDate"
               />
+              <p class="data-title">
+                <small
+                  >Awal cuti Premi tidak boleh kurang dari Tanggal sistem / Hari
+                  ini</small
+                >
+              </p>
               <span class="text-error">{{ errors[0] }}</span>
             </ValidationProvider>
             <br />
-            <p class="data-title">
-              Awal cuti Premi tidak boleh kurang dari Tanggal sistem / Hari ini
-            </p>
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -89,6 +92,19 @@
               />
               <span class="text-error">{{ errors[0] }}</span>
             </ValidationProvider>
+          </div>
+        </div>
+      </div>
+      <div v-else class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Tanggal Batal</p>
+          <div class="data-value">
+            <input
+              type="date"
+              class="outlined form-control"
+              :value="$moment().format('YYYY-MM-DD')"
+              disabled
+            />
           </div>
         </div>
       </div>
@@ -184,6 +200,10 @@ export default {
     },
   },
   methods: {
+    changeStatus() {
+      this.form.startPremiumHolidayDate = "";
+      this.form.endPremiumHolidayDate = "";
+    },
     async addSelfieKtpImage(e) {
       if (e.target.files[0]) {
         const result = await this.$store.dispatch(
