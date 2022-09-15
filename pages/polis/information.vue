@@ -289,8 +289,15 @@ export default {
   },
   methods: {
     getAddress() {
-      const address = myPolicy.policyWithCode.policyHolder.address;
-      return `${address.address1} ${address.address2} ${address.address3} ${address.address4} ${address.address5} ${address.address6} ${address.address7}`;
+      const address = this.myPolicy.policyWithCode.policyHolder.address;
+      let result = "";
+      for (let index = 1; index <= 7; index++) {
+        const addressNow = address[`address${index}`];
+        if (addressNow) {
+          result += ` ${addressNow}`;
+        }
+      }
+      return result;
     },
     totalPremAll: (item) => {
       return (
