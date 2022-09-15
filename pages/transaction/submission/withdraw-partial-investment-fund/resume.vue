@@ -45,25 +45,16 @@
                 <th class="text-left">No</th>
                 <th class="text-left">Nama Fund</th>
                 <th class="text-left">Nilai Top Up</th>
-                <th class="text-left">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, i) in data_investments" :key="item.applyUnit">
+              <tr v-for="(item, i) in getWithdrawPartialInvestmentFund.items" :key="item.fundCode">
                 <td>{{ i + 1 }}</td>
                 <td>
-                  <b>{{ $fundName(item.applyUnit) }}</b>
+                  <b>{{ $fundName(item.fundCode) }}</b>
                 </td>
                 <td>
-                  <b>{{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.applyAmount * applyUnit) }}</b>
-                </td>
-                <td>
-                  <button
-                    class="btn btn-primary-outlined mt-3 w-100 btn-add-investment"
-                    @click.prevent="removeInvestment(i)"
-                  >
-                    Hapus
-                  </button>
+                  <b>{{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.applyAmount) }}</b>
                 </td>
               </tr>
             </tbody>
@@ -74,15 +65,18 @@
 
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Dokumen Selfie dan KTP</p>
-        <button
-          class="btn btn-primary-outlined"
-          @click.prevent="addInvestment()"
-        >
-          Lihat Selfie + KTP
-        </button>
+        <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+        <p class="data-value">
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showSelfieKtpPreview"
+          >
+            Lihat
+          </button>
+        </p>
       </div>
     </div>
+
     <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
@@ -121,12 +115,10 @@
         </button>
       </div>
     </div>
-    <NuxtChild />
-    <ModalMessage
-      :message="modal.message"
-      :show="modal.show"
-      :button="modal.button"
-      @closeModal="modal.show = false"
+    <ModalImagePreview
+      :src="image_preview.src"
+      :show="image_preview.show"
+      @closeImagePreview="image_preview.show = false"
     />
   </div>
 </template>
@@ -140,6 +132,19 @@ export default {
   },
   mounted() {
     console.log($nuxt.$route.name);
+  },
+  computed: {
+    myPolicyLoanInfo() {
+      return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
+    },
+    myPolicy() {
+      return this.$store.getters["submission_transaction/getMyPolicy"];
+    },
+    getWithdrawPartialInvestmentFund() {
+      return this.$store.getters[
+        "submission_transaction/withdraw_partial_investment_fund/getWithdrawPartialInvestmentFund"
+      ];
+    },
   },
   beforeMount() {
     this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
@@ -159,6 +164,14 @@ export default {
     };
   },
   methods: {
+    showSelfieKtpPreview: function () {
+      if (this.getWithdrawPartialInvestmentFund.ktpSelfieAttachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getWithdrawPartialInvestmentFund.ktpSelfieAttachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
     async submit() {
       const result = await this.$store.dispatch(
         "submission_transaction/withdraw_partial_investment_fund/withdrawPartialInvestmentFund"

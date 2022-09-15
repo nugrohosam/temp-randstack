@@ -22,8 +22,8 @@ const actions = {
       items: state.withdrawPartialInvestimentFund.items.map(x => (
         {
           apply_amount: x.applyAmount,
-          apply_unit: x.applyUnit,
-          fund_code: x.code,
+          apply_units: 0,
+          fund_code: x.fundCode,
         }
       )),
       ktp_selfie_attachment: state.withdrawPartialInvestimentFund.ktpSelfieAttachment.name,

@@ -118,7 +118,7 @@
             class="btn btn-primary-outlined w-100 btn-add-investment"
             @click.prevent="addInvestment()"
           >
-            {{ $indexOfObject(form.items, investment_choosen, v => v.applyUnit) == -1 ? "Tambah" : "Ubah"}}
+            {{ $indexOfObject(form.items, investment_choosen, v => v.applyUnits) == -1 ? "Tambah" : "Ubah"}}
           </button>
         </div>
       </div>
@@ -139,13 +139,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, i) in form.items" :key="item.applyUnit">
+                <tr v-for="(item, i) in form.items" :key="item.fundCode">
                   <td>{{ i + 1 }}</td>
                   <td>
-                    <b>{{ $fundName(item.applyUnit) }}</b>
+                    <b>{{ $fundName(item.fundCode) }}</b>
                   </td>
                   <td>
-                    <b>{{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.applyAmount * item.applyUnit) }}</b>
+                    <b>{{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.applyAmount) }}</b>
                   </td>
                   <td>
                     <button
@@ -320,19 +320,17 @@ export default {
         return;
       }
       
-      const fund = contractInvests.find(item => item.fundCode == this.investment_choosen);
-      const bidPrice = this.getFundPrices(this.myPolicy.policyWithCode.fundPrices, this.investment_choosen)
-      const indexObject = this.$indexOfObject(this.form.items, this.investment_choosen, v => v.applyUnit)
+      const indexObject = this.$indexOfObject(this.form.items, this.investment_choosen, v => v.fundCode)
       if (indexObject != -1) {
         this.form.items.splice(indexObject, 1, {
-          applyAmount: bidPrice,
-          applyUnit: this.amount / bidPrice,
+          applyAmount: this.amount,
+          applyUnits: null,
           fundCode: this.investment_choosen
         })
       } else {
         this.form.items.push({
-          applyAmount: bidPrice,
-          applyUnit: this.amount / bidPrice,
+          applyAmount: this.amount,
+          applyUnits: null,
           fundCode: this.investment_choosen
         })
       }
