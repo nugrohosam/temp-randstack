@@ -209,7 +209,7 @@
 <script>
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
-  name: "widthdrawal-partial-investment-fund",
+  name: "withdraw-partial-investment-fund",
   components: {
     SaveIcon,
     InfoIcon,
@@ -217,7 +217,7 @@ export default {
   mounted() {
     if (
       $nuxt.$route.name !=
-      "transaction-submission-widthdrawal-partial-investment-fund"
+      "transaction-submission-withdraw-partial-investment-fund"
     ) {
       this.showMe = false;
     } else {
@@ -371,7 +371,7 @@ export default {
         this.form
       );
       // patch to action
-      this.$router.push({ path: "./widthdrawal-partial-investment-fund/resume" });
+      this.$router.push({ path: "./withdraw-partial-investment-fund/resume" });
     }
   },
 };

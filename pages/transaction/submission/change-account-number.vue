@@ -135,7 +135,7 @@
 <script>
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
-  name: "widthdrawal-partial-investment-fund",
+  name: "withdraw-partial-investment-fund",
   components: {
     SaveIcon,
     InfoIcon,

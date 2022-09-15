@@ -42,7 +42,7 @@ export default {
       active: true,
       hidden: false,
       name: "Penarikan Sebagian Dana Investasi",
-      link: "/transaction/submission/widthdrawal-partial-investment-fund",
+      link: "/transaction/submission/withdraw-partial-investment-fund",
       icon: "ic_percent.svg",
     },
     {

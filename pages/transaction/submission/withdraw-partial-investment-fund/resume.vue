@@ -165,7 +165,7 @@ export default {
       );
       if (result && result.success == true) {
         this.$router.push({
-          path: "/transaction/submission/widthdrawal-partial-investment-fund/thankyou",
+          path: "/transaction/submission/withdraw-partial-investment-fund/thankyou",
         });
       }
     },
