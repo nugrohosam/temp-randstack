@@ -5,25 +5,28 @@
 
       <br /><br />
 
-      <div class="row">
-        <div class="col-8">
-          <p>Pertanyaan</p>
-        </div>
-        <div class="col-2">
-          <p>Tertanggung</p>
-        </div>
-        <div class="col-2">
-          <p>Pemegang Polis</p>
+      <div class="d-none d-md-block">
+        <div class="row">
+          <div class="col-8">
+            <p>Pertanyaan</p>
+          </div>
+          <div class="col-2">
+            <p>Tertanggung</p>
+          </div>
+          <div class="col-2">
+            <p>Pemegang Polis</p>
+          </div>
         </div>
       </div>
 
       <div class="card mb-4">
         <div class="card-body">
           <div class="row">
-            <div class="col-8 d-flex" style="align-items: center">
+            <div class="col-12 col-md-8 d-flex" style="align-items: center">
               <h4>{{ healthQuestionaire[0].pertanyaan }}</h4>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Tertanggung</p>
               <v-radio-group v-model="healthQuestionaire[0].tertanggung" row>
                 <v-radio
                   v-for="(item, index) in radios"
@@ -33,7 +36,8 @@
                 ></v-radio>
               </v-radio-group>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Pemegang Polis</p>
               <v-radio-group v-model="healthQuestionaire[0].pemegang_polis" row>
                 <v-radio
                   v-for="(item, index) in radios"
@@ -56,12 +60,13 @@
                 Polis
               </h4>
             </div>
-            <div class="col-8">
+            <div class="col-12 col-md-8">
               <ul>
                 <li>{{ healthQuestionaire[1].pertanyaan }}</li>
               </ul>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Tertanggung</p>
               <v-radio-group v-model="healthQuestionaire[1].tertanggung" row>
                 <v-radio
                   v-for="(item, index) in radios"
@@ -71,7 +76,8 @@
                 ></v-radio>
               </v-radio-group>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Pemegang Polis</p>
               <v-radio-group v-model="healthQuestionaire[1].pemegang_polis" row>
                 <v-radio
                   v-for="(item, index) in radios"
@@ -81,12 +87,13 @@
                 ></v-radio>
               </v-radio-group>
             </div>
-            <div class="col-8">
+            <div class="col-12 col-md-8">
               <ul>
                 <li>{{ healthQuestionaire[2].pertanyaan }}</li>
               </ul>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Tertanggung</p>
               <v-radio-group v-model="healthQuestionaire[2].tertanggung" row>
                 <v-radio
                   v-for="(item, index) in radios"
@@ -96,7 +103,8 @@
                 ></v-radio>
               </v-radio-group>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Pemegang Polis</p>
               <v-radio-group v-model="healthQuestionaire[2].pemegang_polis" row>
                 <v-radio
                   v-for="(item, index) in radios"
@@ -106,12 +114,13 @@
                 ></v-radio>
               </v-radio-group>
             </div>
-            <div class="col-8">
+            <div class="col-12 col-md-8">
               <ul>
                 <li>{{ healthQuestionaire[3].pertanyaan }}</li>
               </ul>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Tertanggung</p>
               <v-radio-group v-model="healthQuestionaire[3].tertanggung" row>
                 <v-radio
                   v-for="(item, index) in radios"
@@ -121,7 +130,8 @@
                 ></v-radio>
               </v-radio-group>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Pemegang Polis</p>
               <v-radio-group v-model="healthQuestionaire[3].pemegang_polis" row>
                 <v-radio
                   v-for="(item, index) in radios"
@@ -144,12 +154,13 @@
                 berikut:
               </h4>
             </div>
-            <div class="col-8">
+            <div class="col-12 col-md-8">
               <ul>
                 <li>{{ healthQuestionaire[4].pertanyaan }}</li>
               </ul>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Tertanggung</p>
               <v-radio-group v-model="healthQuestionaire[4].tertanggung" row>
                 <v-radio
                   v-for="(item, index) in radios"
@@ -158,15 +169,14 @@
                   v-bind="item"
                 ></v-radio>
               </v-radio-group>
-              <input
-                v-if="healthQuestionaire[4].tertanggung"
-                class="outlined form-control"
-                type="number"
-                v-model="healthQuestionaire[4].tertanggung_number"
-              />
             </div>
-            <div class="col-2">
-              <v-radio-group v-model="healthQuestionaire[4].pemegang_polis" row>
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Pemegang Polis</p>
+              <v-radio-group
+                v-model="healthQuestionaire[4].pemegang_polis"
+                row
+                @change="healthQuestionaire[4].pemegang_polis_number = null"
+              >
                 <v-radio
                   v-for="(item, index) in radios"
                   :key="index"
@@ -174,13 +184,20 @@
                   v-bind="item"
                 ></v-radio>
               </v-radio-group>
+              <input
+                v-if="healthQuestionaire[4].pemegang_polis"
+                class="outlined form-control"
+                type="number"
+                v-model="healthQuestionaire[4].pemegang_polis_number"
+              />
             </div>
-            <div class="col-8">
+            <div class="col-12 col-md-8">
               <ul>
                 <li>{{ healthQuestionaire[5].pertanyaan }}</li>
               </ul>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Tertanggung</p>
               <v-radio-group v-model="healthQuestionaire[5].tertanggung" row>
                 <v-radio
                   v-for="(item, index) in radios"
@@ -190,7 +207,8 @@
                 ></v-radio>
               </v-radio-group>
             </div>
-            <div class="col-2">
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Pemegang Polis</p>
               <v-radio-group v-model="healthQuestionaire[5].pemegang_polis" row>
                 <v-radio
                   v-for="(item, index) in radios"
@@ -200,23 +218,18 @@
                 ></v-radio>
               </v-radio-group>
             </div>
-            <div class="col-8">
+            <div class="col-12 col-md-8">
               <ul>
                 <li>{{ healthQuestionaire[6].pertanyaan }}</li>
               </ul>
             </div>
-            <div class="col-2">
-              <v-radio-group v-model="healthQuestionaire[6].tertanggung" row>
-                <v-radio
-                  v-for="(item, index) in radios"
-                  :key="index"
-                  color="#F15921"
-                  v-bind="item"
-                ></v-radio>
-              </v-radio-group>
-            </div>
-            <div class="col-2">
-              <v-radio-group v-model="healthQuestionaire[6].pemegang_polis" row>
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Tertanggung</p>
+              <v-radio-group
+                v-model="healthQuestionaire[6].tertanggung"
+                row
+                @change="healthQuestionaire[6].tertanggung_number = null"
+              >
                 <v-radio
                   v-for="(item, index) in radios"
                   :key="index"
@@ -225,11 +238,22 @@
                 ></v-radio>
               </v-radio-group>
               <input
-                v-if="healthQuestionaire[6].pemegang_polis"
+                v-if="healthQuestionaire[6].tertanggung"
                 class="outlined form-control"
                 type="number"
-                v-model="healthQuestionaire[6].pemegang_polis_number"
+                v-model="healthQuestionaire[6].tertanggung_number"
               />
+            </div>
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Pemegang Polis</p>
+              <v-radio-group v-model="healthQuestionaire[6].pemegang_polis" row>
+                <v-radio
+                  v-for="(item, index) in radios"
+                  :key="index"
+                  color="#F15921"
+                  v-bind="item"
+                ></v-radio>
+              </v-radio-group>
             </div>
           </div>
         </div>
@@ -237,10 +261,11 @@
 
       <div class="card mb-4">
         <div class="card-body row">
-          <div class="col-8">
+          <div class="col-12 col-md-8">
             <h4>{{ healthQuestionaire[7].pertanyaan }}</h4>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Tertanggung</p>
             <v-radio-group v-model="healthQuestionaire[7].tertanggung" row>
               <v-radio
                 v-for="(item, index) in radios"
@@ -250,7 +275,8 @@
               ></v-radio>
             </v-radio-group>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Pemegang Polis</p>
             <v-radio-group v-model="healthQuestionaire[7].pemegang_polis" row>
               <v-radio
                 v-for="(item, index) in radios"
@@ -265,12 +291,13 @@
 
       <div class="card mb-4">
         <div class="card-body row">
-          <div class="col-8">
+          <div class="col-12 col-md-8">
             <ul>
               <li>{{ healthQuestionaire[8].pertanyaan }}</li>
             </ul>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Tertanggung</p>
             <v-radio-group v-model="healthQuestionaire[8].tertanggung" row>
               <v-radio
                 v-for="(item, index) in radios"
@@ -280,7 +307,8 @@
               ></v-radio>
             </v-radio-group>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Pemegang Polis</p>
             <v-radio-group v-model="healthQuestionaire[8].pemegang_polis" row>
               <v-radio
                 v-for="(item, index) in radios"
@@ -290,12 +318,13 @@
               ></v-radio>
             </v-radio-group>
           </div>
-          <div class="col-8">
+          <div class="col-12 col-md-8">
             <ul>
               <li>{{ healthQuestionaire[9].pertanyaan }}</li>
             </ul>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Tertanggung</p>
             <v-radio-group v-model="healthQuestionaire[9].tertanggung" row>
               <v-radio
                 v-for="(item, index) in radios"
@@ -305,7 +334,8 @@
               ></v-radio>
             </v-radio-group>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Pemegang Polis</p>
             <v-radio-group v-model="healthQuestionaire[9].pemegang_polis" row>
               <v-radio
                 v-for="(item, index) in radios"
@@ -323,12 +353,13 @@
           <div class="col-12">
             <h4>Hanya Untuk Wanita</h4>
           </div>
-          <div class="col-8">
+          <div class="col-12 col-md-8">
             <ul>
               <li>{{ healthQuestionaire[10].pertanyaan }}</li>
             </ul>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Tertanggung</p>
             <v-radio-group v-model="healthQuestionaire[10].tertanggung" row>
               <v-radio
                 v-for="(item, index) in radios"
@@ -338,8 +369,13 @@
               ></v-radio>
             </v-radio-group>
           </div>
-          <div class="col-2">
-            <v-radio-group v-model="healthQuestionaire[10].pemegang_polis" row>
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Pemegang Polis</p>
+            <v-radio-group
+              v-model="healthQuestionaire[10].pemegang_polis"
+              row
+              @change="healthQuestionaire[10].pemegang_polis_number = null"
+            >
               <v-radio
                 v-for="(item, index) in radios"
                 :key="index"
@@ -354,12 +390,13 @@
               v-model="healthQuestionaire[10].pemegang_polis_number"
             />
           </div>
-          <div class="col-8">
+          <div class="col-12 col-md-8">
             <ul>
               <li>{{ healthQuestionaire[11].pertanyaan }}</li>
             </ul>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Tertanggung</p>
             <v-radio-group v-model="healthQuestionaire[11].tertanggung" row>
               <v-radio
                 v-for="(item, index) in radios"
@@ -369,7 +406,8 @@
               ></v-radio>
             </v-radio-group>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Pemegang Polis</p>
             <v-radio-group v-model="healthQuestionaire[11].pemegang_polis" row>
               <v-radio
                 v-for="(item, index) in radios"
@@ -379,38 +417,42 @@
               ></v-radio>
             </v-radio-group>
           </div>
-          <div class="col-8">
+          <div class="col-12 col-md-8">
             <ul>
               <li>{{ healthQuestionaire[12].pertanyaan }}</li>
             </ul>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Tertanggung</p>
+            <input
+              class="outlined form-control"
+              type="date"
+              v-model="healthQuestionaire[12].tertanggung_date"
+            />
+          </div>
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Pemegang Polis</p>
             <input
               class="outlined form-control"
               type="date"
               v-model="healthQuestionaire[12].pemegang_polis_date"
             />
           </div>
-          <div class="col-2">
-            <input
-              class="outlined form-control"
-              type="date"
-              v-model="healthQuestionaire[12].pemegang_polis_date"
-            />
-          </div>
-          <div class="col-8">
+          <div class="col-12 col-md-8">
             <ul>
               <li>{{ healthQuestionaire[13].pertanyaan }}</li>
             </ul>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Tertanggung</p>
             <input
               class="outlined form-control"
               type="date"
-              v-model="healthQuestionaire[13].pemegang_polis_date"
+              v-model="healthQuestionaire[13].tertanggung_date"
             />
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Pemegang Polis</p>
             <input
               class="outlined form-control"
               type="date"
@@ -422,38 +464,42 @@
 
       <div class="card mb-4">
         <div class="card-body row">
-          <div class="col-8">
+          <div class="col-12 col-md-8">
             <ul>
               <li>{{ healthQuestionaire[14].pertanyaan }}</li>
             </ul>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Tertanggung</p>
+            <input
+              class="outlined form-control"
+              type="number"
+              v-model="healthQuestionaire[14].tertanggung_date_number"
+            />
+          </div>
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Pemegang Polis</p>
             <input
               class="outlined form-control"
               type="number"
               v-model="healthQuestionaire[14].pemegang_polis_number"
             />
           </div>
-          <div class="col-2">
-            <input
-              class="outlined form-control"
-              type="number"
-              v-model="healthQuestionaire[14].pemegang_polis_number"
-            />
-          </div>
-          <div class="col-8">
+          <div class="col-12 col-md-8">
             <ul>
               <li>{{ healthQuestionaire[15].pertanyaan }}</li>
             </ul>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Tertanggung</p>
             <input
               class="outlined form-control"
               type="number"
-              v-model="healthQuestionaire[15].pemegang_polis_number"
+              v-model="healthQuestionaire[15].tertanggung_date_number"
             />
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
+            <p class="d-block d-md-none">Pemegang Polis</p>
             <input
               class="outlined form-control"
               type="number"
