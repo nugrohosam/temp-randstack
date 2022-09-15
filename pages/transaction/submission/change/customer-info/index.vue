@@ -47,7 +47,9 @@
                 <!-- Transaction Status Menu -->
                 <div class="row">
                   <div class="col-12">
-                    <div class="d-flex justify-sm-space-between">
+                    <div
+                      class="d-flex flex-column flex-md-row justify-sm-space-between"
+                    >
                       <p><b>Alamat</b></p>
                       <button
                         class="btn btn-primary-outlined btn-mini"
@@ -299,7 +301,9 @@
                 <!-- Transaction Cok Menu -->
                 <div class="row">
                   <div class="col-12">
-                    <div class="d-flex justify-sm-space-between">
+                    <div
+                      class="d-flex flex-column flex-md-row justify-sm-space-between"
+                    >
                       <p><b>Nomor Telepon</b></p>
                       <button
                         class="btn btn-primary-outlined btn-mini"
@@ -450,7 +454,9 @@
         <div class="row">
           <div class="col-lg-6 col-sm-12">
             <p class="data-title mb-2">Email Address</p>
-            <div class="d-flex justify-sm-space-between">
+            <div
+              class="d-flex flex-column flex-md-row justify-sm-space-between"
+            >
               <p class="data-value" v-show="!emailEditable">
                 {{
                   selectedPolicy.person.email
@@ -485,17 +491,22 @@
         </div>
         <div class="row">
           <div class="col-lg-6 col-sm-12">
-            <ValidationProvider rules="required|image" v-slot="{ validate, errors }">
+            <ValidationProvider
+              rules="required|image"
+              v-slot="{ validate, errors }"
+            >
               <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
               <input
                 type="file"
                 ref="inputSelfieKtpImage"
                 v-show="false"
                 accept="image/*"
-                @change="(e) => {
-                  validate(e)
-                  addSelfieKtpImage(e)
-                }"
+                @change="
+                  (e) => {
+                    validate(e);
+                    addSelfieKtpImage(e);
+                  }
+                "
               />
               <button
                 class="btn btn-primary-outlined"
