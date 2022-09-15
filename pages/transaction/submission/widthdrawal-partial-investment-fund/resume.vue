@@ -4,54 +4,67 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
-        <p class="data-value">JHON DOE</p>
+        <p class="data-value">
+          {{ myPolicy.policyWithCode.policyHolder.person.firstName }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nomor Polis</p>
-        <p class="data-value">BLPM20113145</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Nomor Rekening Manfaat</p>
-        <p class="data-value">BLPM20113145</p>
+        <p class="data-value">
+          {{ myPolicy.policyWithCode.policyNumber }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Nama Pemegang Rekening</p>
-        <p class="data-value">JOHN DOE</p>
+        <p class="data-title">Nomor Rekening Saat Ini</p>
+        <p class="data-value">
+          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-" }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Nama Bank</p>
-        <p class="data-value">BNI</p>
+        <p class="data-title mb-2">
+          Nama Pemilik Nomor Rekening Manfaat Saat Ini
+        </p>
+        <p class="data-value">
+          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-" }}
+        </p>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <p class="data-title mb-2">Nama Bank Saat Ini</p>
+        <p class="data-value">
+          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}
+        </p>
       </div>
     </div>
     <div class="row">
       <div class="col-lg-6 col-sm-12">
+        <p class="data-value">Data Pengajuan Penarikan Sebagian Dana Investasi</p>
         <v-simple-table>
           <template v-slot:default>
             <thead>
               <tr>
                 <th class="text-left">No</th>
                 <th class="text-left">Nama Fund</th>
-                <th class="text-left">Nilai Penarikan</th>
+                <th class="text-left">Nilai Top Up</th>
+                <th class="text-left">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, i) in data_investments" :key="item.name">
-                <template v-if="i < data_investments.length - 1">
-                  <td>{{ i + 1 }}</td>
-                  <td>{{ item.fund_name }}</td>
-                  <td>{{ item.topup_value }}</td>
-                </template>
-                <template v-else>
-                  <td></td>
-                  <td>
-                    <b>{{ item.fund_name }}</b>
-                  </td>
-                  <td>
-                    <b>{{ item.topup_value }}</b>
-                  </td>
-                </template>
+              <tr v-for="(item, i) in data_investments" :key="item.applyUnit">
+                <td>{{ i + 1 }}</td>
+                <td>
+                  <b>{{ $fundName(item.applyUnit) }}</b>
+                </td>
+                <td>
+                  <b>{{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.applyAmount * applyUnit) }}</b>
+                </td>
+                <td>
+                  <button
+                    class="btn btn-primary-outlined mt-3 w-100 btn-add-investment"
+                    @click.prevent="removeInvestment(i)"
+                  >
+                    Hapus
+                  </button>
+                </td>
               </tr>
             </tbody>
           </template>
@@ -125,33 +138,37 @@ export default {
     SaveIcon,
     InfoIcon,
   },
-
   mounted() {
     console.log($nuxt.$route.name);
   },
+  beforeMount() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: "Resume Penarikan Sebagian Dana Investasi",
+      sub: "Penarikan Sebagian Dana Investasi",
+    });
+  },
+  destroyed() {
+    this.$store.commit("submission_transaction/removeCurrentHeaderTitle");
+  },
   data() {
     return {
-      ex4: [],
-      items: ["321321321 - BNI", "321321322 - BNI"],
-      data_investments:[],
-      modal: {
-        message: "",
+      image_preview: {
+        src: "",
         show: false,
-        button: {
-          text: "Ok",
-          redirect_link: "./thankyou",
-          redirect_type: "spa",
-        },
       },
     };
   },
   methods: {
-    submit: async function () {
-      this.modal.show = true;
-      this.modal.message =
-        "Jika No Rekening Manfaat kosong (Payee Refund Account) maka Transaksi ditolak oleh LP dan di arahkan ke Perubahan Rekening Manfaat (Change Payee Refund Account)";
+    async submit() {
+      const result = await this.$store.dispatch(
+        "submission_transaction/withdraw_partial_investment_fund/withdrawPartialInvestmentFund"
+      );
+      if (result && result.success == true) {
+        this.$router.push({
+          path: "/transaction/submission/widthdrawal-partial-investment-fund/thankyou",
+        });
+      }
     },
-
   },
 };
 </script>

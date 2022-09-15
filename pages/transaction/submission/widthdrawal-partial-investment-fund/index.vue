@@ -118,7 +118,7 @@
             class="btn btn-primary-outlined w-100 btn-add-investment"
             @click.prevent="addInvestment()"
           >
-            {{ $indexOfObject(data_investments, investment_choosen, v => v.applyUnit) == -1 ? "Tambah" : "Ubah"}}
+            {{ $indexOfObject(form.items, investment_choosen, v => v.applyUnit) == -1 ? "Tambah" : "Ubah"}}
           </button>
         </div>
       </div>
@@ -139,7 +139,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, i) in data_investments" :key="item.applyUnit">
+                <tr v-for="(item, i) in form.items" :key="item.applyUnit">
                   <td>{{ i + 1 }}</td>
                   <td>
                     <b>{{ $fundName(item.applyUnit) }}</b>
@@ -186,7 +186,7 @@
             >
               Unggah
             </button>
-            <small>{{ selfieKtpFileName }}</small>
+            <small>{{ form.ktpSelfieAttachment.name }}</small>
             <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
             <br />
             <span class="text-error">{{ errors[0] }}</span>
@@ -231,6 +231,10 @@ export default {
   },
   data() {
     return {
+      form: {
+        items: [],
+        ktpSelfieAttachment: {},
+      },
       modal: {
         message: "",
         show: false,
@@ -245,7 +249,6 @@ export default {
       amount: null,
       items: [],
       investment_types: [],
-      data_investments: [],
       table: {
         headers: [
           { text: "No", value: "no" },
@@ -307,7 +310,7 @@ export default {
       return contractInvest;
     },
     removeInvestment(i) {
-      this.data_investments.splice(i, 1)
+      this.form.items.splice(i, 1)
     },
     addInvestment() {
       const contractInvests = this.contractInvests(this.myPolicy.policyWithCode.coverages)
@@ -319,15 +322,15 @@ export default {
       
       const fund = contractInvests.find(item => item.fundCode == this.investment_choosen);
       const bidPrice = this.getFundPrices(this.myPolicy.policyWithCode.fundPrices, this.investment_choosen)
-      const indexObject = this.$indexOfObject(this.data_investments, this.investment_choosen, v => v.applyUnit)
+      const indexObject = this.$indexOfObject(this.form.items, this.investment_choosen, v => v.applyUnit)
       if (indexObject != -1) {
-        this.data_investments.splice(indexObject, 1, {
+        this.form.items.splice(indexObject, 1, {
           applyAmount: bidPrice,
           applyUnit: this.amount / fund.accumUnits,
           fundCode: this.investment_choosen
         })
       } else {
-        this.data_investments.push({
+        this.form.items.push({
           applyAmount: bidPrice,
           applyUnit: this.amount / fund.accumUnits,
           fundCode: this.investment_choosen
@@ -349,10 +352,22 @@ export default {
       const found = fundPrices.find((item) => item.fundCode === fundCode);
       return found ? this.$moment(found.pricingDate).format("DD/MM/Y") : "-";
     },
+    async addSelfieKtpImage(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadSelieKtpFile",
+          { file: e.target.files[0] }
+        );
+        this.form.ktpSelfieAttachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
     save: async function () {
       // patch to action
       this.$store.commit(
-        "submission_transaction/policy_loan/setWithdrawPartialInvestmentFund",
+        "submission_transaction/withdraw_partial_investment_fund/setWithdrawPartialInvestmentFund",
         this.form
       );
       // patch to action
