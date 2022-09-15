@@ -39,6 +39,13 @@ export default {
       icon: "ic_package.svg",
     },
     {
+      active: true,
+      hidden: false,
+      name: "Penarikan Sebagian Dana Investasi",
+      link: "/transaction/submission/widthdrawal-partial-investment-fund",
+      icon: "ic_percent.svg",
+    },
+    {
       active: false,
       hidden: false,
       name: "Penambahan Dana Investasi",
@@ -58,13 +65,6 @@ export default {
       name: "Penambahan Uang Pertanggungan",
       link: "/transaction/submission/add-defered-money",
       icon: "ic_plus_square.svg",
-    },
-    {
-      active: false,
-      hidden: false,
-      name: "Penarikan Sebagian Dana Investasi",
-      link: "/transaction/submission/widthdrawal-partial-investment-fund",
-      icon: "ic_percent.svg",
     },
     {
       active: false,

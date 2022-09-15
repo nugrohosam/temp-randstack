@@ -85,15 +85,7 @@ export default {
       showMenu: true,
       default_header_title: "Pengajuan Transaksi",
       current_header_title: "",
-      menu_search: "",
-      // dialog: true,
-      // menus: [
-      //   {
-      //     name: "Cuti Premi",
-      //     to: "/",
-      //     icon: "ic_cuti_premi.svg",
-      //   },
-      // ],
+      menu_search: ""
     };
   },
   watch: {
@@ -107,13 +99,14 @@ export default {
     },
     menu_search(keyword) {
       this.searchMenu({ keywords: keyword });
-      // let menu_filtered = this.menus.filter(function(item){
-      //   let name = item['name'];
-      //   if(name.includes(keyword)){
-      //     return item['name'];
-      //   }
-      // })
-      // this.menus = menu_filtered;
+      let menu_filtered = this.menus.filter(function(item){
+        let name = item['name'];
+        if(name.includes(keyword)){
+          return item['name'];
+        }
+      })
+
+      this.menus = menu_filtered;
     },
   },
   computed: {
@@ -129,19 +122,20 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 2fr);
-  grid-template-rows: repeat(3, 1fr);
-  grid-column-gap: 16px;
-  grid-row-gap: 40px;
-  @media screen and (max-width: 1460px) {
-    grid-template-columns: repeat(3, 1fr);
-    grid-row-gap: 0px;
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 2fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 16px;
+    grid-row-gap: 40px;
+    @media screen and (max-width: 1460px) {
+      grid-template-columns: repeat(3, 1fr);
+      grid-row-gap: 0px;
+    }
+    @media screen and (max-width: 480px) {
+      grid-column-gap: 10px;
+    }
   }
-  @media screen and (max-width: 480px) {
-    grid-column-gap: 10px;
-  }
-}
-</style>
+  </style>

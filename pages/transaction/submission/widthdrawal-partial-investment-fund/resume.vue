@@ -133,23 +133,7 @@ export default {
     return {
       ex4: [],
       items: ["321321321 - BNI", "321321322 - BNI"],
-      data_investments: [
-        {
-          id: 1,
-          fund_name: "DANA MAKSIMA",
-          topup_value: 1000000,
-        },
-        {
-          id: 2,
-          fund_name: "DANA CEMERLANG",
-          topup_value: 2000000,
-        },
-        {
-          id: "",
-          fund_name: "Total",
-          topup_value: 3000000,
-        },
-      ],
+      data_investments:[],
       modal: {
         message: "",
         show: false,

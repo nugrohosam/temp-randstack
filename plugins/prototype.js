@@ -26,6 +26,10 @@ export default function ({ app, $axios }, inject) {
     }
   };
 
+  const indexOfObject = (myArray, find, callback) => {
+    return myArray.map(callback).indexOf(find);
+  };
+
   const labelPaymentMethod = (code) => {
     let methods = new Array();
     methods[3] = "Saving Account/Internet Banking";
@@ -333,6 +337,7 @@ export default function ({ app, $axios }, inject) {
   inject("labelIdentityType", labelIdentityType);
   inject("labelCardType", labelCardType);
   inject("labelRelationType", labelRelationType);
+  inject("indexOfObject", indexOfObject);
   inject("convertCurrency", convertCurrency);
   inject("getBank", getBank);
   inject("getBankName", getBankName);
