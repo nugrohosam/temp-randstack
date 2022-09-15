@@ -40,14 +40,19 @@
               />
             </div>
             <div class="form-input auth">
-              <ValidationProvider name="Nomor Hp" rules="phone" v-slot="{ errors }">
+              <ValidationProvider
+                name="Nomor Hp"
+                rules="phone"
+                v-slot="{ errors }"
+              >
                 <label style="color: black"><b>Nomor HP</b></label>
                 <input
-                  type="text"
+                  type="number"
                   class="w-100"
                   v-model="form.phone_number"
                   placeholder="628xxxxx...."
-                /> <br />
+                />
+                <br />
                 <span class="text-error">{{ errors[0] }}</span>
               </ValidationProvider>
             </div>
@@ -115,8 +120,8 @@ export default {
         if (
           val.policy_number != "" &&
           val.phone_number != "" &&
-          val.identity_number != ""
-          && val.verified == true
+          val.identity_number != "" &&
+          val.verified == true
         ) {
           this.signInDisable = false;
         } else {
@@ -136,7 +141,7 @@ export default {
         policy_number: "", //9210000627,BLMS0000046
         phone_number: "", //6288809139413,6285692203893
         identity_number: "", //5315056301790004,3578204808680002
-        verified: "",
+        verified: true,
       },
       modal: {
         message: "",
@@ -147,12 +152,11 @@ export default {
   methods: {
     signIn: async function () {
       const response = await this.$store.dispatch("auth/signIn", this.form);
-      if(typeof response.success != "undefined" && response.success){
+      if (typeof response.success != "undefined" && response.success) {
         this.$router.push({
           path: `/auth/otp?phonenumber=${response.data.phoneNumber}`,
         });
       }
-
 
       // TEST
 
@@ -197,7 +201,6 @@ export default {
   display: flex;
   justify-content: center;
   margin-bottom: 14px;
-
 }
 .logo-container {
   height: 360px;

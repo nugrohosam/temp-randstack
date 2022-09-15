@@ -205,6 +205,8 @@ h2 {
 #otp_sent_to {
   margin-bottom: 42px;
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #verify {
