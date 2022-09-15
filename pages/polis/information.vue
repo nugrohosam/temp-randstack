@@ -85,10 +85,7 @@
                           <div class="col-md-6 col-xs-12">
                             <p class="data-title">Alamat</p>
                             <p class="data-value">
-                              {{
-                                myPolicy.policyWithCode.policyHolder.address
-                                  .address1
-                              }}
+                              {{ getAddress() }}
                             </p>
                             <!-- <p class="data-title">Alamat Koresponden</p>
                             <p class="data-value">
@@ -291,6 +288,10 @@ export default {
     },
   },
   methods: {
+    getAddress() {
+      const address = myPolicy.policyWithCode.policyHolder.address;
+      return `${address.address1} ${address.address2} ${address.address3} ${address.address4} ${address.address5} ${address.address6} ${address.address7}`;
+    },
     totalPremAll: (item) => {
       return (
         item.currentPremium.stdPremAf + (item.recurringTopup?.topupAmount || 0)
