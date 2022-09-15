@@ -145,7 +145,7 @@
                     <b>{{ $fundName(item.applyUnit) }}</b>
                   </td>
                   <td>
-                    <b>{{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.applyAmount * applyUnit) }}</b>
+                    <b>{{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.applyAmount * item.applyUnit) }}</b>
                   </td>
                   <td>
                     <button
@@ -326,13 +326,13 @@ export default {
       if (indexObject != -1) {
         this.form.items.splice(indexObject, 1, {
           applyAmount: bidPrice,
-          applyUnit: this.amount / fund.accumUnits,
+          applyUnit: this.amount / bidPrice,
           fundCode: this.investment_choosen
         })
       } else {
         this.form.items.push({
           applyAmount: bidPrice,
-          applyUnit: this.amount / fund.accumUnits,
+          applyUnit: this.amount / bidPrice,
           fundCode: this.investment_choosen
         })
       }
