@@ -1,6 +1,6 @@
 <template>
-  <ValidationObserver v-slot="{ handleSubmit }">
-    <form @submit.prevent="handleSubmit(save)">
+  <div>
+    <form @submit.prevent="save">
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemegang Polis</p>
@@ -21,16 +21,13 @@
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Informasi Virtual Account</p>
-          <ValidationProvider rules="required" v-slot="{ errors }">
-            <v-select
-              :items="virtualAccountOptions"
-              v-model="form.virtualAccountNumber"
-              label="Virtual Account"
-              dense
-              outlined
-              :error-messages="errors[0]"
-            ></v-select>
-          </ValidationProvider>
+          <v-select
+            :items="virtualAccountOptions"
+            v-model="form.virtualAccountNumber"
+            label="Virtual Account"
+            dense
+            outlined
+          ></v-select>
         </div>
       </div>
 
@@ -56,68 +53,44 @@
       <div class="row">
         <div class="col-12">
           <p class="data-title mb-2">Unggah Bukti Transfer</p>
-          <ValidationProvider
-            rules="required|image"
-            v-slot="{ validate, errors }"
+          <input
+            type="file"
+            ref="inputBuktiTransferImage"
+            v-show="false"
+            accept="image/*"
+            @change="(e) => addBuktiTransferImage(e)"
+          />
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="$refs.inputBuktiTransferImage.click()"
           >
-            <input
-              type="file"
-              ref="inputBuktiTransferImage"
-              v-show="false"
-              accept="image/*"
-              @change="
-                (e) => {
-                  validate(e);
-                  addBuktiTransferImage(e);
-                }
-              "
-            />
-            <button
-              class="btn btn-primary-outlined"
-              @click.prevent="$refs.inputBuktiTransferImage.click()"
-            >
-              Unggah
-            </button>
-            <small>{{ form.transferAttachment.name }}</small>
-            <br />
-            <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
-            <br />
-            <span class="text-error">{{ errors[0] }}</span>
-          </ValidationProvider>
+            Unggah
+          </button>
+          <small>{{ form.transferAttachment.name }}</small>
+          <br />
+          <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
         </div>
       </div>
 
       <div class="row">
         <div class="col-12">
           <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
-          <ValidationProvider
-            rules="required|image"
-            v-slot="{ validate, errors }"
+          <input
+            type="file"
+            ref="inputSelfieKtpImage"
+            v-show="false"
+            accept="image/*"
+            @change="(e) => addSelfieKtpImage(e)"
+          />
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="$refs.inputSelfieKtpImage.click()"
           >
-            <input
-              type="file"
-              ref="inputSelfieKtpImage"
-              v-show="false"
-              accept="image/*"
-              @change="
-                (e) => {
-                  validate(e);
-                  addSelfieKtpImage(e);
-                }
-              "
-            />
-            <button
-              class="btn btn-primary-outlined"
-              @click.prevent="$refs.inputSelfieKtpImage.click()"
-            >
-              Unggah
-            </button>
-            <small>{{ form.ktpSelfieAttachment.name }}</small>
-            <br />
-            <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
-            <br />
-            <span class="text-error">{{ errors[0] }}</span>
-          </ValidationProvider>
+            Unggah
+          </button>
+          <small>{{ form.ktpSelfieAttachment.name }}</small>
+          <br />
+          <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
         </div>
       </div>
 
@@ -139,6 +112,8 @@
         </div>
       </div>
 
+      <ValidationMessage :validation-message="validationMessage" />
+
       <div class="row">
         <div class="col-12">
           <button class="btn btn-primary btn-save float-right" type="submit">
@@ -154,7 +129,7 @@
       @submit="form.healthQuestionaire = $event"
       @close="showModalHealth = false"
     />
-  </ValidationObserver>
+  </div>
 </template>
 
 <script>
@@ -169,6 +144,7 @@ export default {
         ktpSelfieAttachment: {},
       },
       showModalHealth: false,
+      validationMessage: [],
     };
   },
   computed: {
@@ -186,7 +162,24 @@ export default {
     },
   },
   methods: {
+    validate() {
+      this.validationMessage = [];
+      if (!this.form.healthQuestionaire.length) {
+        this.validationMessage.push("Health Questionaire diperlukan");
+      }
+      if (!this.form.virtualAccountNumber) {
+        this.validationMessage.push("Virtual Account Number diperlukan");
+      }
+      if (!this.form.transferAttachment.name) {
+        this.validationMessage.push("Bukti Transfer diperlukan");
+      }
+      if (!this.form.ktpSelfieAttachment.name) {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+      }
+    },
     save() {
+      this.validate();
+      if (this.validationMessage.length) return false;
       this.$store.commit(
         "submission_transaction/policy_recovery/setPolicyRecovery",
         this.form

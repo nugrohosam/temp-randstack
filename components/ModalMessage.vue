@@ -41,7 +41,7 @@ export default {
           } else {
             window.location.href = this.button.redirect_link;
           }
-        }else{
+        } else {
           window.location.href = this.button.redirect_link;
         }
       } else {
@@ -52,8 +52,3 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-.btn {
-  padding: 0 20px !important;
-}
-</style>

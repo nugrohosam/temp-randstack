@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="app">
     <!-- <v-navigation-drawer
       fixed
       app
@@ -99,8 +99,8 @@
                   <bell-icon size="1.5x"></bell-icon>
                 </button>
                 <template #popper>
-                  <div style="width: 480px; border-radius: 40px;">
-                    <NotificationPanel :style="'max-height: 420px;'"/>
+                  <div style="width: 480px; border-radius: 40px">
+                    <NotificationPanel :style="'max-height: 420px;'" />
                   </div>
                 </template>
               </VDropdown>
@@ -139,10 +139,7 @@
                 </div>
                 <div class="sec-image">
                   <div class="_ellipse-image">
-                    <img
-                      src="~/assets/img/dummy-profile.webp"
-                      alt=""
-                    />
+                    <img src="~/assets/img/dummy-profile.webp" alt="" />
                   </div>
                 </div>
               </div>
@@ -232,10 +229,9 @@ export default {
   },
   onIdle() {
     this.showTimeout();
-    sessionStorage.removeItem('auth');
+    sessionStorage.removeItem("auth");
   },
-  onActive(){
-  },
+  onActive() {},
   watch: {
     windowWidth(newWidth, oldWidth) {
       // breakpoint mobile <960px
@@ -303,27 +299,28 @@ export default {
           text: "Oke",
           redirect_link: "/auth/login",
           redirect_type: "ssr",
-        }
+        },
       },
     };
   },
   methods: {
-    showTimeout: function(){
-       let that = this;
-       let defaultPopup = 5;
-       this.idle.message = "Sistem mendeteksi kamu tidak melakukan aktivitas apapun. Silahkan login kembali";
-       this.idle.show = true;
+    showTimeout: function () {
+      let that = this;
+      let defaultPopup = 5;
+      this.idle.message =
+        "Sistem mendeteksi kamu tidak melakukan aktivitas apapun. Silahkan login kembali";
+      this.idle.show = true;
 
-       setInterval(() => {
-        that.idle.button.text = `Oke (${defaultPopup})`
-        if(defaultPopup > 0){
+      setInterval(() => {
+        that.idle.button.text = `Oke (${defaultPopup})`;
+        if (defaultPopup > 0) {
           defaultPopup -= 1;
         }
-       },1000)
+      }, 1000);
 
-       setTimeout(() => {
-        window.location.href = "/auth/login"
-       },6000)
+      setTimeout(() => {
+        window.location.href = "/auth/login";
+      }, 6000);
     },
     onResize() {
       this.windowWidth = window.innerWidth;

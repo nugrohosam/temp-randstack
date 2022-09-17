@@ -184,8 +184,9 @@
                     </div>
                   </div>
                 </div>
+
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-12 d-none d-md-block">
                     <v-tabs :v-model="'2'" show-arrows color="#F15921">
                       <v-tab
                         v-for="item in myitems"
@@ -208,6 +209,23 @@
                     <v-tabs-items v-model="tab">
                       <NuxtChild />
                     </v-tabs-items>
+                  </div>
+                  <div class="infromation-menu-mobile col-12 d-block d-md-none">
+                    <v-expansion-panels>
+                      <v-expansion-panel
+                        v-for="(item, index) in myitems"
+                        :key="index"
+                      >
+                        <v-expansion-panel-header>
+                          <NuxtLink :to="item.link">
+                            {{ item.tab }}
+                          </NuxtLink>
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                          <NuxtChild />
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                    </v-expansion-panels>
                   </div>
                 </div>
               </div>
@@ -312,5 +330,20 @@ export default {
 <style lang="scss">
 .v-slide-group__content a {
   border-bottom: 1.5px solid #716f6f;
+}
+
+.infromation-menu-mobile {
+  .v-expansion-panel-header {
+    min-height: 0 !important;
+    a {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      color: #f15921;
+      text-decoration: none;
+    }
+  }
+  .v-expansion-panel-content__wrap {
+    padding: 0;
+  }
 }
 </style>

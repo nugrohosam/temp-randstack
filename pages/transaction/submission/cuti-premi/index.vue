@@ -1,6 +1,6 @@
 <template>
-  <ValidationObserver v-slot="{ handleSubmit }">
-    <form @submit.prevent="handleSubmit(save)">
+  <div>
+    <form @submit.prevent="save">
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemegang Polis</p>
@@ -40,23 +40,16 @@
 
       <hr class="my-4" />
 
-      <div class="row">
+      <div v-if="!isSetHoliday" class="row">
         <div class="col-12">
-          <ValidationProvider
-            v-if="!isSetHoliday"
-            rules="required"
-            v-slot="{ errors }"
-          >
-            <v-radio-group v-model="form.status" row @change="changeStatus">
-              <v-radio
-                v-for="(item, index) in radios"
-                :key="index"
-                color="#F15921"
-                v-bind="item"
-              ></v-radio>
-            </v-radio-group>
-            <span class="text-error">{{ errors[0] }}</span>
-          </ValidationProvider>
+          <v-radio-group v-model="form.status" row @change="changeStatus">
+            <v-radio
+              v-for="(item, index) in radios"
+              :key="index"
+              color="#F15921"
+              v-bind="item"
+            ></v-radio>
+          </v-radio-group>
         </div>
       </div>
 
@@ -64,34 +57,28 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tanggal Awal Cuti Premi</p>
           <div class="data-value">
-            <ValidationProvider rules="required" v-slot="{ errors }">
-              <input
-                type="date"
-                class="outlined form-control"
-                v-model="form.startPremiumHolidayDate"
-              />
-              <p class="data-title">
-                <small
-                  >Awal cuti Premi tidak boleh kurang dari Tanggal sistem / Hari
-                  ini</small
-                >
-              </p>
-              <span class="text-error">{{ errors[0] }}</span>
-            </ValidationProvider>
+            <input
+              type="date"
+              class="outlined form-control"
+              v-model="form.startPremiumHolidayDate"
+            />
+            <p class="data-title">
+              <small>
+                Awal cuti Premi tidak boleh kurang dari Tanggal sistem / Hari
+                ini
+              </small>
+            </p>
             <br />
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tanggal Akhir Cuti Premi</p>
           <div class="data-value">
-            <ValidationProvider rules="required" v-slot="{ errors }">
-              <input
-                type="date"
-                class="outlined form-control"
-                v-model="form.endPremiumHolidayDate"
-              />
-              <span class="text-error">{{ errors[0] }}</span>
-            </ValidationProvider>
+            <input
+              type="date"
+              class="outlined form-control"
+              v-model="form.endPremiumHolidayDate"
+            />
           </div>
         </div>
       </div>
@@ -112,34 +99,22 @@
       <div class="row">
         <div class="col-12">
           <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
-          <ValidationProvider
-            rules="required|image"
-            v-slot="{ validate, errors }"
+          <input
+            type="file"
+            ref="inputSelfieKtpImage"
+            v-show="false"
+            accept="image/*"
+            @change="(e) => addSelfieKtpImage(e)"
+          />
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="$refs.inputSelfieKtpImage.click()"
           >
-            <input
-              type="file"
-              ref="inputSelfieKtpImage"
-              v-show="false"
-              accept="image/*"
-              @change="
-                (e) => {
-                  validate(e);
-                  addSelfieKtpImage(e);
-                }
-              "
-            />
-            <button
-              class="btn btn-primary-outlined"
-              @click.prevent="$refs.inputSelfieKtpImage.click()"
-            >
-              Unggah
-            </button>
-            <small>{{ form.ktpSelfieAttachment.name }}</small>
-            <br />
-            <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
-            <br />
-            <span class="text-error">{{ errors[0] }}</span>
-          </ValidationProvider>
+            Unggah
+          </button>
+          <small>{{ form.ktpSelfieAttachment.name }}</small>
+          <br />
+          <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
         </div>
       </div>
 
@@ -155,6 +130,8 @@
         </div>
       </div>
 
+      <ValidationMessage :validation-message="validationMessage" />
+
       <div class="row">
         <div class="col-12">
           <button class="btn btn-primary btn-save float-right" type="submit">
@@ -163,7 +140,7 @@
         </div>
       </div>
     </form>
-  </ValidationObserver>
+  </div>
 </template>
 
 <script>
@@ -181,6 +158,7 @@ export default {
         { label: "Perubahan Tanggal Cuti", value: "change" },
         { label: "Pembatalan Cuti Premi", value: "cancel" },
       ],
+      validationMessage: [],
     };
   },
   computed: {
@@ -216,7 +194,21 @@ export default {
         };
       }
     },
+    validate() {
+      this.validationMessage = [];
+      if (!this.form.startPremiumHolidayDate) {
+        this.validationMessage.push("Tanggal Awal Cuti Premi diperlukan");
+      }
+      if (!this.form.endPremiumHolidayDate) {
+        this.validationMessage.push("Tanggal Akhir Cuti Premi diperlukan");
+      }
+      if (!this.form.ktpSelfieAttachment.name) {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+      }
+    },
     save() {
+      this.validate();
+      if (this.validationMessage.length) return false;
       this.$store.commit(
         "submission_transaction/cuti_premi/setCutiPremi",
         this.form
