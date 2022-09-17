@@ -168,9 +168,7 @@
                                     <p class="data-title">Benefit Status</p>
                                     <p class="data-value">
                                       {{
-                                        item.riskStatus != 1
-                                          ? "Terminated"
-                                          : "Active"
+                                        $riskStatus(item.riskStatus)
                                       }}
                                     </p>
                                   </div>

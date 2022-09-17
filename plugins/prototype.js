@@ -197,6 +197,16 @@ export default function ({ app, $axios }, inject) {
     return types[code];
   };
 
+  const riskStatus = (code) => {
+    let riskStatus = new Array();
+    riskStatus[1] = "Inforce";
+    riskStatus[2] = "Lapsed";
+    riskStatus[3] = "Terminated";
+    riskStatus[0] = "Waiting for Validate";
+
+    return riskStatus[code];
+  };
+
   const getBank = async (bankCode) => {
     const response = await this.$axios
       .$get(`/api/v1/banks/${bankCode}`)
@@ -351,5 +361,6 @@ export default function ({ app, $axios }, inject) {
   inject("findVillage", findVillage);
   inject("fundName", fundName);
   inject("currencyName", currencyName);
+  inject("riskStatus", riskStatus);
   inject("formatDate", formatDate);
 }

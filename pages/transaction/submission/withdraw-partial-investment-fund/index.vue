@@ -313,13 +313,6 @@ export default {
       this.form.items.splice(i, 1)
     },
     addInvestment() {
-      const contractInvests = this.contractInvests(this.myPolicy.policyWithCode.coverages)
-      const totalAmount = contractInvests.reduce((a, item) => this.getFundPrices(this.myPolicy.policyWithCode.fundPrices, this.investment_choosen) * item.accumUnits, 0)
-      if (totalAmount < this.amount) {
-        alert('tidak bisa memasukkan lebih dari fund')
-        return;
-      }
-      
       const indexObject = this.$indexOfObject(this.form.items, this.investment_choosen, v => v.fundCode)
       if (indexObject != -1) {
         this.form.items.splice(indexObject, 1, {
