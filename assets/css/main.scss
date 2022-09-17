@@ -152,6 +152,12 @@ tbody tr:nth-of-type(even) {
   // display: flex;
 }
 
+.app {
+  @media screen and (width < 1263px) {
+    margin-bottom: 56px;
+  }
+}
+
 // Navbar
 .navbar-container {
   width: 244px;
@@ -549,12 +555,15 @@ input {
 }
 .page-body {
   background: #ffffff;
-  border: 1px solid #e5e9f5;
-  border-radius: 16px;
   padding: 37px 26px;
   @media screen and (width < 1440px) {
     max-width: 960px;
     margin: auto;
+  }
+
+  @media screen and (width > 1263px) {
+    border: 1px solid #e5e9f5;
+    border-radius: 16px;
   }
 }
 
