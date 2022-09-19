@@ -19,22 +19,22 @@
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tanggal Jatuh Tempo</p>
-          <p class="data-value">xx/xx/xxxx</p>
+          <p class="data-value">{{ dueDatePremi }}</p>
         </div>
       </div>
 
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Status Cuti Premi</p>
-          <p class="data-value">XX</p>
+          <p class="data-value">{{ myPolicy.policyWithCode.holidayIndi == "Y" ? "Ya" : "Tidak"}}</p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Masa Akhir Pembayaran Premi</p>
-          <p class="data-value">xx/xx/xxxx</p>
+          <p class="data-value">{{ saDueDatePremi }}</p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Masa Wajib Bayar Premi</p>
-          <p class="data-value">xx/xx/xxxx</p>
+          <p class="data-value">{{ myPolicy.policyWithCode.lockedPeriodDate }}</p>
         </div>
       </div>
 
@@ -57,18 +57,7 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tanggal Awal Cuti Premi</p>
           <div class="data-value">
-            <input
-              type="date"
-              class="outlined form-control"
-              v-model="form.startPremiumHolidayDate"
-            />
-            <p class="data-title">
-              <small>
-                Awal cuti Premi tidak boleh kurang dari Tanggal sistem / Hari
-                ini
-              </small>
-            </p>
-            <br />
+            {{ startFixHolidayDate }}
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -165,8 +154,21 @@ export default {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
+    myPolicyLoanInfo() {
+      return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
+    },
     isSetHoliday() {
       return this.myPolicy.policyWithCode.holidayIndi === "N";
+    },
+    dueDatePremi() {
+      return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.coverageExtend?.dueDate || '-'
+    },
+    saDueDatePremi() {
+      return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.coverageExtend?.saDueDate || '-'
+    },
+    startFixHolidayDate() {
+      const dueDate = new Date(this.dueDatePremi)
+      return this.$moment(dueDate.setMonth(dueDate.getMonth() + 1)).format("YYYY-MM-DD HH:mm:ss")
     },
   },
   watch: {
@@ -207,6 +209,7 @@ export default {
       }
     },
     save() {
+      this.form.startPremiumHolidayDate = this.startFixHolidayDate
       this.validate();
       if (this.validationMessage.length) return false;
       this.$store.commit(
