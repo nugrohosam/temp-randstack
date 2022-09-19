@@ -155,7 +155,7 @@ export default {
       return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
     },
     billReinstate() {
-      return this.myPolicyLoanInfo.financialInfo?.fullReinstate || 0
+      return this.myPolicyLoanInfo?.financialInfo?.fullReinstate || 0
     },
     virtualAccountOptions() {
       if (this.myPolicy.policyWithCode.virtualAccountInfo.length) {
