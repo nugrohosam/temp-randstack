@@ -30,7 +30,7 @@
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Masa Akhir Pembayaran Premi</p>
-          <p class="data-value">{{ saDueDatePremi }}</p>
+          <p class="data-value">{{ paidupDatePremi }}</p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Masa Wajib Bayar Premi</p>
@@ -163,8 +163,8 @@ export default {
     dueDatePremi() {
       return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.coverageExtend?.dueDate || '-'
     },
-    saDueDatePremi() {
-      return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.coverageExtend?.saDueDate || '-'
+    paidupDatePremi() {
+      return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.paidupDate || '-'
     },
     startFixHolidayDate() {
       const dueDate = new Date(this.dueDatePremi)
