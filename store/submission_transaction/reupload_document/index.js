@@ -24,7 +24,7 @@ const actions = {
       service_id: state.reuploadDocument.service_id,
     };
 
-    console.log(state.reuploadDocument);
+    
 
     for(let i = 0; i < state.reuploadDocument.documents.length; i++){
       form.documents.push({

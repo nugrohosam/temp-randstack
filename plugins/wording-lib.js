@@ -112,7 +112,7 @@ export default function ({ app, store, $axios }, inject) {
 
   const checkSyariLabel = (str) => {
     let mypolicy = store.getters['submission_transaction/getMyPolicy']
-    console.log(mypolicy.policyWithCode.isSyariah, mypolicy.policyWithCode.productPriorityCode)
+    
     if(mypolicy.policyWithCode.isSyariah){
       let productType = mypolicy.policyWithCode.productPriorityCode
       let rules ;

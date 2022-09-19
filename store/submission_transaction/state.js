@@ -103,10 +103,10 @@ export default {
       icon: "menu/penurunan-uang-pertanggungan.svg",
     },
     {
-      active: false,
+      active: true,
       hidden: false,
       name: "Perubahan Alokasi Dana Investasi",
-      link: "/transaction/submission/investment-fund-allocation-change",
+      link: "/transaction/submission/apportionment",
       icon: "menu/perubahan-alokasi-investasi.svg",
     },
     {

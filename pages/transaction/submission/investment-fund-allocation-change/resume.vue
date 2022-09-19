@@ -151,7 +151,7 @@ export default {
   },
 
   mounted() {
-    console.log($nuxt.$route.name);
+    
   },
   data() {
     return {

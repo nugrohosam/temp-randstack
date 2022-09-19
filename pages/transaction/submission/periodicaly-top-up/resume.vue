@@ -21,17 +21,17 @@
         <p class="data-title mb-2">Nama Tertanggung</p>
         <p class="data-value">
           {{
-            myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person ? 
-            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person.firstName : null) +
-            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person.midName : null) +
-            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person.lastName : null) : "-"
+            myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person ? 
+            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person.firstName : null) +
+            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person.midName : null) +
+            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person.lastName : null) : "-"
           }} 
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Existing Birth Date Life Assured</p>
         <p class="data-value">
-          {{ (myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].birthDate || "-") }}
+          {{ ($formatDate(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.birthDate) || "-") }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -110,7 +110,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" v-if="!isDecreasePrem">
       <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">Unggah Ilustrasi</p>
         <p class="data-value">
@@ -124,7 +124,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" v-if="!isDecreasePrem">
       <div class="col-12">
         <p class="data-title mb-2">Isi Formulir Kesehatan</p>
         <button
@@ -150,7 +150,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" v-if="!isDecreasePrem">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
           v-model="accepted2"
@@ -164,7 +164,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" v-if="!isDecreasePrem">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
           v-model="accepted3"
@@ -234,6 +234,9 @@ export default {
         "submission_transaction/periodicaly_top_up/getPeriodicalyTopUp"
       ];
     },
+    isDecreasePrem() { 
+      return this.getPeriodicalyTopUp.totalPrem  <= this.totalPremAll(this.myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null))
+    },
   },
   beforeMount() {
     this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
@@ -269,6 +272,11 @@ export default {
         this.image_preview.show = true;
       }
     },
+    totalPremAll: (item) => {
+      return (
+        item ? (item.currentPremium.stdPremAf + (item.recurringTopup?.topupAmount || 0)) : 0
+      );
+    },
     validate: async function () {
       this.validationMessage = [];
       if (!this.accepted1){
@@ -276,7 +284,7 @@ export default {
           "Setujui transaksi untuk memproses pengajuan"
         );
       }
-      if(!this.accepted3 || !this.accepted2) {
+      if(!this.isDecreasePrem && (!this.accepted3 || !this.accepted2)) {
         this.validationMessage.push(
           "Setujui pernyataan health questionnare untuk memproses pengajuan"
         );

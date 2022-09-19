@@ -13,7 +13,7 @@ export default {
   },
 
   mounted() {
-    console.log($nuxt.$route.name);
+    
     if ($nuxt.$route.name != "transaction-submission-new-policy-loan") {
       this.showMe = false;
     } else {

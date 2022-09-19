@@ -41,9 +41,6 @@
       </template>
     </v-data-table>
 
-    <div class="col-md-12">
-      <p class="data-title">Alokasi Investasi Premi (Fund Apportionment)</p>
-    </div>
     <v-data-table
       :headers="tableMerger.headers"
       mobile-breakpoint="480"
@@ -141,7 +138,7 @@ import { SaveIcon, InfoIcon } from "vue-feather-icons";
 import resumePageMixin from "@/mixins/resumePage";
 
 export default {  
-  name: "transfer-to-fund-resume",
+  name: "apportionment-resume",
   mixins: [resumePageMixin],
   components: {
     SaveIcon,

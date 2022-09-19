@@ -33,83 +33,37 @@
             <template v-slot:item.investmentType="{ item }">
               {{ (item.fundCode && $fundName(item.fundCode)) || "-" }}
             </template>
-            <template v-slot:item.currency="{ item }">
-              {{ $currencyName(myPolicy.policyWithCode.currency) }}
-            </template>
-            <template v-slot:item.totalUnit="{ item }">
-              {{ (item && $convertCurrency(item.accumUnits)) || 0 }}
-            </template>
             <template v-slot:item.accumUnits="{ item }">
               {{ ((item && $convertCurrency((item.accumUnits * 100) / totalUnits)) || 0) }}%
             </template>
-            <template v-slot:item.priceUnit="{ item }">
-              {{
-                item &&
-                $convertCurrency(
-                  getFundPrices(myPolicy.policyWithCode.fundPrices, item.fundCode)
-                )
-              }}
-            </template>
-            <template v-slot:item.totalInvestment="{ item }">
-              {{
-                item &&
-                $convertCurrency(
-                  item.accumUnits *
-                    getFundPrices(
-                      myPolicy.policyWithCode.fundPrices,
-                      item.fundCode
-                    )
-                )
-              }}
-            </template>
             <template v-slot:body.append>
-              <tr class="lg:hidden">
-                <td colspan="6" >Total</td>
-                <td style="text-align: right">{{ $convertCurrency(sumTotalInvestemnt) }}</td>
-              </tr>
-              <tr class="hidden lg:w-auto lg:visible">
-                <td colspan="2"></td>
-                <td>Total</td>
-                <td>{{ totalUnits }}</td>
-                <td>100,00%</td>
-                <td>{{ totalPrices }}</td>
-                <td>{{ $convertCurrency(sumTotalInvestemnt) }}</td>
+              <tr class="lg:hidden md:hidden">
+                <td collspan="2">Total</td>
+                <td style="text-align: right">100%</td>
               </tr>
             </template>
           </v-data-table>
         </div>
       </div>
 
-      <p class="text-gray-600">Tanggal NAB {{ tanggalNAB(addItemForm.from) }}</p>
       <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-6">
           <p class="data-title mb-2">
-            Jenis Dana Investasi yang akan Dipindahkan (From)
+            Jenis Dana Investasi yang akan Dipilih
           </p>
           <div class="data-value">
             <v-select
               v-model="addItemForm.from"
-              :items="invesmentOptions.from"
+              :items="invesmentOptions"
               dense
               outlined
             />
           </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-6">
           <p class="data-title mb-2">
-            Jenis Dana Investasi yang akan Dipindahkan (To)
+            Komposisi Fund Yang Dirubah
           </p>
-          <div class="data-value">
-            <v-select
-              v-model="addItemForm.to"
-              :items="invesmentOptions.to"
-              dense
-              outlined
-            />
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <p class="data-title mb-2">Persentase Unit yang Akan Dipindahkan (%)</p>
           <div class="data-value">
             <input
               type="number"
@@ -117,17 +71,6 @@
               v-model="addItemForm.percentage"
               min="0"
               max="100"
-            />
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <p class="data-title mb-2">Jumlah Unit yang dipindah</p>
-          <div class="data-value">
-            <input
-              type="text"
-              class="form-control"
-              v-model="addItemForm.totalUnit"
-              disabled
             />
           </div>
         </div>
@@ -155,8 +98,8 @@
         <template v-slot:item.from="{ item }">
           {{ $fundName(item.from) }}
         </template>
-        <template v-slot:item.to="{ item }">
-          {{ $fundName(item.to) }}
+        <template v-slot:item.percentage="{ item }">
+          {{ item.percentage }}%
         </template>
         <template v-slot:item.action="{ index }">
           <button
@@ -213,13 +156,15 @@
             <p><b>Perhatian !</b></p>
             <ul>
               <li>
-                - Pengajuan transaksi Perubahan Alokasi Dana Investasi akan dikenakan biaya
+                - Pembayaran premi selanjutnya akan <b>dialokasikan sesuai dengan perubahan yang ada</b>
               </li>
               <li>- Maksimal fund yang bisa diubah 4</li>
             </ul>
           </div>
         </div>
       </div>
+
+      <ValidationMessage :validation-message="validationMessage" />
 
       <div class="row">
         <div class="col-12">
@@ -236,7 +181,7 @@
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
 
 export default {  
-  name: "transfer-to-fund",
+  name: "apportionment",
   components: {
     SaveIcon,
     InfoIcon,
@@ -247,42 +192,55 @@ export default {
         headers: [
           { text: "No", value: "no" },
           { text: "Jenis Dana Investasi", value: "investmentType" },
-          { text: "Mata Uang", value: "currency" },
-          { text: "Jumlah Unit", value: "totalUnit" },
           { text: "Komposisi Fund", value: "accumUnits" },
-          { text: "Harga Unit", value: "priceUnit" },
-          { text: "Total Investasi", value: "totalInvestment" },
         ],
       },
       tableResult: {
         headers: [
           { text: "No", value: "no" },
-          { text: "Sumber Dana Investasi", value: "from" },
-          { text: "Dana Investasi yang akan dipindahkan", value: "to" },
-          { text: "Jumlah Unit Dituju", value: "totalUnit" },
+          { text: "Jenis Dana Investasi", value: "from" },
+          { text: "Komposisi Fund", value: "percentage" },
           { text: "Action", value: "action" },
         ],
         body: [],
       },
       addItemForm: {
         from: "",
-        to: "",
-        percentage: null,
         totalUnit: "",
-        amount: 0
+        percentage: null,
       },
       form: {
         items: [],
         ktpSelfieAttachment: "",
       },
-      invesmentOptions: {
-        from: [],
-        to: [],
-      },
+      validationMessage: [],
+      invesmentOptions: [],
       errorMessage: {
         haveInvesmentFrom: [],
       },
     };
+  },
+  created() {
+    this.$watch(
+      () => ({
+        from: this.addItemForm.from,
+        percentage: this.addItemForm.percentage,
+      }),
+      (data) => {
+        if (data.from && data.percentage) {
+          const found = this.contractInvests(
+            this.myPolicy.policyWithCode.coverages
+          ).find((item) => item.fundCode === data.from);
+          this.addItemForm.totalUnit =
+            (found.accumUnits * +data.percentage) / 100;
+          this.addItemForm.amount =
+            this.addItemForm.totalUnit * this.getFundPrices(
+              this.myPolicy.policyWithCode.fundPrices,
+              found.fundCode
+            )
+        }
+      }
+    );
   },
   computed: {
     myPolicy() {
@@ -319,28 +277,6 @@ export default {
         .reduce((a, b) => a + b, 0);
     },
   },
-  created() {
-    this.$watch(
-      () => ({
-        from: this.addItemForm.from,
-        percentage: this.addItemForm.percentage,
-      }),
-      (data) => {
-        if (data.from && data.percentage) {
-          const found = this.contractInvests(
-            this.myPolicy.policyWithCode.coverages
-          ).find((item) => item.fundCode === data.from);
-          this.addItemForm.totalUnit =
-            (found.accumUnits * +data.percentage) / 100;
-          this.addItemForm.amount =
-            this.addItemForm.totalUnit * this.getFundPrices(
-              this.myPolicy.policyWithCode.fundPrices,
-              found.fundCode
-            )
-        }
-      }
-    );
-  },
   async mounted() {
     const found = this.myPolicy.policyWithCode.coverages.find(
       (item) => item.masterProduct === null
@@ -349,12 +285,8 @@ export default {
       "submission_transaction/getProduct",
       found.productId
     );
-    this.invesmentOptions = {
-      from: this.contractInvests(this.myPolicy.policyWithCode.coverages).map(
-        (item) => ({'value' : item.fundCode, 'text' : this.$fundName(item.fundCode)})
-      ),
-      to: result.product.fundCodes.map((fundCode) =>  ({'value' : fundCode, 'text' : this.$fundName(fundCode)})),
-    };
+    this.invesmentOptions = this.contractInvests(this.myPolicy.policyWithCode.coverages).map(
+      (item) => ({'value' : item.fundCode, 'text' : this.$fundName(item.fundCode)}));
   },
   methods: {
     contractInvests(coverages) {
@@ -386,52 +318,25 @@ export default {
         };
       }
     },
-    tanggalNAB(fundCode) {
-      const fundPriceDate = this.getFundPriceDate(
-        this.myPolicy.policyWithCode.fundPrices,
-        fundCode
-      )
-      return fundPriceDate || "-"
-    },
     getFundPriceDate(fundPrices = [], fundCode) {
       if (!fundPrices.length) return 0;
       const found = fundPrices.find((item) => item.fundCode === fundCode);
       return found ? this.$moment(found.pricingDate).format("DD/MM/Y") : "-";
     },
     addItem() {
-      const isBodyFill = this.tableResult.body.length > 0 ;
-      const found = isBodyFill ? this.tableResult.body.find(
-        (item) => item.to === this.addItemForm.to
-      ) : null;
-      const totalUnitSource = this.contractInvests(this.myPolicy.policyWithCode.coverages).find((item) => item.fundCode == this.addItemForm.from).accumUnits
-      const countSource = isBodyFill ? this.tableResult.body.filter(
-        (item) => item.from === this.addItemForm.from
-      ).map((item) => +item.totalUnit).reduce((a, b) => a + b, 0) + this.addItemForm.totalUnit : 0;
-      
       this.errorMessage.haveInvesmentFrom = []
-      if (this.addItemForm.from ==this.addItemForm.to) {
-        this.errorMessage.haveInvesmentFrom.push(
-          "Jenis Dana Investasi tidak bisa sama"
-        );
-      }
+      const found = isBodyFill ? this.tableResult.body.find(
+        (item) => item.from === this.addItemForm.from
+      ) : null;
+
       if (found) {
         this.errorMessage.haveInvesmentFrom.push(
           "Jenis Dana Investasi tujuan yang akan Dipindahkan sudah ditambahkan."
         );
         return false;
-      } else if (countSource > totalUnitSource) {
-        this.errorMessage.haveInvesmentFrom.push(
-          "Pemindahan Dana Investasi Melebihi Dana Saat Ini."
-        );
-        return false;
       } else if (this.addItemForm.from == null || this.addItemForm.from == "") {
         this.errorMessage.haveInvesmentFrom.push(
-          "Dana sumber harus dipilih."
-        );
-        return false;
-      } else if (this.addItemForm.to == null || this.addItemForm.to == "") {
-        this.errorMessage.haveInvesmentFrom.push(
-          "Tujuan pengalihan dana harus terisi."
+          "Jenis Dana Investasi harus dipilih."
         );
         return false;
       } else if (this.addItemForm.totalUnit == null || this.addItemForm.totalUnit == 0) {
@@ -446,10 +351,15 @@ export default {
         this.form.items.push(this.addItemForm);
         this.addItemForm = {
           from: "",
-          to: "",
           percentage: null,
           totalUnit: "",
         };
+      }
+    },
+    validate() {
+      this.validationMessage = [];
+      if (this.form.items.map(x => x.percentage).reduce((a, b) => a + b, 0) != 100) {
+        this.validationMessage.push("Komposisi Fund harus sama dengan 100%");
       }
     },
     removeItem(index) {
@@ -457,13 +367,15 @@ export default {
       this.tableResult.body.splice(index, 1);
     },
     save() {
+      this.validate();
+      if (this.validationMessage.length) return false;
       this.$store.commit(
         "submission_transaction/transfer_of_fund/setTransferOfFund",
         this.form
       );
       this.$router.push({
-        path: "/transaction/submission/transfer-of-funds/resume",
-      });
+        path: "/transaction/submission/apportionment/resume",
+      })
     },
   },
 };

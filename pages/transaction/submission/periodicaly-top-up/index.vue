@@ -64,6 +64,7 @@
           <p class="data-title mb-2">Perubahan Premi Dasar</p>
             <div class="form-input">
               <input
+                min="0"
                 type="number"
                 class="form-control"
                 v-model="form.basePrem"
@@ -74,6 +75,7 @@
           <p class="data-title mb-2">Perubahan Premi Top Up Berkala</p>
             <div class="form-input">
               <input
+                min="0"
                 type="number"
                 class="form-control"
                 v-model="form.topUpPrem"
@@ -86,6 +88,7 @@
               <input
                 :disabled="true"
                 type="number"
+                min="0"
                 class="form-control"
                 v-model="totalPrem"
               />
@@ -159,7 +162,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" v-if="!isDecreasePrem">
         <div class="col-lg-6 col-sm-12">
           <ValidationProvider
             rules="required|image"
@@ -192,7 +195,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" v-if="!isDecreasePrem">
         <div class="col-12">
           <p class="data-title mb-2">Isi Formulir Kesehatan</p>
           <button
@@ -323,6 +326,9 @@ export default {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
+    isDecreasePrem() { 
+      return this.totalPrem <= this.totalPremAll(this.myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null))
+    },
     totalPrem() {
       if (this.form.basePrem == null && this.form.topUpPrem == null){
         return null
@@ -374,16 +380,23 @@ export default {
     },
     validate: async function () {
       this.validationMessage = [];
-      if (!this.form.ilustrationAttachment.name) {
+      if (!this.isDecreasePrem && !this.form.ilustrationAttachment.name) {
         this.validationMessage.push("Unggah Ilustrasi diperlukan");
       }
       if (!this.form.basePrem) {
         this.validationMessage.push("Premium Dasar diperlukan");
+      } else if (this.form.basePrem <= 0) {
+        this.validationMessage.push("Premium Dasar harus lebih dr 0");
       }
       if (!this.form.topUpPrem) {
         this.validationMessage.push("Top Up Berkala diperlukan");
+      } else if (this.form.topUpPrem <= 0) {
+        this.validationMessage.push("Top Up Berkala harus lebih dr 0");
       }
-      if (this.form.totalPrem >= this.totalPremAll(this.myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null) || null) && this.form.healthQuestionnaire.length < 1) {
+      if (this.form.topUpPrem >= this.form.basePrem) {
+        this.validationMessage.push("Premi Dasar harus lebih besar dr Top Up Berkala");
+      }
+      if (!this.isDecreasePrem && this.form.healthQuestionnaire.length < 1) {
         this.validationMessage.push("Form Kesehatan diperlukan");
       }
       if (!this.form.ktpSelfieAttachment.name) {

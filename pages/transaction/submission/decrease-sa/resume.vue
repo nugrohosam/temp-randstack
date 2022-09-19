@@ -130,7 +130,7 @@ export default {
     InfoIcon,
   },
   mounted() {
-    console.log($nuxt.$route.name);
+    
   },
   computed: {
     myPolicy() {

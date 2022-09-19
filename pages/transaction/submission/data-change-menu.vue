@@ -18,7 +18,7 @@
 import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   mounted() {
-    console.log($nuxt.$route.name);
+    
     if ($nuxt.$route.name != "polis-information") {
       this.showMenu = false;
     } else {

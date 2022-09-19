@@ -694,7 +694,7 @@ export default {
         .then((res) => {
           this.$router.push({ path: "./customer-info/resume" });
         });
-      // console.log(parseInt(this.selectedPolicy.address.city)
+      // 
     },
     addSelfieKtpImage: function (e) {
       if (e.target.files[0]) {

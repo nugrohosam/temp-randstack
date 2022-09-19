@@ -21,7 +21,7 @@ export default {
     //       return item["name"];
     //     }
     //   });
-    //   console.log(list_filtered);
+    //   
     //   return list_filtered;
     // }else{
       return state.transaction_status_list;

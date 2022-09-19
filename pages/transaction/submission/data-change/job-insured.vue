@@ -102,7 +102,7 @@ export default {
   },
 
   mounted() {
-    console.log($nuxt.$route.name);
+    
     if (
       $nuxt.$route.name != "transaction-submission-data-change-menu-job-insured"
     ) {

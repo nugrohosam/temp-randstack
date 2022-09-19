@@ -136,7 +136,7 @@ export default {
       }
     },
     errorMethod: function (response) {
-      console.log(response);
+      
     },
   },
 };

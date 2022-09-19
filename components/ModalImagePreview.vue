@@ -16,7 +16,6 @@ export default {
   props: ["show", "src"],
   watch: {
     show(value) {
-      console.log(this.show);
       this.isShow = this.show;
     },
   },

@@ -1,7 +1,7 @@
 export default function ({store, $axios}) {
   $axios.setToken(store.getters['auth/getAuthAccessToken'], 'Bearer');
   $axios.onError((error) => {
-    console.log("INI ERROR " , error);
+    
     store.dispatch('toggleOverlayLoading', {show: false}, {root:true});
     let message = "Terjadi kesalahan, coba lagi.";
     if(typeof error.response.data.message != "undefined"){
@@ -12,7 +12,7 @@ export default function ({store, $axios}) {
       message = "Terjadi kesalahan, coba lagi.";
     }
 
-    console.log("INI ERROR " , error, message);
+    
     store.dispatch("showResponseAlert", {
       message: message,
       type: "error",

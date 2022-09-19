@@ -145,7 +145,7 @@ export default {
     this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
       title: "Pengajuan Pinjaman Polis",
     });
-    console.log("loh he");
+    
   },
   computed: {
     myPolicy() {
