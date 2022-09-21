@@ -167,7 +167,7 @@
 
     <HealthDeclarationFormModal
       :show="showModalHealth"
-      :default-value="getPolicyRecovery.healthQuestionaire"
+      :default-value="getPolicyRecovery.healthQuestionnaire"
       preview
       @close="showModalHealth = false"
     />
@@ -229,7 +229,9 @@ export default {
       if (result && result.success == true) {
         let transactionIds = result.data.transactionIds;
         this.$router.push({
-          path: "/transaction/submission/policy-recovery/thankyou?transaction_ids=" + transactionIds.join(","),
+          path:
+            "/transaction/submission/policy-recovery/thankyou?transaction_ids=" +
+            transactionIds.join(","),
         });
       }
     },

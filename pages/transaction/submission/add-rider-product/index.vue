@@ -1,342 +1,379 @@
 <template>
   <div>
-    <!-- <div v-show="showMe">
+    <form @submit.prevent="save">
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemegang Polis</p>
-          <p class="data-value">JHON DOE</p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Nomor Polis</p>
-          <p class="data-value">BLPM20113145</p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title">Nomor Rekening Saat Ini</p>
-          <p class="data-value">BLPM20113145</p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">
-            Nama Pemilik Nomor Rekening Manfaat Saat Ini
+          <p class="data-value">
+            {{ myPolicy.policyWithCode.policyHolder.person.firstName }}
           </p>
-          <p class="data-value">JHON DOE</p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Polis</p>
-          <p class="data-value">BLPM20113145</p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Cabang Bank Saat Ini</p>
-          <p class="data-value">BLPM20113145</p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Tanggal Penerimaan Polis</p>
-          <p class="data-value">04/08/2020</p>
+          <p class="data-value">
+            {{ myPolicy.policyWithCode.policyNumber }}
+          </p>
         </div>
       </div>
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Existing Rider Information</p>
+          <p class="data-value">XX</p>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-12">
-          <p class="data-title mb-1">Jenis dan Dana Investasi yang dimiliki</p>
-          <template>
-            <v-data-table
-              :headers="table.headers"
-              :items="table.items"
-              :page.sync="page"
-              :items-per-page="itemsPerPage"
-              mobile-breakpoint="480"
-              hide-default-footer
-              @page-count="pageCount = $event"
-            >
-              <template v-slot:item.id="{ item }">
-                <v-simple-checkbox v-model="item.selected"></v-simple-checkbox>
-              </template>
-            </v-data-table>
-          </template>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 col-sm-12">
-          <p class="data-title mb-1">Data Pengajuan Top Up Sekaligus</p>
-          <v-simple-table>
-            <template v-slot:default>
-              <thead>
-                <tr>
-                  <th class="text-left">No</th>
-                  <th class="text-left">Nama Fund</th>
-                  <th class="text-left">Nilai Top Up</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(item, i) in data_investments" :key="item.name">
-                  <template v-if="i < data_investments.length - 1">
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ item.fund_name }}</td>
-                    <td>{{ item.topup_value }}</td>
-                  </template>
-                  <template v-else>
-                    <td></td>
-                    <td>
-                      <b>{{ item.fund_name }}</b>
-                    </td>
-                    <td>
-                      <b>{{ item.topup_value }}</b>
-                    </td>
-                  </template>
-                </tr>
-              </tbody>
+          <v-data-table
+            :headers="table.headers"
+            :items="
+              my_policy.policyWithCode.coverages.length > 0
+                ? my_policy.policyWithCode.coverages
+                : []
+            "
+            mobile-breakpoint="480"
+            hide-default-footer
+          >
+            <template v-slot:item.nextPremium.sumAssured="{ item }">
+              {{ $convertCurrency(item ? item.nextPremium.sumAssured : "") }}
             </template>
-          </v-simple-table>
+            <template v-slot:item.lifeInsured.insured.person="{ item }">
+              {{
+                item
+                  ? $isNullWithSpace(
+                      item.lifeInsured.insured.person.firstName
+                    ) +
+                    $isNullWithSpace(item.lifeInsured.insured.person.midName) +
+                    $isNullWithSpace(item.lifeInsured.insured.person.lastName)
+                  : ""
+              }}
+            </template>
+          </v-data-table>
         </div>
       </div>
+
       <div class="row">
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-1">Estimasi Nilai Tunai</p>
-          <h3>Rp 16.000.000</h3>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-1">Estimasi Pengembalian Dana COP</p>
-          <h3>Rp 4.000.000</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 col-sm-12">
-          <p class="data-title mb-2">KTP Pemegang Polis</p>
-          <button
-            class="btn btn-primary-outlined"
-            @click.prevent="addInvestment()"
-          >
-            Unggah KTP
-          </button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 col-sm-12">
-          <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
-          <button
-            class="btn btn-primary-outlined"
-            @click.prevent="addInvestment()"
-          >
-            Unggah Foto Selfie dengan KTP
-          </button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-1">Alasan</p>
-          <v-select
-            :items="problems_type"
-            dense
-            outlined
-            class="investment_type_option"
-          ></v-select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-8 col-sm-12">
-          <div class="message-bar d-flex rounded-lg">
-            <info-icon class="ic-primary mr-2 "></info-icon>
-            Transaksi ini akan dikenakan biaya
+          <p class="data-title mb-2">Rider Name wanted (PR BUAT MULTIPLE)</p>
+          <div>
+            <v-select
+              :items="[]"
+              v-model="form.product_id"
+              label="Pilih Rider Name"
+            ></v-select>
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Rider Plan</p>
+          <div>
+            <v-select
+              :items="[]"
+              v-model="form.plan"
+              label="Pilih Rider Plan"
+            ></v-select>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-12">
-          <button
-            class="btn btn-primary btn-save float-right"
-            @click.prevent="save()"
+          <p class="data-title mb-2">Pilih Tertanggung untuk Rider Baru</p>
+          <v-data-table
+            :headers="riderNameTable.headers"
+            :items="
+              my_policy.policyWithCode.coverages.length > 0
+                ? my_policy.policyWithCode.coverages
+                : []
+            "
+            v-model="form.party_ids"
+            mobile-breakpoint="480"
+            show-select
+            hide-default-footer
           >
-            <save-icon></save-icon> Simpan
+            <template #header.data-table-select> Pilihan </template>
+          </v-data-table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nama Depan</p>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              v-model="form.insured.first_name"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nama Belakang</p>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              v-model="form.insured.last_name"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Kartu Identitas</p>
+          <div class="form-input">
+            <v-select
+              :items="[]"
+              v-model="form.insured.identity_type"
+            ></v-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nomor Identitas</p>
+          <div class="form-input">
+            <input
+              type="number"
+              class="form-control"
+              v-model="form.insured.identity"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Hubungan dengan Tertanggung Utama</p>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              v-model="form.insured.relation"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Jenis Kelamin</p>
+          <div class="form-input">
+            <v-select :items="[]" v-model="form.insured.gender"></v-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Tanggal Lahir</p>
+          <div class="form-input">
+            <input
+              type="date"
+              class="form-control"
+              v-model="form.insured.birth_date"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Tempat lahir</p>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              v-model="form.insured.birth_place"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Kewarganegaraan</p>
+          <div class="form-input">
+            <v-select :items="[]" v-model="form.insured.nationality"></v-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Status Perkawinan</p>
+          <div class="form-input">
+            <v-select
+              :items="[]"
+              v-model="form.insured.marital_status"
+            ></v-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Tinggi Badan (cm)</p>
+          <div class="form-input">
+            <input
+              type="number"
+              class="form-control"
+              v-model="form.insured.height"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Berat Badan (kg)</p>
+          <div class="form-input">
+            <input
+              type="number"
+              class="form-control"
+              v-model="form.insured.weight"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Apakah Merokok</p>
+          <div class="form-input">
+            <v-select :items="[]" v-model="form.insured.is_smoker"></v-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Profesi</p>
+          <div class="form-input">
+            <v-select :items="[]" v-model="form.insured.occupation"></v-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nomor Hp</p>
+          <div class="form-input">
+            <input
+              type="number"
+              class="form-control"
+              v-model="form.insured.phone_number"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <p class="data-title mb-2">Isi Formulir Kesehatan</p>
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showModalHealth = !showModalHealth"
+          >
+            Formulir Kesehatan
           </button>
         </div>
       </div>
-    </div> -->
-    <NuxtChild />
-    <ModalMessage
-      :message="modal.message"
-      :show="modal.show"
-      :button="modal.button"
-      @closeModal="modal.show = false"
+
+      <div class="row">
+        <div class="col-12">
+          <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+          <input
+            type="file"
+            ref="inputSelfieKtpImage"
+            v-show="false"
+            accept="image/*"
+            @change="(e) => addSelfieKtpImage(e)"
+          />
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="$refs.inputSelfieKtpImage.click()"
+          >
+            Unggah
+          </button>
+          <small>{{ form.ktp_selfie_attachment.name }}</small>
+          <br />
+          <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+        </div>
+      </div>
+
+      <ValidationMessage :validation-message="validationMessage" />
+
+      <div class="row">
+        <div class="col-12">
+          <button class="btn btn-primary btn-save float-right" type="submit">
+            Simpan
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <HealthDeclarationFormModal
+      :show="showModalHealth"
+      :default-value="form.healthQuestionnaire"
+      @submit="form.healthQuestionnaire = $event"
+      @close="showModalHealth = false"
     />
   </div>
 </template>
+
 <script>
-import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
-  name: "add-investment-fund",
-  components: {
-    SaveIcon,
-    InfoIcon,
-  },
-  mounted() {
-    console.log($nuxt.$route.name);
-    if ($nuxt.$route.name != "transaction-submission-add-rider-product") {
-      this.showMe = false;
-    } else {
-      this.showMe = true;
-      // this.current_header_title = this.default_header_title;
-    }
-  },
-  beforeMount() {
-    this.modal.show = true;
-    this.modal.message = "Menu yang anda pilih masih dalam tahap pengembangan";
-  },
+  name: "add-rider-product",
   data() {
     return {
-      modal: {
-        message: "",
-        show: false,
-        button: {
-          text: "Tutup",
-          redirect_link: "/transaction/submission",
-          redirect_type: "spa",
+      form: {
+        product_id: null,
+        plan: null,
+        insured: {
+          first_name: null,
+          last_name: null,
+          identity_type: null,
+          identity: null,
+          relation: null,
+          gender: null,
+          birth_date: null,
+          birth_place: null,
+          nationality: null,
+          marital_status: null,
+          height: null,
+          weight: null,
+          is_smoker: false,
+          occupation: null,
+          phone_number: null,
         },
+        party_ids: [],
+        health_questionnaire: [],
+        ktp_selfie_attachment: {},
       },
-      showMe: true,
-      selected: [],
-      items: ["321321321 - BNI", "321321322 - BNI"],
-      problems_type: [
-        "Masalah Pengiriman Polis",
-        "Manfaat Produk",
-        "Penjelasan yang kurang jelas oleh pemasar",
-        "Alasan Keluarga",
-        "Kesulitan Finansial / Butuh Uang",
-        "Untuk SPAJ Baru",
-        "Memiliki Banyak Asuransi",
-      ],
-      data_investments: [
-        {
-          id: 1,
-          fund_name: "DANA MAKSIMA",
-          topup_value: 1000000,
-        },
-        {
-          id: 2,
-          fund_name: "DANA CEMERLANG",
-          topup_value: 2000000,
-        },
-        {
-          id: "",
-          fund_name: "Total",
-          topup_value: 3000000,
-        },
-      ],
+      showModalHealth: false,
+      validationMessage: [],
       table: {
         headers: [
           {
-            text: "Pilihan",
-            align: "start",
-            value: "id",
-          },
-          {
             text: "Nama Produk",
-            value: "product_name",
+            value: "productName",
           },
           {
             text: "Uang Pertangguhan/Benefit",
-            value: "benefit",
-          },
-          {
-            text: "Premium",
-            value: "premium",
-          },
-          {
-            text: "Masa mulai produk",
-            value: "start_date",
+            value: "nextPremium.sumAssured",
           },
           {
             text: "Nama Tertanggung",
-            value: "insured_name",
-          },
-          {
-            text: "Status Produk",
-            value: "product_status",
-          },
-          {
-            text: "Akhir masa produk",
-            value: "end_date",
+            value: "lifeInsured.insured.person",
           },
           {
             text: "Jenis produk",
-            value: "product_type",
-          },
-        ],
-        items: [
-          {
-            id: 1,
-            product_name: "BNI LIFE MULTI PLAN PRO",
-            benefit: 100,
-            premium: 10000,
-            start_date: "07/06/2021",
-            insured_name: "JOHN DAN",
-            product_status: "Active",
-            end_date: "07/06/2045",
-            product_type: "Utama",
-            selected: false,
-          },
-          {
-            id: 2,
-            product_name: "BNI LIFE MULTI PLAN PRO",
-            benefit: 100,
-            premium: 10000,
-            start_date: "07/06/2021",
-            insured_name: "JOHN DAN",
-            product_status: "Active",
-            end_date: "07/06/2045",
-            product_type: "Tambahan",
-            selected: true,
-          },
-          {
-            id: 3,
-            product_name: "BNI LIFE MULTI PLAN PRO",
-            benefit: 100,
-            premium: 10000,
-            start_date: "07/06/2021",
-            insured_name: "JOHN DAN",
-            product_status: "Active",
-            end_date: "07/06/2045",
-            product_type: "Tambahan",
-            selected: false,
+            value: "productType",
           },
         ],
       },
-      page: 1,
-      pageCount: 0,
-      itemsPerPage: 5,
-      limitPages: [5, 10, 15, 20, 25],
+      riderNameTable: {
+        headers: [
+          {
+            text: "Nama Tertanggung",
+            value: "",
+          },
+        ],
+      },
     };
   },
-  watch: {
-    $route(to, from) {
-      if (to.name != "transaction-submission-add-investment-fund") {
-        this.showMe = false;
-      } else {
-        this.showMe = true;
-      }
+  computed: {
+    myPolicy() {
+      return this.$store.getters["submission_transaction/getMyPolicy"];
     },
   },
   methods: {
-    save: async function () {
-      // patch to action
-      this.$router.push({ path: "./add-rider-product/resume" });
+    validate() {
+      this.validationMessage = [];
+      if (!this.form.health_questionnaire.length) {
+        this.validationMessage.push("Health Questionnaire diperlukan");
+      }
+      if (!this.form.ktp_selfie_attachment.name) {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+      }
     },
-    addInvestment: async function () {},
-    selectData: function (item) {
-      console.log(item);
+    save: async function () {
+      this.validate();
+      if (this.validationMessage.length) return false;
+      this.$store.commit(
+        "submission_transaction/rider_product/setAddRider",
+        this.form
+      );
+      this.$router.push({
+        path: "/transaction/submission/add-rider-product/resume",
+      });
     },
   },
 };
 </script>
-<style lang="scss" scoped>
-.investment_type_option {
-  max-width: 250px !important;
-}
-.btn-add-investment {
-  max-width: 250px !important;
-}
-.btn-save {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 150px;
-  justify-content: center;
-}
-</style>

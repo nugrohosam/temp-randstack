@@ -125,8 +125,8 @@
 
     <HealthDeclarationFormModal
       :show="showModalHealth"
-      :default-value="form.healthQuestionaire"
-      @submit="form.healthQuestionaire = $event"
+      :default-value="form.healthQuestionnaire"
+      @submit="form.healthQuestionnaire = $event"
       @close="showModalHealth = false"
     />
   </div>
@@ -138,7 +138,7 @@ export default {
   data() {
     return {
       form: {
-        healthQuestionaire: [],
+        healthQuestionnaire: [],
         virtualAccountNumber: null,
         transferAttachment: {},
         ktpSelfieAttachment: {},
@@ -164,8 +164,8 @@ export default {
   methods: {
     validate() {
       this.validationMessage = [];
-      if (!this.form.healthQuestionaire.length) {
-        this.validationMessage.push("Health Questionaire diperlukan");
+      if (!this.form.healthQuestionnaire.length) {
+        this.validationMessage.push("Health Questionnaire diperlukan");
       }
       if (!this.form.virtualAccountNumber) {
         this.validationMessage.push("Virtual Account Number diperlukan");

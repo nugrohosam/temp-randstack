@@ -4,8 +4,8 @@ import actions from "./actions";
 import mutations from "./mutations";
 import PolicyLoanModules from "./policy_loan";
 import PolicyRecoveryModules from "./policy_recovery";
-import WithdrawPartialInvestmentFund from "./withdraw_partial_investment_fund";
 import CutiPremiModules from "./cuti_premi";
+import RiderProduct from "./rider_product";
 
 const SubmissionTransactionModules = {
   namespaced: true,
@@ -14,6 +14,7 @@ const SubmissionTransactionModules = {
     policy_recovery: PolicyRecoveryModules,
     cuti_premi: CutiPremiModules,
     withdraw_partial_investment_fund: WithdrawPartialInvestmentFund,
+    rider_product: RiderProduct,
   },
   state,
   getters,
