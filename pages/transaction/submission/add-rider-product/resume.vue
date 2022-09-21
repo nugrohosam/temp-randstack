@@ -122,7 +122,7 @@
         <p class="data-title mb-2">Kartu Identitas</p>
         <div class="form-input">
           <v-select
-            :items="[]"
+            :items="options.identityType"
             v-model="getAddRider.insured.identity_type"
             disabled
           ></v-select>
@@ -153,7 +153,10 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Jenis Kelamin</p>
         <div class="form-input">
-          <v-select :items="[]" v-model="getAddRider.insured.gender"></v-select>
+          <v-select
+            :items="options.gender"
+            v-model="getAddRider.insured.gender"
+          ></v-select>
         </div>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -182,7 +185,7 @@
         <p class="data-title mb-2">Kewarganegaraan</p>
         <div class="form-input">
           <v-select
-            :items="[]"
+            :items="options.nationality"
             v-model="getAddRider.insured.nationality"
             disabled
           ></v-select>
@@ -192,7 +195,7 @@
         <p class="data-title mb-2">Status Perkawinan</p>
         <div class="form-input">
           <v-select
-            :items="[]"
+            :items="options.martialStatus"
             v-model="getAddRider.insured.marital_status"
             disabled
           ></v-select>
@@ -224,7 +227,10 @@
         <p class="data-title mb-2">Apakah Merokok</p>
         <div class="form-input">
           <v-select
-            :items="[]"
+            :items="[
+              { text: 'Iya', value: true },
+              { text: 'Tidak', value: false },
+            ]"
             v-model="getAddRider.insured.is_smoker"
             disabled
           ></v-select>
@@ -303,10 +309,26 @@
 </template>
 
 <script>
+import {
+  relationType,
+  gender,
+  identityType,
+  nationality,
+  martialStatus,
+} from "@/utils/constant";
+
+import { option } from "yargs";
 export default {
   name: "add-rider-product-resume",
   data() {
     return {
+      options: {
+        relationType,
+        gender,
+        identityType,
+        nationality,
+        martialStatus,
+      },
       showModalHealth: false,
       image_preview: {
         src: "",

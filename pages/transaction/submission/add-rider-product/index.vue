@@ -123,7 +123,7 @@
           <p class="data-title mb-2">Kartu Identitas</p>
           <div class="form-input">
             <v-select
-              :items="[]"
+              :items="options.identityType"
               v-model="form.insured.identity_type"
             ></v-select>
           </div>
@@ -141,6 +141,10 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Hubungan dengan Tertanggung Utama</p>
           <div class="form-input">
+            <v-select
+              :items="options.relationType"
+              v-model="form.insured.relation"
+            ></v-select>
             <input
               type="text"
               class="form-control"
@@ -151,7 +155,10 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Jenis Kelamin</p>
           <div class="form-input">
-            <v-select :items="[]" v-model="form.insured.gender"></v-select>
+            <v-select
+              :items="options.gender"
+              v-model="form.insured.gender"
+            ></v-select>
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -177,14 +184,17 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Kewarganegaraan</p>
           <div class="form-input">
-            <v-select :items="[]" v-model="form.insured.nationality"></v-select>
+            <v-select
+              :items="nationality"
+              v-model="form.insured.nationality"
+            ></v-select>
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Status Perkawinan</p>
           <div class="form-input">
             <v-select
-              :items="[]"
+              :items="options.martialStatus"
               v-model="form.insured.marital_status"
             ></v-select>
           </div>
@@ -212,7 +222,13 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Apakah Merokok</p>
           <div class="form-input">
-            <v-select :items="[]" v-model="form.insured.is_smoker"></v-select>
+            <v-select
+              :items="[
+                { text: 'Iya', value: true },
+                { text: 'Tidak', value: false },
+              ]"
+              v-model="form.insured.is_smoker"
+            ></v-select>
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -288,10 +304,25 @@
 </template>
 
 <script>
+import {
+  relationType,
+  gender,
+  identityType,
+  nationality,
+  martialStatus,
+} from "@/utils/constant";
+
 export default {
   name: "add-rider-product",
   data() {
     return {
+      options: {
+        relationType,
+        gender,
+        identityType,
+        nationality,
+        martialStatus,
+      },
       form: {
         product_id: null,
         plan: null,
