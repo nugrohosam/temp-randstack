@@ -179,7 +179,7 @@ export default {
       if (result && result.success == true) {
         let transactionIds = result.data.transactionIds;
         this.$router.push({
-          path: "/transaction/submission/withdraw-partial-investment-fund/thankyou?transaction_ids=" + transactionIds.join(","),
+          path: "./thankyou?transaction_ids=" + transactionIds.join(","),
         });
       }
     },
