@@ -32,7 +32,7 @@ const actions = {
       { root: true }
     );
     this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
-    const response = await this.$axios
+    return await this.$axios
       .$post("/api/v1/transaction-proposal/change-premium-holiday", form)
       .then((response) => {
         dispatch(

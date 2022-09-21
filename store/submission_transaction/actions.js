@@ -80,7 +80,7 @@ export default {
 
   async getSurrenderReasons({ rootGetters }, data) {
     this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
-    const response = await this.$axios
+    return await this.$axios
       .$get("/api/v1/reasons")
       .then((response) => {
         if (response.success) {
@@ -91,8 +91,7 @@ export default {
       .catch((error) => {
         return error;
       });
-    return response;
-  },
+      },
 
   async uploadKtpFile({ rootGetters, commit, dispatch }, data) {
     let formData = new FormData();
@@ -104,7 +103,7 @@ export default {
       { show: true, message: "Mohon Tunggu..." },
       { root: true }
     );
-    const response = await this.$axios
+    return await this.$axios
       .$post("/api/v1/attachments", formData)
       .then((response) => {
         if (response.success) {
@@ -124,8 +123,7 @@ export default {
       .catch((error) => {
         return error;
       });
-    return response;
-  },
+      },
 
   async uploadSelieKtpFile({ rootGetters, commit, dispatch }, data) {
     let formData = new FormData();
@@ -137,7 +135,7 @@ export default {
       { show: true, message: "Mohon Tunggu..." },
       { root: true }
     );
-    const response = await this.$axios
+    return await this.$axios
       .$post("/api/v1/attachments", formData)
       .then((response) => {
         if (response.success) {
@@ -157,8 +155,7 @@ export default {
       .catch((error) => {
         return error;
       });
-    return response;
-  },
+      },
 
   async submitTransactionProposalSurrender(
     { rootGetters, getters, dispatch, commit },
@@ -190,7 +187,7 @@ export default {
       { show: true, message: "Mohon Tunggu..." },
       { root: true }
     );
-    const response = await this.$axios
+    return await this.$axios
       // .$post("/api/v1/transaction-proposal/surrender", form)
       .$post("/api/v1/transaction-proposal/surrender", form)
       .then((response) => {
@@ -209,12 +206,11 @@ export default {
       .catch((error) => {
         return error;
       });
-    return response;
-  },
+      },
 
   async getProducts({ rootGetters, dispatch, commit }, data) {
     this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
-    const response = await this.$axios
+    return await this.$axios
       .$get(`/api/v1/products?ids=${data}`)
       .then((response) => {
         if (response.success) {
@@ -225,8 +221,7 @@ export default {
       .catch((error) => {
         return error;
       });
-    return response;
-  },
+      },
 
   async saveCustomerinfo({ rootGetters, dispatch, commit }, data) {
     commit("setCustomerInfoChanged", data);
@@ -297,7 +292,7 @@ export default {
       { show: true, message: "Mohon Tunggu..." },
       { root: true }
     );
-    const response = await this.$axios
+    return await this.$axios
       .$post("/api/v1/policy/change-customer-info", form)
       .then((response) => {
         dispatch(
@@ -312,8 +307,7 @@ export default {
         return error;
       });
 
-    return response;
-  },
+      },
 
   async uploadAttachment({ rootGetters, dispatch }, data) {
     let formData = new FormData();
@@ -326,7 +320,7 @@ export default {
       { show: true, message: "Mohon Tunggu..." },
       { root: true }
     );
-    const response = await this.$axios
+    return await this.$axios
       .$post("/api/v1/attachments", formData)
       .then((response) => {
         if (response.success) {
@@ -342,6 +336,5 @@ export default {
       .catch((error) => {
         return error;
       });
-    return response;
-  },
+      },
 };
