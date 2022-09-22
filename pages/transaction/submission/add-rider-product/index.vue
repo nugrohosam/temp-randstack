@@ -86,6 +86,7 @@
           <p class="data-title mb-2">Rider Plan</p>
           <div >
             <v-select
+              class="rider_plan_type_option"
               :items="riderOptionPlan(rider_choosen)"
               v-model="form.plan"
               label="Pilih Rider Plan"
@@ -284,6 +285,27 @@
           >
             Formulir Kesehatan
           </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-sm-12">
+          <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+          <input
+            type="file"
+            ref="inputSelfieKtpImage"
+            v-show="false"
+            accept="image/*"
+            @change="addSelfieKtpImage"
+          />
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="$refs.inputSelfieKtpImage.click()"
+          >
+            Unggah
+          </button>
+          <small>{{ selfieKtpFileName }}</small>
+          <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
         </div>
       </div>
     </div>
@@ -498,12 +520,23 @@ export default {
       this.isLoading = false;
     },
     save: async function () {
+      this.validate();
       // patch to action
       this.$router.push({ path: "./add-rider-product/resume" });
     },
-    addrider: async function () {},
-    selectData: function (item) {
-      console.log(item);
+    validate: async function () {
+      this.validationMessage = [];
+      if (this.selfieKtpFileName == "") {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+      }
+    },
+    addSelfieKtpImage: function (e) {
+      this.form.ktp_selfie = e.target.files[0];
+      if (e.target.files[0]) {
+        this.$store.dispatch("submission_transaction/uploadSelieKtpFile", {
+          file: e.target.files[0],
+        });
+      }
     },
   },
 };

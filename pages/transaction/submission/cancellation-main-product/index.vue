@@ -208,6 +208,7 @@
         <p style="color: black">Mohon Tunggu...</p>
       </div>
     </template>
+
     <NuxtChild />
     <ModalMessage
       :message="modal.message"
@@ -451,17 +452,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.investment_type_option {
-  max-width: 250px !important;
-}
-.btn-add-investment {
-  max-width: 250px !important;
-}
-.btn-save {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 150px;
-  justify-content: center;
-}
+  .investment_type_option {
+    max-width: 250px !important;
+  }
+  .btn-add-investment {
+    max-width: 250px !important;
+  }
+  .btn-save {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 150px;
+    justify-content: center;
+  }
 </style>
