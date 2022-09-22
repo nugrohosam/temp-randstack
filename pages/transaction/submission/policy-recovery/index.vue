@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Due Date Premium</p>
-          <p class="data-value">xx/xx/xxxx</p>
+          <p class="data-value">{{ dueDatePremi }}</p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Informasi Virtual Account</p>
@@ -34,7 +34,7 @@
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tagihan Premi</p>
-          <p class="data-value">Rp xx.xxx.xxx</p>
+          <p class="data-value">{{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(billReinstate) }}</p>
         </div>
       </div>
 
@@ -151,6 +151,12 @@ export default {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
+    myPolicyLoanInfo() {
+      return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
+    },
+    billReinstate() {
+      return this.myPolicyLoanInfo?.financialInfo?.fullReinstate || 0
+    },
     virtualAccountOptions() {
       if (this.myPolicy.policyWithCode.virtualAccountInfo.length) {
         return this.myPolicy.policyWithCode.virtualAccountInfo.map((item) => ({
@@ -160,6 +166,9 @@ export default {
       }
       return [];
     },
+    dueDatePremi() {
+      return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.coverageExtend?.dueDate || '-'
+    }
   },
   methods: {
     validate() {

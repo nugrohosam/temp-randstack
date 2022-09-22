@@ -1,7 +1,7 @@
 export default {
   async signIn({ dispatch, commit }, data) {
     dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
-    const response = await this.$axios
+    return await this.$axios
       .$post("/api/v1/auth/login", {
         policy_number: data.policy_number,
         phone_number: data.phone_number,
@@ -18,8 +18,7 @@ export default {
         return error;
       });
 
-    return response;
-  },
+      },
 
   async check({ dispatch, commit }) {
     return new Promise((resolve, reject) => {
@@ -36,7 +35,7 @@ export default {
 
   async sendMail({getters}){
     this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
-    const response = await this.$axios
+    return await this.$axios
       .$get("/test/v1/email/login-attempt?email=blabla@rojak.com")
       .then((response) => {
         return response;
@@ -44,11 +43,10 @@ export default {
       .catch((error) => {
         return error;
       });
-    return response;
-  },
+      },
   async signOut({getters,commit}) {
     this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
-    const response = await this.$axios
+    return await this.$axios
       .$post("/api/v1/auth/logout")
       .then((response) => {
         if(response.success){
@@ -76,7 +74,7 @@ export default {
     // dispatch('sendMail')
     dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
     this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
-    const response = await this.$axios
+    return await this.$axios
       .$post("/api/v1/auth/otp/check", data)
       .then((response) => {
         dispatch('toggleOverlayLoading', {show: false}, {root:true});
@@ -93,15 +91,14 @@ export default {
     // force Auth
     // commit("setAuth");
     // localStorage.auth = JSON.stringify(getters.getAuthUser);
-    return response;
-  },
+      },
 
   async otpResend({ getters, commit, dispatch }) {
     const user = getters.getAuthUser;
     this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
     let endpoint = "/api/v1/auth/login";
     dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
-    const response = await this.$axios
+    return await this.$axios
       .$post(endpoint, {
         policy_number: user.policyNumber,
         phone_number: user.phoneNumber,
@@ -117,15 +114,14 @@ export default {
 
     // force Auth
     // commit("setAuth");
-    return response;
-  },
+      },
 
   async otpReset({ getters, commit, dispatch }) {
     const user = getters.getAuthUser;
     this.$axios.setToken(getters.getAuthAccessToken, 'Bearer');
     let endpoint = "/api/v1/auth/otp/reset";
     dispatch('toggleOverlayLoading', { show: true, message: 'Mohon Tunggu...' }, {root:true});
-    const response = await this.$axios
+    return await this.$axios
       .$post(endpoint, {
         identity: user.phoneNumber
       })
@@ -139,7 +135,6 @@ export default {
 
     // force Auth
     // commit("setAuth");
-    return response;
-  },
+      },
 
 };

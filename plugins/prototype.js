@@ -208,7 +208,7 @@ export default function ({ app, $axios }, inject) {
   };
 
   const getBank = async (bankCode) => {
-    const response = await this.$axios
+    return await this.$axios
       .$get(`/api/v1/banks/${bankCode}`)
       .then((response) => {
         return response;
@@ -216,8 +216,7 @@ export default function ({ app, $axios }, inject) {
       .catch((error) => {
         return error;
       });
-    return response;
-  };
+    };
 
   const getBankName = async (bankCode) => {
     try {
@@ -233,7 +232,7 @@ export default function ({ app, $axios }, inject) {
   };
 
   const getProvinces = async (page = "", search = "") => {
-    const response = await $axios
+    return await $axios
       .$get(`/api/v1/address/provinces?page=${page}&search=${search}`)
       .then((response) => {
         return response;
@@ -241,11 +240,10 @@ export default function ({ app, $axios }, inject) {
       .catch((error) => {
         return error;
       });
-    return response;
-  };
+    };
 
   const findProvince = async (id) => {
-    const response = await $axios
+    return await $axios
       .$get(`/api/v1/address/provinces/${id}`)
       .then((response) => {
         return response;
@@ -253,11 +251,10 @@ export default function ({ app, $axios }, inject) {
       .catch((error) => {
         return error;
       });
-    return response;
-  };
+    };
 
   const findCity = async (id) => {
-    const response = await $axios
+    return await $axios
       .$get(`/api/v1/address/cities/${id}`)
       .then((response) => {
         return response;
@@ -265,11 +262,10 @@ export default function ({ app, $axios }, inject) {
       .catch((error) => {
         return error;
       });
-    return response;
-  };
+    };
 
   const findDistrict = async (id) => {
-    const response = await $axios
+    return await $axios
       .$get(`/api/v1/address/districts/${id}`)
       .then((response) => {
         return response;
@@ -277,11 +273,10 @@ export default function ({ app, $axios }, inject) {
       .catch((error) => {
         return error;
       });
-    return response;
-  };
+    };
 
   const findVillage = async (id) => {
-    const response = await $axios
+    return await $axios
       .$get(`/api/v1/address/villages/${id}`)
       .then((response) => {
         return response;
@@ -289,11 +284,10 @@ export default function ({ app, $axios }, inject) {
       .catch((error) => {
         return error;
       });
-    return response;
-  };
+    };
 
   const getCities = async (page = "", province_id = "", search = "") => {
-    const response = await $axios
+    return await $axios
       .$get(
         `/api/v1/address/cities?page=${page}&search=${search}&province_id=${province_id}`
       )
@@ -303,11 +297,10 @@ export default function ({ app, $axios }, inject) {
       .catch((error) => {
         return error;
       });
-    return response;
-  };
+    };
 
   const getDistricts = async (page = "", city_id = "", search = "") => {
-    const response = await $axios
+    return await $axios
       .$get(
         `/api/v1/address/districts?page=${page}&search=${search}&city_id=${city_id}`
       )
@@ -317,11 +310,10 @@ export default function ({ app, $axios }, inject) {
       .catch((error) => {
         return error;
       });
-    return response;
-  };
+    };
 
   const getVillages = async (page = "", district_id = "", search = "") => {
-    const response = await $axios
+    return await $axios
       .$get(
         `/api/v1/address/villages?page=${page}&search=${search}&district_id=${district_id}`
       )
@@ -331,8 +323,7 @@ export default function ({ app, $axios }, inject) {
       .catch((error) => {
         return error;
       });
-    return response;
-  };
+    };
 
   const formatDate = (date) => {
     if (date) {

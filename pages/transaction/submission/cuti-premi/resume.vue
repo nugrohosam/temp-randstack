@@ -18,26 +18,22 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Jatuh Tempo</p>
-        <p class="data-value">xx/xx/xxxx</p>
+        <p class="data-value">{{ dueDatePremi }}</p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Status Cuti Premi</p>
-        <p class="data-value">XX</p>
+        <p class="data-value">{{ myPolicy.policyWithCode.holidayIndi == "Y" ? "Ya" : "Tidak"}}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Masa Akhir Pembayaran Premi</p>
-        <p class="data-value">xx/xx/xxxx</p>
+        <p class="data-value">{{ paidupDatePremi }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Masa Wajib Bayar Premi</p>
-        <p class="data-value">xx/xx/xxxx</p>
-      </div>
-      <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Masa Wajib Bayar Premi</p>
-        <p class="data-value">xx/xx/xxxx</p>
+        <p class="data-value">{{ myPolicy.policyWithCode.lockedPeriodDate }}</p>
       </div>
     </div>
 
@@ -109,6 +105,12 @@ export default {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
+    paidupDatePremi() {
+      return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.paidupDate || '-'
+    },
+    dueDatePremi() {
+      return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.coverageExtend?.dueDate || '-'
+    },
     getCutiPremi() {
       return this.$store.getters[
         "submission_transaction/cuti_premi/getCutiPremi"
@@ -131,7 +133,7 @@ export default {
       if (result && result.success == true) {
         let transactionIds = result.data.transactionIds;
         this.$router.push({
-          path: "/transaction/submission/cuti-premi/thankyou?transaction_ids=" + transactionIds.join(","),
+          path: "./thankyou?transaction_ids=" + transactionIds.join(","),
         });
       }
     },

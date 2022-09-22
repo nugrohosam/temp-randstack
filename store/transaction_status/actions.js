@@ -9,7 +9,7 @@ export default {
   async getTransactionStatusList({ dispatch, commit, rootGetters }) {
     // axios
     this.$axios.setToken(rootGetters['auth/getAuthAccessToken'], 'Bearer');
-    const response = await this.$axios
+    return await this.$axios
       .$get(`/api/v1/transaction-proposal?order=desc&order_by=created_at`)
       .then((response) => {
         if (response.success) {
@@ -20,8 +20,7 @@ export default {
       .catch((error) => {
         return error;
       });
-    return response;
-  },
+    },
 
   async getTransactionStatusDetail({dispatch, commit}, data){
     dispatch('toggleOverlayLoading',{show: true},{root: true});
