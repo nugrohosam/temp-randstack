@@ -18,12 +18,16 @@ export default {
       });
 
     dispatch("getMyPolicyLoanInfo");
-
+    
     const responseData = response.data;
     const productIds = responseData.policyWithCode.coverages.map(
       (product) => product.productId
-    );
+      );
     let products = [];
+
+    const productPriio = responseData.policyWithCode.coverages.find((product) => product.masterProduct == null);
+    dispatch("getProductRiders", productPriio.productId);
+
     products = await this.$axios
       .$get(`/api/v1/products?ids=${productIds.join()}`)
       .then((response) => {
@@ -38,9 +42,11 @@ export default {
 
     responseData.policyWithCode.coverages =
       responseData.policyWithCode.coverages.map((v, i) => {
+
         const foundProduct = products.filter(
           (product) => product.id == v.productId
         )[0];
+
         v.productName = foundProduct.name;
 
         const level = v.currentPremium.benefitLevel ?? null;
@@ -69,7 +75,6 @@ export default {
       .then((response) => {
         if (response.success) {
           commit("setMyPolicyLoanInfo", response.data);
-          // return response.data;
         }
         return response;
       })
@@ -216,12 +221,12 @@ export default {
         if (response.success) {
           return response.data;
         }
-        // return response;
+        return response;
       })
       .catch((error) => {
         return error;
       });
-      },
+    },
 
   async getProductRiders({ rootGetters, dispatch, commit }, id) {
     this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
@@ -229,9 +234,9 @@ export default {
       .$get(`/api/v1/product-riders/${id}`)
       .then((response) => {
         if (response.success) {
-          return response.data;
+          commit("setProductRiders", response.data);
         }
-        // return response;
+        return response;
       })
       .catch((error) => {
         return error;

@@ -1,6 +1,7 @@
 export default {
   menus_search: "",
   myPolicy: null,
+  riders: null,
   myPolicyLoanInfo: null,
   menus: [
     {
