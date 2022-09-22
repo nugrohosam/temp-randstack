@@ -228,6 +228,22 @@ export default {
     return response;
   },
 
+  async getProductRiders({ rootGetters, dispatch, commit }, id) {
+    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+    const response = await this.$axios
+      .$get(`/api/v1/product-riders/${id}`)
+      .then((response) => {
+        if (response.success) {
+          return response.data;
+        }
+        // return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+    return response;
+  },
+
   async saveCustomerinfo({ rootGetters, dispatch, commit }, data) {
     commit("setCustomerInfoChanged", data);
   },
