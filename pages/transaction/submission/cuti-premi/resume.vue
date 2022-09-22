@@ -76,6 +76,9 @@
       </div>
     </div>
 
+      <ValidationMessage :validation-message="validationMessage" />
+
+
     <div class="row">
       <div class="col-12">
         <button class="btn btn-primary btn-save float-right" @click="submit">

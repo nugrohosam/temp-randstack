@@ -80,7 +80,7 @@
     <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
-          v-model="ex4"
+          v-model="accepted"
           color="orange darken-3"
           value="orange darken-3"
           hide-details
@@ -91,6 +91,7 @@
         </p>
       </div>
     </div>
+    
     <div class="row">
       <div class="col-lg-12 col-sm-12">
         <div class="message-bar rounded-lg">
@@ -105,6 +106,9 @@
         </div>
       </div>
     </div>
+    
+    <ValidationMessage :validation-message="validationMessage" />
+
     <div class="row">
       <div class="col-12">
         <button
@@ -157,10 +161,12 @@ export default {
   },
   data() {
     return {
+      validationMessage: [],
       image_preview: {
         src: "",
         show: false,
       },
+      accepted: false,
     };
   },
   methods: {
@@ -172,15 +178,24 @@ export default {
         this.image_preview.show = true;
       }
     },
+    validate: async function () {
+      this.validationMessage = [];
+      if (!this.accepted) {
+        this.validationMessage.push("Setujui transaksi untuk memproses pengajuan");
+      }
+    },
     async submit() {
-      const result = await this.$store.dispatch(
-        "submission_transaction/withdraw_partial_investment_fund/withdrawPartialInvestmentFund"
-      );
-      if (result && result.success == true) {
-        let transactionIds = result.data.transactionIds;
-        this.$router.push({
-          path: "./thankyou?transaction_ids=" + transactionIds.join(","),
-        });
+      this.validate();
+      if (this.validationMessage.length <= 0) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/withdraw_partial_investment_fund/withdrawPartialInvestmentFund"
+        );
+        if (result && result.success == true) {
+          let transactionIds = result.data.transactionIds;
+          this.$router.push({
+            path: "./thankyou?transaction_ids=" + transactionIds.join(","),
+          });
+        }
       }
     },
   },

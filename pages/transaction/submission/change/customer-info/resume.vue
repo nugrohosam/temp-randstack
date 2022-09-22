@@ -249,6 +249,9 @@
           </p>
         </div>
       </div>
+
+      <ValidationMessage :validation-message="validationMessage" />
+
       <div class="row">
         <div class="col-12">
           <button
@@ -285,6 +288,7 @@ export default {
   data() {
     return {
       accepted: false,
+      validationMessage: [],
       image_preview: {
         src: "",
         show: false,
@@ -311,18 +315,26 @@ export default {
     },
   },
   methods: {
-    submit: async function () {
-      // patch to action
-      const result = await this.$store.dispatch(
-        "submission_transaction/updateCustomerInformation"
-      );
-      if (result.success == true) {
-        let transactionIds = result.data.transactionIds;
-        this.$router.push({
-          path: "./thankyou?transaction_ids=" + transactionIds.join(","),
-        });
-      } else {
-        // check validation error
+    validate: async function () {
+      this.validationMessage = [];
+      if (!this.accepted) {
+        this.validationMessage.push("Setujui transaksi untuk memproses pengajuan");
+      }
+    },
+    async submit() {
+      this.validate();
+      if (this.validationMessage.length <= 0) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/updateCustomerInformation"
+        );
+        if (result.success == true) {
+          let transactionIds = result.data.transactionIds;
+          this.$router.push({
+            path: "./thankyou?transaction_ids=" + transactionIds.join(","),
+          });
+        } else {
+          // check validation error
+        }
       }
     },
     showSelfieKtpPreview: function () {

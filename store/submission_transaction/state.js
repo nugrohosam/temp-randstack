@@ -47,7 +47,7 @@ export default {
       icon: "ic_percent.svg",
     },
     {
-      active: true,
+      active: false,
       hidden: false,
       name: "Penambahan Produk Rider",
       link: "/transaction/submission/add-rider-product",

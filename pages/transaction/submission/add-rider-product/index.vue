@@ -522,7 +522,7 @@ export default {
     save: async function () {
       this.validate();
       // patch to action
-      this.$router.push({ path: "./add-rider-product/resume" });
+      this.$router.push({ path: "./resume" });
     },
     validate: async function () {
       this.validationMessage = [];

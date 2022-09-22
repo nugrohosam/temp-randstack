@@ -118,14 +118,14 @@
             class="btn btn-primary-outlined w-100 btn-add-investment"
             @click.prevent="addInvestment()"
           >
-            {{ $indexOfObject(form.items, investment_choosen, v => v.applyUnits) == -1 ? "Tambah" : "Ubah"}}
+            {{ $indexOfObject(form.items, investment_choosen, v => v.applyUnits) == -1 ? "Ubah" : "Tambah"}}
           </button>
         </div>
       </div>
       <br />
       <v-divider></v-divider>
       <br />
-      <div class="row">
+      <div class="row" v-if="form.items.length > 0">
         <div class="col-lg-6 col-sm-12">
           <p class="data-value">Data Pengajuan Penarikan Sebagian Dana Investasi</p>
           <v-simple-table>
@@ -193,6 +193,9 @@
           </ValidationProvider>
         </div>
       </div>
+
+      <ValidationMessage :validation-message="validationMessage" />
+
       <div class="row">
         <div class="col-12">
           <button
@@ -231,6 +234,7 @@ export default {
   },
   data() {
     return {
+      validationMessage: [],
       form: {
         items: [],
         ktpSelfieAttachment: {},
@@ -355,14 +359,25 @@ export default {
         };
       }
     },
+    validate: async function () {
+      this.validationMessage = [];
+      if (this.selfieKtpFileName == "") {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+      }
+      if (this.form.items.length < 1) {
+        this.validationMessage.push("Pilih dana investasi untuk penarikan dana");
+      }
+    },
     save: async function () {
-      // patch to action
-      this.$store.commit(
-        "submission_transaction/withdraw_partial_investment_fund/setWithdrawPartialInvestmentFund",
-        this.form
-      );
-      // patch to action
-      this.$router.push({ path: "./withdraw-partial-investment-fund/resume" });
+      this.validate();
+      if (this.validationMessage.length <= 0) {
+        this.$store.commit(
+          "submission_transaction/withdraw_partial_investment_fund/setWithdrawPartialInvestmentFund",
+          this.form
+        );
+        // patch to action
+        this.$router.push({ path: "./withdraw-partial-investment-fund/resume" });
+      }
     }
   },
 };

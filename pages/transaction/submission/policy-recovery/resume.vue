@@ -148,6 +148,9 @@
       </div>
     </div>
 
+      <ValidationMessage :validation-message="validationMessage" />
+
+
     <div class="row">
       <div class="col-12">
         <button
@@ -179,6 +182,8 @@ export default {
   name: "policy-recovery-resume",
   data() {
     return {
+      accepted: false,
+      validationMessage: [],
       showModalHealth: false,
       image_preview: {
         src: "",
@@ -231,15 +236,24 @@ export default {
         this.image_preview.show = true;
       }
     },
+    validate: async function () {
+      this.validationMessage = [];
+      if (!this.accepted) {
+        this.validationMessage.push("Setujui transaksi untuk memproses pengajuan");
+      }
+    },
     async submit() {
-      const result = await this.$store.dispatch(
-        "submission_transaction/policy_recovery/reinstatement"
-      );
-      if (result && result.success == true) {
-        let transactionIds = result.data.transactionIds;
-        this.$router.push({
-          path: "./thankyou?transaction_ids=" + transactionIds.join(","),
-        });
+      this.validate();
+      if (this.validationMessage.length <= 0) {
+          const result = await this.$store.dispatch(
+          "submission_transaction/policy_recovery/reinstatement"
+        );
+        if (result && result.success == true) {
+          let transactionIds = result.data.transactionIds;
+          this.$router.push({
+            path: "./thankyou?transaction_ids=" + transactionIds.join(","),
+          });
+        }
       }
     },
   },

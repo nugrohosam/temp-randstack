@@ -11,17 +11,17 @@
           </div>
         </template>
         <!-- <template v-else>
-              <div class="page-body" style="display:flex; flex-direction:column; justify-content: center; align-items:center;">
-                <v-progress-circular
-                  indeterminate
-                  size="64"
-                  color="#F15921"
-                  width="7"
-                >
-                </v-progress-circular>
-                <p style="color: black">Mohon Tunggu...</p>
-              </div>
-            </template> -->
+          <div class="page-body" style="display:flex; flex-direction:column; justify-content: center; align-items:center;">
+            <v-progress-circular
+              indeterminate
+              size="64"
+              color="#F15921"
+              width="7"
+            >
+            </v-progress-circular>
+            <p style="color: black">Mohon Tunggu...</p>
+          </div>
+        </template> -->
       </div>
     </div>
   </div>

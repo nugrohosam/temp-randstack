@@ -6,6 +6,7 @@ import PolicyLoanModules from "./policy_loan";
 import PolicyRecoveryModules from "./policy_recovery";
 import CutiPremiModules from "./cuti_premi";
 import RiderProduct from "./rider_product";
+import WithdrawPartialInvestmentFund from "./withdraw_partial_investment_fund";
 
 const SubmissionTransactionModules = {
   namespaced: true,
