@@ -16,6 +16,13 @@
         </div>
       </div>
       <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Existing Rider Information</p>
+          <p class="data-value">XX</p>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-12">
           <p class="data-title mb-1">
             Jenis dan Dana Investasi yang dimiliki
@@ -123,21 +130,215 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Rider Plan</p>
+          <div>
+            <v-select
+              :items="[]"
+              v-model="form.plan"
+              label="Pilih Rider Plan"
+            ></v-select>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-12">
-          <button
-            class="btn btn-primary btn-save float-right"
-            @click.prevent="save()"
+          <p class="data-title mb-2">Pilih Tertanggung untuk Rider Baru</p>
+          <v-data-table
+            :headers="riderNameTable.headers"
+            :items="
+              my_policy.policyWithCode.coverages.length > 0
+                ? my_policy.policyWithCode.coverages
+                : []
+            "
+            v-model="form.party_ids"
+            mobile-breakpoint="480"
+            show-select
+            hide-default-footer
           >
-            <save-icon></save-icon> Simpan
+            <template #header.data-table-select> Pilihan </template>
+          </v-data-table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nama Depan</p>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              v-model="form.insured.first_name"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nama Belakang</p>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              v-model="form.insured.last_name"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Kartu Identitas</p>
+          <div class="form-input">
+            <v-select
+              :items="options.identityType"
+              v-model="form.insured.identity_type"
+            ></v-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nomor Identitas</p>
+          <div class="form-input">
+            <input
+              type="number"
+              class="form-control"
+              v-model="form.insured.identity"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Hubungan dengan Tertanggung Utama</p>
+          <div class="form-input">
+            <v-select
+              :items="options.relationType"
+              v-model="form.insured.relation"
+            ></v-select>
+            <input
+              type="text"
+              class="form-control"
+              v-model="form.insured.relation"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Jenis Kelamin</p>
+          <div class="form-input">
+            <v-select
+              :items="options.gender"
+              v-model="form.insured.gender"
+            ></v-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Tanggal Lahir</p>
+          <div class="form-input">
+            <input
+              type="date"
+              class="form-control"
+              v-model="form.insured.birth_date"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Tempat lahir</p>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              v-model="form.insured.birth_place"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Kewarganegaraan</p>
+          <div class="form-input">
+            <v-select
+              :items="nationality"
+              v-model="form.insured.nationality"
+            ></v-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Status Perkawinan</p>
+          <div class="form-input">
+            <v-select
+              :items="options.martialStatus"
+              v-model="form.insured.marital_status"
+            ></v-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Tinggi Badan (cm)</p>
+          <div class="form-input">
+            <input
+              type="number"
+              class="form-control"
+              v-model="form.insured.height"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Berat Badan (kg)</p>
+          <div class="form-input">
+            <input
+              type="number"
+              class="form-control"
+              v-model="form.insured.weight"
+            />
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Apakah Merokok</p>
+          <div class="form-input">
+            <v-select
+              :items="[
+                { text: 'Iya', value: true },
+                { text: 'Tidak', value: false },
+              ]"
+              v-model="form.insured.is_smoker"
+            ></v-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Profesi</p>
+          <div class="form-input">
+            <v-select :items="[]" v-model="form.insured.occupation"></v-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nomor Hp</p>
+          <div class="form-input">
+            <input
+              type="number"
+              class="form-control"
+              v-model="form.insured.phone_number"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <p class="data-title mb-2">Isi Formulir Kesehatan</p>
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showModalHealth = !showModalHealth"
+          >
+            Formulir Kesehatan
           </button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
-import { SaveIcon, InfoIcon } from "vue-feather-icons";
+import {
+  relationType,
+  gender,
+  identityType,
+  nationality,
+  martialStatus,
+} from "@/utils/constant";
+
 export default {
   name: "add-rider",
   components: {
@@ -170,14 +371,12 @@ export default {
   },
   data() {
     return {
-      modal: {
-        message: "",
-        show: false,
-        button: {
-          text: "Tutup",
-          redirect_link: "/transaction/submission",
-          redirect_type: "spa",
-        },
+      options: {
+        relationType,
+        gender,
+        identityType,
+        nationality,
+        martialStatus,
       },
       my_policy: null,
       showMe: true,
@@ -245,11 +444,21 @@ export default {
         ktp_selfie: null,
         reason_selected: null,
       },
-      page: 1,
-      pageCount: 0,
-      itemsPerPage: 5,
-      limitPages: [5, 10, 15, 20, 25],
     };
+  },
+  computed: {
+    selfieKtpFileName() {
+      return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
+    },
+    myPolicyLoanInfo() {
+      return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
+    },
+    myPolicy() {
+      return this.$store.getters["submission_transaction/getMyPolicy"];
+    },
+  },
+  mounted() {
+
   },
   watch: {
     $route(to, from) {
@@ -309,20 +518,20 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.rider_type_option {
-  max-width: 250px !important;
-}
-.rider_plan_type_option {
-  max-width: 250px !important;
-}
-.btn-add-rider {
-  max-width: 250px !important;
-}
-.btn-save {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 150px;
-  justify-content: center;
-}
+  .rider_type_option {
+    max-width: 250px !important;
+  }
+  .rider_plan_type_option {
+    max-width: 250px !important;
+  }
+  .btn-add-rider {
+    max-width: 250px !important;
+  }
+  .btn-save {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 150px;
+    justify-content: center;
+  }
 </style>

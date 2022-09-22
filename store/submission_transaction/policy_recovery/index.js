@@ -21,7 +21,7 @@ const actions = {
   async reinstatement({ state, rootGetters, dispatch }) {
     console.log("state.policyRecovery ", state.policyRecovery);
     const form = {
-      health_questionnaire: state.policyRecovery.healthQuestionaire,
+      health_questionnaire: state.policyRecovery.healthQuestionnaire,
       virtual_account_number: state.policyRecovery.virtualAccountNumber,
       transfer_attachment: state.policyRecovery.transferAttachment.name,
       ktp_selfie_attachment: state.policyRecovery.ktpSelfieAttachment.name,

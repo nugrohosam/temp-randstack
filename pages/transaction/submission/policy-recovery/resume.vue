@@ -167,7 +167,7 @@
 
     <HealthDeclarationFormModal
       :show="showModalHealth"
-      :default-value="getPolicyRecovery.healthQuestionaire"
+      :default-value="getPolicyRecovery.healthQuestionnaire"
       preview
       @close="showModalHealth = false"
     />
