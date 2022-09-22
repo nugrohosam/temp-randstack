@@ -67,79 +67,40 @@
           </template>
         </div>
       </div>
+
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-1">Rider yang Dipilih *</p>
           <v-select
-            :items="rider_types"
+            :items="riderOptions"
             v-model="rider_choosen"
             dense
             outlined
             class="rider_type_option"
           ></v-select>
         </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-1">Rider Plan *</p>
-          <v-select
-            :items="rider_plan_types"
-            v-model="rider_plan_choosen"
-            dense
-            outlined
-            class="rider_type_option"
-          ></v-select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 col-sm-12">
-          <p class="data-title mb-2">KTP Pemegang Polis</p>
-          <button
-            class="btn btn-primary-outlined"
-            @click.prevent="addrider()"
-          >
-            Unggah KTP
-          </button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 col-sm-12">
-          <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
-          <button
-            class="btn btn-primary-outlined"
-            @click.prevent="addrider()"
-          >
-            Unggah Foto Selfie dengan KTP
-          </button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-1">Alasan</p>
-          <v-select
-            :items="problems_type"
-            dense
-            outlined
-            class="rider_type_option"
-          ></v-select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-8 col-sm-12">
-          <div class="message-bar d-flex rounded-lg">
-            <info-icon class="ic-primary mr-2 "></info-icon>
-            Transaksi ini akan dikenakan biaya
-          </div>
-        </div>
       </div>
 
       <div class="row">
-        <div class="col-lg-4 col-sm-6">
+        <div class="col-lg-4 col-sm-6" v-if="isHavePlans(rider_choosen)">
           <p class="data-title mb-2">Rider Plan</p>
-          <div>
+          <div >
             <v-select
-              :items="[]"
+              class="rider_plan_type_option"
+              :items="riderOptionPlan(rider_choosen)"
               v-model="form.plan"
               label="Pilih Rider Plan"
             ></v-select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6" v-else>
+          <p class="data-title mb-2">Uang Pertanggungan</p>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                v-model="form.sum_assured"
+              />
           </div>
         </div>
       </div>
@@ -164,7 +125,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" v-if="isHaveHealth(rider_choosen)">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Depan</p>
           <div class="form-input">
@@ -315,7 +276,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" v-if="isHaveHealth(rider_choosen)">
         <div class="col-12">
           <p class="data-title mb-2">Isi Formulir Kesehatan</p>
           <button
@@ -326,7 +287,35 @@
           </button>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-sm-12">
+          <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+          <input
+            type="file"
+            ref="inputSelfieKtpImage"
+            v-show="false"
+            accept="image/*"
+            @change="addSelfieKtpImage"
+          />
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="$refs.inputSelfieKtpImage.click()"
+          >
+            Unggah
+          </button>
+          <small>{{ selfieKtpFileName }}</small>
+          <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+        </div>
+      </div>
     </div>
+
+  <HealthDeclarationFormModal
+    :show="showModalHealth"
+    :default-value="form.healthQuestionnaire"
+    @submit="form.healthQuestionnaire = $event"
+    @close="showModalHealth = false"
+  />
   </div>
 </template>
 
@@ -378,23 +367,12 @@ export default {
         nationality,
         martialStatus,
       },
+      showModalHealth: false,
       my_policy: null,
       showMe: true,
       selected: [],
-      rider_types: [],
       rider_choosen: [],
-      rider_plan_types: [],
       rider_plan_choosen: [],
-      items: ["321321321 - BNI", "321321322 - BNI"],
-      problems_type: [
-        "Masalah Pengiriman Polis",
-        "Manfaat Produk",
-        "Penjelasan yang kurang jelas oleh pemasar",
-        "Alasan Keluarga",
-        "Kesulitan Finansial / Butuh Uang",
-        "Untuk SPAJ Baru",
-        "Memiliki Banyak Asuransi",
-      ],
       data_riders: [
         {
           id: 1,
@@ -426,23 +404,35 @@ export default {
             value: "nextPremium.sumAssured",
           },
           {
-            text: "Masa mulai produk",
-            value: "issueDate",
-          },
-          {
-            text: "Nama Tertanggung",
-            value: "lifeInsured.insured.person",
-          },
-          {
             text: "Jenis produk",
             value: "productType",
           },
         ]
       },
       form: {
-        coverages_selected: [],
+        plan: null,
+        sum_assured: null,
+        healthQuestionnaire: [],
+        party_ids: null,
+        insured: {
+          first_name: null,
+          last_name: null,
+          identity_type: null,
+          identity: null,
+          relation: null,
+          relation: null,
+          gender: null,
+          birth_date: null,
+          birth_place: null,
+          nationality: null,
+          marital_status: null,
+          height: null,
+          weight: null,
+          is_smoker: null,
+          occupation: null,
+          phone_number: null,
+        },
         ktp_selfie: null,
-        reason_selected: null,
       },
     };
   },
@@ -456,9 +446,18 @@ export default {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
-  },
-  mounted() {
-
+    allowedRiders() {
+      return this.$store.getters["submission_transaction/getProductRiders"];
+    },
+    riderOptions() {
+      const listRider = this.allowedRiders
+      return listRider.map(v => 
+        ({
+          value: v.productId,
+          text: v.productName,
+        })
+      )
+    },
   },
   watch: {
     $route(to, from) {
@@ -470,6 +469,20 @@ export default {
     },
   },
   methods: {
+    isHavePlans(productId) {
+      return this.allowedRiders.find(v => v.productId == productId).benefitLevelInfoVOList.length > 0;
+    },
+    riderOptionPlan(productId) {
+      return this.allowedRiders.find(v => v.productId == productId).benefitLevelInfoVOList.map(v => v.levelDescrp);
+    },
+    isHavePlans(productId) {
+      return this.allowedRiders.find(v => v.productId == productId).benefitLevelInfoVOList.length > 0;
+    },
+    isHaveHealth(productId) {
+      const isHealthTrue = this.allowedRiders.find(v => v.productId == productId).health;
+      this.form.insured = isHealthTrue ? this.form.insured : null;
+      return isHealthTrue;
+    },
     getData: async function () {
       let data = this.myPolicy;
       let productIds = [],
@@ -507,12 +520,23 @@ export default {
       this.isLoading = false;
     },
     save: async function () {
+      this.validate();
       // patch to action
       this.$router.push({ path: "./add-rider-product/resume" });
     },
-    addrider: async function () {},
-    selectData: function (item) {
-      console.log(item);
+    validate: async function () {
+      this.validationMessage = [];
+      if (this.selfieKtpFileName == "") {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+      }
+    },
+    addSelfieKtpImage: function (e) {
+      this.form.ktp_selfie = e.target.files[0];
+      if (e.target.files[0]) {
+        this.$store.dispatch("submission_transaction/uploadSelieKtpFile", {
+          file: e.target.files[0],
+        });
+      }
     },
   },
 };

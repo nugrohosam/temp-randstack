@@ -16,6 +16,9 @@ export default {
   getMyPolicy: (state) => {
     return state.myPolicy;
   },
+  getProductRiders: (state) => {
+    return state.riders;
+  },
   getMyPolicyLoanInfo: (state) => {
     return state.myPolicyLoanInfo;
   },
