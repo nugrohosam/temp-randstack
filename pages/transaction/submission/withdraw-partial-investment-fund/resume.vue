@@ -17,7 +17,13 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nomor Rekening Saat Ini</p>
         <p class="data-value">
-          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-" }}
+          {{
+            this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+            this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+              ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0]
+                  .bankAccount
+              : "-"
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -25,19 +31,31 @@
           Nama Pemilik Nomor Rekening Manfaat Saat Ini
         </p>
         <p class="data-value">
-          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-" }}
+          {{
+            this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+            this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+              ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName
+              : "-"
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Bank Saat Ini</p>
         <p class="data-value">
-          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}
+          {{
+            this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+            this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+              ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName
+              : "-"
+          }}
         </p>
       </div>
     </div>
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-value">Data Pengajuan Penarikan Sebagian Dana Investasi</p>
+        <p class="data-value">
+          Data Pengajuan Penarikan Sebagian Dana Investasi
+        </p>
         <v-simple-table>
           <template v-slot:default>
             <thead>
@@ -48,13 +66,30 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, i) in getWithdrawPartialInvestmentFund.items" :key="item.fundCode">
+              <tr
+                v-for="(item, i) in getWithdrawPartialInvestmentFund.items"
+                :key="item.fundCode"
+              >
                 <td>{{ i + 1 }}</td>
                 <td>
                   <b>{{ $fundName(item.fundCode) }}</b>
                 </td>
                 <td>
-                  <b>{{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.applyAmount) }}</b>
+                  <b
+                    >{{ $currencyName(myPolicy.policyWithCode.currency) }}
+                    {{ $convertCurrency(item.applyAmount) }}</b
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>Total</td>
+                <td>
+                  {{
+                    `${$currencyName(
+                      myPolicy.policyWithCode.currency
+                    )} ${$convertCurrency(sumTopUpValue)}`
+                  }}
                 </td>
               </tr>
             </tbody>
@@ -91,7 +126,7 @@
         </p>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col-lg-12 col-sm-12">
         <div class="message-bar rounded-lg">
@@ -106,7 +141,7 @@
         </div>
       </div>
     </div>
-    
+
     <ValidationMessage :validation-message="validationMessage" />
 
     <div class="row">
@@ -149,6 +184,11 @@ export default {
         "submission_transaction/withdraw_partial_investment_fund/getWithdrawPartialInvestmentFund"
       ];
     },
+    sumTopUpValue() {
+      return this.getWithdrawPartialInvestmentFund.items
+        .map((item) => item.applyAmount)
+        .reduce((a, b) => a + b, 0);
+    },
   },
   beforeMount() {
     this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
@@ -181,7 +221,9 @@ export default {
     validate: async function () {
       this.validationMessage = [];
       if (!this.accepted) {
-        this.validationMessage.push("Setujui transaksi untuk memproses pengajuan");
+        this.validationMessage.push(
+          "Setujui transaksi untuk memproses pengajuan"
+        );
       }
     },
     async submit() {

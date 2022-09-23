@@ -108,6 +108,13 @@
                   )
                 }}
               </template>
+              <template v-slot:body.append>
+                <tr>
+                  <td colspan="5"></td>
+                  <td>Total</td>
+                  <td>{{ $convertCurrency(sumTotalInvestemnt) }}</td>
+                </tr>
+              </template>
             </v-data-table>
           </template>
         </div>
@@ -337,6 +344,18 @@ export default {
     },
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
+    },
+    sumTotalInvestemnt() {
+      return this.contractInvests(this.myPolicy.policyWithCode.coverages)
+        .map(
+          (item) =>
+            item.accumUnits *
+            this.getFundPrices(
+              this.myPolicy.policyWithCode.fundPrices,
+              item.fundCode
+            )
+        )
+        .reduce((a, b) => a + b, 0);
     },
   },
   methods: {
