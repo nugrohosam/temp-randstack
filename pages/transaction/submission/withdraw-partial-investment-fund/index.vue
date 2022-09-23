@@ -17,7 +17,13 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title">Nomor Rekening Saat Ini</p>
           <p class="data-value">
-            {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-" }}
+            {{
+              this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+              this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+                ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0]
+                    .bankAccount
+                : "-"
+            }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -25,13 +31,25 @@
             Nama Pemilik Nomor Rekening Manfaat Saat Ini
           </p>
           <p class="data-value">
-            {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-" }}
+            {{
+              this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+              this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+                ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0]
+                    .accoName
+                : "-"
+            }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Bank Saat Ini</p>
           <p class="data-value">
-            {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}
+            {{
+              this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+              this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+                ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0]
+                    .bankName
+                : "-"
+            }}
           </p>
         </div>
       </div>
@@ -106,9 +124,14 @@
           ></v-select>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-1">Nilai Penarikan </p>
+          <p class="data-title mb-1">Nilai Penarikan</p>
           <div class="form-input">
-            <input type="text" class="outlined" v-model="amount" placeholder="200.xxx.xxx" />
+            <input
+              type="text"
+              class="outlined"
+              v-model="amount"
+              placeholder="200.xxx.xxx"
+            />
           </div>
         </div>
       </div>
@@ -118,7 +141,11 @@
             class="btn btn-primary-outlined w-100 btn-add-investment"
             @click.prevent="addInvestment()"
           >
-            {{ $indexOfObject(form.items, investment_choosen, v => v.applyUnits) == -1 ? "Ubah" : "Tambah"}}
+            {{
+              !!form.items.find((item) => item.fundCode === investment_choosen)
+                ? "Ubah"
+                : "Tambah"
+            }}
           </button>
         </div>
       </div>
@@ -127,7 +154,9 @@
       <br />
       <div class="row" v-if="form.items.length > 0">
         <div class="col-lg-6 col-sm-12">
-          <p class="data-value">Data Pengajuan Penarikan Sebagian Dana Investasi</p>
+          <p class="data-value">
+            Data Pengajuan Penarikan Sebagian Dana Investasi
+          </p>
           <v-simple-table>
             <template v-slot:default>
               <thead>
@@ -145,7 +174,10 @@
                     <b>{{ $fundName(item.fundCode) }}</b>
                   </td>
                   <td>
-                    <b>{{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(item.applyAmount) }}</b>
+                    <b
+                      >{{ $currencyName(myPolicy.policyWithCode.currency) }}
+                      {{ $convertCurrency(item.applyAmount) }}</b
+                    >
                   </td>
                   <td>
                     <button
@@ -280,15 +312,18 @@ export default {
     },
   },
   mounted() {
-      var contractInvest = [];
+    var contractInvest = [];
 
-      this.myPolicy.policyWithCode.coverages.forEach((item) => {
-        if (item.contractInvests.length > 0) {
-          contractInvest = contractInvest.concat(item.contractInvests);
-        }
-      });
+    this.myPolicy.policyWithCode.coverages.forEach((item) => {
+      if (item.contractInvests.length > 0) {
+        contractInvest = contractInvest.concat(item.contractInvests);
+      }
+    });
 
-    this.investment_types = contractInvest.map(item => ({value: item.fundCode, text: this.$fundName(item.fundCode)}))
+    this.investment_types = contractInvest.map((item) => ({
+      value: item.fundCode,
+      text: this.$fundName(item.fundCode),
+    }));
   },
   computed: {
     selfieKtpFileName() {
@@ -314,25 +349,29 @@ export default {
       return contractInvest;
     },
     removeInvestment(i) {
-      this.form.items.splice(i, 1)
+      this.form.items.splice(i, 1);
     },
     addInvestment() {
-      const indexObject = this.$indexOfObject(this.form.items, this.investment_choosen, v => v.fundCode)
+      const indexObject = this.$indexOfObject(
+        this.form.items,
+        this.investment_choosen,
+        (v) => v.fundCode
+      );
       if (indexObject != -1) {
         this.form.items.splice(indexObject, 1, {
           applyAmount: this.amount,
           applyUnits: null,
-          fundCode: this.investment_choosen
-        })
+          fundCode: this.investment_choosen,
+        });
       } else {
         this.form.items.push({
           applyAmount: this.amount,
           applyUnits: null,
-          fundCode: this.investment_choosen
-        })
+          fundCode: this.investment_choosen,
+        });
       }
 
-      this.amount = null; 
+      this.amount = null;
       this.investment_choosen = null;
     },
     getFundPrices(fundPrices = [], fundCode) {
@@ -365,7 +404,9 @@ export default {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
       }
       if (this.form.items.length < 1) {
-        this.validationMessage.push("Pilih dana investasi untuk penarikan dana");
+        this.validationMessage.push(
+          "Pilih dana investasi untuk penarikan dana"
+        );
       }
     },
     save: async function () {
@@ -376,24 +417,26 @@ export default {
           this.form
         );
         // patch to action
-        this.$router.push({ path: "./withdraw-partial-investment-fund/resume" });
+        this.$router.push({
+          path: "./withdraw-partial-investment-fund/resume",
+        });
       }
-    }
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
-  .investment_type_option {
-    max-width: 250px !important;
-  }
-  .btn-add-investment {
-    max-width: 250px !important;
-  }
-  .btn-save {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 150px;
-    justify-content: center;
-  }
+.investment_type_option {
+  max-width: 250px !important;
+}
+.btn-add-investment {
+  max-width: 250px !important;
+}
+.btn-save {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 150px;
+  justify-content: center;
+}
 </style>
