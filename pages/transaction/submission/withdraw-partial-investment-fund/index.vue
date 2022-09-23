@@ -121,6 +121,7 @@
             dense
             outlined
             class="investment_type_option"
+            @input="validationAddInvesment = []"
           ></v-select>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -135,6 +136,7 @@
           </div>
         </div>
       </div>
+      <ValidationMessage :validation-message="validationAddInvesment" />
       <div class="row">
         <div class="col-4">
           <button
@@ -267,6 +269,7 @@ export default {
   data() {
     return {
       validationMessage: [],
+      validationAddInvesment: [],
       form: {
         items: [],
         ktpSelfieAttachment: {},
@@ -352,6 +355,12 @@ export default {
       this.form.items.splice(i, 1);
     },
     addInvestment() {
+      this.validationAddInvesment = [];
+      if (!this.investment_choosen) {
+        this.validationAddInvesment.push("Jenis Dana Investasi perlu dipilih");
+        return false;
+      }
+
       const indexObject = this.$indexOfObject(
         this.form.items,
         this.investment_choosen,
