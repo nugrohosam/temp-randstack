@@ -409,7 +409,7 @@ export default {
     },
     validate: async function () {
       this.validationMessage = [];
-      if (this.selfieKtpFileName == "") {
+      if (!this.form.ktpSelfieAttachment.name) {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
       }
       if (this.form.items.length < 1) {
