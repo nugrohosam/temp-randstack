@@ -437,7 +437,7 @@
                         </p>
                         <div class="form-input" v-show="phoneEditable">
                           <input
-                            type="text"
+                            type="number"
                             class="outlined"
                             placeholder="021xxx..."
                             v-model="selectedPolicy.person.homeTel"
