@@ -86,6 +86,21 @@
     </div>
 
     <div class="row">
+      <div class="col-lg-6 col-sm-12 d-flex">
+        <v-checkbox
+          v-model="accepted"
+          color="orange darken-3"
+          value="orange darken-3"
+          hide-details
+        ></v-checkbox>
+        <p>
+          Saya menyetujui transaksi dan kebenaran data yang disampaikan.
+          <a class="bni-primary no-border" href="">Baca selengkapnya</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-lg-12 col-sm-12">
         <div class="message-bar rounded-lg">
           <p><b>Perhatian !</b></p>
