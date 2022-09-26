@@ -81,10 +81,10 @@
       </div>
     </div>
 
-    <!-- <div class="row">
+    <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
-          v-model="term1"
+          v-model="accepted"
           color="orange darken-3"
           value="orange darken-3"
           hide-details
@@ -96,7 +96,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
           v-model="term2"
