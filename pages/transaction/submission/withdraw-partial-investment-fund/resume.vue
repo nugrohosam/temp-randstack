@@ -186,7 +186,7 @@ export default {
     },
     sumTopUpValue() {
       return this.getWithdrawPartialInvestmentFund.items
-        .map((item) => item.applyAmount)
+        .map((item) => parseFloat(item.applyAmount))
         .reduce((a, b) => a + b, 0);
     },
   },
