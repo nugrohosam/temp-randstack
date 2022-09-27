@@ -264,6 +264,7 @@
               <v-radio-group
                 v-model="healthQuestionnaire[6].pemegang_polis"
                 row
+                @change="healthQuestionnaire[6].pemegang_polis_number = null"
               >
                 <v-radio
                   v-for="(item, index) in radios"
@@ -272,6 +273,12 @@
                   v-bind="item"
                 ></v-radio>
               </v-radio-group>
+              <input
+                v-if="healthQuestionnaire[6].pemegang_polis"
+                class="outlined form-control"
+                type="number"
+                v-model="healthQuestionnaire[6].pemegang_polis_number"
+              />
             </div>
           </div>
         </div>
@@ -574,7 +581,7 @@ export default {
         },
         {
           pertanyaan:
-            "Pernah dianjurkan oleh dokter atau pernah melakukan pemeriksaan kesehatan diagnostic, check up seperti : sinar X, MRI, USG, CT scan,",
+            "Pernah dianjurkan oleh dokter atau pernah melakukan pemeriksaan kesehatan diagnostic, check up seperti : sinar X, MRI, USG, CT scan, ECG,treadmill, darah, urine atau pemeriksaan laboratorium lainnya?",
           tertanggung: null,
           pemegang_polis: null,
         },
@@ -587,10 +594,11 @@ export default {
           pertanyaan: "Merokok? Jika YA, berapa batang dalam sehari?",
           tertanggung: null,
           pemegang_polis: null,
+          tertanggung_number: null,
           pemegang_polis_number: null,
         },
         {
-          pertanyaan: "Menggunakan obat bius/narkotik ,obat/zat terlarang?",
+          pertanyaan: "Menggunakan obat bius/narkotik,obat/zat terlarang?",
           tertanggung: null,
           pemegang_polis: null,
         },
@@ -599,6 +607,7 @@ export default {
           tertanggung: null,
           pemegang_polis: null,
           tertanggung_number: null,
+          pemegang_polis_number: null,
         },
         {
           pertanyaan:
@@ -614,7 +623,7 @@ export default {
         },
         {
           pertanyaan:
-            "Apakah Tertanggung pernah atau bermaksud ikut dalam olah raga yang beresiko tinggi ? (Balap mobil, terjun payung, dll) /",
+            "Apakah Tertanggung pernah atau bermaksud ikut dalam olah raga yang beresiko tinggi ? (Balap mobil, terjun payung, dll)",
           tertanggung: null,
           pemegang_polis: null,
         },
@@ -622,6 +631,7 @@ export default {
           pertanyaan: "Apakah Anda sekarang sedang hamil? bila YA, bulan",
           tertanggung: null,
           pemegang_polis: null,
+          tertanggung_number: null,
           pemegang_polis_number: null,
         },
         {
