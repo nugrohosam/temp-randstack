@@ -156,7 +156,7 @@
 <script>
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
-  components: { ValidationMessage },
+  
   name: "cancellation-main-product-resume",
   components: {
     SaveIcon,

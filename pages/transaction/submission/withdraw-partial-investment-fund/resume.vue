@@ -166,7 +166,7 @@ import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
   name: "add-investment-fund-resume",
   components: {
-    ValidationMessage,
+    
     SaveIcon,
     InfoIcon,
   },

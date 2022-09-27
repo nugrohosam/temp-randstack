@@ -131,7 +131,6 @@
 
 <script>
 export default {
-  components: { ValidationMessage },
   name: "request-policy-loan",
   data() {
     return {
@@ -141,6 +140,12 @@ export default {
       },
       validationMessage: [],
     };
+  },
+  beforeMount() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: "Pengajuan Pinjaman Polis",
+      sub: "Pengajuan Pinjaman Nilai Tunai Polis",
+    });
   },
   computed: {
     myPolicy() {

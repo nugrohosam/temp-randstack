@@ -275,7 +275,7 @@ import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
   name: "investment-fund-allocation-change",
   components: {
-    ValidationMessage,
+    
     SaveIcon,
     InfoIcon,
   },

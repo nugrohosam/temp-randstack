@@ -134,7 +134,7 @@
 
 <script>
 export default {
-  components: { ValidationMessage },
+  
   name: "cuti-premi",
   data() {
     return {

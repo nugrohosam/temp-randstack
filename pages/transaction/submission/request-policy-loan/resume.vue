@@ -138,7 +138,7 @@
 
 <script>
 export default {
-  components: { ValidationMessage },
+  
   name: "request-policy-loan-resume",
   data() {
     return {

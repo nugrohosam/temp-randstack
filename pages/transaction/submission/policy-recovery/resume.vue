@@ -178,7 +178,7 @@
 
 <script>
 export default {
-  components: { ValidationMessage },
+  
   name: "policy-recovery-resume",
   data() {
     return {
