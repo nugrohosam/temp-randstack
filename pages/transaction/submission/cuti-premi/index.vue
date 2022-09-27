@@ -162,10 +162,10 @@ export default {
       return this.myPolicy.policyWithCode.holidayIndi === "N";
     },
     dueDatePremi() {
-      return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.coverageExtend?.dueDate || '-'
+      return this.myPolicy.policyWithCode.coverages?.find(x => x?.masterProduct == null || false)?.coverageExtend?.dueDate || '-'
     },
     paidupDatePremi() {
-      return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.paidupDate || '-'
+      return this.myPolicy.policyWithCode.coverages?.find(x => x?.masterProduct == null || false)?.paidupDate || '-'
     },
     startFixHolidayDate() {
       const dueDate = new Date(this.dueDatePremi)
