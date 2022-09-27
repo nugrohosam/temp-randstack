@@ -342,7 +342,7 @@ export default {
     var contractInvest = [];
 
     this.myPolicy.policyWithCode.coverages.forEach((item) => {
-      if (item.contractInvests.length > 0) {
+      if (item?.contractInvests.length > 0) {
         contractInvest = contractInvest.concat(item.contractInvests);
       }
     });
@@ -380,7 +380,7 @@ export default {
       var contractInvest = [];
 
       coverages.forEach((item) => {
-        if (item.contractInvests.length > 0) {
+        if (item?.contractInvests.length > 0) {
           contractInvest = contractInvest.concat(item.contractInvests);
         }
       });

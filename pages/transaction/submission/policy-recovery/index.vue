@@ -167,7 +167,7 @@ export default {
       return [];
     },
     dueDatePremi() {
-      return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.coverageExtend?.dueDate || '-'
+      return this.myPolicy.policyWithCode.coverages?.find(x => x?.masterProduct == null || false)?.coverageExtend?.dueDate || '-'
     }
   },
   methods: {
