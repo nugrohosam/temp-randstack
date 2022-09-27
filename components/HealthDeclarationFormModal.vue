@@ -166,6 +166,7 @@
                 berikut:
               </h4>
             </div>
+
             <div class="col-12 col-md-8">
               <ul>
                 <li>{{ healthQuestionnaire[4].pertanyaan }}</li>
@@ -173,7 +174,11 @@
             </div>
             <div class="col-12 col-md-2">
               <p class="d-block d-md-none">Tertanggung</p>
-              <v-radio-group v-model="healthQuestionnaire[4].tertanggung" row>
+              <v-radio-group
+                v-model="healthQuestionnaire[4].tertanggung"
+                row
+                @change="healthQuestionnaire[4].tertanggung_number = null"
+              >
                 <v-radio
                   v-for="(item, index) in radios"
                   :key="index"
@@ -181,6 +186,12 @@
                   v-bind="item"
                 ></v-radio>
               </v-radio-group>
+              <input
+                v-if="healthQuestionnaire[4].tertanggung"
+                class="outlined form-control"
+                type="number"
+                v-model="healthQuestionnaire[4].tertanggung_number"
+              />
             </div>
             <div class="col-12 col-md-2">
               <p class="d-block d-md-none">Pemegang Polis</p>
@@ -203,6 +214,7 @@
                 v-model="healthQuestionnaire[4].pemegang_polis_number"
               />
             </div>
+
             <div class="col-12 col-md-8">
               <ul>
                 <li>{{ healthQuestionnaire[5].pertanyaan }}</li>
@@ -233,6 +245,7 @@
                 ></v-radio>
               </v-radio-group>
             </div>
+
             <div class="col-12 col-md-8">
               <ul>
                 <li>{{ healthQuestionnaire[6].pertanyaan }}</li>
@@ -385,7 +398,11 @@
           </div>
           <div class="col-12 col-md-2">
             <p class="d-block d-md-none">Tertanggung</p>
-            <v-radio-group v-model="healthQuestionnaire[10].tertanggung" row>
+            <v-radio-group
+              v-model="healthQuestionnaire[10].tertanggung"
+              row
+              @change="healthQuestionnaire[10].tertanggung_number = null"
+            >
               <v-radio
                 v-for="(item, index) in radios"
                 :key="index"
@@ -393,6 +410,12 @@
                 v-bind="item"
               ></v-radio>
             </v-radio-group>
+            <input
+              v-if="healthQuestionnaire[10].tertanggung"
+              class="outlined form-control"
+              type="number"
+              v-model="healthQuestionnaire[10].tertanggung_number"
+            />
           </div>
           <div class="col-12 col-md-2">
             <p class="d-block d-md-none">Pemegang Polis</p>
