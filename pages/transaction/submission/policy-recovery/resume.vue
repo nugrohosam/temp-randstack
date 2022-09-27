@@ -84,7 +84,7 @@
     <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
-          v-model="accepted"
+          v-model="accepted1"
           color="orange darken-3"
           value="orange darken-3"
           hide-details
@@ -96,10 +96,10 @@
       </div>
     </div>
 
-    <!-- <div class="row">
+    <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
-          v-model="term2"
+          v-model="accepted2"
           color="orange darken-3"
           value="orange darken-3"
           hide-details
@@ -116,7 +116,7 @@
     <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
-          v-model="term3"
+          v-model="accpeted3"
           color="orange darken-3"
           value="orange darken-3"
           hide-details
@@ -128,7 +128,7 @@
           menanggung segala risiko dan akibatnya
         </p>
       </div>
-    </div> -->
+    </div>
 
     <div class="row">
       <div class="col-lg-12 col-sm-12">
@@ -148,8 +148,7 @@
       </div>
     </div>
 
-      <ValidationMessage :validation-message="validationMessage" />
-
+    <ValidationMessage :validation-message="validationMessage" />
 
     <div class="row">
       <div class="col-12">
@@ -179,10 +178,13 @@
 
 <script>
 export default {
+  components: { ValidationMessage },
   name: "policy-recovery-resume",
   data() {
     return {
-      accepted: false,
+      accepted1: false,
+      accepted2: false,
+      accepted3: false,
       validationMessage: [],
       showModalHealth: false,
       image_preview: {
@@ -238,8 +240,8 @@ export default {
     },
     validate: async function () {
       this.validationMessage = [];
-      if (!this.accepted) {
-        this.validationMessage.push("Setujui transaksi untuk memproses pengajuan");
+      if (!this.accepted1 || !this.accepted2 || !this.accepted3) {
+        this.validationMessage.push("Setujui semua pernyataan transaksi untuk memproses pengajuan");
       }
     },
     async submit() {

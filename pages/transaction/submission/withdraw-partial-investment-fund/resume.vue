@@ -62,7 +62,7 @@
               <tr>
                 <th class="text-left">No</th>
                 <th class="text-left">Nama Fund</th>
-                <th class="text-left">Nilai Top Up</th>
+                <th class="text-left">Nilai Penarikan</th>
               </tr>
             </thead>
             <tbody>
@@ -166,6 +166,7 @@ import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
   name: "add-investment-fund-resume",
   components: {
+    ValidationMessage,
     SaveIcon,
     InfoIcon,
   },

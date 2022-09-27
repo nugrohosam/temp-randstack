@@ -143,7 +143,9 @@
           </div>
         </div>
       </div>
+
       <ValidationMessage :validation-message="validationAddInvesment" />
+      
       <div class="row">
         <div class="col-4">
           <button
@@ -172,7 +174,7 @@
                 <tr>
                   <th class="text-left">No</th>
                   <th class="text-left">Nama Fund</th>
-                  <th class="text-left">Nilai Top Up</th>
+                  <th class="text-left">Nilai Penarikan</th>
                   <th class="text-left">Action</th>
                 </tr>
               </thead>
@@ -195,6 +197,17 @@
                     >
                       Hapus
                     </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Total</td>
+                  <td>
+                    {{
+                      `${$currencyName(
+                        myPolicy.policyWithCode.currency
+                      )} ${$convertCurrency(sumTopUpValue)}`
+                    }}
                   </td>
                 </tr>
               </tbody>
@@ -254,7 +267,8 @@
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
   name: "withdraw-partial-investment-fund",
-  components: {
+  components: { 
+    ValidationMessage,
     SaveIcon,
     InfoIcon,
   },
@@ -425,6 +439,11 @@ export default {
           name: result.name,
         };
       }
+    },
+    sumTopUpValue() {
+      return this.form.items
+        .map((item) => parseFloat(item.applyAmount))
+        .reduce((a, b) => a + b, 0);
     },
     validate: async function () {
       this.validationMessage = [];

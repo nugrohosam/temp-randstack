@@ -134,6 +134,7 @@
 
 <script>
 export default {
+  components: { ValidationMessage },
   name: "cuti-premi",
   data() {
     return {
@@ -168,7 +169,7 @@ export default {
     },
     startFixHolidayDate() {
       const dueDate = new Date(this.dueDatePremi)
-      return this.$moment(dueDate.setMonth(dueDate.getMonth() + 1)).format("YYYY-MM-DD HH:mm:ss")
+      return this.$moment(dueDate.setMonth(dueDate.getMonth() + 1)).format("YYYY-MM-DD")
     },
   },
   watch: {

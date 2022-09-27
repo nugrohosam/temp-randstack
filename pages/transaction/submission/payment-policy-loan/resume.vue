@@ -85,6 +85,7 @@
 
 <script>
 export default {
+  components: { ValidationMessage },
   name: "payment-policy-loan-resume",
   data() {
     return {

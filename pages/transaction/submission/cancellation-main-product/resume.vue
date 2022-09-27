@@ -133,7 +133,8 @@
         </div>
       </div>
     </div>
-      <ValidationMessage :validation-message="validationMessage" />
+
+    <ValidationMessage :validation-message="validationMessage" />
 
     <div class="row">
       <div class="col-12">
@@ -155,6 +156,7 @@
 <script>
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
+  components: { ValidationMessage },
   name: "cancellation-main-product-resume",
   components: {
     SaveIcon,

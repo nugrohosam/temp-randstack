@@ -110,6 +110,7 @@
 
 <script>
 export default {
+  components: { ValidationMessage },
   data() {
     return {
       accepted: false,

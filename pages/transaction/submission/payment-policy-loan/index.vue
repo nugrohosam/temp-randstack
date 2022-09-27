@@ -140,10 +140,10 @@ export default {
     },
   },
   beforeMount() {
-    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
-      title: "Pembayaran Pinjaman Polis",
-      sub: "Pengajuan Pinjaman Nilai Tunai Polis",
-    });
+    // this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+    //   title: "Pembayaran Pinjaman Polis",
+    //   sub: "Pengajuan Pinjaman Nilai Tunai Polis",
+    // });
     if (
       this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo?.length === 0
     ) {
