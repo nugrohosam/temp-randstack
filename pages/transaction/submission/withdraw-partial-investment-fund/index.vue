@@ -209,6 +209,8 @@
                       )} ${$convertCurrency(sumTopUpValue)}`
                     }}
                   </td>
+                  <td>
+                  </td>
                 </tr>
               </tbody>
             </template>
