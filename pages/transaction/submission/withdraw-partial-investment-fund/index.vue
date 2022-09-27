@@ -206,7 +206,7 @@
                     {{
                       `${$currencyName(
                         myPolicy.policyWithCode.currency
-                      )} ${$convertCurrency(sumTopUpValue)}`
+                      )} ${$convertCurrency(totalWithdraw)}`
                     }}
                   </td>
                   <td>
@@ -310,6 +310,7 @@ export default {
       investment_choosen: null,
       amount: null,
       items: [],
+      totalWithdraw: 0,
       investment_types: [],
       table: {
         headers: [
@@ -387,6 +388,7 @@ export default {
       return contractInvest;
     },
     removeInvestment(i) {
+      this.totalWithdraw -= this.form.items[i].applyAmount;
       this.form.items.splice(i, 1);
     },
     addInvestment() {
@@ -402,12 +404,15 @@ export default {
         (v) => v.fundCode
       );
       if (indexObject != -1) {
+      this.totalWithdraw -= parseFloat(this.form.items[indexObject].applyAmount);
         this.form.items.splice(indexObject, 1, {
           applyAmount: this.amount,
           applyUnits: null,
           fundCode: this.investment_choosen,
         });
+        this.totalWithdraw += parseFloat(this.amount);
       } else {
+        this.totalWithdraw += parseFloat(this.amount);
         this.form.items.push({
           applyAmount: this.amount,
           applyUnits: null,
