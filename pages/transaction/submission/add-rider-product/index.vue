@@ -491,7 +491,7 @@ export default {
       return listRider.map(v => 
         ({
           value: v.productId,
-          text: v.productName,
+          text: v?.productName || '-',
         })
       )
     },

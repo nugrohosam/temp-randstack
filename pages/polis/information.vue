@@ -121,7 +121,7 @@
                               :key="i"
                             >
                               <v-expansion-panel-header>{{
-                                item.productName || "Memuat..."
+                                (item ? item.productName : "Memuat...")
                               }}</v-expansion-panel-header>
                               <v-expansion-panel-content>
                                 <div class="row">
@@ -142,13 +142,13 @@
                                       }}
                                       {{
                                         $convertCurrency(
-                                          item.currentPremium.sumAssured
+                                          (item ? item.currentPremium.sumAssured : 0)
                                         )
                                       }}
                                     </p>
                                     <p class="data-title">Plan</p>
                                     <p class="data-value mb-3">
-                                      {{ item.benefitLevel }}
+                                      {{ (item ? item.benefitLevel : "-") }}
                                     </p>
                                     <p class="data-title">
                                       {{
@@ -168,7 +168,7 @@
                                     <p class="data-title">Benefit Status</p>
                                     <p class="data-value">
                                       {{
-                                        $riskStatus(item.riskStatus)
+                                        (item ? $riskStatus(item.riskStatus) : "-")
                                       }}
                                     </p>
                                   </div>
@@ -317,7 +317,7 @@ export default {
     },
     totalPremAll: (item) => {
       return (
-        item.currentPremium.stdPremAf + (item.recurringTopup?.topupAmount || 0)
+        item ? (item.currentPremium.stdPremAf + (item.recurringTopup?.topupAmount || 0)) : 0
       );
     },
     // getInformationPolicyList: async function () {

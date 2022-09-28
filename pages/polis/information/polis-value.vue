@@ -116,7 +116,7 @@ export default {
       var contractInvest = [];
 
       coverages.forEach((item) => {
-        if (item.contractInvests.length > 0) {
+        if (item?.contractInvests.length > 0) {
           contractInvest = contractInvest.concat(item.contractInvests);
         }
       });

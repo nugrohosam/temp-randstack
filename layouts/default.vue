@@ -117,7 +117,7 @@
                     {{
                       myPolicy
                         ? myPolicy.policyWithCode.proposalNumber
-                        : "memuat..."
+                        : "Memuat..."
                     }}
                   </p>
                   <p class="_name">
@@ -133,7 +133,7 @@
                           $isNullWithSpace(
                             myPolicy.policyWithCode.policyHolder.person.lastName
                           )
-                        : "memuat..."
+                        : "Memuat..."
                     }}
                   </p>
                 </div>
