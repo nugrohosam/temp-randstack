@@ -15,7 +15,13 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nomor Rekening Saat Ini</p>
         <p class="data-value">
-          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount : "-"  }}
+          {{
+            this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+            this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+              ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0]
+                  .bankAccount
+              : "-"
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -23,12 +29,24 @@
           Nama Pemilik Nomor Rekening Manfaat Saat Ini
         </p>
         <p class="data-value">
-          {{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName : "-"  }}
+          {{
+            this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+            this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+              ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName
+              : "-"
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Bank Saat Ini</p>
-        <p class="data-value">{{ this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 && this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName : "-" }}</p>
+        <p class="data-value">
+          {{
+            this.myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
+            this.myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
+              ? this.myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName
+              : "-"
+          }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Penerimaan Polis</p>
@@ -155,9 +173,11 @@
 </template>
 <script>
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
+import resumePageMixin from "@/mixins/resumePage";
+
 export default {
-  
   name: "cancellation-main-product-resume",
+  mixins: [resumePageMixin],
   components: {
     SaveIcon,
     InfoIcon,
@@ -263,7 +283,9 @@ export default {
     validate: async function () {
       this.validationMessage = [];
       if (!this.accepted) {
-        this.validationMessage.push("Setujui transaksi untuk memproses pengajuan");
+        this.validationMessage.push(
+          "Setujui transaksi untuk memproses pengajuan"
+        );
       }
     },
     showSelfieKtpPreview: function () {

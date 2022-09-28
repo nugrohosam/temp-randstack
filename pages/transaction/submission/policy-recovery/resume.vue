@@ -17,7 +17,7 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Due Date Premium</p>
-          <p class="data-value">{{ dueDatePremi }}</p>
+        <p class="data-value">{{ dueDatePremi }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Informasi Virtual Account</p>
@@ -37,7 +37,10 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tagihan Premi</p>
-          <p class="data-value">{{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(billReinstate) }}</p>
+        <p class="data-value">
+          {{ $currencyName(myPolicy.policyWithCode.currency) }}
+          {{ $convertCurrency(billReinstate) }}
+        </p>
       </div>
     </div>
 
@@ -160,9 +163,11 @@
 </template>
 
 <script>
+import resumePageMixin from "@/mixins/resumePage";
+
 export default {
-  
   name: "policy-recovery-resume",
+  mixins: [resumePageMixin],
   data() {
     return {
       accepted1: false,
@@ -183,10 +188,14 @@ export default {
       return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
     },
     dueDatePremi() {
-      return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.coverageExtend?.dueDate || '-'
+      return (
+        this.myPolicy.policyWithCode.coverages.find(
+          (x) => x.masterProduct == null
+        )?.coverageExtend?.dueDate || "-"
+      );
     },
     billReinstate() {
-      return this.myPolicyLoanInfo?.financialInfo?.fullReinstate || 0
+      return this.myPolicyLoanInfo?.financialInfo?.fullReinstate || 0;
     },
     virtualAccountOptions() {
       if (this.myPolicy.policyWithCode.virtualAccountInfo.length) {
@@ -223,13 +232,15 @@ export default {
     validate: async function () {
       this.validationMessage = [];
       if (!this.accepted1 || !this.accepted2) {
-        this.validationMessage.push("Setujui semua pernyataan transaksi untuk memproses pengajuan");
+        this.validationMessage.push(
+          "Setujui semua pernyataan transaksi untuk memproses pengajuan"
+        );
       }
     },
     async submit() {
       this.validate();
       if (this.validationMessage.length <= 0) {
-          const result = await this.$store.dispatch(
+        const result = await this.$store.dispatch(
           "submission_transaction/policy_recovery/reinstatement"
         );
         if (result && result.success == true) {

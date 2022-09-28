@@ -84,9 +84,11 @@
 </template>
 
 <script>
+import resumePageMixin from "@/mixins/resumePage";
+
 export default {
-  
   name: "payment-policy-loan-resume",
+  mixins: [resumePageMixin],
   data() {
     return {
       accepted: false,
@@ -121,7 +123,10 @@ export default {
   },
   methods: {
     loan() {
-      return this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo.length > 0 ? this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo[0] : null;
+      return this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo.length >
+        0
+        ? this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo[0]
+        : null;
     },
     loanDate() {
       return this.loan()?.creationDate ?? "-";
@@ -148,13 +153,15 @@ export default {
     validate: async function () {
       this.validationMessage = [];
       if (!this.accepted) {
-        this.validationMessage.push("Setujui transaksi untuk memproses pengajuan");
+        this.validationMessage.push(
+          "Setujui transaksi untuk memproses pengajuan"
+        );
       }
     },
     async submit() {
       this.validate();
       if (this.validationMessage.length <= 0) {
-            const result = await this.$store.dispatch(
+        const result = await this.$store.dispatch(
           "submission_transaction/policy_loan/repaymentPolicyLoan"
         );
         if (result && result.success == true) {

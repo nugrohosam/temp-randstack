@@ -137,9 +137,11 @@
 </template>
 
 <script>
+import resumePageMixin from "@/mixins/resumePage";
+
 export default {
-  
   name: "request-policy-loan-resume",
+  mixins: [resumePageMixin],
   data() {
     return {
       accepted: false,
@@ -175,7 +177,9 @@ export default {
     validate: async function () {
       this.validationMessage = [];
       if (!this.accepted) {
-        this.validationMessage.push("Setujui transaksi untuk memproses pengajuan");
+        this.validationMessage.push(
+          "Setujui transaksi untuk memproses pengajuan"
+        );
       }
     },
     async submit() {

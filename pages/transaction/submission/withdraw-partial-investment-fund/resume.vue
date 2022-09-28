@@ -163,10 +163,12 @@
 </template>
 <script>
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
+import resumePageMixin from "@/mixins/resumePage";
+
 export default {
   name: "add-investment-fund-resume",
+  mixins: [resumePageMixin],
   components: {
-    
     SaveIcon,
     InfoIcon,
   },

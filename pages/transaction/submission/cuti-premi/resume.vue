@@ -25,7 +25,9 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Status Cuti Premi</p>
-        <p class="data-value">{{ myPolicy.policyWithCode.holidayIndi == "Y" ? "Ya" : "Tidak"}}</p>
+        <p class="data-value">
+          {{ myPolicy.policyWithCode.holidayIndi == "Y" ? "Ya" : "Tidak" }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Masa Akhir Pembayaran Premi</p>
@@ -78,7 +80,7 @@
         </p>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col-lg-12 col-sm-12">
         <div class="message-bar rounded-lg">
@@ -109,8 +111,10 @@
 </template>
 
 <script>
+import resumePageMixin from "@/mixins/resumePage";
+
 export default {
-  
+  mixins: [resumePageMixin],
   data() {
     return {
       accepted: false,
@@ -126,10 +130,18 @@ export default {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
     paidupDatePremi() {
-      return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.paidupDate || '-'
+      return (
+        this.myPolicy.policyWithCode.coverages.find(
+          (x) => x.masterProduct == null
+        )?.paidupDate || "-"
+      );
     },
     dueDatePremi() {
-      return this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null)?.coverageExtend?.dueDate || '-'
+      return (
+        this.myPolicy.policyWithCode.coverages.find(
+          (x) => x.masterProduct == null
+        )?.coverageExtend?.dueDate || "-"
+      );
     },
     getCutiPremi() {
       return this.$store.getters[
@@ -149,7 +161,9 @@ export default {
     validate: async function () {
       this.validationMessage = [];
       if (!this.accepted) {
-        this.validationMessage.push("Setujui transaksi untuk memproses pengajuan");
+        this.validationMessage.push(
+          "Setujui transaksi untuk memproses pengajuan"
+        );
       }
     },
     async submit() {

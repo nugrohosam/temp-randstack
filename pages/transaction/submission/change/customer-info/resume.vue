@@ -272,10 +272,12 @@
 </template>
 <script>
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
+import resumePageMixin from "@/mixins/resumePage";
+
 export default {
   name: "investment-fund-allocation-change",
+  mixins: [resumePageMixin],
   components: {
-    
     SaveIcon,
     InfoIcon,
   },
@@ -319,7 +321,9 @@ export default {
     validate: async function () {
       this.validationMessage = [];
       if (!this.accepted) {
-        this.validationMessage.push("Setujui transaksi untuk memproses pengajuan");
+        this.validationMessage.push(
+          "Setujui transaksi untuk memproses pengajuan"
+        );
       }
     },
     async submit() {
