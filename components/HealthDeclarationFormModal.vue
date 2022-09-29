@@ -326,9 +326,9 @@
           <div class="col-12 col-md-2">
             <p class="d-block d-md-none">Pemegang Polis</p>
             <v-radio-group
-              v-model="healthQuestionnaire[4].pemegang_polis"
+              v-model="healthQuestionnaire[7].pemegang_polis"
               row
-              @change="healthQuestionnaire[4].pemegang_polis_text = null"
+              @change="healthQuestionnaire[7].pemegang_polis_text = null"
             >
               <v-radio
                 v-for="(item, index) in radios"
@@ -338,10 +338,10 @@
               ></v-radio>
             </v-radio-group>
             <input
-              v-if="healthQuestionnaire[4].pemegang_polis"
+              v-if="healthQuestionnaire[7].pemegang_polis"
               class="outlined form-control"
               type="textarea"
-              v-model="healthQuestionnaire[4].pemegang_polis_text"
+              v-model="healthQuestionnaire[7].pemegang_polis_text"
             />
           </div>
         </div>
