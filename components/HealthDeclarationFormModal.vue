@@ -1,183 +1,501 @@
 <template>
   <v-dialog v-model="isShow" :max-width="1000" content-class="modal-health">
-    <div class="modal-health-body">
-      <h2>Formulir Pernyataan Kesehatan</h2>
+    <ValidationObserver v-slot="{ handleSubmit }">
+      <form class="modal-health-body" @submit.prevent="handleSubmit(submit)">
+        <h2>Formulir Pernyataan Kesehatan</h2>
 
-      <br />
+        <br />
 
-      <div class="d-none d-md-block">
-        <div class="row">
-          <div class="col-8">
-            <p>Pertanyaan</p>
-          </div>
-          <div class="col-2">
-            <p>Tertanggung</p>
-          </div>
-          <div class="col-2">
-            <p>Pemegang Polis</p>
+        <div class="d-none d-md-block">
+          <div class="row">
+            <div class="col-8">
+              <p>Pertanyaan</p>
+            </div>
+            <div class="col-2">
+              <p>Tertanggung</p>
+            </div>
+            <div class="col-2">
+              <p>Pemegang Polis</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="card mb-4">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12 col-md-8 d-flex" style="align-items: center">
-              <h4>{{ healthQuestionnaire[0].pertanyaan }}</h4>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 col-md-8 d-flex" style="align-items: center">
+                <h4>{{ healthQuestionnaire[0].pertanyaan }}</h4>
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Tertanggung</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[0].tertanggung"
+                    row
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Pemegang Polis</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[0].pemegang_polis"
+                    row
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <h4>
+                  Sejak Polis tersebut di atas berlaku apakah
+                  Tertanggung/Pemegang Polis
+                </h4>
+              </div>
+              <div class="col-12 col-md-8">
+                <ul>
+                  <li>{{ healthQuestionnaire[1].pertanyaan }}</li>
+                </ul>
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Tertanggung</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[1].tertanggung"
+                    row
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Pemegang Polis</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[1].pemegang_polis"
+                    row
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+              </div>
+              <div class="col-12 col-md-8">
+                <ul>
+                  <li>{{ healthQuestionnaire[2].pertanyaan }}</li>
+                </ul>
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Tertanggung</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[2].tertanggung"
+                    row
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Pemegang Polis</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[2].pemegang_polis"
+                    row
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+              </div>
+              <div class="col-12 col-md-8">
+                <ul>
+                  <li>{{ healthQuestionnaire[3].pertanyaan }}</li>
+                </ul>
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Tertanggung</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[3].tertanggung"
+                    row
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Pemegang Polis</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[3].pemegang_polis"
+                    row
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <h4>
+                  Apakah Tertanggung/Pemegang Polis mempunyai kebiasaan sebagai
+                  berikut:
+                </h4>
+              </div>
+
+              <div class="col-12 col-md-8">
+                <ul>
+                  <li>{{ healthQuestionnaire[4].pertanyaan }}</li>
+                </ul>
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Tertanggung</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[4].tertanggung"
+                    row
+                    @change="healthQuestionnaire[4].tertanggung_number = null"
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+                <input
+                  v-if="healthQuestionnaire[4].tertanggung"
+                  class="form-control"
+                  type="number"
+                  v-model="healthQuestionnaire[4].tertanggung_number"
+                />
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Pemegang Polis</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[4].pemegang_polis"
+                    row
+                    @change="
+                      healthQuestionnaire[4].pemegang_polis_number = null
+                    "
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+                <input
+                  v-if="healthQuestionnaire[4].pemegang_polis"
+                  class="form-control"
+                  type="number"
+                  v-model="healthQuestionnaire[4].pemegang_polis_number"
+                />
+              </div>
+
+              <div class="col-12 col-md-8">
+                <ul>
+                  <li>{{ healthQuestionnaire[5].pertanyaan }}</li>
+                </ul>
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Tertanggung</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[5].tertanggung"
+                    row
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Pemegang Polis</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[5].pemegang_polis"
+                    row
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+              </div>
+
+              <div class="col-12 col-md-8">
+                <ul>
+                  <li>{{ healthQuestionnaire[6].pertanyaan }}</li>
+                </ul>
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Tertanggung</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[6].tertanggung"
+                    row
+                    @change="healthQuestionnaire[6].tertanggung_number = null"
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+                <input
+                  v-if="healthQuestionnaire[6].tertanggung"
+                  class="form-control"
+                  type="number"
+                  v-model="healthQuestionnaire[6].tertanggung_number"
+                />
+              </div>
+              <div class="col-12 col-md-2">
+                <p class="d-block d-md-none">Pemegang Polis</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[6].pemegang_polis"
+                    row
+                    @change="
+                      healthQuestionnaire[6].pemegang_polis_number = null
+                    "
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+                <input
+                  v-if="healthQuestionnaire[6].pemegang_polis"
+                  class="form-control"
+                  type="number"
+                  v-model="healthQuestionnaire[6].pemegang_polis_number"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body row">
+            <div class="col-12 col-md-8">
+              <h4>{{ healthQuestionnaire[7].pertanyaan }}</h4>
             </div>
             <div class="col-12 col-md-2">
               <p class="d-block d-md-none">Tertanggung</p>
-              <v-radio-group v-model="healthQuestionnaire[0].tertanggung" row>
-                <v-radio
-                  v-for="(item, index) in radios"
-                  :key="index"
-                  color="#F15921"
-                  v-bind="item"
-                ></v-radio>
-              </v-radio-group>
+              <ValidateForm rules="required">
+                <v-radio-group
+                  v-model="healthQuestionnaire[7].tertanggung"
+                  row
+                  @change="healthQuestionnaire[7].tertanggung_text = null"
+                >
+                  <v-radio
+                    v-for="(item, index) in radios"
+                    :key="index"
+                    color="#F15921"
+                    v-bind="item"
+                  ></v-radio>
+                </v-radio-group>
+              </ValidateForm>
+              <p v-if="healthQuestionnaire[7].tertanggung">
+                berikan diagnosa, tanggal, lamanya, nama & alamat dokter yang
+                merawat
+              </p>
+              <textarea
+                v-if="healthQuestionnaire[7].tertanggung"
+                class="form-control"
+                placeholder="Mohon disebutkan.."
+                v-model="healthQuestionnaire[7].tertanggung_text"
+              />
             </div>
             <div class="col-12 col-md-2">
               <p class="d-block d-md-none">Pemegang Polis</p>
-              <v-radio-group
-                v-model="healthQuestionnaire[0].pemegang_polis"
-                row
-              >
-                <v-radio
-                  v-for="(item, index) in radios"
-                  :key="index"
-                  color="#F15921"
-                  v-bind="item"
-                ></v-radio>
-              </v-radio-group>
+              <ValidateForm rules="required">
+                <v-radio-group
+                  v-model="healthQuestionnaire[7].pemegang_polis"
+                  row
+                  @change="healthQuestionnaire[7].pemegang_polis_text = null"
+                >
+                  <v-radio
+                    v-for="(item, index) in radios"
+                    :key="index"
+                    color="#F15921"
+                    v-bind="item"
+                  ></v-radio>
+                </v-radio-group>
+              </ValidateForm>
+              <p v-if="healthQuestionnaire[7].pemegang_polis">
+                berikan diagnosa, tanggal, lamanya, nama & alamat dokter yang
+                merawat
+              </p>
+              <textarea
+                v-if="healthQuestionnaire[7].pemegang_polis"
+                class="form-control"
+                placeholder="Mohon disebutkan.."
+                v-model="healthQuestionnaire[7].pemegang_polis_text"
+              />
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="card mb-4">
-        <div class="card-body">
-          <div class="row">
+        <div class="card mb-4">
+          <div class="card-body row">
+            <div class="col-12 col-md-8">
+              <ul>
+                <li>{{ healthQuestionnaire[8].pertanyaan }}</li>
+              </ul>
+            </div>
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Tertanggung</p>
+              <ValidateForm rules="required">
+                <v-radio-group v-model="healthQuestionnaire[8].tertanggung" row>
+                  <v-radio
+                    v-for="(item, index) in radios"
+                    :key="index"
+                    color="#F15921"
+                    v-bind="item"
+                  ></v-radio>
+                </v-radio-group>
+              </ValidateForm>
+            </div>
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Pemegang Polis</p>
+              <ValidateForm rules="required">
+                <v-radio-group
+                  v-model="healthQuestionnaire[8].pemegang_polis"
+                  row
+                >
+                  <v-radio
+                    v-for="(item, index) in radios"
+                    :key="index"
+                    color="#F15921"
+                    v-bind="item"
+                  ></v-radio>
+                </v-radio-group>
+              </ValidateForm>
+            </div>
+            <div class="col-12 col-md-8">
+              <ul>
+                <li>{{ healthQuestionnaire[9].pertanyaan }}</li>
+              </ul>
+            </div>
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Tertanggung</p>
+              <ValidateForm rules="required">
+                <v-radio-group v-model="healthQuestionnaire[9].tertanggung" row>
+                  <v-radio
+                    v-for="(item, index) in radios"
+                    :key="index"
+                    color="#F15921"
+                    v-bind="item"
+                  ></v-radio>
+                </v-radio-group>
+              </ValidateForm>
+            </div>
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Pemegang Polis</p>
+              <ValidateForm rules="required">
+                <v-radio-group
+                  v-model="healthQuestionnaire[9].pemegang_polis"
+                  row
+                >
+                  <v-radio
+                    v-for="(item, index) in radios"
+                    :key="index"
+                    color="#F15921"
+                    v-bind="item"
+                  ></v-radio>
+                </v-radio-group>
+              </ValidateForm>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body row">
             <div class="col-12">
-              <h4>
-                Sejak Polis tersebut di atas berlaku apakah Tertanggung/Pemegang
-                Polis
-              </h4>
+              <h4>Hanya Untuk Wanita</h4>
             </div>
             <div class="col-12 col-md-8">
               <ul>
-                <li>{{ healthQuestionnaire[1].pertanyaan }}</li>
-              </ul>
-            </div>
-            <div class="col-12 col-md-2">
-              <p class="d-block d-md-none">Tertanggung</p>
-              <v-radio-group v-model="healthQuestionnaire[1].tertanggung" row>
-                <v-radio
-                  v-for="(item, index) in radios"
-                  :key="index"
-                  color="#F15921"
-                  v-bind="item"
-                ></v-radio>
-              </v-radio-group>
-            </div>
-            <div class="col-12 col-md-2">
-              <p class="d-block d-md-none">Pemegang Polis</p>
-              <v-radio-group
-                v-model="healthQuestionnaire[1].pemegang_polis"
-                row
-              >
-                <v-radio
-                  v-for="(item, index) in radios"
-                  :key="index"
-                  color="#F15921"
-                  v-bind="item"
-                ></v-radio>
-              </v-radio-group>
-            </div>
-            <div class="col-12 col-md-8">
-              <ul>
-                <li>{{ healthQuestionnaire[2].pertanyaan }}</li>
-              </ul>
-            </div>
-            <div class="col-12 col-md-2">
-              <p class="d-block d-md-none">Tertanggung</p>
-              <v-radio-group v-model="healthQuestionnaire[2].tertanggung" row>
-                <v-radio
-                  v-for="(item, index) in radios"
-                  :key="index"
-                  color="#F15921"
-                  v-bind="item"
-                ></v-radio>
-              </v-radio-group>
-            </div>
-            <div class="col-12 col-md-2">
-              <p class="d-block d-md-none">Pemegang Polis</p>
-              <v-radio-group
-                v-model="healthQuestionnaire[2].pemegang_polis"
-                row
-              >
-                <v-radio
-                  v-for="(item, index) in radios"
-                  :key="index"
-                  color="#F15921"
-                  v-bind="item"
-                ></v-radio>
-              </v-radio-group>
-            </div>
-            <div class="col-12 col-md-8">
-              <ul>
-                <li>{{ healthQuestionnaire[3].pertanyaan }}</li>
-              </ul>
-            </div>
-            <div class="col-12 col-md-2">
-              <p class="d-block d-md-none">Tertanggung</p>
-              <v-radio-group v-model="healthQuestionnaire[3].tertanggung" row>
-                <v-radio
-                  v-for="(item, index) in radios"
-                  :key="index"
-                  color="#F15921"
-                  v-bind="item"
-                ></v-radio>
-              </v-radio-group>
-            </div>
-            <div class="col-12 col-md-2">
-              <p class="d-block d-md-none">Pemegang Polis</p>
-              <v-radio-group
-                v-model="healthQuestionnaire[3].pemegang_polis"
-                row
-              >
-                <v-radio
-                  v-for="(item, index) in radios"
-                  :key="index"
-                  color="#F15921"
-                  v-bind="item"
-                ></v-radio>
-              </v-radio-group>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card mb-4">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12">
-              <h4>
-                Apakah Tertanggung/Pemegang Polis mempunyai kebiasaan sebagai
-                berikut:
-              </h4>
-            </div>
-
-            <div class="col-12 col-md-8">
-              <ul>
-                <li>{{ healthQuestionnaire[4].pertanyaan }}</li>
+                <li>{{ healthQuestionnaire[10].pertanyaan }}</li>
               </ul>
             </div>
             <div class="col-12 col-md-2">
               <p class="d-block d-md-none">Tertanggung</p>
               <v-radio-group
-                v-model="healthQuestionnaire[4].tertanggung"
+                v-model="healthQuestionnaire[10].tertanggung"
                 row
-                @change="healthQuestionnaire[4].tertanggung_number = null"
+                @change="healthQuestionnaire[10].tertanggung_number = null"
               >
                 <v-radio
                   v-for="(item, index) in radios"
@@ -187,18 +505,18 @@
                 ></v-radio>
               </v-radio-group>
               <input
-                v-if="healthQuestionnaire[4].tertanggung"
-                class="outlined form-control"
+                v-if="healthQuestionnaire[10].tertanggung"
+                class="form-control"
                 type="number"
-                v-model="healthQuestionnaire[4].tertanggung_number"
+                v-model="healthQuestionnaire[10].tertanggung_number"
               />
             </div>
             <div class="col-12 col-md-2">
               <p class="d-block d-md-none">Pemegang Polis</p>
               <v-radio-group
-                v-model="healthQuestionnaire[4].pemegang_polis"
+                v-model="healthQuestionnaire[10].pemegang_polis"
                 row
-                @change="healthQuestionnaire[4].pemegang_polis_number = null"
+                @change="healthQuestionnaire[10].pemegang_polis_number = null"
               >
                 <v-radio
                   v-for="(item, index) in radios"
@@ -208,21 +526,20 @@
                 ></v-radio>
               </v-radio-group>
               <input
-                v-if="healthQuestionnaire[4].pemegang_polis"
-                class="outlined form-control"
+                v-if="healthQuestionnaire[10].pemegang_polis"
+                class="form-control"
                 type="number"
-                v-model="healthQuestionnaire[4].pemegang_polis_number"
+                v-model="healthQuestionnaire[10].pemegang_polis_number"
               />
             </div>
-
             <div class="col-12 col-md-8">
               <ul>
-                <li>{{ healthQuestionnaire[5].pertanyaan }}</li>
+                <li>{{ healthQuestionnaire[11].pertanyaan }}</li>
               </ul>
             </div>
             <div class="col-12 col-md-2">
               <p class="d-block d-md-none">Tertanggung</p>
-              <v-radio-group v-model="healthQuestionnaire[5].tertanggung" row>
+              <v-radio-group v-model="healthQuestionnaire[11].tertanggung" row>
                 <v-radio
                   v-for="(item, index) in radios"
                   :key="index"
@@ -234,7 +551,7 @@
             <div class="col-12 col-md-2">
               <p class="d-block d-md-none">Pemegang Polis</p>
               <v-radio-group
-                v-model="healthQuestionnaire[5].pemegang_polis"
+                v-model="healthQuestionnaire[11].pemegang_polis"
                 row
               >
                 <v-radio
@@ -245,354 +562,118 @@
                 ></v-radio>
               </v-radio-group>
             </div>
-
             <div class="col-12 col-md-8">
               <ul>
-                <li>{{ healthQuestionnaire[6].pertanyaan }}</li>
+                <li>{{ healthQuestionnaire[12].pertanyaan }}</li>
               </ul>
             </div>
             <div class="col-12 col-md-2">
               <p class="d-block d-md-none">Tertanggung</p>
-              <v-radio-group
-                v-model="healthQuestionnaire[6].tertanggung"
-                row
-                @change="healthQuestionnaire[6].tertanggung_number = null"
-              >
-                <v-radio
-                  v-for="(item, index) in radios"
-                  :key="index"
-                  color="#F15921"
-                  v-bind="item"
-                ></v-radio>
-              </v-radio-group>
               <input
-                v-if="healthQuestionnaire[6].tertanggung"
-                class="outlined form-control"
-                type="number"
-                v-model="healthQuestionnaire[6].tertanggung_number"
+                class="form-control"
+                type="date"
+                v-model="healthQuestionnaire[12].tertanggung_date"
               />
             </div>
             <div class="col-12 col-md-2">
               <p class="d-block d-md-none">Pemegang Polis</p>
-              <v-radio-group
-                v-model="healthQuestionnaire[6].pemegang_polis"
-                row
-                @change="healthQuestionnaire[6].pemegang_polis_number = null"
-              >
-                <v-radio
-                  v-for="(item, index) in radios"
-                  :key="index"
-                  color="#F15921"
-                  v-bind="item"
-                ></v-radio>
-              </v-radio-group>
               <input
-                v-if="healthQuestionnaire[6].pemegang_polis"
-                class="outlined form-control"
-                type="number"
-                v-model="healthQuestionnaire[6].pemegang_polis_number"
+                class="form-control"
+                type="date"
+                v-model="healthQuestionnaire[12].pemegang_polis_date"
+              />
+            </div>
+            <div class="col-12 col-md-8">
+              <ul>
+                <li>{{ healthQuestionnaire[13].pertanyaan }}</li>
+              </ul>
+            </div>
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Tertanggung</p>
+              <input
+                class="form-control"
+                type="date"
+                v-model="healthQuestionnaire[13].tertanggung_date"
+              />
+            </div>
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Pemegang Polis</p>
+              <input
+                class="form-control"
+                type="date"
+                v-model="healthQuestionnaire[13].pemegang_polis_date"
               />
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="card mb-4">
-        <div class="card-body row">
-          <div class="col-12 col-md-8">
-            <h4>{{ healthQuestionnaire[7].pertanyaan }}</h4>
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Tertanggung</p>
-            <v-radio-group
-              v-model="healthQuestionnaire[7].tertanggung"
-              row
-              @change="healthQuestionnaire[7].tertanggung_text = null"
-            >
-              <v-radio
-                v-for="(item, index) in radios"
-                :key="index"
-                color="#F15921"
-                v-bind="item"
-              ></v-radio>
-            </v-radio-group>
-            <p
-              v-if="healthQuestionnaire[7].tertanggung"
-            >berikan diagnosa, tanggal, lamanya, nama & alamat dokter yang merawat</p>
-            <textarea
-              v-if="healthQuestionnaire[7].tertanggung"
-              class="outlined form-control"
-              placeholder="Mohon disebutkan.."
-              v-model="healthQuestionnaire[7].tertanggung_text"
-            />
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Pemegang Polis</p>
-            <v-radio-group
-              v-model="healthQuestionnaire[7].pemegang_polis"
-              row
-              @change="healthQuestionnaire[7].pemegang_polis_text = null"
-            >
-              <v-radio
-                v-for="(item, index) in radios"
-                :key="index"
-                color="#F15921"
-                v-bind="item"
-              ></v-radio>
-            </v-radio-group>            
-            <p
-              v-if="healthQuestionnaire[7].pemegang_polis"
-            >berikan diagnosa, tanggal, lamanya, nama & alamat dokter yang merawat</p>
-            <textarea
-              v-if="healthQuestionnaire[7].pemegang_polis"
-              class="outlined form-control"
-              placeholder="Mohon disebutkan.."
-              v-model="healthQuestionnaire[7].pemegang_polis_text"
-            />
+        <div class="card mb-4">
+          <div class="card-body row">
+            <div class="col-12 col-md-8">
+              <ul>
+                <li>{{ healthQuestionnaire[14].pertanyaan }}</li>
+              </ul>
+            </div>
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Tertanggung</p>
+              <ValidateForm rules="required">
+                <input
+                  class="form-control"
+                  type="number"
+                  v-model="healthQuestionnaire[14].tertanggung_date_number"
+                />
+              </ValidateForm>
+            </div>
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Pemegang Polis</p>
+              <ValidateForm rules="required">
+                <input
+                  class="form-control"
+                  type="number"
+                  v-model="healthQuestionnaire[14].pemegang_polis_number"
+                />
+              </ValidateForm>
+            </div>
+            <div class="col-12 col-md-8">
+              <ul>
+                <li>{{ healthQuestionnaire[15].pertanyaan }}</li>
+              </ul>
+            </div>
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Tertanggung</p>
+              <ValidateForm rules="required">
+                <input
+                  class="form-control"
+                  type="number"
+                  v-model="healthQuestionnaire[15].tertanggung_date_number"
+                />
+              </ValidateForm>
+            </div>
+            <div class="col-12 col-md-2">
+              <p class="d-block d-md-none">Pemegang Polis</p>
+              <ValidateForm rules="required">
+                <input
+                  class="form-control"
+                  type="number"
+                  v-model="healthQuestionnaire[15].pemegang_polis_number"
+                />
+              </ValidateForm>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="card mb-4">
-        <div class="card-body row">
-          <div class="col-12 col-md-8">
-            <ul>
-              <li>{{ healthQuestionnaire[8].pertanyaan }}</li>
-            </ul>
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Tertanggung</p>
-            <v-radio-group v-model="healthQuestionnaire[8].tertanggung" row>
-              <v-radio
-                v-for="(item, index) in radios"
-                :key="index"
-                color="#F15921"
-                v-bind="item"
-              ></v-radio>
-            </v-radio-group>
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Pemegang Polis</p>
-            <v-radio-group v-model="healthQuestionnaire[8].pemegang_polis" row>
-              <v-radio
-                v-for="(item, index) in radios"
-                :key="index"
-                color="#F15921"
-                v-bind="item"
-              ></v-radio>
-            </v-radio-group>
-          </div>
-          <div class="col-12 col-md-8">
-            <ul>
-              <li>{{ healthQuestionnaire[9].pertanyaan }}</li>
-            </ul>
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Tertanggung</p>
-            <v-radio-group v-model="healthQuestionnaire[9].tertanggung" row>
-              <v-radio
-                v-for="(item, index) in radios"
-                :key="index"
-                color="#F15921"
-                v-bind="item"
-              ></v-radio>
-            </v-radio-group>
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Pemegang Polis</p>
-            <v-radio-group v-model="healthQuestionnaire[9].pemegang_polis" row>
-              <v-radio
-                v-for="(item, index) in radios"
-                :key="index"
-                color="#F15921"
-                v-bind="item"
-              ></v-radio>
-            </v-radio-group>
-          </div>
+        <div v-if="!preview" class="d-flex flex-row-reverse">
+          <button type="submit" class="btn btn-primary btn-save mb-0">
+            Submit
+          </button>
         </div>
-      </div>
-
-      <div class="card mb-4">
-        <div class="card-body row">
-          <div class="col-12">
-            <h4>Hanya Untuk Wanita</h4>
-          </div>
-          <div class="col-12 col-md-8">
-            <ul>
-              <li>{{ healthQuestionnaire[10].pertanyaan }}</li>
-            </ul>
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Tertanggung</p>
-            <v-radio-group
-              v-model="healthQuestionnaire[10].tertanggung"
-              row
-              @change="healthQuestionnaire[10].tertanggung_number = null"
-            >
-              <v-radio
-                v-for="(item, index) in radios"
-                :key="index"
-                color="#F15921"
-                v-bind="item"
-              ></v-radio>
-            </v-radio-group>
-            <input
-              v-if="healthQuestionnaire[10].tertanggung"
-              class="outlined form-control"
-              type="number"
-              v-model="healthQuestionnaire[10].tertanggung_number"
-            />
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Pemegang Polis</p>
-            <v-radio-group
-              v-model="healthQuestionnaire[10].pemegang_polis"
-              row
-              @change="healthQuestionnaire[10].pemegang_polis_number = null"
-            >
-              <v-radio
-                v-for="(item, index) in radios"
-                :key="index"
-                color="#F15921"
-                v-bind="item"
-              ></v-radio>
-            </v-radio-group>
-            <input
-              v-if="healthQuestionnaire[10].pemegang_polis"
-              class="outlined form-control"
-              type="number"
-              v-model="healthQuestionnaire[10].pemegang_polis_number"
-            />
-          </div>
-          <div class="col-12 col-md-8">
-            <ul>
-              <li>{{ healthQuestionnaire[11].pertanyaan }}</li>
-            </ul>
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Tertanggung</p>
-            <v-radio-group v-model="healthQuestionnaire[11].tertanggung" row>
-              <v-radio
-                v-for="(item, index) in radios"
-                :key="index"
-                color="#F15921"
-                v-bind="item"
-              ></v-radio>
-            </v-radio-group>
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Pemegang Polis</p>
-            <v-radio-group v-model="healthQuestionnaire[11].pemegang_polis" row>
-              <v-radio
-                v-for="(item, index) in radios"
-                :key="index"
-                color="#F15921"
-                v-bind="item"
-              ></v-radio>
-            </v-radio-group>
-          </div>
-          <div class="col-12 col-md-8">
-            <ul>
-              <li>{{ healthQuestionnaire[12].pertanyaan }}</li>
-            </ul>
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Tertanggung</p>
-            <input
-              class="outlined form-control"
-              type="date"
-              v-model="healthQuestionnaire[12].tertanggung_date"
-            />
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Pemegang Polis</p>
-            <input
-              class="outlined form-control"
-              type="date"
-              v-model="healthQuestionnaire[12].pemegang_polis_date"
-            />
-          </div>
-          <div class="col-12 col-md-8">
-            <ul>
-              <li>{{ healthQuestionnaire[13].pertanyaan }}</li>
-            </ul>
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Tertanggung</p>
-            <input
-              class="outlined form-control"
-              type="date"
-              v-model="healthQuestionnaire[13].tertanggung_date"
-            />
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Pemegang Polis</p>
-            <input
-              class="outlined form-control"
-              type="date"
-              v-model="healthQuestionnaire[13].pemegang_polis_date"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div class="card mb-4">
-        <div class="card-body row">
-          <div class="col-12 col-md-8">
-            <ul>
-              <li>{{ healthQuestionnaire[14].pertanyaan }}</li>
-            </ul>
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Tertanggung</p>
-            <input
-              class="outlined form-control"
-              type="number"
-              v-model="healthQuestionnaire[14].tertanggung_date_number"
-            />
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Pemegang Polis</p>
-            <input
-              class="outlined form-control"
-              type="number"
-              v-model="healthQuestionnaire[14].pemegang_polis_number"
-            />
-          </div>
-          <div class="col-12 col-md-8">
-            <ul>
-              <li>{{ healthQuestionnaire[15].pertanyaan }}</li>
-            </ul>
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Tertanggung</p>
-            <input
-              class="outlined form-control"
-              type="number"
-              v-model="healthQuestionnaire[15].tertanggung_date_number"
-            />
-          </div>
-          <div class="col-12 col-md-2">
-            <p class="d-block d-md-none">Pemegang Polis</p>
-            <input
-              class="outlined form-control"
-              type="number"
-              v-model="healthQuestionnaire[15].pemegang_polis_number"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div v-if="!preview" class="d-flex flex-row-reverse">
-        <button class="btn btn-primary btn-save mb-0" @click="submit">
-          Submit
-        </button>
-      </div>
-    </div>
+      </form>
+    </ValidationObserver>
   </v-dialog>
 </template>
 
 <script>
+import ValidateForm from "./ValidateForm.vue";
 export default {
   props: {
     show: {
@@ -734,6 +815,7 @@ export default {
       this.$emit("close");
     },
   },
+  components: { ValidateForm },
 };
 </script>
 
