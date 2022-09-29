@@ -304,7 +304,11 @@
           </div>
           <div class="col-12 col-md-2">
             <p class="d-block d-md-none">Tertanggung</p>
-            <v-radio-group v-model="healthQuestionnaire[7].tertanggung" row>
+            <v-radio-group
+              v-model="healthQuestionnaire[7].tertanggung"
+              row
+              @change="healthQuestionnaire[7].tertanggung_text = null"
+            >
               <v-radio
                 v-for="(item, index) in radios"
                 :key="index"
@@ -312,10 +316,20 @@
                 v-bind="item"
               ></v-radio>
             </v-radio-group>
+            <input
+              v-if="healthQuestionnaire[7].tertanggung"
+              class="outlined form-control"
+              type="textarea"
+              v-model="healthQuestionnaire[7].tertanggung_text"
+            />
           </div>
           <div class="col-12 col-md-2">
             <p class="d-block d-md-none">Pemegang Polis</p>
-            <v-radio-group v-model="healthQuestionnaire[7].pemegang_polis" row>
+            <v-radio-group
+              v-model="healthQuestionnaire[4].pemegang_polis"
+              row
+              @change="healthQuestionnaire[4].pemegang_polis_text = null"
+            >
               <v-radio
                 v-for="(item, index) in radios"
                 :key="index"
@@ -323,6 +337,12 @@
                 v-bind="item"
               ></v-radio>
             </v-radio-group>
+            <input
+              v-if="healthQuestionnaire[4].pemegang_polis"
+              class="outlined form-control"
+              type="textarea"
+              v-model="healthQuestionnaire[4].pemegang_polis_text"
+            />
           </div>
         </div>
       </div>
@@ -607,6 +627,8 @@ export default {
             "Pernah dianjurkan oleh dokter atau pernah melakukan pemeriksaan kesehatan diagnostic, check up seperti : sinar X, MRI, USG, CT scan, ECG,treadmill, darah, urine atau pemeriksaan laboratorium lainnya?",
           tertanggung: null,
           pemegang_polis: null,
+          tertanggung_text: null,
+          pemegang_polis_text: null,
         },
         {
           pertanyaan: "Menderita cacat atau kelainan fisik?",
