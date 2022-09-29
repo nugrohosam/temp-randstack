@@ -316,10 +316,13 @@
                 v-bind="item"
               ></v-radio>
             </v-radio-group>
-            <input
+            <p
+              v-if="healthQuestionnaire[7].tertanggung"
+            >berikan diagnosa, tanggal, lamanya, nama & alamat dokter yang merawat</p>
+            <textarea
               v-if="healthQuestionnaire[7].tertanggung"
               class="outlined form-control"
-              type="textarea"
+              placeholder="Mohon disebutkan.."
               v-model="healthQuestionnaire[7].tertanggung_text"
             />
           </div>
@@ -336,11 +339,14 @@
                 color="#F15921"
                 v-bind="item"
               ></v-radio>
-            </v-radio-group>
-            <input
+            </v-radio-group>            
+            <p
+              v-if="healthQuestionnaire[7].pemegang_polis"
+            >berikan diagnosa, tanggal, lamanya, nama & alamat dokter yang merawat</p>
+            <textarea
               v-if="healthQuestionnaire[7].pemegang_polis"
               class="outlined form-control"
-              type="textarea"
+              placeholder="Mohon disebutkan.."
               v-model="healthQuestionnaire[7].pemegang_polis_text"
             />
           </div>
