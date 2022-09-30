@@ -315,6 +315,16 @@
                   type="number"
                   v-model="healthQuestionnaire[6].tertanggung_number"
                 />
+                <p v-if="healthQuestionnaire[6].tertanggung_polis">
+                  berikan diagnosa, tanggal, lamanya, nama & alamat dokter yang
+                  merawat
+                </p>
+                <textarea
+                  v-if="healthQuestionnaire[6].tertanggung_polis"
+                  class="form-control"
+                  placeholder="Mohon disebutkan.."
+                  v-model="healthQuestionnaire[6].tertanggung_polis_text"
+                />
               </div>
               <div class="col-12 col-md-2">
                 <p class="d-block d-md-none">Pemegang Polis</p>
@@ -339,6 +349,16 @@
                   class="form-control"
                   type="number"
                   v-model="healthQuestionnaire[6].pemegang_polis_number"
+                />
+                <p v-if="healthQuestionnaire[6].pemegang_polis">
+                  berikan diagnosa, tanggal, lamanya, nama & alamat dokter yang
+                  merawat
+                </p>
+                <textarea
+                  v-if="healthQuestionnaire[6].pemegang_polis"
+                  class="form-control"
+                  placeholder="Mohon disebutkan.."
+                  v-model="healthQuestionnaire[6].pemegang_polis_text"
                 />
               </div>
             </div>
@@ -366,10 +386,6 @@
                   ></v-radio>
                 </v-radio-group>
               </ValidateForm>
-              <p v-if="healthQuestionnaire[7].tertanggung">
-                berikan diagnosa, tanggal, lamanya, nama & alamat dokter yang
-                merawat
-              </p>
               <textarea
                 v-if="healthQuestionnaire[7].tertanggung"
                 class="form-control"
@@ -393,10 +409,6 @@
                   ></v-radio>
                 </v-radio-group>
               </ValidateForm>
-              <p v-if="healthQuestionnaire[7].pemegang_polis">
-                berikan diagnosa, tanggal, lamanya, nama & alamat dokter yang
-                merawat
-              </p>
               <textarea
                 v-if="healthQuestionnaire[7].pemegang_polis"
                 class="form-control"
@@ -426,6 +438,12 @@
                   ></v-radio>
                 </v-radio-group>
               </ValidateForm>
+              <textarea
+                v-if="healthQuestionnaire[8].tertanggung_polis"
+                class="form-control"
+                placeholder="Mohon disebutkan.."
+                v-model="healthQuestionnaire[8].tertanggung_polis_text"
+              />
             </div>
             <div class="col-12 col-md-2">
               <p class="d-block d-md-none">Pemegang Polis</p>
@@ -442,7 +460,12 @@
                   ></v-radio>
                 </v-radio-group>
               </ValidateForm>
-            </div>
+              <textarea
+                v-if="healthQuestionnaire[8].pemegang_polis"
+                class="form-control"
+                placeholder="Mohon disebutkan.."
+                v-model="healthQuestionnaire[8].pemegang_polis_text"
+              />
             <div class="col-12 col-md-8">
               <ul>
                 <li>{{ healthQuestionnaire[9].pertanyaan }}</li>
@@ -460,6 +483,12 @@
                   ></v-radio>
                 </v-radio-group>
               </ValidateForm>
+              <textarea
+                v-if="healthQuestionnaire[9].tertanggung_polis"
+                class="form-control"
+                placeholder="Mohon disebutkan.."
+                v-model="healthQuestionnaire[9].tertanggung_polis_text"
+              />
             </div>
             <div class="col-12 col-md-2">
               <p class="d-block d-md-none">Pemegang Polis</p>
@@ -476,6 +505,12 @@
                   ></v-radio>
                 </v-radio-group>
               </ValidateForm>
+              <textarea
+                v-if="healthQuestionnaire[9].pemegang_polis"
+                class="form-control"
+                placeholder="Mohon disebutkan.."
+                v-model="healthQuestionnaire[9].pemegang_polis_text"
+              />
             </div>
           </div>
         </div>
@@ -740,24 +775,34 @@ export default {
           pemegang_polis: null,
           tertanggung_number: null,
           pemegang_polis_number: null,
+          tertanggung_text: null,
+          pemegang_polis_text: null,
         },
         {
           pertanyaan:
             "Apakah kondisi kesehatan Tertanggung/Pemegang Polis sekarang dalam keadaan terganggu, memerlukan atau dianjurkan operasi atau dalam perawatan dokter /makan obat untuk alasan apapun?",
           tertanggung: null,
           pemegang_polis: null,
+          tertanggung_text: null,
+          pemegang_polis_text: null,
+          tertanggung_text: null,
+          pemegang_polis_text: null,
         },
         {
           pertanyaan:
             "Apakah Tertanggung sering melakukan kegiatan penerbangan komersial/non-komersial?",
           tertanggung: null,
           pemegang_polis: null,
+          tertanggung_text: null,
+          pemegang_polis_text: null,
         },
         {
           pertanyaan:
             "Apakah Tertanggung pernah atau bermaksud ikut dalam olah raga yang beresiko tinggi ? (Balap mobil, terjun payung, dll)",
           tertanggung: null,
           pemegang_polis: null,
+          tertanggung_text: null,
+          pemegang_polis_text: null,
         },
         {
           pertanyaan: "Apakah Anda sekarang sedang hamil? bila YA, bulan",
