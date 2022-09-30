@@ -438,12 +438,6 @@
                   ></v-radio>
                 </v-radio-group>
               </ValidateForm>
-              <textarea
-                v-if="healthQuestionnaire[8].tertanggung_polis"
-                class="form-control"
-                placeholder="Mohon disebutkan.."
-                v-model="healthQuestionnaire[8].tertanggung_polis_text"
-              />
             </div>
             <div class="col-12 col-md-2">
               <p class="d-block d-md-none">Pemegang Polis</p>
@@ -460,12 +454,6 @@
                   ></v-radio>
                 </v-radio-group>
               </ValidateForm>
-              <textarea
-                v-if="healthQuestionnaire[8].pemegang_polis"
-                class="form-control"
-                placeholder="Mohon disebutkan.."
-                v-model="healthQuestionnaire[8].pemegang_polis_text"
-              />
             <div class="col-12 col-md-8">
               <ul>
                 <li>{{ healthQuestionnaire[9].pertanyaan }}</li>
@@ -491,26 +479,27 @@
               />
             </div>
             <div class="col-12 col-md-2">
-              <p class="d-block d-md-none">Pemegang Polis</p>
-              <ValidateForm rules="required">
-                <v-radio-group
-                  v-model="healthQuestionnaire[9].pemegang_polis"
-                  row
-                >
-                  <v-radio
-                    v-for="(item, index) in radios"
-                    :key="index"
-                    color="#F15921"
-                    v-bind="item"
-                  ></v-radio>
-                </v-radio-group>
-              </ValidateForm>
-              <textarea
-                v-if="healthQuestionnaire[9].pemegang_polis"
-                class="form-control"
-                placeholder="Mohon disebutkan.."
-                v-model="healthQuestionnaire[9].pemegang_polis_text"
-              />
+                <p class="d-block d-md-none">Pemegang Polis</p>
+                <ValidateForm rules="required">
+                  <v-radio-group
+                    v-model="healthQuestionnaire[9].pemegang_polis"
+                    row
+                  >
+                    <v-radio
+                      v-for="(item, index) in radios"
+                      :key="index"
+                      color="#F15921"
+                      v-bind="item"
+                    ></v-radio>
+                  </v-radio-group>
+                </ValidateForm>
+                <textarea
+                  v-if="healthQuestionnaire[9].pemegang_polis"
+                  class="form-control"
+                  placeholder="Mohon disebutkan.."
+                  v-model="healthQuestionnaire[9].pemegang_polis_text"
+                />
+              </div>
             </div>
           </div>
         </div>
