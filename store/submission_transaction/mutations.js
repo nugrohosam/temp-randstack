@@ -2,17 +2,64 @@ export default {
   setMenuKeyword(state, data) {
     state.menus_search = data.keywords;
   },
+  
   setUploadKtpFile(state, data) {
-    state.cancellation_main_product.upload.ktp.file = data.stream;
-    state.cancellation_main_product.upload.ktp.name = data.stream.name;
-    state.cancellation_main_product.upload.ktp.upload_filename = data.upload;
+    state.attachments.upload.ktp.file = data.stream;
+    state.attachments.upload.ktp.name = data.stream.name;
+    state.attachments.upload.ktp.upload_filename = data.upload;
   },
+  clearUploadKtpFile(state) {
+    state.attachments.upload.ktp.file = null;
+    state.attachments.upload.ktp.name = "";
+    state.attachments.upload.ktp.upload_filename = "";
+  },
+
+  setUploadSavingBookFile(state, data) {
+    state.attachments.upload.saving_book.file = data.stream;
+    state.attachments.upload.saving_book.name = data.stream.name;
+    state.attachments.upload.saving_book.upload_filename = data.upload;
+  },
+  clearUploadSavingBookFile(state) {
+    state.attachments.upload.saving_book.file = null;
+    state.attachments.upload.saving_book.name = "";
+    state.attachments.upload.saving_book.upload_filename = "";
+  },
+
+  setUploadBirthCertificateFile(state, data) {
+    state.attachments.upload.saving_book.file = data.stream;
+    state.attachments.upload.saving_book.name = data.stream.name;
+    state.attachments.upload.saving_book.upload_filename = data.upload;
+  },
+  clearUploadBirthCertificateFile(state) {
+    state.attachments.upload.birth_certificate.file = null;
+    state.attachments.upload.birth_certificate.name = "";
+    state.attachments.upload.birth_certificate.upload_filename = "";
+  },
+
   setUploadSelfieKtpFile(state, data) {
-    state.cancellation_main_product.upload.selfie_ktp.file = data.stream;
-    state.cancellation_main_product.upload.selfie_ktp.name = data.stream.name;
-    state.cancellation_main_product.upload.selfie_ktp.upload_filename =
+    state.attachments.upload.selfie_ktp.file = data.stream;
+    state.attachments.upload.selfie_ktp.name = data.stream.name;
+    state.attachments.upload.selfie_ktp.upload_filename =
       data.upload;
   },
+  clearUploadSelfieKtpFile(state) {
+    state.attachments.upload.selfie_ktp.file = null;
+    state.attachments.upload.selfie_ktp.name = "";
+    state.attachments.upload.selfie_ktp.upload_filename = "";
+  },
+
+  setUploadKkFile(state, data) {
+    state.attachments.upload.kk.file = data.stream;
+    state.attachments.upload.kk.name = data.stream.name;
+    state.attachments.upload.kk.upload_filename =
+      data.upload;
+  },
+  clearUploadKkFile(state) {
+    state.attachments.upload.kk.file = null;
+    state.attachments.upload.kk.name = "";
+    state.attachments.upload.kk.upload_filename = "";
+  },
+  
   setCoveragesSelected(state, data) {
     state.cancellation_main_product.coverages_selected = data;
   },
@@ -25,21 +72,14 @@ export default {
   setMyPolicy(state, data) {
     state.myPolicy = data;
   },
+  setBanks(state, data) {
+    state.banks = data;
+  },
   setMyPolicyLoanInfo(state, data) {
     state.myPolicyLoanInfo = data;
   },
   setProductRiders(state, data) {
     state.riders = data;
-  },
-  clearUploadSelfieKtpFile(state) {
-    state.cancellation_main_product.upload.selfie_ktp.file = null;
-    state.cancellation_main_product.upload.selfie_ktp.name = "";
-    state.cancellation_main_product.upload.selfie_ktp.upload_filename = "";
-  },
-  clearUploadKtpFile(state) {
-    state.cancellation_main_product.upload.ktp.file = null;
-    state.cancellation_main_product.upload.ktp.name = "";
-    state.cancellation_main_product.upload.ktp.upload_filename = "";
   },
   clearCoveragesSelected(state) {
     state.cancellation_main_product.coverages_selected = [];

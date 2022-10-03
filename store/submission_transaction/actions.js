@@ -2,6 +2,20 @@ export default {
   searchMenu({ dispatch, commit }, data) {
     commit("setMenuKeyword", data);
   },
+  async getBanks({ rootGetters, commit, dispatch }) {
+    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+    await this.$axios
+      .$get("/api/v1/banks")
+      .then((response) => {
+        if (response.success) {
+          commit("setBanks", response.data);
+        }
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+  },
   async getMyPolicy({ rootGetters, commit, dispatch }) {
     this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
     const response = await this.$axios
@@ -134,6 +148,70 @@ export default {
       });
       },
 
+  async uploadKkFile({ rootGetters, commit, dispatch }, data) {
+    let formData = new FormData();
+    formData.append("File", data.file);
+    formData.append("Type", "KK");
+    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+    dispatch(
+      "toggleOverlayLoading",
+      { show: true, message: "Mohon Tunggu..." },
+      { root: true }
+    );
+    return await this.$axios
+      .$post("/api/v1/attachments", formData)
+      .then((response) => {
+        if (response.success) {
+          commit("setUploadKkFile", {
+            stream: data.file,
+            upload: response.data.name,
+          });
+          dispatch(
+            "toggleOverlayLoading",
+            { show: false, message: "Mohon Tunggu..." },
+            { root: true }
+          );
+          return response.data;
+        }
+        // return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+      },
+    
+  async uploadSavingBookFile({ rootGetters, commit, dispatch }, data) {
+    let formData = new FormData();
+    formData.append("File", data.file);
+    formData.append("Type", "SAVINGBOOK");
+    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+    dispatch(
+      "toggleOverlayLoading",
+      { show: true, message: "Mohon Tunggu..." },
+      { root: true }
+    );
+    return await this.$axios
+      .$post("/api/v1/attachments", formData)
+      .then((response) => {
+        if (response.success) {
+          commit("setUploadSavingBookFile", {
+            stream: data.file,
+            upload: response.data.name,
+          });
+          dispatch(
+            "toggleOverlayLoading",
+            { show: false, message: "Mohon Tunggu..." },
+            { root: true }
+          );
+          return response.data;
+        }
+        // return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+      },
+    
   async uploadSelieKtpFile({ rootGetters, commit, dispatch }, data) {
     let formData = new FormData();
     formData.append("File", data.file);

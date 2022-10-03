@@ -54,6 +54,13 @@ export default {
       icon: "ic_pocket.svg",
     },
     {
+      active: true,
+      hidden: false,
+      name: "Pengajuan gagal transfer / SB / MB / NCB",
+      link: "/transaction/submission/benefit-allocation",
+      icon: "ic_loader.svg",
+    },
+    {
       active: false,
       hidden: false,
       name: "Penambahan Produk Rider",
@@ -73,13 +80,6 @@ export default {
       name: "Penambahan Uang Pertanggungan",
       link: "/transaction/submission/add-defered-money",
       icon: "ic_plus_square.svg",
-    },
-    {
-      active: false,
-      hidden: false,
-      name: "Pengajuan gagal transfer /SB/MB NCB",
-      link: "/transaction/submission/request-fails-transfer",
-      icon: "ic_loader.svg",
     },
     {
       active: false,
@@ -110,7 +110,15 @@ export default {
       icon: "ic_edit_3.svg",
     },
   ],
+
   cancellation_main_product: {
+    coverages_selected: [],
+    reason_selected: null,
+  },
+
+  banks: [],
+
+  attachments: {
     upload: {
       ktp: {
         file: null,
@@ -124,19 +132,28 @@ export default {
         preview: "",
         upload_filename: "",
       },
+      saving_book: {
+        file: null,
+        name: "",
+        preview: "",
+        upload_filename: "",
+      },
+      kk: {
+        file: null,
+        name: "",
+        preview: "",
+        upload_filename: "",
+      },
+      birth_certificate: {
+        file: null,
+        name: "",
+        preview: "",
+        upload_filename: "",
+      },
     },
-    coverages_selected: [],
-    reason_selected: null,
   },
+
   customerInfo: {
-    // resume: {
-    //   holderName: null,
-    //   policyNumber: null,
-    //   selectedPolicy: null,
-    //   emailAddress: null,
-    //   address: null,
-    //   phonerNumber: null,
-    // },
     resume: null,
   },
   currentHeaderTitle: {

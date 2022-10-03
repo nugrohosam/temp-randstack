@@ -573,9 +573,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .investment_type_option {
-    max-width: 250px !important;
-  }
   .plan_type_option {
     max-width: 250px !important;
   }

@@ -128,16 +128,10 @@ export default {
     console.log($nuxt.$route.name);
   },
   computed: {
-    myPolicyLoanInfo() {
-      return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
-    },
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
     getDecreaseSA() {
-      console.log(this.$store.getters[
-        "submission_transaction/decrease_sa/getDecreaseSA"
-      ]);
       return this.$store.getters[
         "submission_transaction/decrease_sa/getDecreaseSA"
       ];

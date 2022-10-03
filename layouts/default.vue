@@ -345,6 +345,7 @@ export default {
       const isAuthenticated = await this.$store.dispatch("auth/check");
       if (isAuthenticated) {
         this.getMyPolicy();
+        this.getBanks();
       } else if (!isAuthenticated) {
         this.$router.push({
           path: "/auth/login",
@@ -368,6 +369,12 @@ export default {
           this.error.message = "Terjadi kesalahan, coba lagi.";
         }
       }
+    },
+
+    getBanks: async function () {
+      await this.$store.dispatch(
+        "submission_transaction/getBanks"
+      );
     },
 
     showNotification: function () {
