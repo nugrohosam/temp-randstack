@@ -8,6 +8,7 @@ import CutiPremiModules from "./cuti_premi";
 import RiderProduct from "./rider_product";
 import DecreaseSA from "./decrease_sa";
 import BenefitAllocation from "./benefit_allocation";
+import ChangePayeeRefundAccount from "./change_payee_refund_account";
 import WithdrawPartialInvestmentFund from "./withdraw_partial_investment_fund";
 
 const SubmissionTransactionModules = {
@@ -20,6 +21,7 @@ const SubmissionTransactionModules = {
     rider_product: RiderProduct,
     decrease_sa: DecreaseSA,
     benefit_allocation: BenefitAllocation,
+    change_payee_refund_account: ChangePayeeRefundAccount,
   },
   state,
   getters,

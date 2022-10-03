@@ -61,6 +61,13 @@ export default {
       icon: "ic_loader.svg",
     },
     {
+      active: true,
+      hidden: false,
+      name: "Perubahan Nomor Rekening",
+      link: "/transaction/submission/change-payee-refund-account",
+      icon: "ic_edit.svg",
+    },
+    {
       active: false,
       hidden: false,
       name: "Penambahan Produk Rider",
@@ -87,13 +94,6 @@ export default {
       name: "Perubahan Alokasi Dana Investasi",
       link: "/transaction/submission/investment-fund-allocation-change",
       icon: "ic_bar_chart_2.svg",
-    },
-    {
-      active: false,
-      hidden: false,
-      name: "Perubahan Nomor Rekening",
-      link: "/transaction/submission/change-account-number",
-      icon: "ic_edit.svg",
     },
     {
       active: false,
