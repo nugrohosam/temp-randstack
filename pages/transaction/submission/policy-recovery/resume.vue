@@ -17,7 +17,7 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Due Date Premium</p>
-        <p class="data-value">{{ dueDatePremi }}</p>
+        <p class="data-value">{{ $formatDate(dueDatePremi) }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Informasi Virtual Account</p>

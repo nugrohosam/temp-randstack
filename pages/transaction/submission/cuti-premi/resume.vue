@@ -18,7 +18,7 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Jatuh Tempo</p>
-        <p class="data-value">{{ dueDatePremi }}</p>
+        <p class="data-value">{{ $formatDate(dueDatePremi) }}</p>
       </div>
     </div>
 
@@ -31,11 +31,11 @@
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Masa Akhir Pembayaran Premi</p>
-        <p class="data-value">{{ paidupDatePremi }}</p>
+        <p class="data-value">{{ $formatDate(paidupDatePremi) }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Masa Wajib Bayar Premi</p>
-        <p class="data-value">{{ myPolicy.policyWithCode.lockedPeriodDate }}</p>
+        <p class="data-value">{{ $formatDate(myPolicy.policyWithCode.lockedPeriodDate) }}</p>
       </div>
     </div>
 

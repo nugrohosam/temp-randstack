@@ -121,7 +121,7 @@
           hide-details
         ></v-checkbox>
         <p>
-          Saya menyetujui transaksi dan kebenaran data yang disampaikan.
+          Saya telah membaca dan menyetujui seluruh ketentuan transaksi yang diajukan dan resume pengajuan serta memahami risiko atas keputusan yang saya buat.
           <a class="bni-primary no-border" href="">Baca selengkapnya</a>
         </p>
       </div>
