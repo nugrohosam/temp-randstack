@@ -47,6 +47,13 @@ export default {
       icon: "ic_percent.svg",
     },
     {
+      active: true,
+      hidden: false,
+      name: "Penurunan Uang Pertanggungan",
+      link: "/transaction/submission/decrease-sa",
+      icon: "ic_pocket.svg",
+    },
+    {
       active: false,
       hidden: false,
       name: "Penambahan Produk Rider",
@@ -73,13 +80,6 @@ export default {
       name: "Pengajuan gagal transfer /SB/MB NCB",
       link: "/transaction/submission/request-fails-transfer",
       icon: "ic_loader.svg",
-    },
-    {
-      active: false,
-      hidden: false,
-      name: "Penurunan Uang Pertanggungan",
-      link: "/transaction/submission/deferred-money-reduction",
-      icon: "ic_pocket.svg",
     },
     {
       active: false,

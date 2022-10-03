@@ -48,17 +48,21 @@ export default {
         )[0];
 
         v.productName = foundProduct.name;
+        v.benefitLevelInfoVOList = foundProduct.benefitLevelInfoVOList;
+        v.minSurValue = foundProduct.minSurValue;
+        v.maxSurValue = foundProduct.maxSurValue;
 
         const level = v.currentPremium.benefitLevel ?? null;
         if (level) {
           const benefitLevels = foundProduct.benefitLevelInfoVOList.filter(
             (v, i) => v.benefitLevel == level
           );
+          
           const foundBenefitLevel =
             benefitLevels.length > 0 ? benefitLevels[0].levelDescrp : "-";
-          v.benefitLevel = foundBenefitLevel;
+          v.benefitLevelDescrp = foundBenefitLevel;
         } else {
-          v.benefitLevel = "-";
+          v.benefitLevelDescrp = "-";
         }
 
         return v;
@@ -217,6 +221,21 @@ export default {
     this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
     return await this.$axios
       .$get(`/api/v1/products?ids=${data}`)
+      .then((response) => {
+        if (response.success) {
+          return response.data;
+        }
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+    },
+
+  async getProduct({ rootGetters, dispatch, commit }, productId) {
+    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+    return await this.$axios
+      .$get(`/api/v1/products/${productId}`)
       .then((response) => {
         if (response.success) {
           return response.data;

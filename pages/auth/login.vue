@@ -3,7 +3,7 @@
     <div class="col-12 d-md-none bni_logo">
       <img src="~/assets/icon/main_bni_life.svg" alt="logo" />
     </div>
-    <ValidationObserver v-slot="{ handleSubmit }" class="col-md-12 col-xs-8">
+      <ValidationObserver v-slot="{ handleSubmit }" class="col-md-12 col-xs-8">
       <div
         class="row v-card-auth-body"
         style="justify-content: center; width: 100%; max-width: 1020px"
@@ -158,33 +158,6 @@ export default {
           path: `/auth/otp?phonenumber=${response.data.phoneNumber}`,
         });
       }
-
-      // TEST
-
-      // try {
-      // let response = await this.$auth
-      //   .loginWith("local", {
-      //     data: {
-      //       policy_number: this.form.policy_number,
-      //       phone_number: this.form.phone_number,
-      //       identity_number: this.form.identity_number,
-      //     },
-      //   })
-      //   .then((response) => {
-      //     console.log(response);
-      //   });
-
-      // console.log(response);
-      // if (response) {
-      // } else {
-      //   this.modal.message =
-      //     "Akun anda telah terblokir, silahkan hubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
-      //   this.modal.show = true;
-      // }
-      // } catch (err) {
-      //   console.log(err);
-      //   this.error = err.response.data.message;
-      // }
     },
     verifyMethod: function (response) {
       if (response) {

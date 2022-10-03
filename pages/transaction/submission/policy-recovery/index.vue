@@ -155,7 +155,14 @@ export default {
       return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
     },
     billReinstate() {
-      return this.myPolicyLoanInfo?.financialInfo?.fullReinstate || 0
+      var bill = this.myPolicyLoanInfo?.financialInfo?.fullReinstate || 0
+      if (bill = 0) {
+        const overduePrem = this.myPolicyLoanInfo?.financialInfo?.overduePrem || 0
+        const plBalance = this.myPolicyLoanInfo?.financialInfo?.plBalance || 0
+        bill = overduePrem + plBalance
+      }
+
+      return bill
     },
     virtualAccountOptions() {
       if (this.myPolicy.policyWithCode.virtualAccountInfo.length) {

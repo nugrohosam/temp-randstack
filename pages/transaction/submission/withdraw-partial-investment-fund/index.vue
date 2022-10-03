@@ -160,9 +160,11 @@
           </button>
         </div>
       </div>
+
       <br />
       <v-divider></v-divider>
       <br />
+
       <div class="row" v-if="form.items.length > 0">
         <div class="col-lg-6 col-sm-12">
           <p class="data-value">
@@ -217,6 +219,7 @@
           </v-simple-table>
         </div>
       </div>
+
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <ValidationProvider

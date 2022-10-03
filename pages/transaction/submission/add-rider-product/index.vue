@@ -343,6 +343,7 @@
 </template>
 
 <script>
+
 import {
   relationType,
   gender,
@@ -542,10 +543,6 @@ export default {
       this.my_policy = data;
       this.isLoading = false;
     },
-    isHavePlans(productId) {
-      console.log(this.allowedRiders);
-      return this.allowedRiders.find(v => v.productId == productId)?.benefitLevelInfoVOList.length > 0;
-    },
     riderOptionPlan(productId) {
       return this.allowedRiders.find(v => v.productId == productId)?.benefitLevelInfoVOList?.map(v => v.levelDescrp) || [];
     },
@@ -578,6 +575,7 @@ export default {
     },
   },
 };
+
 </script>
 <style lang="scss" scoped>
   .rider_type_option {
