@@ -156,9 +156,9 @@ export default {
     },
     billReinstate() {
       var bill = this.myPolicyLoanInfo?.financialInfo?.fullReinstate || 0
-      if (bill = 0) {
-        const overduePrem = this.myPolicyLoanInfo?.financialInfo?.overduePrem || 0
-        const plBalance = this.myPolicyLoanInfo?.financialInfo?.plBalance || 0
+      if (bill == 0) {
+        const overduePrem = this.myPolicyLoanInfo?.financialInfo?.overduePremium || 0
+        const plBalance = this.myPolicyLoanInfo?.financialInfo?.aplBalance || 0
         bill = overduePrem + plBalance
       }
 

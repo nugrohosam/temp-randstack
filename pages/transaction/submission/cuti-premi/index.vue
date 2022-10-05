@@ -210,7 +210,8 @@ export default {
       }
     },
     save() {
-      this.form.startPremiumHolidayDate = this.startFixHolidayDate
+      const dueDate = new Date(this.dueDatePremi)
+      this.form.startPremiumHolidayDate = this.$moment(dueDate.setMonth(dueDate.getMonth() + 1)).format("YYYY-MM-DD")
       this.validate();
       if (this.validationMessage.length) return false;
       this.$store.commit(

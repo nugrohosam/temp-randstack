@@ -121,7 +121,6 @@ export default {
         if (
           val.policy_number != "" &&
           val.phone_number != "" &&
-          val.identity_number != "" &&
           val.verified == true
         ) {
           this.signInDisable = false;
