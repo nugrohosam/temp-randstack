@@ -25,7 +25,7 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tanggal Pinjaman Polis</p>
           <p class="data-value">
-            {{ $formatDate(loan() && loan().creationDate) }}
+            {{ this.loanDate() }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -38,6 +38,28 @@
               solo
             ></v-select>
           </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <p class="data-title mb-2">Unggah Bukti Transfer</p>
+          <input
+            type="file"
+            ref="inputBuktiTransferImage"
+            v-show="false"
+            accept="image/*"
+            @change="(e) => addBuktiTransferImage(e)"
+          />
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="$refs.inputBuktiTransferImage.click()"
+          >
+            Unggah
+          </button>
+          <small>{{ form.transferAttachment.name }}</small>
+          <br />
+          <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
         </div>
       </div>
 
@@ -107,6 +129,7 @@ export default {
       form: {
         virtualAccountNumber: null,
         ktpSelfieAttachment: {},
+        transferAttachment: {},
       },
       modal: {
         message: "",
@@ -147,7 +170,7 @@ export default {
     if (
       this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo?.length === 0 
       ||
-      this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo?.length > 0 && this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo[0].capitalBalance === 0 
+      this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo?.length > 0 && this.myPolicyLoanInfo?.financialInfo?.plBalance === 0 
     ) {
       this.modal.show = true;
       this.modal.message = "Maaf anda tidak dapat melakukan pembayaran karena tidak ada pinjaman.";
@@ -160,14 +183,32 @@ export default {
     loan() {
       return this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo.length >
         0
-        ? this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo[0]
+        ? this.myPolicyLoanInfo?.financialInfo?.plBalance
+        : null;
+    },
+    loanAccountInfo() {
+      return this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo.length >
+        0
+        ? this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo[0]?.creationDate
         : null;
     },
     loanDate() {
-      return this.loan()?.creationDate ?? "-";
+      return this.$formatDate(this.loanAccountInfo()) || "-"
     },
     loanAmount() {
-      return this.loan()?.capitalBalance ?? "-";
+      return this.loan() ?? "-";
+    },
+    async addBuktiTransferImage(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadAttachment",
+          { file: e.target.files[0], type: "TRANSFER" }
+        );
+        this.form.transferAttachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
     },
     async addSelfieKtpImage(e) {
       if (e.target.files[0]) {

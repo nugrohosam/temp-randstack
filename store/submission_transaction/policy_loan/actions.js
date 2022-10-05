@@ -31,6 +31,7 @@ export default {
     const form = {
       virtual_account_number: state.paymentPolicyLoan.virtualAccountNumber,
       ktp_selfie_attachment: state.paymentPolicyLoan.ktpSelfieAttachment.name,
+      transfer_attachment: state.paymentPolicyLoan.transferAttachment.name,
     };
 
     dispatch(

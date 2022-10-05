@@ -27,13 +27,27 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Pinjaman Polis</p>
         <p class="data-value">
-          {{ $formatDate(loan() && loan().creationDate) }}
+            {{ this.loanDate() }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Bank</p>
         <p class="data-value">
           {{ bankName(getPaymentPolicyLoan.virtualAccountNumber) }}
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 col-sm-12">
+        <p class="data-title mb-2">Unggah Bukti Transfer</p>
+        <p class="data-value">
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showTransferAttachmentPreview"
+          >
+            Lihat
+          </button>
         </p>
       </div>
     </div>
@@ -52,6 +66,21 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-lg-6 col-sm-12 d-flex">
+        <v-checkbox
+          v-model="accepted"
+          color="orange darken-3"
+          value="orange darken-3"
+          hide-details
+        ></v-checkbox>
+        <p>
+          Saya menyetujui transaksi dan kebenaran data yang disampaikan.
+          <a class="bni-primary no-border" href="">Baca selengkapnya</a>
+        </p>
+      </div>
+    </div>
+    
     <div class="row">
       <div class="col-lg-12 col-sm-12">
         <div class="message-bar rounded-lg">
@@ -125,14 +154,20 @@ export default {
     loan() {
       return this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo.length >
         0
-        ? this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo[0]
+        ? this.myPolicyLoanInfo?.financialInfo?.plBalance
+        : null;
+    },
+    loanAccountInfo() {
+      return this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo.length >
+        0
+        ? this.myPolicyLoanInfo?.loanAndDepositInfo?.loanAccountInfo[0]?.creationDate
         : null;
     },
     loanDate() {
-      return this.loan()?.creationDate ?? "-";
+      return this.$formatDate(this.loanAccountInfo()) || "-"
     },
     loanAmount() {
-      return this.loan()?.capitalBalance ?? "-";
+      return this.loan() ?? "-";
     },
     bankName(virtualAccountNumber) {
       if (this.myPolicy.policyWithCode.virtualAccountInfo.length) {
@@ -141,6 +176,14 @@ export default {
         ).bankName;
       }
       return "-";
+    },
+    showTransferAttachmentPreview() {
+      if (this.getPaymentPolicyLoan.transferAttachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getPaymentPolicyLoan.transferAttachment.file
+        );
+        this.image_preview.show = true;
+      }
     },
     showSelfieKtpPreview: function () {
       if (this.getPaymentPolicyLoan.ktpSelfieAttachment.file) {
