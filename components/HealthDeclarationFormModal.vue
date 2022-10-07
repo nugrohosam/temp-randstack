@@ -685,7 +685,7 @@
                 <input
                   class="form-control"
                   type="number"
-                  v-model="healthQuestionnaire[14].tertanggung_date_number"
+                  v-model="healthQuestionnaire[14].tertanggung_number"
                 />
               </ValidateForm>
             </div>
@@ -710,7 +710,7 @@
                 <input
                   class="form-control"
                   type="number"
-                  v-model="healthQuestionnaire[15].tertanggung_date_number"
+                  v-model="healthQuestionnaire[15].tertanggung_number"
                 />
               </ValidateForm>
             </div>
