@@ -54,29 +54,21 @@
         </div>
       </div>
 
-      <br>
+      <br />
       <v-divider></v-divider>
-      <br>
+      <br />
 
       <div class="row">
         <div class="col-lg-2 col-sm-6">
           <p class="data-title mb-2">Nomor Rekening Baru</p>
-            <div class="form-input">
-              <input
-                type="text"
-                class="form-control"
-                v-model="form.newNoRek"
-              />
+          <div class="form-input">
+            <input type="text" class="form-control" v-model="form.newNoRek" />
           </div>
         </div>
         <div class="col-lg-2 col-sm-6">
           <p class="data-title mb-2">Nama Pemilik Rekening Baru</p>
-            <div class="form-input">
-              <input
-                type="text"
-                class="form-control"
-                v-model="form.rekOwner"
-              />
+          <div class="form-input">
+            <input type="text" class="form-control" v-model="form.rekOwner" />
           </div>
         </div>
       </div>
@@ -84,17 +76,17 @@
       <div class="row">
         <div class="col-lg-2 col-sm-6">
           <p class="data-title mb-2">Bank</p>
-            <div >
-              <v-select
-                class="bank_option"
-                :items="optionBank"
-                v-model="form.bank"
-                label=""
-              ></v-select>
-            </div>
+          <div>
+            <v-select
+              class="bank_option"
+              :items="optionBank"
+              v-model="form.bank"
+              label=""
+            ></v-select>
+          </div>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <ValidationProvider
@@ -167,7 +159,9 @@
             rules="required|image"
             v-slot="{ validate, errors }"
           >
-            <p class="data-title mb-2">Halaman Depan Buku Tabungan Baru</p>
+            <p class="data-title mb-2">
+              Unggah Halaman Depan Buku Tabungan Baru
+            </p>
             <input
               type="file"
               ref="inputSavingBookImage"
@@ -194,6 +188,62 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-12">
+          <v-radio-group
+            v-model="form.statusFamilyAttachment"
+            row
+            @change="form.familyAttachment = {}"
+          >
+            <v-radio
+              v-for="(item, index) in radios"
+              :key="index"
+              color="#F15921"
+              v-bind="item"
+            ></v-radio>
+          </v-radio-group>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6 col-sm-12">
+          <ValidationProvider
+            rules="required|image"
+            v-slot="{ validate, errors }"
+          >
+            <p class="data-title mb-2">
+              {{
+                form.statusFamilyAttachment === "KK"
+                  ? "Unggah Kartu Keluarga"
+                  : "Akte Kelahiran (Pemegang polis)"
+              }}
+            </p>
+            <input
+              type="file"
+              ref="inputFamilyAttachment"
+              v-show="false"
+              accept="image/*"
+              @change="
+                (e) => {
+                  validate(e);
+                  addFamilyAttachment(e);
+                }
+              "
+            />
+            <button
+              class="btn btn-primary-outlined"
+              @click.prevent="$refs.inputFamilyAttachment.click()"
+            >
+              Unggah
+            </button>
+            <small>{{ form.familyAttachment.name }}</small>
+            <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+            <br />
+            <span class="text-error">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </div>
+      </div>
+
       <ValidationMessage :validation-message="validationMessage" />
 
       <div class="row">
@@ -213,16 +263,12 @@
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
   name: "benefit-allocation",
-  components: { 
-    
+  components: {
     SaveIcon,
     InfoIcon,
   },
   mounted() {
-    if (
-      $nuxt.$route.name !=
-      "benefit-allocation"
-    ) {
+    if ($nuxt.$route.name != "benefit-allocation") {
       this.showMe = false;
     } else {
       this.showMe = true;
@@ -230,18 +276,24 @@ export default {
   },
   data() {
     return {
+      radios: [
+        { label: "Kartu Keluarga (Pemegang polis)", value: "KK" },
+        {
+          label: "Akte Kelahiran (Pemegang polis)",
+          value: "BIRTHCERTIFICATE",
+        },
+      ],
       validationMessage: [],
       validationAddInvesment: [],
       form: {
-          newNoRek: null,
-          bank: null,
-          rekOwner: null,
-          ktpAttachment: {},
-          savingBookAttachment: {},
-          documentAttachment: {},
-          birthCertificateAttachment: {},
-          kkAttachment: {},
-          ktpSelfieAttachment: {},
+        newNoRek: null,
+        bank: null,
+        rekOwner: null,
+        ktpAttachment: {},
+        savingBookAttachment: {},
+        ktpSelfieAttachment: {},
+        statusFamilyAttachment: "KK",
+        familyAttachment: {},
       },
       modal: {
         message: "",
@@ -290,7 +342,9 @@ export default {
       return this.$store.getters["submission_transaction/getKtpFileName"];
     },
     savingBookFileName() {
-      return this.$store.getters["submission_transaction/getSavingBookFileName"];
+      return this.$store.getters[
+        "submission_transaction/getSavingBookFileName"
+      ];
     },
     myPolicyLoanInfo() {
       return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
@@ -302,7 +356,7 @@ export default {
       return this.$store.getters["submission_transaction/getBanks"];
     },
     optionBank() {
-      return this.banks.map(v => ({ value: v.bankId, text: v.name }))
+      return this.banks.map((v) => ({ value: v.bankId, text: v.name }));
     },
     sumTotalInvestemnt() {
       return this.contractInvests(this.myPolicy.policyWithCode.coverages)
@@ -346,7 +400,9 @@ export default {
         (v) => v.fundCode
       );
       if (indexObject != -1) {
-      this.totalWithdraw -= parseFloat(this.form.items[indexObject].applyAmount);
+        this.totalWithdraw -= parseFloat(
+          this.form.items[indexObject].applyAmount
+        );
         this.form.items.splice(indexObject, 1, {
           applyAmount: this.amount,
           applyUnits: null,
@@ -414,7 +470,18 @@ export default {
         };
       }
     },
-    
+    async addFamilyAttachment(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadAttachment",
+          { file: e.target.files[0], type: this.form.statusFamilyAttachment }
+        );
+        this.form.familyAttachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
     sumTopUpValue() {
       return this.form.items
         .map((item) => parseFloat(item.applyAmount))
@@ -422,14 +489,26 @@ export default {
     },
     validate: async function () {
       this.validationMessage = [];
-      // if (!this.form.ktpSelfieAttachment.name) {
-      //   this.validationMessage.push("Unggah Selfie + KTP diperlukan");
-      // }
-      // if (this.form.items.length < 1) {
-      //   this.validationMessage.push(
-      //     "Pilih dana investasi untuk penarikan dana"
-      //   );
-      // }
+      if (!this.form.newNoRek) {
+        this.validationMessage.push("Nomor Rekening Baru diperlukan");
+      }
+      if (!this.form.rekOwner) {
+        this.validationMessage.push("Nama Pemilik Rekening Baru diperlukan");
+      }
+      if (!this.form.bank) {
+        this.validationMessage.push("Bank diperlukan");
+      }
+      if (!this.form.ktpSelfieAttachment.name) {
+        this.validationMessage.push("Foto Selfie dengan KTP diperlukan");
+      }
+      if (!this.form.ktpAttachment.name) {
+        this.validationMessage.push("Foto KTP diperlukan");
+      }
+      if (!this.form.savingBookAttachment.name) {
+        this.validationMessage.push(
+          "Foto Halaman Depan Buku Tabungan Baru diperlukan"
+        );
+      }
     },
     save: async function () {
       this.validate();
@@ -438,7 +517,6 @@ export default {
           "submission_transaction/benefit_allocation/setBenefitAllocation",
           this.form
         );
-        // patch to action
         this.$router.push({
           path: "./benefit-allocation/resume",
         });
@@ -448,17 +526,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .bank_option {
-    max-width: 250px !important;
-  }
-  .btn-add-investment {
-    max-width: 250px !important;
-  }
-  .btn-save {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 150px;
-    justify-content: center;
-  }
+.bank_option {
+  max-width: 250px !important;
+}
+.btn-add-investment {
+  max-width: 250px !important;
+}
+.btn-save {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 150px;
+  justify-content: center;
+}
 </style>

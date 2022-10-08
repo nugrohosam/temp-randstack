@@ -52,35 +52,27 @@
       </div>
     </div>
 
-    <br>
+    <br />
     <v-divider></v-divider>
-    <br>
+    <br />
 
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nomor Rekening Baru</p>
         <p class="data-value">
-          {{
-            getBenefitAllocation.newNoRek
-          }}
+          {{ getBenefitAllocation.newNoRek }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">
-          Nama Pemilik Nomor Rekening Manfaat Baru
-        </p>
+        <p class="data-title mb-2">Nama Pemilik Nomor Rekening Manfaat Baru</p>
         <p class="data-value">
-          {{
-            getBenefitAllocation.rekOwner
-          }}
+          {{ getBenefitAllocation.rekOwner }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Bank</p>
         <p class="data-value">
-          {{
-            choosenBank(getBenefitAllocation.bank)
-          }}
+          {{ choosenBank(getBenefitAllocation.bank) }}
         </p>
       </div>
     </div>
@@ -115,11 +107,33 @@
 
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Unggah Foto Halaman Depan Buku Tabungan Yang Baru</p>
+        <p class="data-title mb-2">
+          Unggah Foto Halaman Depan Buku Tabungan Yang Baru
+        </p>
         <p class="data-value">
           <button
             class="btn btn-primary-outlined"
             @click.prevent="showSavingBookPreview"
+          >
+            Lihat
+          </button>
+        </p>
+      </div>
+    </div>
+
+    <div v-if="getBenefitAllocation.familyAttachment.file" class="row">
+      <div class="col-lg-6 col-sm-12">
+        <p class="data-title mb-2">
+          {{
+            getBenefitAllocation.statusFamilyAttachment === "KK"
+              ? "Unggah Kartu Keluarga"
+              : "Akte Kelahiran (Pemegang polis)"
+          }}
+        </p>
+        <p class="data-value">
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showFamilyAttachmentPreview"
           >
             Lihat
           </button>
@@ -232,9 +246,17 @@ export default {
         this.image_preview.show = true;
       }
     },
+    showFamilyAttachmentPreview: function () {
+      if (this.getBenefitAllocation.familyAttachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getBenefitAllocation.familyAttachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
     choosenBank: function (bankId) {
-      return this.banks.find(v => v.bankId == bankId).name;
-    },   
+      return this.banks.find((v) => v.bankId == bankId).name;
+    },
     validate: async function () {
       this.validationMessage = [];
       if (!this.accepted) {

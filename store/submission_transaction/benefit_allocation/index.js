@@ -1,14 +1,14 @@
 const state = () => ({
   benefitAllocation: {
-      newNoRek: null,
-      bank: null,
-      rekOwner: null,
-      ktpAttachment: null,
-      documentAttachment: null,
-      savingBookAttachment: null,
-      birthCertificateAttachment: null,
-      kkAttachment: null,
-      ktpSelfieAttachment: null,
+    newNoRek: null,
+    bank: null,
+    rekOwner: null,
+    ktpAttachment: null,
+    documentAttachment: null,
+    savingBookAttachment: null,
+    ktpSelfieAttachment: null,
+    statusFamilyAttachment: "KK",
+    familyAttachment: null,
   },
 });
 
@@ -31,10 +31,18 @@ const actions = {
       ktp_attachment: state.benefitAllocation.ktpAttachment,
       saving_book_attachment: state.benefitAllocation.savingBookAttachment,
       document_attachment: state.benefitAllocation.documentAttachment,
-      birth_certificate_attachment: state.benefitAllocation.birthCertificateAttachment,
-      kk_attachment: state.benefitAllocation.kkAttachment,
+
       ktp_selfie_attachment: state.benefitAllocation.ktpSelfieAttachment,
     };
+
+    if (state.familyAttachment) {
+      if (state.statusFamilyAttachment === "KK") {
+        form.kk_attachment = state.benefitAllocation.familyAttachment;
+      } else {
+        form.birth_certificate_attachment =
+          state.benefitAllocation.familyAttachment;
+      }
+    }
 
     dispatch(
       "toggleOverlayLoading",
