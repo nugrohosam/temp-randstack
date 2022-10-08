@@ -199,14 +199,16 @@ export default {
     },
     validate() {
       this.validationMessage = [];
-      if (!this.form.startPremiumHolidayDate) {
-        this.validationMessage.push("Tanggal Awal Cuti Premi diperlukan");
-      }
-      if (!this.form.endPremiumHolidayDate) {
-        this.validationMessage.push("Tanggal Akhir Cuti Premi diperlukan");
-      }
-      if (!this.form.ktpSelfieAttachment.name) {
-        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+      if (this.form.status != "cancel") {
+        if (!this.form.startPremiumHolidayDate) {
+          this.validationMessage.push("Tanggal Awal Cuti Premi diperlukan");
+        }
+        if (!this.form.endPremiumHolidayDate) {
+          this.validationMessage.push("Tanggal Akhir Cuti Premi diperlukan");
+        }
+        if (!this.form.ktpSelfieAttachment.name) {
+          this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+        }
       }
     },
     save() {
