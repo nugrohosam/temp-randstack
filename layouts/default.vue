@@ -238,6 +238,12 @@ export default {
       // breakpoint tablet <1264px
       this.changeAppDrawer(newWidth);
     },
+    $route(to, from) {
+      const lastPath = to.path.split("/").pop();
+      if (lastPath === "thankyou") {
+        this.getMyPolicy();
+      }
+    },
   },
   mounted() {
     this.changeAppDrawer(this.windowWidth);
@@ -372,9 +378,7 @@ export default {
     },
 
     getBanks: async function () {
-      await this.$store.dispatch(
-        "submission_transaction/getBanks"
-      );
+      await this.$store.dispatch("submission_transaction/getBanks");
     },
 
     showNotification: function () {
