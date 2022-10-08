@@ -105,13 +105,13 @@
               </div>
             </div>
             <div class="col-lg-4 col-sm-6" v-if="!isHavePlans(coverages_selected)">
-              <p class="data-title mb-2">Milimal Uang Pertanggungan</p>
+              <p class="data-title mb-2">Minimal Uang Pertanggungan</p>
               <p class="data-value">
                 {{ $convertCurrency(minSurValue(coverages_selected)) }}
               </p>
             </div>
             <div class="col-lg-4 col-sm-6" v-if="!isHavePlans(coverages_selected)">
-              <p class="data-title mb-2">Maximal Uang Pertanggungan</p>
+              <p class="data-title mb-2">Maksimal Uang Pertanggungan</p>
               <p class="data-value">
                 {{ $convertCurrency(maxSurValue(coverages_selected)) }}
               </p>
