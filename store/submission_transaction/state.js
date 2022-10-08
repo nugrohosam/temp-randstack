@@ -68,6 +68,13 @@ export default {
       icon: "ic_edit.svg",
     },
     {
+      active: true,
+      hidden: false,
+      name: "Penambahan Uang Pertanggungan",
+      link: "/transaction/submission/increase-sa",
+      icon: "ic_plus_square.svg",
+    },
+    {
       active: false,
       hidden: false,
       name: "Penambahan Produk Rider",
@@ -79,13 +86,6 @@ export default {
       hidden: false,
       name: "Penambahan Dana Investasi",
       link: "/transaction/submission/add-investment-fund",
-      icon: "ic_plus_square.svg",
-    },
-    {
-      active: false,
-      hidden: false,
-      name: "Penambahan Uang Pertanggungan",
-      link: "/transaction/submission/add-defered-money",
       icon: "ic_plus_square.svg",
     },
     {
