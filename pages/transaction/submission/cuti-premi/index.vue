@@ -172,6 +172,10 @@ export default {
       return this.$formatDate(dueDate.setMonth(dueDate.getMonth() + 1))
     },
   },
+  mounted() {
+    const date = this.myPolicy.policyWithCode.holidayIndi == "Y" ? this.myPolicy.policyWithCode.holidayEndDate : this.form.endPremiumHolidayDate;
+    this.form.endPremiumHolidayDate = date != "" ? new Date(date).toISOString().slice(0,10) : "";
+  },
   watch: {
     isSetHoliday: {
       handler() {
@@ -213,7 +217,9 @@ export default {
     },
     save() {
       const dueDate = new Date(this.dueDatePremi)
-      this.form.startPremiumHolidayDate = this.$moment(dueDate.setMonth(dueDate.getMonth() + 1)).format("YYYY-MM-DD")
+      this.form.startPremiumHolidayDate = this.$moment(dueDate.setMonth(dueDate.getMonth() + 1)).format("YYYY-MM-DD");
+      this.form.endPremiumHolidayDate = this.myPolicy.policyWithCode.holidayIndi == "Y" && this.form.status == "cancel" ? this.myPolicy.policyWithCode.holidayEndDate : this.form.endPremiumHolidayDate;
+      this.form.endPremiumHolidayDate = this.$moment(this.form.endPremiumHolidayDate).format("YYYY-MM-DD")
       this.validate();
       if (this.validationMessage.length) return false;
       this.$store.commit(
