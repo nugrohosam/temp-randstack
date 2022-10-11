@@ -34,7 +34,20 @@
         <p class="data-value">{{ $formatDate(paidupDatePremi) }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Masa Wajib Bayar Premi</p>
+        <p class="data-title d-flex mb-2">Masa Wajib Bayar Premi&nbsp
+          <span>
+            <VDropdown :distance="6" :skidding="-190">
+              <button>
+                <info-icon class="ic-primary mr-2"></info-icon>
+              </button>
+              <template #popper>
+                <div style="width: 240px; border-radius: 40px">
+                  <InfoPanel :style="'max-height: 420px;'" :information="'Pengajuan cuti tidak bisa diajukan jika masa wajib bayar premi masih di atas tanggal awal pengajuan cuti premi'" />
+                </div>
+              </template>
+            </VDropdown>
+          </span>
+        </p>
         <p class="data-value">
           {{ $formatDate(myPolicy.policyWithCode.lockedPeriodDate) }}
         </p>
@@ -43,14 +56,29 @@
 
     <hr class="my-4" />
 
+    <div v-if="getCutiPremi.oldStartPremiumHolidayDate != '' && getCutiPremi.oldEndPremiumHolidayDate != ''" class="row">
+      <div class="col-lg-4 col-sm-6">
+        <p class="data-title mb-2">Tanggal Awal Cuti Premi Sebelumnya</p>
+        <div class="data-value">
+          {{ $formatDate(getCutiPremi.oldStartPremiumHolidayDate) }}
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <p class="data-title mb-2">Tanggal Akhir Cuti Premi Sebelumnya</p>
+        <div class="data-value">
+          {{ $formatDate(getCutiPremi.oldEndPremiumHolidayDate) }}
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Awal Cuti Premi</p>
-        <p class="data-value">{{ getCutiPremi.startPremiumHolidayDate }}</p>
+        <p class="data-value">{{ $formatDate(getCutiPremi.startPremiumHolidayDate) }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Akhir Cuti Premi</p>
-        <p class="data-value">{{ getCutiPremi.endPremiumHolidayDate }}</p>
+        <p class="data-value">{{ $formatDate(getCutiPremi.endPremiumHolidayDate) }}</p>
       </div>
     </div>
 
@@ -114,8 +142,15 @@
 
 <script>
 import resumePageMixin from "@/mixins/resumePage";
+import InfoPanel from "../../../../components/InfoPanel.vue";
+import { InfoIcon } from "vue-feather-icons";
+
 
 export default {
+  components: {
+    InfoIcon,
+    InfoPanel
+  },
   mixins: [resumePageMixin],
   data() {
     return {

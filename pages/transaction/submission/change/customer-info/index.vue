@@ -459,7 +459,7 @@
                 {{
                   selectedPolicy.person.email
                     ? selectedPolicy.person.email
-                    : "-"
+                    : ""
                 }}
               </p>
               <div class="form-input" v-show="emailEditable">

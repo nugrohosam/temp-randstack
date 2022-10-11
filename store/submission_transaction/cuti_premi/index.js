@@ -3,6 +3,8 @@ const state = () => ({
     status: "",
     startPremiumHolidayDate: "",
     endPremiumHolidayDate: "",
+    oldStartPremiumHolidayDate: "",
+    oldEndPremiumHolidayDate: "",
     ktpSelfieAttachment: "",
   },
 });

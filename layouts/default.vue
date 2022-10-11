@@ -105,11 +105,6 @@
                 </template>
               </VDropdown>
             </span>
-            <!-- <span>
-              <a href="">
-                <help-circle-icon size="1.5x"></help-circle-icon>
-              </a>
-            </span> -->
             <span>
               <div class="small-profile">
                 <div class="sec-title">

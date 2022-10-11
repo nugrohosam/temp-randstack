@@ -26,20 +26,6 @@
             <v-divider class="item-line"></v-divider>
           </div>
         </template>
-
-        <!-- <div class="items opened">
-          <div class="items-container">
-            <v-badge bordered dot inline left color="#F15921"></v-badge>
-            <div class="items-value">
-              <p class="item-title">Cuti Premi</p>
-              <div class="item-bottom">
-                <p class="item-data">Pengajuan Berhasil</p>
-                <p class="item-date">Pengajuan Berhasil</p>
-              </div>
-            </div>
-          </div>
-          <v-divider class="mt-5 mb-5"></v-divider>
-        </div> -->
       </v-card-text>
     </template>
     <template v-else>

@@ -33,7 +33,20 @@
           <p class="data-value">{{ $formatDate(paidupDatePremi) }}</p>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Masa Wajib Bayar Premi</p>
+          <p class="data-title mb-2 d-flex">Masa Wajib Bayar Premi&nbsp
+            <span>
+              <VDropdown :distance="6" :skidding="-190">
+                <button>
+                  <info-icon class="ic-primary mr-2"></info-icon>
+                </button>
+                <template #popper>
+                  <div style="width: 240px; border-radius: 40px">
+                    <InfoPanel :style="'max-height: 420px;'" :information="'Pengajuan cuti tidak bisa diajukan jika masa wajib bayar premi masih di atas tanggal awal pengajuan cuti premi'" />
+                  </div>
+                </template>
+              </VDropdown>
+            </span>
+          </p>
           <p class="data-value">{{ $formatDate(myPolicy.policyWithCode.lockedPeriodDate) }}</p>
         </div>
       </div>
@@ -53,6 +66,22 @@
         </div>
       </div>
 
+      <div v-if="!isSetHoliday" class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Tanggal Awal Cuti Premi</p>
+          <div class="data-value">
+            {{ $formatDate(form.oldStartPremiumHolidayDate) }}
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Tanggal Akhir Cuti Premi</p>
+          <div class="data-value">
+            {{ $formatDate(form.oldEndPremiumHolidayDate) }}
+          </div>
+        </div>
+      </div>
+      
+
       <div v-if="form.status != 'cancel'" class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tanggal Awal Cuti Premi</p>
@@ -71,6 +100,8 @@
           </div>
         </div>
       </div>
+
+
       <div v-else class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tanggal Batal</p>
@@ -110,11 +141,15 @@
       <div class="row">
         <div class="col-lg-12 col-sm-12">
           <div class="message-bar rounded-lg">
-            <p><b>Perhatian !</b></p>
-            <ul>
-              <li>Polis tidak dalam masa Cuti Premi Otomatis</li>
-              <li>Polis tidak dalam masa Must Pay Period</li>
-            </ul>
+              <div class="d-flex">
+                <info-icon class="ic-primary mr-2"></info-icon>
+                Perhatian !
+              </div>
+              <br>
+              <ul>
+                <li>Polis tidak dalam masa Cuti Premi Otomatis</li>
+                <li>Polis tidak dalam masa Must Pay Period</li>
+              </ul>
           </div>
         </div>
       </div>
@@ -133,8 +168,14 @@
 </template>
 
 <script>
+import { InfoIcon } from "vue-feather-icons";
+import InfoPanel from "../../../../components/InfoPanel.vue";
+
 export default {
-  
+  components: {
+    InfoIcon,
+    InfoPanel
+  },  
   name: "cuti-premi",
   data() {
     return {
@@ -142,6 +183,8 @@ export default {
         status: "",
         startPremiumHolidayDate: "",
         endPremiumHolidayDate: "",
+        oldStartPremiumHolidayDate: "",
+        oldEndPremiumHolidayDate: "",
         ktpSelfieAttachment: {},
       },
       radios: [
@@ -174,7 +217,12 @@ export default {
   },
   mounted() {
     const date = this.myPolicy.policyWithCode.holidayIndi == "Y" ? this.myPolicy.policyWithCode.holidayEndDate : this.form.endPremiumHolidayDate;
-    this.form.endPremiumHolidayDate = date != "" ? new Date(date).toISOString().slice(0,10) : "";
+    this.form.endPremiumHolidayDate = date != "" ? date.slice(0,10) : "";
+
+    if (!this.isSetHoliday) {
+      this.form.oldStartPremiumHolidayDate = this.myPolicy.policyWithCode.holidayStartDate;
+      this.form.oldEndPremiumHolidayDate = this.myPolicy.policyWithCode.holidayEndDate;
+    }
   },
   watch: {
     isSetHoliday: {
