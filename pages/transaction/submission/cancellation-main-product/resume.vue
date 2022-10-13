@@ -61,6 +61,7 @@
         </p>
       </div>
     </div>
+
     <div class="row">
       <div class="col-12">
         <p class="data-title mb-1">Jenis dan Dana Investasi yang dimiliki</p>
@@ -107,23 +108,14 @@
         </template>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Lihat Foto Selfie dengan KTP</p>
-        <button
-          class="btn btn-primary-outlined"
-          @click.prevent="showSelfieKtpPreview"
-        >
-          Lihat
-        </button>
-      </div>
-    </div>
+
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-1">Alasan</p>
         <p class="data-value">{{ reasonSelected[0].name }}</p>
       </div>
     </div>
+
     <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
@@ -138,6 +130,7 @@
         </p>
       </div>
     </div>
+
     <div class="row">
       <div class="col-lg-12 col-sm-12">
         <div class="message-bar rounded-lg">
@@ -164,11 +157,7 @@
         </button>
       </div>
     </div>
-    <ModalImagePreview
-      :src="image_preview.src"
-      :show="image_preview.show"
-      @closeImagePreview="image_preview.show = false"
-    />
+
   </div>
 </template>
 <script>
@@ -241,9 +230,6 @@ export default {
     };
   },
   computed: {
-    selfieKtpFile() {
-      return this.$store.getters["submission_transaction/getSelfieKtpFile"];
-    },
     coveragesSelected() {
       return this.$store.getters["submission_transaction/getCoveragesSelected"];
     },
@@ -275,8 +261,6 @@ export default {
           this.$router.push({
             path: "./thankyou?transaction_ids=" + transactionIds.join(","),
           });
-        } else {
-          // check validation error
         }
       }
     },
@@ -286,12 +270,6 @@ export default {
         this.validationMessage.push(
           "Setujui transaksi untuk memproses pengajuan"
         );
-      }
-    },
-    showSelfieKtpPreview: function () {
-      if (this.selfieKtpFile) {
-        this.image_preview.src = URL.createObjectURL(this.selfieKtpFile);
-        this.image_preview.show = true;
       }
     },
   },

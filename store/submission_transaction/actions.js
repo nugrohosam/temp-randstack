@@ -267,7 +267,6 @@ export default {
     const form = {
       items: items,
       cancel_reason: getters.getReasonSelected[0].name,
-      ktp_selfie_attachment: getters.getSelfieKtpUploadFileName,
     };
     dispatch(
       "toggleOverlayLoading",
@@ -284,7 +283,6 @@ export default {
           { root: true }
         );
         const result = dispatch("getMyPolicy");
-        commit("clearUploadSelfieKtpFile");
         commit("clearUploadKtpFile");
         commit("clearCoveragesSelected");
         // commit('clearReasonSelected');
