@@ -250,6 +250,23 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-lg-12 col-sm-12">
+          <div class="message-bar rounded-lg">
+              <div class="d-flex">
+                <info-icon class="ic-primary mr-2"></info-icon>
+                Perhatian !
+              </div>
+              <br>
+              <ul>
+                <li>
+                  Pemilik rekning baru harus pihak yang terdaftar dalam polis
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+      
       <ValidationMessage :validation-message="validationMessage" />
 
       <div class="row">
@@ -430,6 +447,9 @@ export default {
       }
       if (!this.form.savingBookAttachment.name) {
         this.validationMessage.push("Unggah Halaman Depan Buku Tabungan Yang Baru diperlukan");
+      }
+      if (!this.form.familyAttachment) {
+        this.validationMessage.push("Unggah " + this.form.statusFamilyAttachment + "diperlukan");
       }
     },
     save: async function () {
