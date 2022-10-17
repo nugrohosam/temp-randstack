@@ -439,6 +439,15 @@ export default {
     },
     validate: async function () {
       this.validationMessage = [];
+      if (!this.form.newNoRek) {
+        this.validationMessage.push("Nomor Rekening Baru diperlukan");
+      }
+      if (!this.form.rekOwner) {
+        this.validationMessage.push("Nama Pemilik Rekening Baru diperlukan");
+      }
+      if (!this.form.bank) {
+        this.validationMessage.push("Bank diperlukan");
+      }
       if (!this.form.ktpSelfieAttachment.name) {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
       }
