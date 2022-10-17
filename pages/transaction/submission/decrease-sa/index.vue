@@ -212,22 +212,29 @@
           </div>
 
           <div class="row">
-            <div class="col-lg-8 col-sm-12">
-              <div class="message-bar d-flex rounded-lg">
-                <ul>
-                  <li>
-                    Minimal dan Maksimal Uang pertanggungan berdasarkan atas premi yang dibayarkan! 
-                  </li>
-                  <li>
-                    Penurunan Plan atau Benefit maksimal 1 tingkat!
-                  </li>
-                  <li>
-                    Akan ada kemungkinan Penurunan atau Peningkatan Premi yang di tagihkan!
-                  </li>
-                </ul>
+            <div class="col-lg-12 col-sm-12">
+              <div class="message-bar rounded-lg">
+                  <div class="d-flex">
+                    <info-icon class="ic-primary mr-2"></info-icon>
+                    Perhatian !
+                  </div>
+                  <br>
+                  <ul>
+                    <li>
+                      Minimal dan Maksimal Uang pertanggungan berdasarkan atas premi yang dibayarkan! 
+                    </li>
+                    <li>
+                      Penurunan Plan atau Benefit maksimal 1 tingkat!
+                    </li>
+                    <li>
+                      Akan ada kemungkinan Penurunan atau Peningkatan Premi yang di tagihkan!
+                    </li>
+                  </ul>
               </div>
             </div>
           </div>
+          
+          <ValidationMessage :validation-message="validationMessage" />
 
           <div class="row">
             <div class="col-12">
@@ -256,14 +263,6 @@
         <p style="color: black">Mohon Tunggu...</p>
       </div>
     </template>
-
-    <NuxtChild />
-    <ModalMessage
-      :message="modal.message"
-      :show="modal.show"
-      :button="modal.button"
-      @closeModal="modal.show = false"
-    />
   </div>
 </template>
 
@@ -566,9 +565,15 @@ export default {
       this.plan = null
       this.sum_assured = null
     },
-    validate: async function () {
+    validate() {
       this.validationMessage = [];
-    }
+      if (!this.form.ktpSelfieAttachment.name) {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+      }
+      if (this.form.items.length < 1) {
+        this.validationMessage.push("Minimal pilih salah satu produk");
+      }
+    },
   },
 };
 </script>

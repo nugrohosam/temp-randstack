@@ -8,6 +8,8 @@ const state = () => ({
       savingBookAttachment: null,
       birthCertificateAttachment: null,
       kkAttachment: null,
+      familyAttachment: null,
+      statusFamilyAttachment: "KK",
       ktpSelfieAttachment: null,
   },
 });
@@ -28,13 +30,20 @@ const actions = {
       new_no_rek: state.changePayeeRefundAccount.newNoRek,
       bank: state.changePayeeRefundAccount.bank,
       rek_owner: state.changePayeeRefundAccount.rekOwner,
-      ktp_attachment: state.changePayeeRefundAccount.ktpAttachment,
-      saving_book_attachment: state.changePayeeRefundAccount.savingBookAttachment,
-      document_attachment: state.changePayeeRefundAccount.documentAttachment,
-      birth_certificate_attachment: state.changePayeeRefundAccount.birthCertificateAttachment,
-      kk_attachment: state.changePayeeRefundAccount.kkAttachment,
-      ktp_selfie_attachment: state.changePayeeRefundAccount.ktpSelfieAttachment,
+      ktp_attachment: state.changePayeeRefundAccount.ktpAttachment?.name || null,
+      saving_book_attachment: state.changePayeeRefundAccount.savingBookAttachment?.name || null,
+      document_attachment: state.changePayeeRefundAccount.documentAttachment?.name || null,
+      ktp_selfie_attachment: state.changePayeeRefundAccount.ktpSelfieAttachment?.name || null,
     };
+
+    if (state.changePayeeRefundAccount.familyAttachment) {
+      if (state.changePayeeRefundAccount.statusFamilyAttachment === "KK") {
+        form.kk_attachment = state.changePayeeRefundAccount.familyAttachment?.name || null;
+      } else {
+        form.birth_certificate_attachment =
+          state.changePayeeRefundAccount.familyAttachment?.name || null;
+      }
+    }
 
     dispatch(
       "toggleOverlayLoading",

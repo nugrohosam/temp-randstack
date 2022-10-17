@@ -185,23 +185,15 @@ export default {
         },
       },
     },
-    // redirect: {
-    //   login: '/auth/login',
-    //   logout: '/auth/login',
-    //   home: '/transaction/status'
-    // }
   },
 
   components: {
     dirs: ["~/components", "~/components/submission_transaction"],
   },
-  // Serve local port
   server: {
     host: "0.0.0.0",
     port: 3000, // default: 3000
   },
-
-  // Router
   router: {
     // middleware: ['auth']
   },

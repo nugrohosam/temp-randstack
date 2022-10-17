@@ -78,19 +78,24 @@
     <ValidationMessage :validation-message="validationMessage" />
     
     <div class="row">
-      <div class="col-lg-8 col-sm-12">
-        <div class="message-bar d-flex rounded-lg">
-          <ul>
-            <li>
-              Minimal dan Maksimal Uang pertanggungan berdasarkan atas premi yang dibayarkan! 
-            </li>
-            <li>
-              Penurunan Plan atau Benefit maksimal 1 tingkat!
-            </li>
-            <li>
-              Akan ada kemungkinan Penurunan atau Peningkatan Premi yang di tagihkan!
-            </li>
-          </ul>
+      <div class="col-lg-12 col-sm-12">
+        <div class="message-bar rounded-lg">
+            <div class="d-flex">
+              <info-icon class="ic-primary mr-2"></info-icon>
+              Perhatian !
+            </div>
+            <br>
+            <ul>
+              <li>
+                Minimal dan Maksimal Uang pertanggungan berdasarkan atas premi yang dibayarkan! 
+              </li>
+              <li>
+                Penurunan Plan atau Benefit maksimal 1 tingkat!
+              </li>
+              <li>
+                Akan ada kemungkinan Penurunan atau Peningkatan Premi yang di tagihkan!
+              </li>
+            </ul>
         </div>
       </div>
     </div>

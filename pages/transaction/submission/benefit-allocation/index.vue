@@ -59,16 +59,24 @@
       <br />
 
       <div class="row">
-        <div class="col-lg-2 col-sm-6">
+        <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Rekening Baru</p>
-          <div class="form-input">
-            <input type="text" class="form-control" v-model="form.newNoRek" />
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                v-model="form.newNoRek"
+              />
           </div>
         </div>
-        <div class="col-lg-2 col-sm-6">
+        <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemilik Rekening Baru</p>
-          <div class="form-input">
-            <input type="text" class="form-control" v-model="form.rekOwner" />
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                v-model="form.rekOwner"
+              />
           </div>
         </div>
       </div>
@@ -294,6 +302,8 @@ export default {
         ktpSelfieAttachment: {},
         statusFamilyAttachment: "KK",
         familyAttachment: {},
+        kkAttachment: {},
+        ktpSelfieAttachment: {},
       },
       modal: {
         message: "",

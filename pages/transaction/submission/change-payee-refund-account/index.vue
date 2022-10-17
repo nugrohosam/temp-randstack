@@ -59,7 +59,7 @@
       <br>
 
       <div class="row">
-        <div class="col-lg-2 col-sm-6">
+        <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Rekening Baru</p>
             <div class="form-input">
               <input
@@ -69,7 +69,7 @@
               />
           </div>
         </div>
-        <div class="col-lg-2 col-sm-6">
+        <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemilik Rekening Baru</p>
             <div class="form-input">
               <input
@@ -194,6 +194,62 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-12">
+          <v-radio-group
+            v-model="form.statusFamilyAttachment"
+            row
+            @change="form.familyAttachment = {}"
+          >
+            <v-radio
+              v-for="(item, index) in radios"
+              :key="index"
+              color="#F15921"
+              v-bind="item"
+            ></v-radio>
+          </v-radio-group>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6 col-sm-12">
+          <ValidationProvider
+            rules="required|image"
+            v-slot="{ validate, errors }"
+          >
+            <p class="data-title mb-2">
+              {{
+                form.statusFamilyAttachment === "KK"
+                  ? "Unggah Kartu Keluarga"
+                  : "Akte Kelahiran (Pemegang polis)"
+              }}
+            </p>
+            <input
+              type="file"
+              ref="inputFamilyAttachment"
+              v-show="false"
+              accept="image/*"
+              @change="
+                (e) => {
+                  validate(e);
+                  addFamilyAttachment(e);
+                }
+              "
+            />
+            <button
+              class="btn btn-primary-outlined"
+              @click.prevent="$refs.inputFamilyAttachment.click()"
+            >
+              Unggah
+            </button>
+            <small>{{ form.familyAttachment.name }}</small>
+            <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+            <br />
+            <span class="text-error">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </div>
+      </div>
+
       <ValidationMessage :validation-message="validationMessage" />
 
       <div class="row">
@@ -230,18 +286,25 @@ export default {
   },
   data() {
     return {
+      radios: [
+        { label: "Kartu Keluarga (Pemegang polis)", value: "KK" },
+        {
+          label: "Akte Kelahiran (Pemegang polis)",
+          value: "BIRTHCERTIFICATE",
+        },
+      ],
       validationMessage: [],
       validationAddInvesment: [],
       form: {
-          newNoRek: null,
-          bank: null,
-          rekOwner: null,
-          ktpAttachment: {},
-          savingBookAttachment: {},
-          documentAttachment: {},
-          birthCertificateAttachment: {},
-          kkAttachment: {},
-          ktpSelfieAttachment: {},
+        newNoRek: null,
+        bank: null,
+        rekOwner: null,
+        ktpAttachment: {},
+        savingBookAttachment: {},
+        ktpSelfieAttachment: {},
+        statusFamilyAttachment: "KK",
+        familyAttachment: {},
+        kkAttachment: {},
       },
       modal: {
         message: "",
@@ -276,22 +339,8 @@ export default {
         contractInvest = contractInvest.concat(item.contractInvests);
       }
     });
-
-    this.investment_types = contractInvest.map((item) => ({
-      value: item.fundCode,
-      text: this.$fundName(item.fundCode),
-    }));
   },
   computed: {
-    selfieKtpFileName() {
-      return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
-    },
-    ktpFileName() {
-      return this.$store.getters["submission_transaction/getKtpFileName"];
-    },
-    savingBookFileName() {
-      return this.$store.getters["submission_transaction/getSavingBookFileName"];
-    },
     myPolicyLoanInfo() {
       return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
     },
@@ -304,66 +353,19 @@ export default {
     optionBank() {
       return this.banks.map(v => ({ value: v.bankId, text: v.name }))
     },
-    sumTotalInvestemnt() {
-      return this.contractInvests(this.myPolicy.policyWithCode.coverages)
-        .map(
-          (item) =>
-            item.accumUnits *
-            this.getFundPrices(
-              this.myPolicy.policyWithCode.fundPrices,
-              item.fundCode
-            )
-        )
-        .reduce((a, b) => a + b, 0);
-    },
   },
   methods: {
-    contractInvests(coverages) {
-      var contractInvest = [];
-
-      coverages.forEach((item) => {
-        if (item?.contractInvests.length > 0) {
-          contractInvest = contractInvest.concat(item.contractInvests);
-        }
-      });
-
-      return contractInvest;
-    },
-    removeInvestment(i) {
-      this.totalWithdraw -= this.form.items[i].applyAmount;
-      this.form.items.splice(i, 1);
-    },
-    addInvestment() {
-      this.validationAddInvesment = [];
-      if (!this.investment_choosen) {
-        this.validationAddInvesment.push("Jenis Dana Investasi perlu dipilih");
-        return false;
+    async addFamilyAttachment(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadAttachment",
+          { file: e.target.files[0], type: this.form.statusFamilyAttachment }
+        );
+        this.form.familyAttachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
       }
-
-      const indexObject = this.$indexOfObject(
-        this.form.items,
-        this.investment_choosen,
-        (v) => v.fundCode
-      );
-      if (indexObject != -1) {
-      this.totalWithdraw -= parseFloat(this.form.items[indexObject].applyAmount);
-        this.form.items.splice(indexObject, 1, {
-          applyAmount: this.amount,
-          applyUnits: null,
-          fundCode: this.investment_choosen,
-        });
-        this.totalWithdraw += parseFloat(this.amount);
-      } else {
-        this.totalWithdraw += parseFloat(this.amount);
-        this.form.items.push({
-          applyAmount: this.amount,
-          applyUnits: null,
-          fundCode: this.investment_choosen,
-        });
-      }
-
-      this.amount = null;
-      this.investment_choosen = null;
     },
     getFundPrices(fundPrices = [], fundCode) {
       if (!fundPrices.length) return 0;
@@ -377,7 +379,6 @@ export default {
       const found = fundPrices.find((item) => item.fundCode === fundCode);
       return found ? this.$moment(found.pricingDate).format("DD/MM/Y") : "-";
     },
-
     async addSelfieKtpImage(e) {
       if (e.target.files[0]) {
         const result = await this.$store.dispatch(
@@ -414,7 +415,6 @@ export default {
         };
       }
     },
-    
     sumTopUpValue() {
       return this.form.items
         .map((item) => parseFloat(item.applyAmount))
@@ -422,14 +422,15 @@ export default {
     },
     validate: async function () {
       this.validationMessage = [];
-      // if (!this.form.ktpSelfieAttachment.name) {
-      //   this.validationMessage.push("Unggah Selfie + KTP diperlukan");
-      // }
-      // if (this.form.items.length < 1) {
-      //   this.validationMessage.push(
-      //     "Pilih dana investasi untuk penarikan dana"
-      //   );
-      // }
+      if (!this.form.ktpSelfieAttachment.name) {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+      }
+      if (!this.form.ktpAttachment.name) {
+        this.validationMessage.push("Unggah KTP diperlukan");
+      }
+      if (!this.form.savingBookAttachment.name) {
+        this.validationMessage.push("Unggah Halaman Depan Buku Tabungan Yang Baru diperlukan");
+      }
     },
     save: async function () {
       this.validate();
@@ -449,9 +450,6 @@ export default {
 </script>
 <style lang="scss" scoped>
   .bank_option {
-    max-width: 250px !important;
-  }
-  .btn-add-investment {
     max-width: 250px !important;
   }
   .btn-save {

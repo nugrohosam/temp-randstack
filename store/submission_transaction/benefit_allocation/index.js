@@ -6,9 +6,11 @@ const state = () => ({
     ktpAttachment: null,
     documentAttachment: null,
     savingBookAttachment: null,
-    ktpSelfieAttachment: null,
-    statusFamilyAttachment: "KK",
+    birthCertificateAttachment: null,
+    kkAttachment: null,
     familyAttachment: null,
+    statusFamilyAttachment: "KK",
+    ktpSelfieAttachment: null,
   },
 });
 
@@ -28,19 +30,18 @@ const actions = {
       new_no_rek: state.benefitAllocation.newNoRek,
       bank: state.benefitAllocation.bank,
       rek_owner: state.benefitAllocation.rekOwner,
-      ktp_attachment: state.benefitAllocation.ktpAttachment,
-      saving_book_attachment: state.benefitAllocation.savingBookAttachment,
-      document_attachment: state.benefitAllocation.documentAttachment,
-
-      ktp_selfie_attachment: state.benefitAllocation.ktpSelfieAttachment,
+      ktp_attachment: state.benefitAllocation.ktpAttachment?.name || null,
+      saving_book_attachment: state.benefitAllocation.savingBookAttachment?.name || null,
+      document_attachment: state.benefitAllocation.documentAttachment?.name || null,
+      ktp_selfie_attachment: state.benefitAllocation.ktpSelfieAttachment?.name || null,
     };
 
-    if (state.familyAttachment) {
-      if (state.statusFamilyAttachment === "KK") {
-        form.kk_attachment = state.benefitAllocation.familyAttachment;
+    if (state.benefitAllocation.familyAttachment) {
+      if (state.benefitAllocation.statusFamilyAttachment === "KK") {
+        form.kk_attachment = state.benefitAllocation.familyAttachment?.name || null;
       } else {
         form.birth_certificate_attachment =
-          state.benefitAllocation.familyAttachment;
+          state.benefitAllocation.familyAttachment?.name || null;
       }
     }
 

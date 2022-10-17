@@ -127,6 +127,26 @@
       </div>
     </div>
 
+    <div v-if="getChangePayeeRefundAccount.familyAttachment.file" class="row">
+      <div class="col-lg-6 col-sm-12">
+        <p class="data-title mb-2">
+          {{
+            getChangePayeeRefundAccount.statusFamilyAttachment === "KK"
+              ? "Unggah Kartu Keluarga"
+              : "Akte Kelahiran (Pemegang polis)"
+          }}
+        </p>
+        <p class="data-value">
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showFamilyAttachmentPreview"
+          >
+            Lihat
+          </button>
+        </p>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
@@ -235,6 +255,14 @@ export default {
     choosenBank: function (bankId) {
       return this.banks.find(v => v.bankId == bankId).name;
     },   
+    showFamilyAttachmentPreview: function () {
+      if (this.getChangePayeeRefundAccount.familyAttachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getChangePayeeRefundAccount.familyAttachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
     validate: async function () {
       this.validationMessage = [];
       if (!this.accepted) {
