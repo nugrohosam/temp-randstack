@@ -76,6 +76,16 @@
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
+        <p class="data-title mb-2">
+          Nama Cabang
+        </p>
+        <p class="data-value">
+          {{
+            getChangePayeeRefundAccount.branch
+          }}
+        </p>
+      </div>
+      <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Bank</p>
         <p class="data-value">
           {{

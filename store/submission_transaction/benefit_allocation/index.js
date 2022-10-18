@@ -2,6 +2,7 @@ const state = () => ({
   benefitAllocation: {
     newNoRek: null,
     bank: null,
+    branch: null,
     rekOwner: null,
     ktpAttachment: null,
     documentAttachment: null,
@@ -29,6 +30,7 @@ const actions = {
     const form = {
       new_no_rek: state.benefitAllocation.newNoRek,
       bank: state.benefitAllocation.bank,
+      branch: state.benefitAllocation.branch,
       rek_owner: state.benefitAllocation.rekOwner,
       ktp_attachment: state.benefitAllocation.ktpAttachment?.name || null,
       saving_book_attachment: state.benefitAllocation.savingBookAttachment?.name || null,

@@ -1,20 +1,32 @@
 <template>
   <div>
-    <!-- <div v-show="showMe">
+    <div v-show="showMe">
+      
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemegang Polis</p>
-          <p class="data-value">JHON DOE</p>
+          <p class="data-value">
+            {{ myPolicy.policyWithCode.policyHolder.person.firstName }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Polis</p>
-          <p class="data-value">BLPM20113145</p>
+          <p class="data-value">
+            {{ myPolicy.policyWithCode.policyNumber }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title">Informasi Virtual Account</p>
-          <v-select :items="items" dense outlined></v-select>
+          <p class="data-title mb-2">Informasi Virtual Account</p>
+          <v-select
+            :items="virtualAccountOptions"
+            v-model="form.virtualAccountNumber"
+            label="Virtual Account"
+            dense
+            outlined
+          ></v-select>
         </div>
       </div>
+
       <div class="row">
         <div class="col-md-12">
           <p class="data-title">Jenis dan Dana Investasi yang dimiliki</p>
@@ -23,21 +35,65 @@
           <template>
             <v-data-table
               :headers="table.headers"
-              :items="table.items"
-              :page.sync="page"
-              :items-per-page="itemsPerPage"
               mobile-breakpoint="480"
               hide-default-footer
-              @page-count="pageCount = $event"
+              :items="contractInvests(myPolicy.policyWithCode.coverages)"
             >
-              <template v-slot:item.no="{ item, index }">
+              <template v-slot:item.no="{ index }">
                 {{ index + 1 }}
+              </template>
+              <template v-slot:item.investmentType="{ item }">
+                {{ (item.fundCode && $fundName(item.fundCode)) || "-" }}
+              </template>
+              <template v-slot:item.currency="{ item }">
+                {{ $currencyName(myPolicy.policyWithCode.currency) }}
+              </template>
+              <template v-slot:item.totalUnit="{ item }">
+                {{ (item && $convertCurrency(item.accumUnits)) || 0 }}
+              </template>
+              <template v-slot:item.priceUnit="{ item }">
+                {{
+                  item &&
+                  $convertCurrency(
+                    getFundPrices(
+                      myPolicy.policyWithCode.fundPrices,
+                      item.fundCode
+                    )
+                  )
+                }}
+              </template>
+              <template v-slot:item.nabDate="{ item }">
+                {{
+                  getFundPriceDate(
+                    myPolicy.policyWithCode.fundPrices,
+                    item.fundCode
+                  )
+                }}
+              </template>
+              <template v-slot:item.totalInvestment="{ item }">
+                {{
+                  item &&
+                  $convertCurrency(
+                    item.accumUnits *
+                      getFundPrices(
+                        myPolicy.policyWithCode.fundPrices,
+                        item.fundCode
+                      )
+                  )
+                }}
+              </template>
+              <template v-slot:body.append>
+                <tr>
+                  <td colspan="5"></td>
+                  <td>Total</td>
+                  <td>{{ $convertCurrency(sumTotalInvestemnt) }}</td>
+                </tr>
               </template>
             </v-data-table>
           </template>
-
         </div>
       </div>
+
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-1">Jenis Dana Investasi yang Dipilih *</p>
@@ -55,6 +111,7 @@
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col-4">
           <button
@@ -65,9 +122,11 @@
           </button>
         </div>
       </div>
+
       <br />
       <v-divider></v-divider>
       <br />
+      
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <p class="data-value">Data Pengajuan Top Up Sekaligus</p>
@@ -82,8 +141,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, i) in data_investments" :key="item.name">
-                  <template v-if="i < data_investments.length - 1">
+                <tr v-for="(item, i) in form.items" :key="item.name">
+                  <template v-if="i < form.items.length - 1">
                     <td>{{ i + 1 }}</td>
                     <td>{{ item.fund_name }}</td>
                     <td>{{ item.topup_value }}</td>
@@ -105,6 +164,7 @@
           </v-simple-table>
         </div>
       </div>
+
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <p class="data-title mb-2">
@@ -118,6 +178,7 @@
           </button>
         </div>
       </div>
+
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <p class="data-title mb-2">Unggah selfie dan KTP</p>
@@ -129,24 +190,19 @@
           </button>
         </div>
       </div>
+
       <div class="row">
         <div class="col-12">
           <button
             class="btn btn-primary btn-save float-right"
-            @click.prevent="saveInvestment()"
+            @click.prevent="save()"
           >
             <save-icon></save-icon> Simpan
           </button>
         </div>
       </div>
-    </div> -->
-    <NuxtChild />
-    <ModalMessage
-      :message="modal.message"
-      :show="modal.show"
-      :button="modal.button"
-      @closeModal="modal.show = false"
-    />
+
+    </div>
   </div>
 </template>
 <script>
@@ -157,113 +213,75 @@ export default {
     SaveIcon,
     InfoIcon,
   },
-  beforeMount() {
-    this.modal.show = true;
-    this.modal.message = "Menu yang anda pilih masih dalam tahap pengembangan";
-  },
   mounted() {
-    if ($nuxt.$route.name != "transaction-submission-add-investment-fund") {
-      this.showMe = false;
-    } else {
-      this.showMe = true;
-      // this.current_header_title = this.default_header_title;
-    }
+    var contractInvest = [];
+
+    this.myPolicy.policyWithCode.coverages.forEach((item) => {
+      if (item?.contractInvests.length > 0) {
+        contractInvest = contractInvest.concat(item.contractInvests);
+      }
+    });
+
+    this.investment_types = contractInvest.map((item) => ({
+      value: item.fundCode,
+      text: this.$fundName(item.fundCode),
+    }));
   },
   data() {
     return {
-      modal: {
-        message: "",
-        show: false,
-        button: {
-          text: "Tutup",
-          redirect_link: "/transaction/submission",
-          redirect_type: "spa",
-        },
+      form: {
+        virtualAccountNumber: null,
+        items: [],
       },
       showMe: true,
-      items: ["321321321 - BNI", "321321322 - BNI"],
-      investment_types: ["UANG SEKOLAH", "ASURANSI"],
-      data_investments: [
-        {
-          id: 1,
-          fund_name: "DANA MAKSIMA",
-          topup_value: 1000000,
-        },
-        {
-          id: 2,
-          fund_name: "DANA CEMERLANG",
-          topup_value: 2000000,
-        },
-        {
-          id: "",
-          fund_name: "Total",
-          topup_value: 3000000,
-        },
-      ],
+      investment_types: [],
       table: {
         headers: [
-          {
-            text: "No",
-            align: "start",
-            value: "no",
-          },
-          {
-            text: "Jenis Dana Investasi",
-            value: "type",
-          },
-          {
-            text: "Mata Uang",
-            value: "currency",
-          },
-          {
-            text: "Jumlah Unit",
-            value: "unit_total",
-          },
-          {
-            text: "Harga Unit",
-            value: "unit_price",
-          },
-          {
-            text: "Tanggal NAB",
-            value: "nab_date",
-          },
-          {
-            text: "Total Investasi",
-            value: "total_investment",
-          },
-        ],
-        items: [
-          {
-            type: "BNI LIFE MAXIMA",
-            currency: "Rp",
-            unit_total: 100,
-            unit_price: 100000,
-            nab_date: "10/10/2010",
-            total_investment: 1000000,
-          },
-          {
-            type: "BNI LIFE ENDAVO",
-            currency: "Rp",
-            unit_total: 100,
-            unit_price: 100000,
-            nab_date: "10/10/2010",
-            total_investment: 1000000,
-          },
-          {
-            type: "BNI LIFE X",
-            currency: "Rp",
-            unit_total: 100,
-            unit_price: 100000,
-            nab_date: "10/10/2010",
-            total_investment: 1000000,
-          },
+          { text: "No", value: "no" },
+          { text: "Jenis Dana Investasi", value: "investmentType" },
+          { text: "Mata Uang", value: "currency" },
+          { text: "Jumlah Unit", value: "totalUnit" },
+          { text: "Harga Unit", value: "priceUnit" },
+          { text: "Tanggal NAB", value: "nabDate" },
+          { text: "Total Investasi", value: "totalInvestment" },
         ],
       },
+      validationMessage: [],
       page: 1,
       pageCount: 0,
       itemsPerPage: 5,
       limitPages: [5, 10, 15, 20, 25],
     };
+  },
+  computed: {
+    selfieKtpFileName() {
+      return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
+    },
+    myPolicy() {
+      return this.$store.getters["submission_transaction/getMyPolicy"];
+    },
+    virtualAccountOptions() {
+      if (this.myPolicy.policyWithCode.virtualAccountInfo.length) {
+        return this.myPolicy.policyWithCode.virtualAccountInfo.map((item) => ({
+          text: `${item.virtualAccountNumber} - ${item.bankAbbrName}`,
+          value: item.virtualAccountNumber,
+        }));
+      }
+
+      return [];
+    },
+    sumTotalInvestemnt() {
+      return this.contractInvests(this.myPolicy.policyWithCode.coverages)
+        .map(
+          (item) =>
+            item.accumUnits *
+            this.getFundPrices(
+              this.myPolicy.policyWithCode.fundPrices,
+              item.fundCode
+            )
+        )
+        .reduce((a, b) => a + b, 0);
+    },
   },
   watch: {
     $route(to, from) {
@@ -275,8 +293,36 @@ export default {
     },
   },
   methods: {
-    saveInvestment: async function () {
-      // patch to action
+    getFundPrices(fundPrices = [], fundCode) {
+      if (!fundPrices.length) return 0;
+
+      const found = fundPrices.find((item) => item.fundCode === fundCode);
+      return found ? found.bidPrice : 0;
+    },
+    getFundPriceDate(fundPrices = [], fundCode) {
+      if (!fundPrices.length) return 0;
+
+      const found = fundPrices.find((item) => item.fundCode === fundCode);
+      return found ? this.$moment(found.pricingDate).format("DD/MM/Y") : "-";
+    },
+    contractInvests(coverages) {
+      var contractInvest = [];
+
+      coverages.forEach((item) => {
+        if (item?.contractInvests.length > 0) {
+          contractInvest = contractInvest.concat(item.contractInvests);
+        }
+      });
+
+      return contractInvest;
+    },
+    validate() {
+      this.validationMessage = [];
+      if (!this.form.virtualAccountNumber) {
+        this.validationMessage.push("Virtual Account Number diperlukan");
+      }
+    },
+    save: async function () {
       this.$router.push({ path: "./add-investment-fund/resume" });
     },
     addInvestment: async function () {},

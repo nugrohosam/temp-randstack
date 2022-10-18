@@ -298,20 +298,6 @@ export default {
       validationMessage: [],
       isLoading: true,
       my_policy: null,
-      reasons: [
-        {
-          id: "",
-          reason_id: "",
-          name: "",
-        },
-      ],
-      reasons_filtered: [
-        {
-          id: "",
-          reason_id: "",
-          name: "",
-        },
-      ],
       showMe: true,
       coverages: [],
       table: {

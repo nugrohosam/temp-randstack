@@ -53,6 +53,7 @@
           </p>
         </div>
       </div>
+
       <div class="row">
         <div class="col-md-12">
           <p class="data-title">Jenis dan Dana Investasi yang dimiliki</p>
@@ -119,6 +120,7 @@
           </template>
         </div>
       </div>
+      
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-1">Jenis Dana Investasi yang Dipilih *</p>

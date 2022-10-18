@@ -77,16 +77,16 @@ export default {
     {
       active: false,
       hidden: false,
-      name: "Penambahan Produk Rider",
-      link: "/transaction/submission/add-rider-product",
-      icon: "ic_cuti_premi.svg",
+      name: "Penambahan Dana Investasi",
+      link: "/transaction/submission/add-investment-fund",
+      icon: "ic_plus_square.svg",
     },
     {
       active: false,
       hidden: false,
-      name: "Penambahan Dana Investasi",
-      link: "/transaction/submission/add-investment-fund",
-      icon: "ic_plus_square.svg",
+      name: "Penambahan Produk Rider",
+      link: "/transaction/submission/add-rider-product",
+      icon: "ic_cuti_premi.svg",
     },
     {
       active: false,

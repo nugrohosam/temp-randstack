@@ -79,6 +79,16 @@
               />
           </div>
         </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nama Cabang</p>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                v-model="form.branch"
+              />
+          </div>
+        </div>
       </div>
 
       <div class="row">
@@ -315,6 +325,7 @@ export default {
       form: {
         newNoRek: null,
         bank: null,
+        branch: null,
         rekOwner: null,
         ktpAttachment: {},
         savingBookAttachment: {},
@@ -447,6 +458,9 @@ export default {
       }
       if (!this.form.bank) {
         this.validationMessage.push("Bank diperlukan");
+      }
+      if (!this.form.branch) {
+        this.validationMessage.push("Cabang diperlukan");
       }
       if (!this.form.ktpSelfieAttachment.name) {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");

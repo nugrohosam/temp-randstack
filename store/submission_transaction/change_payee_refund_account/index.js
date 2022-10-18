@@ -2,6 +2,7 @@ const state = () => ({
   changePayeeRefundAccount: {
       newNoRek: null,
       bank: null,
+      branch: null,
       rekOwner: null,
       ktpAttachment: null,
       documentAttachment: null,
@@ -29,6 +30,7 @@ const actions = {
     const form = {
       new_no_rek: state.changePayeeRefundAccount.newNoRek,
       bank: state.changePayeeRefundAccount.bank,
+      branch: state.changePayeeRefundAccount.branch,
       rek_owner: state.changePayeeRefundAccount.rekOwner,
       ktp_attachment: state.changePayeeRefundAccount.ktpAttachment?.name || null,
       saving_book_attachment: state.changePayeeRefundAccount.savingBookAttachment?.name || null,
