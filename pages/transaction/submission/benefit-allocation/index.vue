@@ -262,6 +262,23 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-lg-12 col-sm-12">
+          <div class="message-bar rounded-lg">
+              <div class="d-flex">
+                <info-icon class="ic-primary mr-2"></info-icon>
+                Perhatian !
+              </div>
+              <br>
+              <ul>
+                <li>
+                  Pengajuan ini hanya untuk manfaat hidup, bonus sehat, akhir asuransi dan anuitas
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+
       <ValidationMessage :validation-message="validationMessage" />
 
       <div class="row">
