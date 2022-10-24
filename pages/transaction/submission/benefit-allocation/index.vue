@@ -531,8 +531,8 @@ export default {
       if (!this.form.savingBookAttachment.name) {
         this.validationMessage.push("Unggah Halaman Depan Buku Tabungan Yang Baru diperlukan");
       }
-      if (!this.form.familyAttachment) {
-        this.validationMessage.push("Unggah " + this.form.statusFamilyAttachment + "diperlukan");
+      if (!this.form.familyAttachment.name) {
+        this.validationMessage.push("Unggah " + (this.form.statusFamilyAttachment == "KK" ? "KK" : "Akte Kelahiran") + " diperlukan");
       }
     },
     save: async function () {

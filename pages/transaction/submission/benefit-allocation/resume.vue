@@ -14,6 +14,13 @@
           {{ myPolicy.policyWithCode.policyNumber }}
         </p>
       </div>
+    </div>
+
+    <br>
+    <v-divider></v-divider>
+    <br>
+
+    <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Nomor Rekening Saat Ini</p>
         <p class="data-value">
@@ -70,15 +77,21 @@
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Nama Cabang</p>
+        <p class="data-title mb-2">
+          Nama Cabang Baru
+        </p>
         <p class="data-value">
-          {{ getBenefitAllocation.cabang }}
+          {{
+            getBenefitAllocation.branch
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Bank</p>
+        <p class="data-title mb-2">Nama Bank Baru</p>
         <p class="data-value">
-          {{ choosenBank(getBenefitAllocation.bank) }}
+          {{
+            choosenBank(getBenefitAllocation.bank)
+          }}
         </p>
       </div>
     </div>
@@ -162,6 +175,23 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-lg-12 col-sm-12">
+        <div class="message-bar rounded-lg">
+            <div class="d-flex">
+              <info-icon class="ic-primary mr-2"></info-icon>
+              Perhatian !
+            </div>
+            <br>
+            <ul>
+              <li>
+                Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak silahkan hubungi Customer Care 1-500-045
+              </li>
+            </ul>
+        </div>
+      </div>
+    </div>
+    
     <ValidationMessage :validation-message="validationMessage" />
 
     <div class="row">

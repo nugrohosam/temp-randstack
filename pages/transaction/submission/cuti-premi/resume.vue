@@ -73,11 +73,11 @@
 
     <div class="row">
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Tanggal Awal Cuti Premi</p>
+        <p class="data-title mb-2">Tanggal Awal Cuti Premi Yang Diajukan</p>
         <p class="data-value">{{ $formatDate(getCutiPremi.startPremiumHolidayDate) }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Tanggal Akhir Cuti Premi</p>
+        <p class="data-title mb-2">Tanggal Akhir Cuti Premi Yang Diajukan</p>
         <p class="data-value">{{ $formatDate(getCutiPremi.endPremiumHolidayDate) }}</p>
       </div>
     </div>

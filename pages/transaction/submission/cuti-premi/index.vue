@@ -68,29 +68,30 @@
 
       <div v-if="!isSetHoliday" class="row">
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Tanggal Awal Cuti Premi</p>
+          <p class="data-title mb-2">Tanggal Awal Cuti Premi Sebelumnya</p>
           <div class="data-value">
             {{ $formatDate(form.oldStartPremiumHolidayDate) }}
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Tanggal Akhir Cuti Premi</p>
+          <p class="data-title mb-2">Tanggal Akhir Cuti Premi Sebelumnya</p>
           <div class="data-value">
             {{ $formatDate(form.oldEndPremiumHolidayDate) }}
           </div>
         </div>
       </div>
-      
+
+      <hr class="my-4" v-if="!isSetHoliday" />
 
       <div v-if="form.status != 'cancel'" class="row">
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Tanggal Awal Cuti Premi</p>
+          <p class="data-title mb-2">Tanggal Awal Cuti Premi Yang Diajukan</p>
           <div class="data-value">
             {{ startFixHolidayDate }}
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Tanggal Akhir Cuti Premi</p>
+          <p class="data-title mb-2">Tanggal Akhir Cuti Premi Yang Diajukan</p>
           <div class="data-value">
             <input
               type="date"
@@ -212,7 +213,7 @@ export default {
     },
     startFixHolidayDate() {
       const dueDate = new Date(this.dueDatePremi)
-      return this.$formatDate(dueDate.setMonth(dueDate.getMonth() + 1))
+      return this.$formatDate(dueDate)
     },
   },
   mounted() {
@@ -252,20 +253,20 @@ export default {
     validate() {
       this.validationMessage = [];
       if (this.form.status != "cancel") {
-        if (!this.form.startPremiumHolidayDate) {
+        if (this.form.status == "set" && !this.form.startPremiumHolidayDate) {
           this.validationMessage.push("Tanggal Awal Cuti Premi diperlukan");
         }
         if (!this.form.endPremiumHolidayDate) {
           this.validationMessage.push("Tanggal Akhir Cuti Premi diperlukan");
         }
-        if (!this.form.ktpSelfieAttachment.name) {
-          this.validationMessage.push("Unggah Selfie + KTP diperlukan");
-        }
+      }
+      if (!this.form.ktpSelfieAttachment.name) {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
       }
     },
     save() {
       const dueDate = new Date(this.dueDatePremi)
-      this.form.startPremiumHolidayDate = this.$moment(dueDate.setMonth(dueDate.getMonth() + 1)).format("YYYY-MM-DD");
+      this.form.startPremiumHolidayDate = this.$moment(dueDate).format("YYYY-MM-DD");
       this.form.endPremiumHolidayDate = this.myPolicy.policyWithCode.holidayIndi == "Y" && this.form.status == "cancel" ? this.myPolicy.policyWithCode.holidayEndDate : this.form.endPremiumHolidayDate;
       this.form.endPremiumHolidayDate = this.$moment(this.form.endPremiumHolidayDate).format("YYYY-MM-DD")
       this.validate();
