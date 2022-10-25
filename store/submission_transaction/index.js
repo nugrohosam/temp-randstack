@@ -10,6 +10,7 @@ import DecreaseSA from "./decrease_sa";
 import BenefitAllocation from "./benefit_allocation";
 import ChangePayeeRefundAccount from "./change_payee_refund_account";
 import WithdrawPartialInvestmentFund from "./withdraw_partial_investment_fund";
+import AddInvestmentFund from "./add_investment_fund";
 
 const SubmissionTransactionModules = {
   namespaced: true,
@@ -18,6 +19,7 @@ const SubmissionTransactionModules = {
     policy_recovery: PolicyRecoveryModules,
     cuti_premi: CutiPremiModules,
     withdraw_partial_investment_fund: WithdrawPartialInvestmentFund,
+    add_investment_fund: AddInvestmentFund,
     rider_product: RiderProduct,
     decrease_sa: DecreaseSA,
     benefit_allocation: BenefitAllocation,

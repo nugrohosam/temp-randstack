@@ -99,15 +99,16 @@
           <p class="data-title mb-1">Jenis Dana Investasi yang Dipilih *</p>
           <v-select
             :items="investment_types"
+            v-model="investment_choosen"
             dense
             outlined
             class="investment_type_option"
           ></v-select>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-1">Amount Top Up (Rp)</p>
+          <p class="data-title mb-1">Amount Top Up ({{ $currencyName(myPolicy.policyWithCode.currency) }})</p>
           <div class="form-input">
-            <input type="text" class="outlined" placeholder="200.xxx.xxx" />
+            <input type="number" class="outlined" placeholder="200.xxx.xxx" v-model="investment_amount" />
           </div>
         </div>
       </div>
@@ -118,7 +119,11 @@
             class="btn btn-primary-outlined w-100 btn-add-investment"
             @click.prevent="addInvestment()"
           >
-            Tambah
+            {{
+              !!form.items.find((item) => item.fund_code === investment_choosen)
+                ? "Ubah"
+                : "Tambah"
+            }}
           </button>
         </div>
       </div>
@@ -142,21 +147,31 @@
               </thead>
               <tbody>
                 <tr v-for="(item, i) in form.items" :key="item.name">
-                  <template v-if="i < form.items.length - 1">
+                  <template v-if="i < form.items.length">
                     <td>{{ i + 1 }}</td>
                     <td>{{ item.fund_name }}</td>
-                    <td>{{ item.topup_value }}</td>
-                    <td>Edit | Hapus</td>
+                    <td>{{ item.amount }}</td>
+                    <td>
+                      <button
+                        class="btn btn-primary-outlined mt-3 w-100 btn-add-investment"
+                        @click.prevent="removeInvestment(i)"
+                      >
+                        Hapus
+                      </button>
+                    </td>
                   </template>
-                  <template v-else>
-                    <td></td>
+                </tr>
+                <tr v-if="form.items.length > 0">
+                  <template>
+                    <td colspan="1"></td>
                     <td>
-                      <b>{{ item.fund_name }}</b>
+                      <b>Total</b>
                     </td>
                     <td>
-                      <b>{{ item.topup_value }}</b>
+                      <b>{{ totalAmount }}</b>
                     </td>
-                    <td></td>
+                    <td>
+                    </td>
                   </template>
                 </tr>
               </tbody>
@@ -167,29 +182,88 @@
 
       <div class="row">
         <div class="col-lg-6 col-sm-12">
-          <p class="data-title mb-2">
-            Unggah Bukti Transfer (Jika sudah melakukan transfer)
-          </p>
-          <button
-            class="btn btn-primary-outlined"
-            @click.prevent="addInvestment()"
+          <ValidationProvider
+            rules="required|image"
+            v-slot="{ validate, errors }"
           >
-            Unggah Bukti Transfer
-          </button>
+            <p class="data-title mb-2">Unggah Bukti Transfer (Jika sudah melakukan transfer)</p>
+            <input
+              type="file"
+              ref="inputTransferImage"
+              v-show="false"
+              accept="image/*"
+              @change="
+                (e) => {
+                  validate(e);
+                  addTransferImage(e);
+                }
+              "
+            />
+            <button
+              class="btn btn-primary-outlined"
+              @click.prevent="$refs.inputTransferImage.click()"
+            >
+              Unggah
+            </button>
+            <small>{{ form.transferAttachment.name }}</small>
+            <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+            <br />
+            <span class="text-error">{{ errors[0] }}</span>
+          </ValidationProvider>
         </div>
       </div>
 
       <div class="row">
         <div class="col-lg-6 col-sm-12">
-          <p class="data-title mb-2">Unggah selfie dan KTP</p>
-          <button
-            class="btn btn-primary-outlined"
-            @click.prevent="addInvestment()"
+          <ValidationProvider
+            rules="required|image"
+            v-slot="{ validate, errors }"
           >
-            Unggah Selfie + KTP
-          </button>
+            <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+            <input
+              type="file"
+              ref="inputSelfieKtpImage"
+              v-show="false"
+              accept="image/*"
+              @change="
+                (e) => {
+                  validate(e);
+                  addSelfieKtpImage(e);
+                }
+              "
+            />
+            <button
+              class="btn btn-primary-outlined"
+              @click.prevent="$refs.inputSelfieKtpImage.click()"
+            >
+              Unggah
+            </button>
+            <small>{{ form.ktpSelfieAttachment.name }}</small>
+            <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+            <br />
+            <span class="text-error">{{ errors[0] }}</span>
+          </ValidationProvider>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-sm-12">
+          <div class="message-bar rounded-lg">
+              <div class="d-flex">
+                <info-icon class="ic-primary mr-2"></info-icon>
+                Perhatian !
+              </div>
+              <br>
+              <ul>
+                <li>
+                  Amount Top up dan uang yang di transfer harus sama!
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+      
+      <ValidationMessage :validation-message="validationMessage" />
 
       <div class="row">
         <div class="col-12">
@@ -230,11 +304,15 @@ export default {
   data() {
     return {
       form: {
+        ktpSelfieAttachment: {},
+        transferAttachment: {},
         virtualAccountNumber: null,
         items: [],
       },
       showMe: true,
       investment_types: [],
+      investment_amount: null,
+      investment_choosen: null,
       table: {
         headers: [
           { text: "No", value: "no" },
@@ -259,6 +337,9 @@ export default {
     },
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
+    },
+    totalAmount() {
+      return this.form.items.length > 0 ? this.form.items.reduce((a, b) => a + b.amount).amount : 0;  
     },
     virtualAccountOptions() {
       if (this.myPolicy.policyWithCode.virtualAccountInfo.length) {
@@ -293,6 +374,30 @@ export default {
     },
   },
   methods: {
+    async addSelfieKtpImage(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadSelieKtpFile",
+          { file: e.target.files[0] }
+        );
+        this.form.ktpSelfieAttachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
+    async addTransferImage(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadTransferFile",
+          { file: e.target.files[0] }
+        );
+        this.form.transferAttachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
     getFundPrices(fundPrices = [], fundCode) {
       if (!fundPrices.length) return 0;
 
@@ -321,11 +426,54 @@ export default {
       if (!this.form.virtualAccountNumber) {
         this.validationMessage.push("Virtual Account Number diperlukan");
       }
+      if (this.form.items.length < 1) {
+        this.validationMessage.push("Dana Topup yang akan diajukan diperlukan");
+      }
+      if (!this.form.ktpSelfieAttachment.name) {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+      }
     },
     save: async function () {
-      this.$router.push({ path: "./add-investment-fund/resume" });
+      this.validate();
+      if (this.validationMessage.length <= 0) {
+        this.$store.commit(
+          "submission_transaction/add_investment_fund/setAddInvestmentFund",
+          this.form
+        );
+
+        // patch to action
+        this.$router.push({
+          path: "./add-investment-fund/resume",
+        });
+      }
     },
-    addInvestment: async function () {},
+    removeInvestment(i) {
+      this.form.items.splice(i, 1);
+    },
+    addInvestment: async function () {
+      const indexObject = this.$indexOfObject(
+        this.form.items,
+        this.investment_choosen,
+        (v) => v.fund_code
+      );
+
+      if (indexObject != -1) {
+        this.form.items.splice(indexObject, 1, 
+        {
+          fund_name: this.$fundName(this.investment_choosen),
+          fund_code: this.investment_choosen,
+          amount: this.investment_amount,
+        })
+      } else {
+        this.form.items.push({
+          fund_name: this.$fundName(this.investment_choosen),
+          fund_code: this.investment_choosen,
+          amount: this.investment_amount,
+        })
+      }
+      this.investment_choosen = null;
+      this.investment_amount = null;
+    },
   },
 };
 </script>

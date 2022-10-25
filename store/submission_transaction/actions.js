@@ -61,10 +61,10 @@ export default {
           (product) => product.id == v.productId
         )[0];
 
-        v.productName = foundProduct.name;
-        v.benefitLevelInfoVOList = foundProduct.benefitLevelInfoVOList;
-        v.minSurValue = foundProduct.minSurValue;
-        v.maxSurValue = foundProduct.maxSurValue;
+        v.productName = foundProduct?.name || "-";
+        v.benefitLevelInfoVOList = foundProduct?.benefitLevelInfoVOList || [];
+        v.minSurValue = foundProduct?.minSurValue || 0;
+        v.maxSurValue = foundProduct?.maxSurValue || 0;
 
         const level = v.currentPremium.benefitLevel ?? null;
         if (level) {
@@ -212,38 +212,70 @@ export default {
       });
       },
     
-  async uploadSelieKtpFile({ rootGetters, commit, dispatch }, data) {
-    let formData = new FormData();
-    formData.append("File", data.file);
-    formData.append("Type", "KTPSELFIE");
-    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
-    dispatch(
-      "toggleOverlayLoading",
-      { show: true, message: "Mohon Tunggu..." },
-      { root: true }
-    );
-    return await this.$axios
-      .$post("/api/v1/attachments", formData)
-      .then((response) => {
-        if (response.success) {
-          commit("setUploadSelfieKtpFile", {
-            stream: data.file,
-            upload: response.data.name,
-          });
-          dispatch(
-            "toggleOverlayLoading",
-            { show: false, message: "Mohon Tunggu..." },
-            { root: true }
-          );
-          return response.data;
-        }
-        // return response;
-      })
-      .catch((error) => {
-        return error;
-      });
+    async uploadTransferFile({ rootGetters, commit, dispatch }, data) {
+      let formData = new FormData();
+      formData.append("File", data.file);
+      formData.append("Type", "TRANSFER");
+      this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+      dispatch(
+        "toggleOverlayLoading",
+        { show: true, message: "Mohon Tunggu..." },
+        { root: true }
+      );
+      return await this.$axios
+        .$post("/api/v1/attachments", formData)
+        .then((response) => {
+          if (response.success) {
+            commit("setUploadTransferFile", {
+              stream: data.file,
+              upload: response.data.name,
+            });
+            dispatch(
+              "toggleOverlayLoading",
+              { show: false, message: "Mohon Tunggu..." },
+              { root: true }
+            );
+            return response.data;
+          }
+          // return response;
+        })
+        .catch((error) => {
+          return error;
+        });
       },
-
+  
+    async uploadSelieKtpFile({ rootGetters, commit, dispatch }, data) {
+      let formData = new FormData();
+      formData.append("File", data.file);
+      formData.append("Type", "KTPSELFIE");
+      this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+      dispatch(
+        "toggleOverlayLoading",
+        { show: true, message: "Mohon Tunggu..." },
+        { root: true }
+      );
+      return await this.$axios
+        .$post("/api/v1/attachments", formData)
+        .then((response) => {
+          if (response.success) {
+            commit("setUploadSelfieKtpFile", {
+              stream: data.file,
+              upload: response.data.name,
+            });
+            dispatch(
+              "toggleOverlayLoading",
+              { show: false, message: "Mohon Tunggu..." },
+              { root: true }
+            );
+            return response.data;
+          }
+          // return response;
+        })
+        .catch((error) => {
+          return error;
+        });
+      },
+            
   async submitTransactionProposalSurrender(
     { rootGetters, getters, dispatch, commit },
     data

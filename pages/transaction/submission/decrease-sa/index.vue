@@ -426,7 +426,6 @@ export default {
     save: async function () {
       this.validate();
       if (this.validationMessage.length <= 0) {
-        console.log(this.form)
         this.$store.commit(
           "submission_transaction/decrease_sa/setDecreaseSA",
           this.form

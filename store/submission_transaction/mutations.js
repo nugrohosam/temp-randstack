@@ -14,6 +14,17 @@ export default {
     state.attachments.upload.ktp.upload_filename = "";
   },
 
+  setUploadTransferFile(state, data) {
+    state.attachments.upload.transfer.file = data.stream;
+    state.attachments.upload.transfer.name = data.stream.name;
+    state.attachments.upload.transfer.upload_filename = data.upload;
+  },
+  clearUploadTransferFile(state) {
+    state.attachments.upload.transfer.file = null;
+    state.attachments.upload.transfer.name = "";
+    state.attachments.upload.transfer.upload_filename = "";
+  },
+
   setUploadSavingBookFile(state, data) {
     state.attachments.upload.saving_book.file = data.stream;
     state.attachments.upload.saving_book.name = data.stream.name;

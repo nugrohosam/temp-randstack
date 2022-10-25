@@ -1,28 +1,25 @@
 <template>
   <div>
     <BackButton />
-    <!-- <div class="row">
-      <div class="col-12">
-        <div class="page-header">
-          <h3 class="page-title">Resume Pengajuan Penambahan Dana Investasi (Top Up Sekaligus) </h3>
-          <p class="page-caption">Penambahan Dana Investasi (Top Up Sekaligus)</p>
-        </div>
-      </div>
-    </div> -->
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
-        <p class="data-value">JHON DOE</p>
+        <p class="data-value">
+          {{ myPolicy.policyWithCode.policyHolder.person.firstName }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nomor Polis</p>
-        <p class="data-value">BLPM20113145</p>
+        <p class="data-value">
+          {{ myPolicy.policyWithCode.policyNumber }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Informasi Virtual Account</p>
-        <v-select :items="items" dense outlined></v-select>
+        <p class="data-value">{{ getAddInvestmentFund.virtualAccountNumber }}</p>
       </div>
     </div>
+
     <div class="row">
       <div class="col-lg-6 col-sm-12">
         <v-simple-table>
@@ -35,19 +32,21 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, i) in data_investments" :key="item.name">
-                <template v-if="i < data_investments.length - 1">
+              <tr v-for="(item, i) in getAddInvestmentFund.items" :key="item.name">
+                <template v-if="i < getAddInvestmentFund.items.length">
                   <td>{{ i + 1 }}</td>
                   <td>{{ item.fund_name }}</td>
-                  <td>{{ item.topup_value }}</td>
+                  <td>{{ item.amount }}</td>
                 </template>
-                <template v-else>
-                  <td></td>
+              </tr>
+              <tr v-if="getAddInvestmentFund.items.length > 0">
+                <template>
+                  <td colspan="1"></td>
                   <td>
-                    <b>{{ item.fund_name }}</b>
+                    <b>Total</b>
                   </td>
                   <td>
-                    <b>{{ item.topup_value }}</b>
+                    <b>{{ totalAmount }}</b>
                   </td>
                 </template>
               </tr>
@@ -56,6 +55,7 @@
         </v-simple-table>
       </div>
     </div>
+
     <div class="row">
       <div class="col-lg-8 col-sm-12">
         <div class="message-bar d-flex">
@@ -64,27 +64,39 @@
         </div>
       </div>
     </div>
+
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Bukti Transfer</p>
-        <button class="btn btn-primary-outlined">Lihat Bukti Transfer</button>
+        <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+        <p class="data-value">
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showSelfieKtpPreview"
+          >
+            Lihat
+          </button>
+        </p>
       </div>
     </div>
-    <div class="row">
+
+    <div class="row" v-if="this.getAddInvestmentFund.transferAttachment.file != null">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Selfie dan KTP</p>
-        <button
-          class="btn btn-primary-outlined"
-          @click.prevent="addInvestment()"
-        >
-          Lihat Selfie + KTP
-        </button>
+        <p class="data-title mb-2">Unggah Foto Bukti Transfer</p>
+        <p class="data-value">
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showTransferPreview"
+          >
+            Lihat
+          </button>
+        </p>
       </div>
     </div>
+
     <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
-          v-model="ex4"
+          v-model="accepted"
           color="orange darken-3"
           value="orange darken-3"
           hide-details
@@ -95,22 +107,41 @@
         </p>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-lg-12 col-sm-12">
+        <div class="message-bar rounded-lg">
+            <div class="d-flex">
+              <info-icon class="ic-primary mr-2"></info-icon>
+              Perhatian !
+            </div>
+            <br>
+            <ul>
+              <li>
+                Amount Top up dan uang yang di transfer harus sama!
+              </li>
+            </ul>
+        </div>
+      </div>
+    </div>
+    
+    <ValidationMessage :validation-message="validationMessage" />
+
     <div class="row">
       <div class="col-12">
         <button
           class="btn btn-primary btn-save float-right"
-          @click.prevent="submitInvesment()"
+          @click.prevent="submit()"
         >
           Submit
         </button>
       </div>
     </div>
-    <NuxtChild />
-    <ModalMessage
-      :message="modal.message"
-      :show="modal.show"
-      :button="modal.button"
-      @closeModal="modal.show = false"
+
+    <ModalImagePreview
+      :src="image_preview.src"
+      :show="image_preview.show"
+      @closeImagePreview="image_preview.show = false"
     />
   </div>
 </template>
@@ -122,48 +153,79 @@ export default {
     SaveIcon,
     InfoIcon,
   },
-
   mounted() {
     console.log($nuxt.$route.name);
   },
+  computed: {
+    myPolicy() {
+      return this.$store.getters["submission_transaction/getMyPolicy"];
+    },
+    getAddInvestmentFund() {
+      return this.$store.getters[
+        "submission_transaction/add_investment_fund/getAddInvestmentFund"
+      ];
+    },
+    totalAmount() {
+      return this.getAddInvestmentFund.items.length > 0 ? this.getAddInvestmentFund.items.reduce((a, b) => a + b.amount).amount : 0;  
+    },
+  },
+  beforeMount() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: "Resume Pengajuan Penambahan Dana Investasi (Top Up Sekaligus) ",
+      sub: "Pengajuan Penambahan Dana Investasi (Top Up Sekaligus) ",
+    });
+  },
+  destroyed() {
+    this.$store.commit("submission_transaction/removeCurrentHeaderTitle");
+  },
   data() {
     return {
-      ex4: [
-      ],
-      items: ["321321321 - BNI", "321321322 - BNI"],
-      data_investments: [
-        {
-          id: 1,
-          fund_name: "DANA MAKSIMA",
-          topup_value: 1000000,
-        },
-        {
-          id: 2,
-          fund_name: "DANA CEMERLANG",
-          topup_value: 2000000,
-        },
-        {
-          id: "",
-          fund_name: "Total",
-          topup_value: 3000000,
-        },
-      ],
-      modal: {
-        message: "",
+      accepted: null,
+      image_preview: {
+        src: "",
         show: false,
-        button: {
-          text: "Ok",
-          redirect_link: "./thankyou",
-          redirect_type: "spa",
-        }
       },
+      validationMessage: [],
     };
   },
   methods: {
-    submitInvesment: async function () {
-      this.modal.show = true;
-      this.modal.message =
-        "Mohon melakukan pembayaran setelah Mengajukan transaksi Top Up";
+    showSelfieKtpPreview: function () {
+      if (this.getAddInvestmentFund.ktpSelfieAttachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getAddInvestmentFund.ktpSelfieAttachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
+    showTransferPreview: function () {
+      if (this.getAddInvestmentFund.transferAttachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getAddInvestmentFund.transferAttachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
+    validate: async function () {
+      this.validationMessage = [];
+      if (!this.accepted) {
+        this.validationMessage.push(
+          "Setujui transaksi untuk memproses pengajuan"
+        );
+      }
+    },
+    async submit() {
+      this.validate();
+      if (this.validationMessage.length <= 0) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/add_investment_fund/addInvestmentFund"
+        );
+        if (result && result.success == true) {
+          let transactionIds = result.data.transactionIds;
+          this.$router.push({
+            path: "./thankyou?transaction_ids=" + transactionIds.join(","),
+          });
+        }
+      }
     },
   },
 };

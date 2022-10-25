@@ -77,7 +77,7 @@ export default {
     {
       active: true,
       hidden: false,
-      name: "Penambahan Dana Investasi",
+      name: "Penambahan Dana Investasi (Top Up Sekaligus)",
       link: "/transaction/submission/add-investment-fund",
       icon: "ic_plus_square.svg",
     },
@@ -139,6 +139,12 @@ export default {
         upload_filename: "",
       },
       kk: {
+        file: null,
+        name: "",
+        preview: "",
+        upload_filename: "",
+      },
+      transfer: {
         file: null,
         name: "",
         preview: "",
