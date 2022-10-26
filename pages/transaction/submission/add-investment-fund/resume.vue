@@ -166,7 +166,7 @@ export default {
       ];
     },
     totalAmount() {
-      return this.getAddInvestmentFund.items.length > 0 ? this.getAddInvestmentFund.items.reduce((a, b) => a + b.amount).amount : 0;  
+      return this.getAddInvestmentFund.items.length > 0 ? this.getAddInvestmentFund.items.map(a => a.amount).reduce((a, b) => +a + +b) : 0;  
     },
   },
   beforeMount() {
