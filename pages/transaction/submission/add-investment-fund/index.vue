@@ -339,7 +339,7 @@ export default {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
     totalAmount() {
-      return this.form.items.length > 0 ? this.form.items.reduce((a, b) => a + b.amount).amount : 0;  
+      return this.form.items.length > 0 ? this.form.items.map(a => a.amount).reduce((a, b) => +a + +b) : 0;  
     },
     virtualAccountOptions() {
       if (this.myPolicy.policyWithCode.virtualAccountInfo.length) {
@@ -451,6 +451,9 @@ export default {
       this.form.items.splice(i, 1);
     },
     addInvestment: async function () {
+
+      if (!this.investment_choosen) return;
+
       const indexObject = this.$indexOfObject(
         this.form.items,
         this.investment_choosen,
@@ -471,6 +474,7 @@ export default {
           amount: this.investment_amount,
         })
       }
+
       this.investment_choosen = null;
       this.investment_amount = null;
     },
