@@ -43,6 +43,7 @@ export const identityType = [
   "Lainnya",
 ];
 
+
 export const martialStatus = ["KAWIN", "BELUM KAWIN"];
 
 export const nationality = ["WNI", "WNA"];

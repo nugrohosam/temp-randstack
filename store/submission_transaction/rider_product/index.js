@@ -1,7 +1,13 @@
 const state = () => ({
   addRider: {
-    product_id: null,
-    plan: null,
+    add_riders: [
+      {
+        product_id: null,
+        party_ids: [],
+        plan: null,
+        sum_asured: null,
+      }
+    ],
     insured: {
       first_name: null,
       last_name: null,
@@ -19,9 +25,9 @@ const state = () => ({
       occupation: null,
       phone_number: null,
     },
-    party_ids: [],
     health_questionnaire: [],
     ktp_selfie_attachment: {},
+    kk_attachment: {},
   },
 });
 

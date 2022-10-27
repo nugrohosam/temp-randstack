@@ -16,17 +16,11 @@
               </p>
             </div>
           </div>
-          <div class="row">
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Existing Rider Information</p>
-              <p class="data-value">XX</p>
-            </div>
-          </div>
 
           <div class="row">
             <div class="col-12">
               <p class="data-title mb-1">
-                Jenis dan Dana Investasi yang dimiliki
+                Informasi Produk
               </p>
               <template>
                 <v-data-table
@@ -69,71 +63,117 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-1">Rider yang Dipilih *</p>
-              <v-select
-                :items="riderOptions"
-                v-model="rider_choosen"
-                dense
-                outlined
-                class="rider_type_option"
-              ></v-select>
-            </div>
-          </div>
+          <br>
+          <v-divider></v-divider>
+          <br>
 
-          <div class="row">
-            <div class="col-lg-4 col-sm-6" v-if="isHavePlans(rider_choosen)">
-              <p class="data-title mb-2">Rider Plan</p>
-              <div >
+          <div v-for="(rider, index) in form.add_riders" :key="index">
+            
+            <div class="row" v-if="index > 0">
+              <div class="col-12">
+                <button
+                  class="btn btn-primary btn-save float-right"
+                  @click.prevent="removeRider(index)"
+                >
+                  X Hapus
+                </button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-1">Rider yang Dipilih *</p>
                 <v-select
-                  class="rider_plan_type_option"
-                  :items="riderOptionPlan(rider_choosen)"
-                  v-model="form.plan"
-                  label="Pilih Rider Plan"
+                  :items="riderOptions"
+                  v-model="form.add_riders[index].product_id"
+                  dense
+                  outlined
+                  class="rider_type_option"
                 ></v-select>
               </div>
             </div>
-            <div class="col-lg-4 col-sm-6" v-else>
-              <p class="data-title mb-2">Uang Pertanggungan</p>
-                <div class="form-input">
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="form.sum_assured"
-                  />
+            
+            <div class="row">
+              <div class="col-lg-4 col-sm-6" v-if="isHavePlans(form.add_riders[index].product_id)">
+                <p class="data-title mb-2">Rider Plan</p>
+                <div >
+                  <v-select
+                    class="rider_plan_type_option"
+                    :items="riderOptionPlan(form.add_riders[index].product_id)"
+                    v-model="form.add_riders[index].plan"
+                  ></v-select>
+                </div>
               </div>
+              <div class="col-lg-4 col-sm-6" v-else>
+                <p class="data-title mb-2">Uang Pertanggungan</p>
+                  <div class="form-input">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="form.add_riders[index].sum_assured"
+                    />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <p class="data-title mb-2">Pilih Tertanggung untuk Rider Baru</p>
+                <v-data-table
+                  :headers="insuredTable.headers"
+                  :items="
+                    my_policy.policyWithCode.insureds.length > 0
+                      ? my_policy.policyWithCode.insureds
+                      : []
+                  "
+                  v-model="form.add_riders[index].parties"
+                  mobile-breakpoint="480"
+                  show-select
+                  item-key="partyId"
+                  @item-selected="e => selectInsureds(index, e)"
+                  hide-default-footer
+                  :single-select="true"
+                >
+                  <template #header.data-table-select> Pilihan </template>
+                  <template  v-slot:item.person="{ item }"> 
+                    {{
+                        $isNullWithSpace(item.person.firstName) +
+                        $isNullWithSpace(item.person.midName) +
+                        $isNullWithSpace(item.person.lastName)
+                    }} 
+                  </template>
+                </v-data-table>
+              </div>
+            </div>
+            
+            <br>
+            <v-divider></v-divider>
+            <br>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <button
+                class="btn btn-primary btn-save float-right"
+                @click.prevent="addRider()"
+              >
+                + Rider
+              </button>
+            </div>
+          </div>
+          
+          <div class="row" v-if="isCanDoAddInsured()">
+            <div class="col-lg-12 col-sm-12">
+              <button
+                class="btn btn-primary-outlined"
+                @click.prevent="toogleAddInsured()"
+              >
+                {{ !isAddNewInsured ? "Tambah Tertanggung Baru" : "Hapus Tertanggung Baru"}}
+              </button>
             </div>
           </div>
 
-          <!-- <div class="row">
-            <div class="col-12">
-              <p class="data-title mb-2">Pilih Tertanggung untuk Rider Baru</p>
-              <v-data-table
-                :headers="insuredTable.headers"
-                :items="
-                  my_policy.policyWithCode.insureds.length > 0
-                    ? my_policy.policyWithCode.insureds
-                    : []
-                "
-                v-model="form.party_ids"
-                mobile-breakpoint="480"
-                show-select
-                hide-default-footer
-              >
-                <template #header.data-table-select> Pilihan </template>
-                <template  v-slot:item="{ item }"> 
-                  {{
-                      $isNullWithSpace(item.person.firstName) +
-                      $isNullWithSpace(item.person.midName) +
-                      $isNullWithSpace(item.person.lastName)
-                  }} 
-                </template>
-              </v-data-table>
-            </div>
-          </div> -->
-
-          <div class="row" v-if="isHaveHealth(rider_choosen)">
+          <div class="row" v-if="isAddNewInsured">
             <div class="col-lg-4 col-sm-6">
               <p class="data-title mb-2">Nama Depan</p>
               <div class="form-input">
@@ -167,7 +207,7 @@
               <p class="data-title mb-2">Nomor Identitas</p>
               <div class="form-input">
                 <input
-                  type="number"
+                  type="text"
                   class="form-control"
                   v-model="form.insured.identity"
                 />
@@ -180,11 +220,6 @@
                   :items="options.relationType"
                   v-model="form.insured.relation"
                 ></v-select>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="form.insured.relation"
-                />
               </div>
             </div>
             <div class="col-lg-4 col-sm-6">
@@ -220,7 +255,7 @@
               <p class="data-title mb-2">Kewarganegaraan</p>
               <div class="form-input">
                 <v-select
-                  :items="nationality"
+                  :items="options.nationality"
                   v-model="form.insured.nationality"
                 ></v-select>
               </div>
@@ -269,7 +304,11 @@
             <div class="col-lg-4 col-sm-6">
               <p class="data-title mb-2">Profesi</p>
               <div class="form-input">
-                <v-select :items="[]" v-model="form.insured.occupation"></v-select>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="form.insured.occupation"
+                />
               </div>
             </div>
             <div class="col-lg-4 col-sm-6">
@@ -277,6 +316,7 @@
               <div class="form-input">
                 <input
                   type="number"
+                  placeholder="628xxx"
                   class="form-control"
                   v-model="form.insured.phone_number"
                 />
@@ -284,7 +324,7 @@
             </div>
           </div>
 
-          <div class="row" v-if="isHaveHealth(rider_choosen)">
+          <div class="row">
             <div class="col-12">
               <p class="data-title mb-2">Isi Formulir Kesehatan</p>
               <button
@@ -295,33 +335,92 @@
               </button>
             </div>
           </div>
+          
+          <div class="row">
+            <div class="col-lg-6 col-sm-12">
+              <ValidationProvider
+                rules="required|image"
+                v-slot="{ validate, errors }"
+              >
+                <p class="data-title mb-2">Unggah KK (jika ada tertanggung baru)</p>
+                <input
+                  type="file"
+                  ref="inputKkImage"
+                  v-show="false"
+                  accept="image/*"
+                  @change="
+                    (e) => {
+                      validate(e);
+                      addKkImage(e);
+                    }
+                  "
+                />
+                <button
+                  class="btn btn-primary-outlined"
+                  @click.prevent="$refs.inputKkImage.click()"
+                >
+                  Unggah
+                </button>
+                <small>{{ form.kk_attachment.name }}</small>
+                <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+                <br />
+                <span class="text-error">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </div>
+          </div>
 
           <div class="row">
-            <div class="col-lg-12 col-sm-12">
-              <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
-              <input
-                type="file"
-                ref="inputSelfieKtpImage"
-                v-show="false"
-                accept="image/*"
-                @change="addSelfieKtpImage"
-              />
-              <button
-                class="btn btn-primary-outlined"
-                @click.prevent="$refs.inputSelfieKtpImage.click()"
+            <div class="col-lg-6 col-sm-12">
+              <ValidationProvider
+                rules="required|image"
+                v-slot="{ validate, errors }"
               >
-                Unggah
-              </button>
-              <small>{{ selfieKtpFileName }}</small>
-              <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+                <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+                <input
+                  type="file"
+                  ref="inputSelfieKtpImage"
+                  v-show="false"
+                  accept="image/*"
+                  @change="
+                    (e) => {
+                      validate(e);
+                      addSelfieKtpImage(e);
+                    }
+                  "
+                />
+                <button
+                  class="btn btn-primary-outlined"
+                  @click.prevent="$refs.inputSelfieKtpImage.click()"
+                >
+                  Unggah
+                </button>
+                <small>{{ form.ktp_selfie_attachment.name }}</small>
+                <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+                <br />
+                <span class="text-error">{{ errors[0] }}</span>
+              </ValidationProvider>
             </div>
+          </div>
+
+        </div>
+
+        <ValidationMessage :validation-message="validationMessage" />
+
+        <div class="row">
+          <div class="col-12">
+            <button
+              class="btn btn-primary btn-save float-right"
+              @click.prevent="save()"
+            >
+              <save-icon></save-icon> Simpan
+            </button>
           </div>
         </div>
 
         <HealthDeclarationFormModal
           :show="showModalHealth"
-          :default-value="form.healthQuestionnaire"
-          @submit="form.healthQuestionnaire = $event"
+          :default-value="form.health_questionnaire"
+          @submit="form.health_questionnaire = $event"
           @close="showModalHealth = false"
         />
     </template>
@@ -364,6 +463,9 @@ export default {
     selfieKtpFileName() {
       return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
     },
+    KkFileName() {
+      return this.$store.getters["submission_transaction/getKkFileName"];
+    },
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
@@ -395,8 +497,10 @@ export default {
         nationality,
         martialStatus,
       },
+      validationMessage: [],
       showModalHealth: false,
       isLoading: true,
+      isAddNewInsured: false,
       my_policy: null,
       showMe: true,
       selected: [],
@@ -443,18 +547,24 @@ export default {
           {
             text: "Nama Tertanggung",
             align: "center",
-            value: "productName",
+            value: "person",
           },
         ]
       },
       form: {
-        plan: null,
-        sum_assured: null,
-        healthQuestionnaire: [],
-        party_ids: null,
+        add_riders: [
+          {
+            product_id: null,
+            plan: null,
+            sum_assured: null,
+            party_ids: [],
+            parties: [],
+          }
+        ],
+        health_questionnaire: [],
         insured: {
-          first_name: null,
-          last_name: null,
+          first_name: "",
+          last_name: "",
           identity_type: null,
           identity: null,
           relation: null,
@@ -470,13 +580,17 @@ export default {
           occupation: null,
           phone_number: null,
         },
-        ktp_selfie: null,
+        ktp_selfie_attachment: {},
+        kk_attachment: {},
       },
     };
   },
   computed: {
     selfieKtpFileName() {
       return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
+    },
+    KkFileName() {
+      return this.$store.getters["submission_transaction/getKkFileName"];
     },
     myPolicyLoanInfo() {
       return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
@@ -507,6 +621,9 @@ export default {
     },
   },
   methods: {
+    isCanDoAddInsured: function () {
+      return this.allowedRiders.filter(x => this.form.add_riders.find(v => v.product_id == x.productId)).filter(x => x.familyType == 1).length > 0
+    },
     getData: async function () {
       let data = this.myPolicy;
       let productIds = [],
@@ -522,7 +639,7 @@ export default {
         data.policyWithCode.coverages[i].productType =
           data.policyWithCode.coverages[i].masterProduct == null
             ? "Utama"
-            : "Tambahan";
+            : "Tambahan/Rider";
         data.policyWithCode.coverages[i].productStatus = "Aktif";
       });
       products = await this.$store.dispatch(
@@ -551,27 +668,105 @@ export default {
     },
     isHaveHealth(productId) {
       const isHealthTrue = this.allowedRiders.find(v => v.productId == productId)?.health || false;
-      this.form.insured = isHealthTrue ? this.form.insured : null;
       return isHealthTrue;
     },
     save: async function () {
       this.validate();
-      // patch to action
-      this.$router.push({ path: "./resume" });
+      if (this.validationMessage.length <= 0) {
+        this.$store.commit(
+          "submission_transaction/rider_product/setAddRider",
+          this.form
+        );
+        // patch to action
+        this.$router.push({
+          path: "./add-rider-product/resume",
+        });
+      }
+    },
+    selectInsureds: async function (index, e) {
+      if (e.value) {
+        this.form.add_riders[index].party_ids.push(e.item.partyId)
+      } else {
+        const i = this.form.add_riders[index].party_ids.indexOf(e.item.partyId);
+        this.form.add_riders[index].party_ids.splice(i, 1);
+      }
     },
     validate: async function () {
       this.validationMessage = [];
-      if (this.selfieKtpFileName == "") {
+      if (!this.form.ktp_selfie_attachment.name) {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
       }
-    },
-    addSelfieKtpImage: function (e) {
-      this.form.ktp_selfie = e.target.files[0];
-      if (e.target.files[0]) {
-        this.$store.dispatch("submission_transaction/uploadSelieKtpFile", {
-          file: e.target.files[0],
-        });
+      if (this.form.insured.first_name != "" && !this.form.kk_attachment.name) {
+        this.validationMessage.push("Unggah KK diperlukan");
       }
+      if (this.form.insured.first_name != "" && this.form.health_questionnaire.length < 1) {
+        this.validationMessage.push("Formulir Kesehatan Harus Terisi");
+      }
+      if (this.form.add_riders[0].product_id == null) {
+        this.validationMessage.push("Rider harus dipilih");
+      }
+    },
+    async addSelfieKtpImage(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadSelieKtpFile",
+          { file: e.target.files[0] }
+        );
+        this.form.ktp_selfie_attachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
+    async addKkImage(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadKkFile",
+          { file: e.target.files[0] }
+        );
+        this.form.kk_attachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
+    addRider: function () {
+      this.form.add_riders.push({
+        product_name: null,
+        product_id: null,
+        plan: null,
+        sum_assured: null,
+        health_questionnaire: [],
+        party_ids: [],
+      });
+    },
+    removeRider: function (index) {
+      this.form.add_riders.splice(index, 1)
+    },
+    toogleAddInsured: function () {
+      if (this.isAddNewInsured) {
+        this.form.health_questionnaire = [];
+        this.form.insured = {
+          first_name: "",
+          last_name: "",
+          identity_type: null,
+          identity: null,
+          relation: null,
+          relation: null,
+          gender: null,
+          birth_date: null,
+          birth_place: null,
+          nationality: null,
+          marital_status: null,
+          height: null,
+          weight: null,
+          is_smoker: null,
+          occupation: null,
+          phone_number: null,
+        }
+      }
+
+      this.isAddNewInsured = !this.isAddNewInsured;
     },
   },
 };
