@@ -45,7 +45,7 @@
                     {{ item ? $moment(item.issueDate).format("DD/MM/Y") : "" }}
                   </template>
                   <template v-slot:item.benefitLevelDescrp="{ item }">
-                    {{ item.benefitLevelDescrp }}
+                    {{  item.benefitLevelDescrp != "-" ? item.benefitLevelDescrp : $convertCurrency(item.currentPremium.sumAssured || 0) }}
                   </template>
                   <template v-slot:item.lifeInsured.insured.person="{ item }">
                     {{
@@ -108,12 +108,6 @@
               <p class="data-title mb-2">Minimal Uang Pertanggungan</p>
               <p class="data-value">
                 {{ $convertCurrency(minSurValue(coverages_selected)) }}
-              </p>
-            </div>
-            <div class="col-lg-4 col-sm-6" v-if="!isHavePlans(coverages_selected)">
-              <p class="data-title mb-2">Maksimal Uang Pertanggungan</p>
-              <p class="data-value">
-                {{ $convertCurrency(maxSurValue(coverages_selected)) }}
               </p>
             </div>
           </div>
