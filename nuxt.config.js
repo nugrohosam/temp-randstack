@@ -100,7 +100,7 @@ export default {
       // target: "http://10.20.10.34/",
       // target: "http://34.124.156.103:8888/",
       // target: "http://localhost:5020/",
-      // target: "https://d892-158-140-167-174.ngrok.io/",
+      // target: "https://0d27-103-86-152-226.ngrok.io/",
       pathRewrite: { "^/api/v1/": "/api/v1/" },
     },
     "/test/v1/": {
@@ -108,7 +108,7 @@ export default {
       // target: "http://10.20.10.34/",
       // target: "http://34.124.156.103:8888/",
       // target: "http://localhost:5020/",
-      // target: "https://d892-158-140-167-174.ngrok.io/",
+      // target: "https://0d27-103-86-152-226.ngrok.io/",
       pathRewrite: { "^/test/v1/": "/test/v1/" },
     },
   },

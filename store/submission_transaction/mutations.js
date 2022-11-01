@@ -59,6 +59,18 @@ export default {
     state.attachments.upload.selfie_ktp.upload_filename = "";
   },
 
+  setDocumentKtpFile(state, data) {
+    state.attachments.upload.document.file = data.stream;
+    state.attachments.upload.document.name = data.stream.name;
+    state.attachments.upload.document.upload_filename =
+      data.upload;
+  },
+  clearDocumentKtpFile(state) {
+    state.attachments.upload.document.file = null;
+    state.attachments.upload.document.name = "";
+    state.attachments.upload.document.upload_filename = "";
+  },
+
   setUploadKkFile(state, data) {
     state.attachments.upload.kk.file = data.stream;
     state.attachments.upload.kk.name = data.stream.name;

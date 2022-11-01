@@ -22,6 +22,13 @@
 
     <div v-for="(rider, index) in getAddRider.add_riders" :key="index">
 
+      <HealthDeclarationFormModal
+        :show="getAddRider.add_riders[index].show_modal_health"
+        :default-value="getAddRider.add_riders[index].health_questionnaire"
+        @submit="getAddRider.add_riders[index].health_questionnaire = $event"
+        @close="getAddRider.add_riders[index].show_modal_health = false"
+      />
+
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-1">Rider {{ index + 1 }} yang Dipilih</p>
@@ -66,12 +73,24 @@
         </div>
       </div>
       
+      <div class="row" v-if="getAddRider.add_riders[index].health_questionnaire.length > 0">
+        <div class="col-12">
+          <p class="data-title mb-2">Isi Formulir Kesehatan</p>
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="getAddRider.add_riders[index].show_modal_health = !getAddRider.add_riders[index].show_modal_health"
+          >
+            Lihat
+          </button>
+        </div>
+      </div>
+      
       <br>
       <v-divider></v-divider>
       <br>
     </div>
 
-    <div v-if="getAddRider.insured.first_name != null && getAddRider.insured.first_name != ''">
+    <div v-if="getAddRider.insured != null">
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tertanggung Tamabahan</p>
@@ -170,19 +189,6 @@
           </p>
         </div>
       </div>
-
-    </div>
-
-    <div class="row" v-if="getAddRider.health_questionnaire.length > 0">
-      <div class="col-12">
-        <p class="data-title mb-2">Isi Formulir Kesehatan</p>
-        <button
-          class="btn btn-primary-outlined"
-          @click.prevent="showModalHealth = !showModalHealth"
-        >
-          Lihat
-        </button>
-      </div>
     </div>
 
     <div class="row" v-if="getAddRider.kk_attachment != null">
@@ -224,7 +230,7 @@
         ></v-checkbox>
         <p>
           Saya menyetujui transaksi dan kebenaran data yang disampaikan.
-          <a class="bni-primary no-border" href="">Baca selengkapnya</a>
+          
         </p>
       </div>
     </div>
@@ -245,12 +251,6 @@
       @closeImagePreview="image_preview.show = false"
     />
 
-    <HealthDeclarationFormModal
-      :show="showModalHealth"
-      :default-value="getAddRider.health_questionnaire"
-      @submit="getAddRider.health_questionnaire = $event"
-      @close="showModalHealth = false"
-    />
   </div>
 </template>
 
@@ -276,7 +276,6 @@ export default {
         nationality,
         martialStatus,
       },
-      showModalHealth: false,
       image_preview: {
         src: "",
         show: false,

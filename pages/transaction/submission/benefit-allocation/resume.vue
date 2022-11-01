@@ -170,7 +170,7 @@
         ></v-checkbox>
         <p>
           Saya menyetujui transaksi dan kebenaran data yang disampaikan.
-          <a class="bni-primary no-border" href="">Baca selengkapnya</a>
+          
         </p>
       </div>
     </div>

@@ -89,6 +89,13 @@ export default {
       icon: "ic_cuti_premi.svg",
     },
     {
+      active: true,
+      hidden: false,
+      name: "Perubahan Premi Dasar dan Topup Berkala",
+      link: "/transaction/submission/periodicaly-top-up",
+      icon: "ic_edit_3.svg",
+    },
+    {
       active: false,
       hidden: false,
       name: "Perubahan Alokasi Dana Investasi",
@@ -101,13 +108,6 @@ export default {
       name: "Perubahan Pembayaran Premi",
       link: "/transaction/submission/premi-payment-change",
       icon: "ic_hexagon.svg",
-    },
-    {
-      active: false,
-      hidden: false,
-      name: "Perubahan Premi Dasar dan Topup Berkala",
-      link: "/transaction/submission/basic-premi-change-and-topup",
-      icon: "ic_edit_3.svg",
     },
   ],
 
@@ -145,6 +145,12 @@ export default {
         upload_filename: "",
       },
       transfer: {
+        file: null,
+        name: "",
+        preview: "",
+        upload_filename: "",
+      },
+      document: {
         file: null,
         name: "",
         preview: "",

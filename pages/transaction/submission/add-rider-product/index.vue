@@ -66,6 +66,7 @@
           <br>
           <v-divider></v-divider>
           <br>
+          
 
           <div v-for="(rider, index) in form.add_riders" :key="index">
             
@@ -79,6 +80,13 @@
                 </button>
               </div>
             </div>
+
+            <HealthDeclarationFormModal
+              :show="form.add_riders[index].show_modal_health"
+              :default-value="form.add_riders[index].health_questionnaire"
+              @submit="form.add_riders[index].health_questionnaire = $event"
+              @close="form.add_riders[index].show_modal_health = false"
+            />
 
             <div class="row">
               <div class="col-lg-4 col-sm-6">
@@ -143,6 +151,18 @@
                     }} 
                   </template>
                 </v-data-table>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-12">
+                <p class="data-title mb-2">Isi Formulir Kesehatan</p>
+                <button
+                  class="btn btn-primary-outlined"
+                  @click.prevent="form.add_riders[index].show_modal_health = !form.add_riders[index].show_modal_health"
+                >
+                  Formulir Kesehatan
+                </button>
               </div>
             </div>
             
@@ -323,18 +343,6 @@
               </div>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-12">
-              <p class="data-title mb-2">Isi Formulir Kesehatan</p>
-              <button
-                class="btn btn-primary-outlined"
-                @click.prevent="showModalHealth = !showModalHealth"
-              >
-                Formulir Kesehatan
-              </button>
-            </div>
-          </div>
           
           <div class="row">
             <div class="col-lg-6 col-sm-12">
@@ -416,13 +424,6 @@
             </button>
           </div>
         </div>
-
-        <HealthDeclarationFormModal
-          :show="showModalHealth"
-          :default-value="form.health_questionnaire"
-          @submit="form.health_questionnaire = $event"
-          @close="showModalHealth = false"
-        />
     </template>
     <template v-else>
       <div
@@ -498,7 +499,6 @@ export default {
         martialStatus,
       },
       validationMessage: [],
-      showModalHealth: false,
       isLoading: true,
       isAddNewInsured: false,
       my_policy: null,
@@ -559,27 +559,11 @@ export default {
             sum_assured: null,
             party_ids: [],
             parties: [],
+            health_questionnaire: [],
+            show_modal_health: false,
           }
         ],
-        health_questionnaire: [],
-        insured: {
-          first_name: "",
-          last_name: "",
-          identity_type: null,
-          identity: null,
-          relation: null,
-          relation: null,
-          gender: null,
-          birth_date: null,
-          birth_place: null,
-          nationality: null,
-          marital_status: null,
-          height: null,
-          weight: null,
-          is_smoker: null,
-          occupation: null,
-          phone_number: null,
-        },
+        insured: null,
         ktp_selfie_attachment: {},
         kk_attachment: {},
       },
@@ -732,6 +716,7 @@ export default {
     },
     addRider: function () {
       this.form.add_riders.push({
+        show_modal_health: false,
         product_name: null,
         product_id: null,
         plan: null,
@@ -744,26 +729,27 @@ export default {
       this.form.add_riders.splice(index, 1)
     },
     toogleAddInsured: function () {
-      if (this.isAddNewInsured) {
-        this.form.health_questionnaire = [];
+      if (!this.isAddNewInsured) {
         this.form.insured = {
           first_name: "",
           last_name: "",
-          identity_type: null,
-          identity: null,
-          relation: null,
-          relation: null,
-          gender: null,
-          birth_date: null,
-          birth_place: null,
-          nationality: null,
-          marital_status: null,
-          height: null,
-          weight: null,
-          is_smoker: null,
-          occupation: null,
-          phone_number: null,
+          identity_type: "",
+          identity: "",
+          relation: "",
+          relation: "",
+          gender: "",
+          birth_date: "",
+          birth_place: "",
+          nationality: "",
+          marital_status: "",
+          height: "",
+          weight: "",
+          is_smoker: false,
+          occupation: "",
+          phone_number: "",
         }
+      }else {
+        this.form.insured = null;
       }
 
       this.isAddNewInsured = !this.isAddNewInsured;
