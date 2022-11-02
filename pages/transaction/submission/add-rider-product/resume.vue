@@ -90,7 +90,7 @@
       <br>
     </div>
 
-    <div v-if="getAddRider.insured != null">
+    <div v-if="getAddRider.insured">
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tertanggung Tamabahan</p>
@@ -101,91 +101,91 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Depan</p>
           <p class="data-value">
-            {{ getAddRider.insured.first_name }}
+            {{ getAddRider.insured ? getAddRider.insured.first_name : "" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Belakang</p>
           <p class="data-value">
-            {{ getAddRider.insured.last_name }}
+            {{ getAddRider.insured ? getAddRider.insured.last_name : "" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Kartu Identitas</p>
           <p class="data-value">
-            {{ getAddRider.insured.identity_type }}
+            {{ getAddRider.insured ? getAddRider.insured.identity_type : "" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Identitas</p>
           <p class="data-value">
-            {{ getAddRider.insured.identity }}
+            {{ getAddRider.insured ? getAddRider.insured.identity : "" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Hubungan dengan Tertanggung Utama</p>
           <p class="data-value">
-            {{ getAddRider.insured.relation }}
+            {{ getAddRider.insured ? getAddRider.insured.relation : "" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Jenis Kelamin</p>
           <p class="data-value">
-            {{ getAddRider.insured.gender }}
+            {{ getAddRider.insured ? getAddRider.insured.gender : "" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tanggal Lahir</p>
           <p class="data-value">
-            {{ getAddRider.insured.birth_date }}
+            {{ getAddRider.insured ? getAddRider.insured.birth_date : "" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tempat lahir</p>
           <p class="data-value">
-            {{ getAddRider.insured.birth_place }}
+            {{ getAddRider.insured ? getAddRider.insured.birth_place : "" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Kewarganegaraan</p>
           <p class="data-value">
-            {{ getAddRider.insured.nationality }}
+            {{ getAddRider.insured ? getAddRider.insured.nationality : "" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Status Perkawinan</p>
           <p class="data-value">
-            {{ getAddRider.insured.marital_status }}
+            {{ getAddRider.insured ? getAddRider.insured.marital_status : "" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tinggi Badan (cm)</p>
           <p class="data-value">
-            {{ getAddRider.insured.height }}
+            {{ getAddRider.insured ? getAddRider.insured.height : "" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Berat Badan (kg)</p>
           <p class="data-value">
-            {{ getAddRider.insured.weight }}
+            {{ getAddRider.insured ? getAddRider.insured.weight : "" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Apakah Merokok</p>
           <p class="data-value">
-            {{ getAddRider.insured.is_somker ? "Ya" : "Tidak" }}
+            {{ getAddRider.insured != null ? (getAddRider.insured.is_somker ? "Ya" : "Tidak") : "Tidak"}}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Profesi</p>
           <p class="data-value">
-            {{ getAddRider.insured.occupation }}
+            {{ getAddRider.insured != null ? getAddRider.insured.occupation : "" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Hp</p>
           <p class="data-value">
-            {{ getAddRider.insured.phone_number }}
+            {{ getAddRider.insured != null ? getAddRider.insured.phone_number : "" }}
           </p>
         </div>
       </div>

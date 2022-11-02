@@ -10,23 +10,7 @@ const state = () => ({
         show_modal_health: false,
       }
     ],
-    insured: {
-      first_name: null,
-      last_name: null,
-      identity_type: null,
-      identity: null,
-      relation: null,
-      gender: null,
-      birth_date: null,
-      birth_place: null,
-      nationality: null,
-      marital_status: null,
-      height: null,
-      weight: null,
-      is_smoker: false,
-      occupation: null,
-      phone_number: null,
-    },
+    insured: null,
     ktp_selfie_attachment: {},
     kk_attachment: {},
   },
@@ -63,7 +47,7 @@ const actions = {
       { root: true }
     );
     this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
-    const response = await this.$axios
+    return await await this.$axios
       .$post("/api/v1/transaction-proposal/add-rider", form)
       .then((response) => {
         dispatch(
