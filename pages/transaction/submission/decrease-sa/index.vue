@@ -257,6 +257,14 @@
         <p style="color: black">Mohon Tunggu...</p>
       </div>
     </template>
+
+    <NuxtChild />
+    <ModalMessage
+      :message="modal.message"
+      :show="modal.show"
+      :button="modal.button"
+      @closeModal="modal.show = false"
+    />
   </div>
 </template>
 
