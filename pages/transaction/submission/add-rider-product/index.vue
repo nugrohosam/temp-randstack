@@ -68,7 +68,7 @@
           <br>
           
 
-          <div v-for="(rider, index) in form.add_riders" :key="index">
+          <div v-for="(rider, index) in form.add_riders" :key="index" ref="riders">
             
             <div class="row" v-if="index > 0">
               <div class="col-12">
@@ -124,7 +124,7 @@
               </div>
             </div>
 
-            <div class="row">
+            <div class="row" v-if="form.add_riders[index].party_ids != null">
               <div class="col-12">
                 <p class="data-title mb-2">Pilih Tertanggung untuk Rider Baru</p>
                 <v-data-table
@@ -154,6 +154,168 @@
               </div>
             </div>
             
+            <div class="row" v-if="isCanDoAddInsured(index)">
+              <div class="col-lg-12 col-sm-12">
+                <button
+                  class="btn btn-primary-outlined"
+                  @click.prevent="toogleAddInsured(index)"
+                >
+                  {{ !form.add_riders[index].insured ? "Tambah Tertanggung Baru" : "Hapus Tertanggung Baru"}}
+                </button>
+              </div>
+            </div>
+              
+            <div class="row" v-if="form.add_riders[index].insured != null">
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Nama Depan</p>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="form.add_riders[index].insured.first_name"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Nama Belakang</p>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="form.add_riders[index].insured.last_name"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Kartu Identitas</p>
+                <div class="form-input">
+                  <v-select
+                    :items="options.identityType"
+                    v-model="form.add_riders[index].insured.identity_type"
+                  ></v-select>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Nomor Identitas</p>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="form.add_riders[index].insured.identity"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Hubungan dengan Tertanggung Utama</p>
+                <div class="form-input">
+                  <v-select
+                    :items="options.relationType"
+                    v-model="form.add_riders[index].insured.relation"
+                  ></v-select>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Jenis Kelamin</p>
+                <div class="form-input">
+                  <v-select
+                    :items="options.gender"
+                    v-model="form.add_riders[index].insured.gender"
+                  ></v-select>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Tanggal Lahir</p>
+                <div class="form-input">
+                  <input
+                    type="date"
+                    class="form-control"
+                    v-model="form.add_riders[index].insured.birth_date"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Tempat lahir</p>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="form.add_riders[index].insured.birth_place"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Kewarganegaraan</p>
+                <div class="form-input">
+                  <v-select
+                    :items="options.nationality"
+                    v-model="form.add_riders[index].insured.nationality"
+                  ></v-select>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Status Perkawinan</p>
+                <div class="form-input">
+                  <v-select
+                    :items="options.martialStatus"
+                    v-model="form.add_riders[index].insured.marital_status"
+                  ></v-select>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Tinggi Badan (cm)</p>
+                <div class="form-input">
+                  <input
+                    type="number"
+                    class="form-control"
+                    v-model="form.add_riders[index].insured.height"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Berat Badan (kg)</p>
+                <div class="form-input">
+                  <input
+                    type="number"
+                    class="form-control"
+                    v-model="form.add_riders[index].insured.weight"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Apakah Merokok</p>
+                <div class="form-input">
+                  <v-select
+                    :items="[
+                      { text: 'Iya', value: true },
+                      { text: 'Tidak', value: false },
+                    ]"
+                    v-model="form.add_riders[index].insured.is_smoker"
+                  ></v-select>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Profesi</p>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="form.add_riders[index].insured.occupation"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Nomor Hp</p>
+                <div class="form-input">
+                  <input
+                    type="number"
+                    placeholder="628xxx"
+                    class="form-control"
+                    v-model="form.add_riders[index].insured.phone_number"
+                  />
+                </div>
+              </div>
+            </div>
+
             <div class="row">
               <div class="col-12">
                 <p class="data-title mb-2">Isi Formulir Kesehatan</p>
@@ -165,7 +327,40 @@
                 </button>
               </div>
             </div>
-            
+
+            <div class="row" v-if="form.add_riders[index].insured != null">
+              <div class="col-lg-6 col-sm-12">
+                <ValidationProvider
+                  rules="required|image"
+                  v-slot="{ validate, errors }"
+                >
+                  <p class="data-title mb-2">Unggah KK (jika ada tertanggung baru)</p>
+                  <input
+                    type="file"
+                    :id="'inputKkImage-' + index"
+                    v-show="false"
+                    accept="image/*"
+                    @change="
+                      (e) => {
+                        validate(e);
+                        addKkImage(e, index);
+                      }
+                    "
+                  />
+                  <button
+                    class="btn btn-primary-outlined"
+                    @click.prevent="$el.querySelector('#inputKkImage-' + index).click()"
+                  >
+                    Unggah
+                  </button>
+                  <small>{{ form.add_riders[index].kk_attachment.name }}</small>
+                  <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+                  <br />
+                  <span class="text-error">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </div>
+            </div>
+
             <br>
             <v-divider></v-divider>
             <br>
@@ -182,201 +377,6 @@
             </div>
           </div>
           
-          <div class="row" v-if="isCanDoAddInsured()">
-            <div class="col-lg-12 col-sm-12">
-              <button
-                class="btn btn-primary-outlined"
-                @click.prevent="toogleAddInsured()"
-              >
-                {{ !isAddNewInsured ? "Tambah Tertanggung Baru" : "Hapus Tertanggung Baru"}}
-              </button>
-            </div>
-          </div>
-
-          <div class="row" v-if="isAddNewInsured">
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Nama Depan</p>
-              <div class="form-input">
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="form.insured.first_name"
-                />
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Nama Belakang</p>
-              <div class="form-input">
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="form.insured.last_name"
-                />
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Kartu Identitas</p>
-              <div class="form-input">
-                <v-select
-                  :items="options.identityType"
-                  v-model="form.insured.identity_type"
-                ></v-select>
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Nomor Identitas</p>
-              <div class="form-input">
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="form.insured.identity"
-                />
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Hubungan dengan Tertanggung Utama</p>
-              <div class="form-input">
-                <v-select
-                  :items="options.relationType"
-                  v-model="form.insured.relation"
-                ></v-select>
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Jenis Kelamin</p>
-              <div class="form-input">
-                <v-select
-                  :items="options.gender"
-                  v-model="form.insured.gender"
-                ></v-select>
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Tanggal Lahir</p>
-              <div class="form-input">
-                <input
-                  type="date"
-                  class="form-control"
-                  v-model="form.insured.birth_date"
-                />
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Tempat lahir</p>
-              <div class="form-input">
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="form.insured.birth_place"
-                />
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Kewarganegaraan</p>
-              <div class="form-input">
-                <v-select
-                  :items="options.nationality"
-                  v-model="form.insured.nationality"
-                ></v-select>
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Status Perkawinan</p>
-              <div class="form-input">
-                <v-select
-                  :items="options.martialStatus"
-                  v-model="form.insured.marital_status"
-                ></v-select>
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Tinggi Badan (cm)</p>
-              <div class="form-input">
-                <input
-                  type="number"
-                  class="form-control"
-                  v-model="form.insured.height"
-                />
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Berat Badan (kg)</p>
-              <div class="form-input">
-                <input
-                  type="number"
-                  class="form-control"
-                  v-model="form.insured.weight"
-                />
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Apakah Merokok</p>
-              <div class="form-input">
-                <v-select
-                  :items="[
-                    { text: 'Iya', value: true },
-                    { text: 'Tidak', value: false },
-                  ]"
-                  v-model="form.insured.is_smoker"
-                ></v-select>
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Profesi</p>
-              <div class="form-input">
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="form.insured.occupation"
-                />
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-              <p class="data-title mb-2">Nomor Hp</p>
-              <div class="form-input">
-                <input
-                  type="number"
-                  placeholder="628xxx"
-                  class="form-control"
-                  v-model="form.insured.phone_number"
-                />
-              </div>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6 col-sm-12">
-              <ValidationProvider
-                rules="required|image"
-                v-slot="{ validate, errors }"
-              >
-                <p class="data-title mb-2">Unggah KK (jika ada tertanggung baru)</p>
-                <input
-                  type="file"
-                  ref="inputKkImage"
-                  v-show="false"
-                  accept="image/*"
-                  @change="
-                    (e) => {
-                      validate(e);
-                      addKkImage(e);
-                    }
-                  "
-                />
-                <button
-                  class="btn btn-primary-outlined"
-                  @click.prevent="$refs.inputKkImage.click()"
-                >
-                  Unggah
-                </button>
-                <small>{{ form.kk_attachment.name }}</small>
-                <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
-                <br />
-                <span class="text-error">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </div>
-          </div>
-
           <div class="row">
             <div class="col-lg-6 col-sm-12">
               <ValidationProvider
@@ -561,11 +561,11 @@ export default {
             parties: [],
             health_questionnaire: [],
             show_modal_health: false,
+            insured: null,
+            kk_attachment: {},
           }
         ],
-        insured: null,
         ktp_selfie_attachment: {},
-        kk_attachment: {},
       },
     };
   },
@@ -605,8 +605,12 @@ export default {
     },
   },
   methods: {
-    isCanDoAddInsured: function () {
-      return this.allowedRiders.filter(x => this.form.add_riders.find(v => v.product_id == x.productId)).filter(x => x.familyType == 1).length > 0
+    isCanDoAddInsured: function (index) {
+      const isCanDoAddInsured = this.allowedRiders.filter(x => this.form.add_riders[index].product_id == x.productId).filter(x => x.familyType == 1).length > 0
+      if (!isCanDoAddInsured){
+        this.form.add_riders[index].insured = null;
+      }
+      return isCanDoAddInsured
     },
     getData: async function () {
       let data = this.myPolicy;
@@ -680,11 +684,13 @@ export default {
       if (!this.form.ktp_selfie_attachment.name) {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
       }
-      if (this.form.insured.first_name != "" && !this.form.kk_attachment.name) {
-        this.validationMessage.push("Unggah KK diperlukan");
-      }
-      if (this.form.insured.first_name != "" && this.form.health_questionnaire.length < 1) {
-        this.validationMessage.push("Formulir Kesehatan Harus Terisi");
+      for (let i = 0; i < this.form.add_riders.length; i++) {
+        if (this.form.add_riders[i].insured.first_name != "" && !this.form.add_riders[i].kk_attachment.name) {
+          this.validationMessage.push("Unggah KK pada penambahan rider ke-"+ (i+1) +" diperlukan");
+        }
+        if (this.form.add_riders[i].insured.first_name != "" && this.form.add_riders[i].health_questionnaire.length < 1) {
+          this.validationMessage.push("Formulir pada penambahan rider ke-"+ (i+1) +" Kesehatan Harus Terisi");
+        }
       }
       if (this.form.add_riders[0].product_id == null) {
         this.validationMessage.push("Rider harus dipilih");
@@ -702,13 +708,13 @@ export default {
         };
       }
     },
-    async addKkImage(e) {
+    async addKkImage(e, index) {
       if (e.target.files[0]) {
         const result = await this.$store.dispatch(
           "submission_transaction/uploadKkFile",
           { file: e.target.files[0] }
         );
-        this.form.kk_attachment = {
+        this.form.add_riders[index].kk_attachment = {
           file: e.target.files[0],
           name: result.name,
         };
@@ -723,14 +729,16 @@ export default {
         sum_assured: null,
         health_questionnaire: [],
         party_ids: [],
+        kk_attachment: {},
+        insured: null
       });
     },
     removeRider: function (index) {
       this.form.add_riders.splice(index, 1)
     },
-    toogleAddInsured: function () {
-      if (!this.isAddNewInsured) {
-        this.form.insured = {
+    toogleAddInsured: function (index) {
+      if (!this.form.add_riders[index].insured) {
+        this.form.add_riders[index].insured = {
           first_name: "",
           last_name: "",
           identity_type: "",
@@ -748,11 +756,13 @@ export default {
           occupation: "",
           phone_number: "",
         }
+        this.form.add_riders[index].party_ids = null;
+        this.form.add_riders[index].parties = null;
       }else {
-        this.form.insured = null;
+        this.form.add_riders[index].party_ids = [];
+        this.form.add_riders[index].parties = [];
+        this.form.add_riders[index].insured = null;
       }
-
-      this.isAddNewInsured = !this.isAddNewInsured;
     },
   },
 };

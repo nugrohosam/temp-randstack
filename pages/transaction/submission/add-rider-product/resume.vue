@@ -51,9 +51,9 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" v-if="!getAddRider.add_riders[index].insured">
         <div class="col-12">
-          <p class="data-title mb-2">Pilih Tertanggung untuk Rider Baru</p>
+          <p class="data-title mb-2">Pilihan Tertanggung untuk Rider Baru</p>
           <v-simple-table>
             <template v-slot:default>
               <thead>
@@ -73,6 +73,107 @@
         </div>
       </div>
       
+      <div v-if="getAddRider.add_riders[index].insured">
+        <div class="row">
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Tertanggung Tamabahan</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Nama Depan</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured ? getAddRider.add_riders[index].insured.first_name : "" }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Nama Belakang</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured ? getAddRider.add_riders[index].insured.last_name : "" }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Kartu Identitas</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured ? getAddRider.add_riders[index].insured.identity_type : "" }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Nomor Identitas</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured ? getAddRider.add_riders[index].insured.identity : "" }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Hubungan dengan Tertanggung Utama</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured ? getAddRider.add_riders[index].insured.relation : "" }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Jenis Kelamin</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured ? getAddRider.add_riders[index].insured.gender : "" }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Tanggal Lahir</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured ? getAddRider.add_riders[index].insured.birth_date : "" }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Tempat lahir</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured ? getAddRider.add_riders[index].insured.birth_place : "" }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Kewarganegaraan</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured ? getAddRider.add_riders[index].insured.nationality : "" }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Status Perkawinan</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured ? getAddRider.add_riders[index].insured.marital_status : "" }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Tinggi Badan (cm)</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured ? getAddRider.add_riders[index].insured.height : "" }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Berat Badan (kg)</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured ? getAddRider.add_riders[index].insured.weight : "" }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Apakah Merokok</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured != null ? (getAddRider.add_riders[index].insured.is_somker ? "Ya" : "Tidak") : "Tidak"}}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Profesi</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured != null ? getAddRider.add_riders[index].insured.occupation : "" }}
+            </p>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Nomor Hp</p>
+            <p class="data-value">
+              {{ getAddRider.add_riders[index].insured != null ? getAddRider.add_riders[index].insured.phone_number : "" }}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div class="row" v-if="getAddRider.add_riders[index].health_questionnaire.length > 0">
         <div class="col-12">
           <p class="data-title mb-2">Isi Formulir Kesehatan</p>
@@ -84,125 +185,24 @@
           </button>
         </div>
       </div>
+
+      <div class="row" v-if="getAddRider.add_riders[index].insured && getAddRider.add_riders[index].kk_attachment != null">
+        <div class="col-lg-6 col-sm-12">
+          <p class="data-title mb-2">Unggah KK</p>
+          <p class="data-value">
+            <button
+              class="btn btn-primary-outlined"
+              @click.prevent="showKkPreview(index)"
+            >
+              Lihat
+            </button>
+          </p>
+        </div>
+      </div>
       
       <br>
       <v-divider></v-divider>
       <br>
-    </div>
-
-    <div v-if="getAddRider.insured">
-      <div class="row">
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Tertanggung Tamabahan</p>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Nama Depan</p>
-          <p class="data-value">
-            {{ getAddRider.insured ? getAddRider.insured.first_name : "" }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Nama Belakang</p>
-          <p class="data-value">
-            {{ getAddRider.insured ? getAddRider.insured.last_name : "" }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Kartu Identitas</p>
-          <p class="data-value">
-            {{ getAddRider.insured ? getAddRider.insured.identity_type : "" }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Nomor Identitas</p>
-          <p class="data-value">
-            {{ getAddRider.insured ? getAddRider.insured.identity : "" }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Hubungan dengan Tertanggung Utama</p>
-          <p class="data-value">
-            {{ getAddRider.insured ? getAddRider.insured.relation : "" }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Jenis Kelamin</p>
-          <p class="data-value">
-            {{ getAddRider.insured ? getAddRider.insured.gender : "" }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Tanggal Lahir</p>
-          <p class="data-value">
-            {{ getAddRider.insured ? getAddRider.insured.birth_date : "" }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Tempat lahir</p>
-          <p class="data-value">
-            {{ getAddRider.insured ? getAddRider.insured.birth_place : "" }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Kewarganegaraan</p>
-          <p class="data-value">
-            {{ getAddRider.insured ? getAddRider.insured.nationality : "" }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Status Perkawinan</p>
-          <p class="data-value">
-            {{ getAddRider.insured ? getAddRider.insured.marital_status : "" }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Tinggi Badan (cm)</p>
-          <p class="data-value">
-            {{ getAddRider.insured ? getAddRider.insured.height : "" }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Berat Badan (kg)</p>
-          <p class="data-value">
-            {{ getAddRider.insured ? getAddRider.insured.weight : "" }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Apakah Merokok</p>
-          <p class="data-value">
-            {{ getAddRider.insured != null ? (getAddRider.insured.is_somker ? "Ya" : "Tidak") : "Tidak"}}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Profesi</p>
-          <p class="data-value">
-            {{ getAddRider.insured != null ? getAddRider.insured.occupation : "" }}
-          </p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Nomor Hp</p>
-          <p class="data-value">
-            {{ getAddRider.insured != null ? getAddRider.insured.phone_number : "" }}
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="row" v-if="getAddRider.kk_attachment != null">
-      <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Unggah KK</p>
-        <p class="data-value">
-          <button
-            class="btn btn-primary-outlined"
-            @click.prevent="showKkPreview"
-          >
-            Lihat
-          </button>
-        </p>
-      </div>
     </div>
 
     <div class="row">
@@ -218,7 +218,6 @@
         </p>
       </div>
     </div>
-
 
     <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
@@ -324,10 +323,10 @@ export default {
         this.image_preview.show = true;
       }
     },
-    showKkPreview: function () {
-      if (this.getAddRider.kk_attachment.file) {
+    showKkPreview: function (index) {
+      if (this.getAddRider.add_riders[index].kk_attachment.file) {
         this.image_preview.src = URL.createObjectURL(
-          this.getAddRider.kk_attachment.file
+          this.getAddRider.add_riders[index].kk_attachment.file
         );
         this.image_preview.show = true;
       }

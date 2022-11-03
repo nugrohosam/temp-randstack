@@ -8,10 +8,10 @@ const state = () => ({
         sum_asured: null,
         health_questionnaire: [],
         show_modal_health: false,
+        insured: null,
+        ktp_selfie_attachment: {},
       }
     ],
-    insured: null,
-    ktp_selfie_attachment: {},
     kk_attachment: {},
   },
 });
@@ -32,11 +32,11 @@ const actions = {
 
     form = { 
       ...form, 
-      kk_attachment: state.addRider.kk_attachment.name,
       ktp_selfie_attachment: state.addRider.ktp_selfie_attachment.name,
     }
 
     for (let i = 0; i < form.add_riders.length; i++){
+      form.add_riders[i].kk_attachment = state.addRider.add_riders[i].kk_attachment.name,
       delete form.add_riders[i].parties
       delete form.add_riders[i].show_modal_health
     }
