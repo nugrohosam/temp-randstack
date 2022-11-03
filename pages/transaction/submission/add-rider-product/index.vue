@@ -685,11 +685,17 @@ export default {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
       }
       for (let i = 0; i < this.form.add_riders.length; i++) {
-        if (this.form.add_riders[i].insured.first_name != "" && !this.form.add_riders[i].kk_attachment.name) {
+        if (this.form.add_riders[i].insured && !this.form.add_riders[i].kk_attachment.name) {
           this.validationMessage.push("Unggah KK pada penambahan rider ke-"+ (i+1) +" diperlukan");
         }
-        if (this.form.add_riders[i].insured.first_name != "" && this.form.add_riders[i].health_questionnaire.length < 1) {
+        if (this.form.add_riders[i].health_questionnaire.length < 1) {
           this.validationMessage.push("Formulir pada penambahan rider ke-"+ (i+1) +" Kesehatan Harus Terisi");
+        }
+        if (this.form.add_riders[i].party_ids == null && this.form.add_riders[i].insured.first_name == "") {
+          this.validationMessage.push("Formulir pada penambahan rider ke-"+ (i+1) +" tertanggung harus dipilih");
+        }
+        if (this.form.add_riders[i].party_ids.length < 1 && !this.form.add_riders[i].insured) {
+          this.validationMessage.push("Formulir pada penambahan rider ke-"+ (i+1) +" tertanggung harus dipilih");
         }
       }
       if (this.form.add_riders[0].product_id == null) {
