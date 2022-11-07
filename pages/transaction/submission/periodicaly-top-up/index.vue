@@ -19,7 +19,7 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title">Premi Dasar Eksisting</p>
           <p class="data-value">
-            {{ "12999" }}
+            {{ myPolicy.policyWithCode.coverages ? $convertCurrency(myPolicy.policyWithCode.coverages[0].currentPremium.stdPremAf) : 0 }} 
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -33,7 +33,7 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Total Premi</p>
           <p class="data-value">
-            {{ "123123" }}
+            {{ myPolicy.policyWithCode.coverages ? $convertCurrency(myPolicy.policyWithCode.coverages[0].currentPremium.totalPremAf) : 0 }} 
           </p>
         </div>
       </div>
@@ -301,15 +301,24 @@ export default {
     },
     validate: async function () {
       this.validationMessage = [];
+      if (!this.form.basePrem) {
+        this.validationMessage.push("Premium Dasar diperlukan");
+      }
+      if (!this.form.topUpPrem) {
+        this.validationMessage.push("Top Up Berkala diperlukan");
+      }
       if (!this.form.ktpSelfieAttachment.name) {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+      }
+      if (this.form.healthQuestionnaire.length < 1) {
+        this.validationMessage.push("Form Kesehatan diperlukan");
       }
     },
     save: async function () {
       this.validate();
       if (this.validationMessage.length <= 0) {
         this.$store.commit(
-          "submission_transaction/benefit_allocation/setBenefitAllocation",
+          "submission_transaction/periodicaly_top_up/setPeriodicalyTopUp",
           this.form
         );
         this.$router.push({

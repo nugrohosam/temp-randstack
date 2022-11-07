@@ -684,7 +684,9 @@ export default {
       if (!this.form.ktp_selfie_attachment.name) {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
       }
+      var countRider = []
       for (let i = 0; i < this.form.add_riders.length; i++) {
+        countRider[this.form.add_riders[i].product_id] = countRider[this.form.add_riders[i].product_id] ? countRider[this.form.add_riders[i].product_id]++ : 1;
         if (this.form.add_riders[i].insured && !this.form.add_riders[i].kk_attachment.name) {
           this.validationMessage.push("Unggah KK pada penambahan rider ke-"+ (i+1) +" diperlukan");
         }
@@ -697,6 +699,9 @@ export default {
         if (this.form.add_riders[i].party_ids.length < 1 && !this.form.add_riders[i].insured) {
           this.validationMessage.push("Formulir pada penambahan rider ke-"+ (i+1) +" tertanggung harus dipilih");
         }
+      }
+      if (countRider.length > 1 && countRider.filter(x => x > 1).length > 1) {
+        this.validationMessage.push("Rider tidak bisa dipilih 2 kali");
       }
       if (this.form.add_riders[0].product_id == null) {
         this.validationMessage.push("Rider harus dipilih");

@@ -9,6 +9,7 @@ import RiderProduct from "./rider_product";
 import DecreaseSA from "./decrease_sa";
 import BenefitAllocation from "./benefit_allocation";
 import ChangePayeeRefundAccount from "./change_payee_refund_account";
+import PeriodicalyTopUp from "./periodicaly_top_up";
 import WithdrawPartialInvestmentFund from "./withdraw_partial_investment_fund";
 import AddInvestmentFund from "./add_investment_fund";
 
@@ -21,6 +22,7 @@ const SubmissionTransactionModules = {
     withdraw_partial_investment_fund: WithdrawPartialInvestmentFund,
     add_investment_fund: AddInvestmentFund,
     rider_product: RiderProduct,
+    periodicaly_top_up: PeriodicalyTopUp,
     decrease_sa: DecreaseSA,
     benefit_allocation: BenefitAllocation,
     change_payee_refund_account: ChangePayeeRefundAccount,

@@ -150,7 +150,7 @@
           <div class="row" v-if="form.items.length > 0">
             <div class="col-lg-6 col-sm-12">
               <p class="data-value">
-                Data Pengajuan Penarikan Sebagian Dana Investasi
+                Data Pengajuan Penambahan Uang Pertanggunan
               </p>
               <v-simple-table>
                 <template v-slot:default>
