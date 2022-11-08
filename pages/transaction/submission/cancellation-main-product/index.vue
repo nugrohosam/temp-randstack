@@ -679,12 +679,15 @@ export default {
             this.validationMessage.push("Unggah " + (this.form.status_family_attachment == "KK" ? "KK" : "Akte Kelahiran") + " diperlukan");
         }
       }
-      
+
       if (!this.form.is_should_fill_payee_refund){
         result = await this.$store.dispatch(
           "submission_transaction/submitCheckFreelookCOPAndNoRekKosong", this.form
         );
         this.form.is_should_fill_payee_refund = result.data.status
+        if (this.form.is_should_fill_payee_refund) {
+          this.validationMessage.push("Isi data rekening manfaat di atas untuk melanjutan transaksi");
+        }
       }
 
       if (this.form.coverages_selected.length <= 0) {
