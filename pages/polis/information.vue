@@ -127,14 +127,14 @@
                                 <div class="row">
                                   <div class="col-12">
                                     <br />
-                                    <p class="data-title">
+                                    <p class="data-title" v-if="item.benefitLevelDescrp == null || item.benefitLevelDescrp == '-' || item.benefitLevelDescrp == ''">
                                       {{
                                         myPolicy.policyWithCode.isSyariah
                                           ? "Santunan Asuransi"
                                           : "Uang Pertanggungan"
                                       }}
                                     </p>
-                                    <p class="data-value mb-3">
+                                    <p class="data-value mb-3" v-if="item.benefitLevelDescrp == null || item.benefitLevelDescrp == '-' || item.benefitLevelDescrp == ''">
                                       {{
                                         $currencyName(
                                           myPolicy.policyWithCode.currency
@@ -146,9 +146,9 @@
                                         )
                                       }}
                                     </p>
-                                    <p class="data-title">Plan</p>
-                                    <p class="data-value mb-3">
-                                      {{ (item ? item.benefitLevel : "-") }}
+                                    <p class="data-title" v-if="item.benefitLevelDescrp != null && item.benefitLevelDescrp != '-' && item.benefitLevelDescrp != ''">Plan</p>
+                                    <p class="data-value mb-3" v-if="item.benefitLevelDescrp != null && item.benefitLevelDescrp != '-' && item.benefitLevelDescrp != ''">
+                                      {{ item.benefitLevelDescrp }}
                                     </p>
                                     <p class="data-title">
                                       {{

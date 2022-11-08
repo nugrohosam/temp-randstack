@@ -138,6 +138,216 @@
               ></v-select>
             </div>
           </div>
+          
+          <div v-if="form.is_should_fill_payee_refund">
+
+            <br>
+            <v-divider></v-divider>
+            <br>
+
+            <div class="row">
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Nomor Rekening Baru</p>
+                  <div class="form-input">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="form.new_no_rek"
+                    />
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Nama Pemilik Rekening Baru</p>
+                  <div class="form-input">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="form.rek_owner"
+                    />
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6">
+                <p class="data-title mb-2">Nama Cabang</p>
+                  <div class="form-input">
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="form.branch"
+                    />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-2 col-sm-6">
+                <p class="data-title mb-2">Bank</p>
+                  <div >
+                    <v-select
+                      class="bank_option"
+                      :items="optionBank"
+                      v-model="form.bank"
+                      label=""
+                    ></v-select>
+                  </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-lg-6 col-sm-12">
+                <ValidationProvider
+                  rules="required|image"
+                  v-slot="{ validate, errors }"
+                >
+                  <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+                  <input
+                    type="file"
+                    ref="inputSelfieKtpImage"
+                    v-show="false"
+                    accept="image/*"
+                    @change="
+                      (e) => {
+                        validate(e);
+                        addSelfieKtpImage(e);
+                      }
+                    "
+                  />
+                  <button
+                    class="btn btn-primary-outlined"
+                    @click.prevent="$refs.inputSelfieKtpImage.click()"
+                  >
+                    Unggah
+                  </button>
+                  <small>{{ form.ktp_selfie_attachment.name }}</small>
+                  <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+                  <br />
+                  <span class="text-error">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6 col-sm-12">
+                <ValidationProvider
+                  rules="required|image"
+                  v-slot="{ validate, errors }"
+                >
+                  <p class="data-title mb-2">Unggah Foto KTP</p>
+                  <input
+                    type="file"
+                    ref="inputKtpImage"
+                    v-show="false"
+                    accept="image/*"
+                    @change="
+                      (e) => {
+                        validate(e);
+                        addKtpImage(e);
+                      }
+                    "
+                  />
+                  <button
+                    class="btn btn-primary-outlined"
+                    @click.prevent="$refs.inputKtpImage.click()"
+                  >
+                    Unggah
+                  </button>
+                  <small>{{ form.ktp_attachment.name }}</small>
+                  <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+                  <br />
+                  <span class="text-error">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6 col-sm-12">
+                <ValidationProvider
+                  rules="required|image"
+                  v-slot="{ validate, errors }"
+                >
+                  <p class="data-title mb-2">Halaman Depan Buku Tabungan Baru</p>
+                  <input
+                    type="file"
+                    ref="inputSavingBookImage"
+                    v-show="false"
+                    accept="image/*"
+                    @change="
+                      (e) => {
+                        validate(e);
+                        addSavingBookImage(e);
+                      }
+                    "
+                  />
+                  <button
+                    class="btn btn-primary-outlined"
+                    @click.prevent="$refs.inputSavingBookImage.click()"
+                  >
+                    Unggah
+                  </button>
+                  <small>{{ form.saving_book_attachment.name }}</small>
+                  <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+                  <br />
+                  <span class="text-error">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <v-radio-group
+                  v-model="form.status_family_attachment"
+                  row
+                  @change="form.family_attachment = {}"
+                >
+                  <v-radio
+                    v-for="(item, index) in radios"
+                    :key="index"
+                    color="#F15921"
+                    v-bind="item"
+                  ></v-radio>
+                </v-radio-group>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6 col-sm-12">
+                <ValidationProvider
+                  rules="required|image"
+                  v-slot="{ validate, errors }"
+                >
+                  <p class="data-title mb-2">
+                    {{
+                      form.status_family_attachment === "KK"
+                        ? "Unggah Kartu Keluarga"
+                        : "Akte Kelahiran (Pemegang polis)"
+                    }}
+                  </p>
+                  <input
+                    type="file"
+                    ref="inputFamilyAttachment"
+                    v-show="false"
+                    accept="image/*"
+                    @change="
+                      (e) => {
+                        validate(e);
+                        addFamilyAttachment(e);
+                      }
+                    "
+                  />
+                  <button
+                    class="btn btn-primary-outlined"
+                    @click.prevent="$refs.inputFamilyAttachment.click()"
+                  >
+                    Unggah
+                  </button>
+                  <small>{{ form.family_attachment.name }}</small>
+                  <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+                  <br />
+                  <span class="text-error">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </div>
+            </div>
+
+          </div>
 
           <div class="row">
             <div class="col-lg-8 col-sm-12">
@@ -273,9 +483,27 @@ export default {
           },
         ],
       },
+      radios: [
+        { label: "Kartu Keluarga (Pemegang polis)", value: "KK" },
+        {
+          label: "Akte Kelahiran (Pemegang polis)",
+          value: "BIRTHCERTIFICATE",
+        },
+      ],
       form: {
         coverages_selected: [],
+        is_should_fill_payee_refund: false,
         reason_selected: null,
+        new_no_rek: null,
+        bank: null,
+        branch: null,
+        rek_owner: null,
+        ktp_attachment: {},
+        saving_book_attachment: {},
+        ktp_selfie_attachment: {},
+        status_family_attachment: "KK",
+        family_attachment: {},
+        kk_attachment: {},
       },
       modal: {
         message: "",
@@ -304,8 +532,62 @@ export default {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
+    banks() {
+      return this.$store.getters["submission_transaction/getBanks"];
+    },
+    optionBank() {
+      return this.banks.map(v => ({ value: v.bankId, text: v.name }))
+    },
   },
   methods: {
+    async addFamilyAttachment(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadAttachment",
+          { file: e.target.files[0], type: this.form.status_family_attachment }
+        );
+        this.form.family_attachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
+    async addSelfieKtpImage(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadSelieKtpFile",
+          { file: e.target.files[0] }
+        );
+        this.form.ktp_selfie_attachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
+    async addKtpImage(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadKtpFile",
+          { file: e.target.files[0] }
+        );
+        this.form.ktp_attachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
+    async addSavingBookImage(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadSavingBookFile",
+          { file: e.target.files[0] }
+        );
+        this.form.saving_book_attachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
     getData: async function () {
       let data = this.myPolicy;
       let productIds = [],
@@ -348,21 +630,63 @@ export default {
       );
     },
     save: async function () {
-      this.validate();
+      this.$store.commit(
+        "submission_transaction/setCoveragesSelected",
+        this.form.coverages_selected
+      );
+      await this.validate();
       if (this.validationMessage.length <= 0) {
+        if (this.form.is_should_fill_payee_refund) {
+          this.$store.commit(
+            "submission_transaction/change_payee_refund_account/setChangePayeeRefundAccount",
+            this.form
+          );
+        }
         this.$store.commit(
           "submission_transaction/setReasonSelected",
           this.form.reason_selected
-        );
-        this.$store.commit(
-          "submission_transaction/setCoveragesSelected",
-          this.form.coverages_selected
         );
         this.$router.push({ path: "./cancellation-main-product/resume" });
       }
     },
     validate: async function () {
       this.validationMessage = [];
+      let result = null
+
+      if (this.form.is_should_fill_payee_refund) {
+          if (!this.form.new_no_rek) {
+            this.validationMessage.push("Nomor Rekening Baru diperlukan");
+          }
+          if (!this.form.rek_owner) {
+            this.validationMessage.push("Nama Pemilik Rekening Baru diperlukan");
+          }
+          if (!this.form.bank) {
+            this.validationMessage.push("Bank diperlukan");
+          }
+          if (!this.form.branch) {
+            this.validationMessage.push("Cabang diperlukan");
+          }
+          if (!this.form.ktp_selfie_attachment.name) {
+            this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+          }
+          if (!this.form.ktp_attachment.name) {
+            this.validationMessage.push("Unggah KTP diperlukan");
+          }
+          if (!this.form.saving_book_attachment.name) {
+            this.validationMessage.push("Unggah Halaman Depan Buku Tabungan Yang Baru diperlukan");
+          }
+          if (!this.form.family_attachment.name) {
+            this.validationMessage.push("Unggah " + (this.form.status_family_attachment == "KK" ? "KK" : "Akte Kelahiran") + " diperlukan");
+        }
+      }
+      
+      if (!this.form.is_should_fill_payee_refund){
+        result = await this.$store.dispatch(
+          "submission_transaction/submitCheckFreelookCOPAndNoRekKosong", this.form
+        );
+        this.form.is_should_fill_payee_refund = result.data.status
+      }
+
       if (this.form.coverages_selected.length <= 0) {
         this.validationMessage.push("Pilih minimal 1 produk");
       }

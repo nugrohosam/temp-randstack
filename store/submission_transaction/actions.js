@@ -328,18 +328,47 @@ export default {
       );
     }
 
-    const form = {
+    let changePayeeAccount = rootGetters[
+      "submission_transaction/change_payee_refund_account/getChangePayeeRefundAccount"
+    ];
+    let form = {
       items: items,
       cancel_reason: getters.getReasonSelected[0].name,
     };
+
+    const isUseChangePayeeAccount = changePayeeAccount.bank != null
+    if (isUseChangePayeeAccount) {
+
+      changePayeeAccount = {
+        ...changePayeeAccount,
+        saving_book_attachment: changePayeeAccount.saving_book_attachment?.name || null,
+        ktp_attachment: changePayeeAccount.ktp_attachment?.name || null,
+        document_attachment: changePayeeAccount.document_attachment?.name || null,
+        ktp_selfie_attachment: changePayeeAccount.ktp_selfie_attachment?.name || null,
+      }
+
+      if (changePayeeAccount.family_attachment) {
+        if (changePayeeAccount.status_family_attachment === "KK") {
+          changePayeeAccount.kk_attachment = changePayeeAccount.family_attachment?.name || null;
+        } else {
+          changePayeeAccount.birth_certificate_attachment =
+            changePayeeAccount.family_attachment?.name || null;
+        }
+      }
+
+      form = { ...form, ...changePayeeAccount }
+    }
+
     dispatch(
       "toggleOverlayLoading",
       { show: true, message: "Mohon Tunggu..." },
       { root: true }
     );
+
+    const endpoint = !isUseChangePayeeAccount ? "/api/v1/transaction-proposal/surrender" : "/api/v1/transaction-proposal/surrender-with-payee";
     return await this.$axios
       // .$post("/api/v1/transaction-proposal/surrender", form)
-      .$post("/api/v1/transaction-proposal/surrender", form)
+      .$post(endpoint, form)
       .then((response) => {
         dispatch(
           "toggleOverlayLoading",
@@ -348,6 +377,8 @@ export default {
         );
         const result = dispatch("getMyPolicy");
         commit("clearUploadKtpFile");
+        commit("clearUploadSelfieKtpFile");
+        commit("clearUploadKkFile");
         commit("clearCoveragesSelected");
         // commit('clearReasonSelected');
         return response;
@@ -355,8 +386,51 @@ export default {
       .catch((error) => {
         return error;
       });
-      },
+  },
 
+  async submitCheckFreelookCOPAndNoRekKosong(
+    { rootGetters, getters, dispatch, commit },
+    data
+  ) {
+    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+    let items = [];
+    if (getters.getCoveragesSelected.find((v) => v.productType == "Utama")) {
+      items.push({
+        itemId: getters.getCoveragesSelected.find(
+          (v) => v.productType == "Utama"
+        ).itemId,
+      });
+    } else {
+      getters.getCoveragesSelected.forEach((v, i) =>
+        items.push({
+          itemId: v.itemId,
+        })
+      );
+    }
+
+    const form = {
+      items: items
+    };
+    dispatch(
+      "toggleOverlayLoading",
+      { show: true, message: "Mohon Tunggu..." },
+      { root: true }
+    );
+    return await this.$axios
+      .$post("/api/v1/transaction-proposal/check-cop-freelook-payee-account", form)
+      .then((response) => {
+        dispatch(
+          "toggleOverlayLoading",
+          { show: false, message: "Mohon Tunggu..." },
+          { root: true }
+        );
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+  },
+    
   async getProducts({ rootGetters, dispatch, commit }, data) {
     this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
     return await this.$axios

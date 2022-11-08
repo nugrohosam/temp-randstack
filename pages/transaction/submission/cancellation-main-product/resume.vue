@@ -115,6 +115,113 @@
         <p class="data-value">{{ reasonSelected[0].name }}</p>
       </div>
     </div>
+    
+    <div v-if="getChangePayeeRefundAccount.is_should_fill_payee_refund">
+      <br>
+      <v-divider></v-divider>
+      <br>
+
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title">Nomor Rekening Baru</p>
+          <p class="data-value">
+            {{
+              getChangePayeeRefundAccount.new_no_rek
+            }}
+          </p>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">
+            Nama Pemilik Nomor Rekening Manfaat Baru
+          </p>
+          <p class="data-value">
+            {{
+              getChangePayeeRefundAccount.rek_owner
+            }}
+          </p>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">
+            Nama Cabang Baru
+          </p>
+          <p class="data-value">
+            {{
+              getChangePayeeRefundAccount.branch
+            }}
+          </p>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nama Bank Baru</p>
+          <p class="data-value">
+            {{
+              choosenBank(getChangePayeeRefundAccount.bank)
+            }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6 col-sm-12">
+          <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+          <p class="data-value">
+            <button
+              class="btn btn-primary-outlined"
+              @click.prevent="showSelfieKtpPreview"
+            >
+              Lihat
+            </button>
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6 col-sm-12">
+          <p class="data-title mb-2">Unggah Foto KTP</p>
+          <p class="data-value">
+            <button
+              class="btn btn-primary-outlined"
+              @click.prevent="showKtpPreview"
+            >
+              Lihat
+            </button>
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6 col-sm-12">
+          <p class="data-title mb-2">Unggah Foto Halaman Depan Buku Tabungan Yang Baru</p>
+          <p class="data-value">
+            <button
+              class="btn btn-primary-outlined"
+              @click.prevent="showSavingBookPreview"
+            >
+              Lihat
+            </button>
+          </p>
+        </div>
+      </div>
+
+      <div v-if="getChangePayeeRefundAccount.family_attachment.file" class="row">
+        <div class="col-lg-6 col-sm-12">
+          <p class="data-title mb-2">
+            {{
+              getChangePayeeRefundAccount.status_family_attachment === "KK"
+                ? "Unggah Kartu Keluarga"
+                : "Akte Kelahiran (Pemegang polis)"
+            }}
+          </p>
+          <p class="data-value">
+            <button
+              class="btn btn-primary-outlined"
+              @click.prevent="showFamilyAttachmentPreview"
+            >
+              Lihat
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
@@ -158,6 +265,11 @@
       </div>
     </div>
 
+    <ModalImagePreview
+      :src="image_preview.src"
+      :show="image_preview.show"
+      @closeImagePreview="image_preview.show = false"
+    />
   </div>
 </template>
 <script>
@@ -239,6 +351,14 @@ export default {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
+    banks() {
+      return this.$store.getters["submission_transaction/getBanks"];
+    },
+    getChangePayeeRefundAccount() {
+      return this.$store.getters[
+        "submission_transaction/change_payee_refund_account/getChangePayeeRefundAccount"
+      ];
+    },
   },
   watch: {
     $route(to, from) {
@@ -250,6 +370,44 @@ export default {
     },
   },
   methods: {
+    showSelfieKtpPreview: function () {
+      if (this.getChangePayeeRefundAccount.ktp_selfie_attachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getChangePayeeRefundAccount.ktp_selfie_attachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
+    showKtpPreview: function () {
+      if (this.getChangePayeeRefundAccount.ktp_attachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getChangePayeeRefundAccount.ktp_attachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
+    showSavingBookPreview: function () {
+      if (this.getChangePayeeRefundAccount.saving_book_attachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getChangePayeeRefundAccount.saving_book_attachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
+    choosenBank: function (bankId) {
+      if (!bankId){
+        return null
+      }
+      return this.banks.find(v => v.bankId == bankId).name;
+    },   
+    showFamilyAttachmentPreview: function () {
+      if (this.getChangePayeeRefundAccount.family_attachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getChangePayeeRefundAccount.family_attachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
     async submit() {
       this.validate();
       if (this.validationMessage.length <= 0) {
