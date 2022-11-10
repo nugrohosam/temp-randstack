@@ -101,7 +101,7 @@
             >
               <p class="data-title mb-2">Uang Pertanggungan</p>
               <div class="form-input">
-                <input type="text" class="form-control" v-model="sum_assured" />
+                <input type="number" class="form-control" v-model="sum_assured" />
               </div>
             </div>
             <div

@@ -244,39 +244,39 @@ export default {
         });
       },
   
-    async uploadSelieKtpFile({ rootGetters, commit, dispatch }, data) {
-      let formData = new FormData();
-      formData.append("File", data.file);
-      formData.append("Type", "KTPSELFIE");
-      this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
-      dispatch(
-        "toggleOverlayLoading",
-        { show: true, message: "Mohon Tunggu..." },
-        { root: true }
-      );
-      return await this.$axios
-        .$post("/api/v1/attachments", formData)
-        .then((response) => {
-          if (response.success) {
-            commit("setUploadSelfieKtpFile", {
-              stream: data.file,
-              upload: response.data.name,
-            });
-            dispatch(
-              "toggleOverlayLoading",
-              { show: false, message: "Mohon Tunggu..." },
-              { root: true }
-            );
-            return response.data;
-          }
-          // return response;
-        })
-        .catch((error) => {
-          return error;
-        });
-      },
+  async uploadSelieKtpFile({ rootGetters, commit, dispatch }, data) {
+    let formData = new FormData();
+    formData.append("File", data.file);
+    formData.append("Type", "KTPSELFIE");
+    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+    dispatch(
+      "toggleOverlayLoading",
+      { show: true, message: "Mohon Tunggu..." },
+      { root: true }
+    );
+    return await this.$axios
+      .$post("/api/v1/attachments", formData)
+      .then((response) => {
+        if (response.success) {
+          commit("setUploadSelfieKtpFile", {
+            stream: data.file,
+            upload: response.data.name,
+          });
+          dispatch(
+            "toggleOverlayLoading",
+            { show: false, message: "Mohon Tunggu..." },
+            { root: true }
+          );
+          return response.data;
+        }
+        // return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+    },
          
-  async uploadDocument({ rootGetters, commit, dispatch }, data) {
+  async uploadDocumentFile({ rootGetters, commit, dispatch }, data) {
     let formData = new FormData();
     formData.append("File", data.file);
     formData.append("Type", "DOCUMENT");

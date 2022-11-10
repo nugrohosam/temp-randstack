@@ -290,7 +290,7 @@ export default {
     async addDocumentImage(e) {
       if (e.target.files[0]) {
         const result = await this.$store.dispatch(
-          "submission_transaction/uploadDocument",
+          "submission_transaction/uploadDocumentFile",
           { file: e.target.files[0] }
         );
         this.form.documentAttachment = {

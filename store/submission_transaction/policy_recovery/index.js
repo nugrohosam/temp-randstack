@@ -19,7 +19,6 @@ const mutations = {
 
 const actions = {
   async reinstatement({ state, rootGetters, dispatch }) {
-    console.log("state.policyRecovery ", state.policyRecovery);
     const form = {
       health_questionnaire: state.policyRecovery.healthQuestionnaire,
       virtual_account_number: state.policyRecovery.virtualAccountNumber,

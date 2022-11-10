@@ -116,7 +116,7 @@
                 <p class="data-title mb-2">Uang Pertanggungan</p>
                   <div class="form-input">
                     <input
-                      type="text"
+                      type="number"
                       class="form-control"
                       v-model="form.add_riders[index].sum_assured"
                     />

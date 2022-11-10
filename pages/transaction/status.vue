@@ -2,7 +2,6 @@
   <div>
     <div class="row">
       <div class="col-12">
-        <!-- Head -->
         <div class="row">
           <div class="col-12">
             <div class="page-header">
@@ -11,14 +10,11 @@
           </div>
         </div>
         <div class="row">
-          <!-- Search -->
           <div class="col-12">
             <div class="page-body">
               <template v-if="table.items">
-              <!-- Transaction Status Menu -->
               <div class="row">
                 <div class="col-lg-6 col-md-12">
-                  <!-- <v-toolbar> -->
                   <v-text-field
                     class="search-bar"
                     hide-details
@@ -29,7 +25,6 @@
                     solo
                     v-model="data_search"
                   ></v-text-field>
-                  <!-- </v-toolbar> -->
                 </div>
               </div>
               <div class="row">
@@ -49,7 +44,11 @@
                         <button
                           v-if="item.status == 3 || item.status == 'Pending'"
                           class="btn btn-primary btn-table"
-                          @click="showDetail(item)"
+                          @click="() => { 
+                            uploadDialog = true; 
+                            form.transaction_id = item.pengajuanTransactionId;
+                            form.service_id = item.serviceId;
+                          }"
                         >
                           Lengkapi
                         </button>
@@ -59,13 +58,6 @@
                           <b>{{item.status}}  <info-icon v-if="item.status == 'Gagal'" style="position:relative; bottom:-3px;" size="1.3x" bottom="10px"></info-icon></b>
                         </a>
                       </template>
-                      <!-- <template v-slot:item.status="{ item }">
-                        <a
-                          @click.prevent="showDetail(item)"
-                          class="bni-primary"
-                          >{{ item.status }}</a
-                        >
-                      </template> -->
                       <template v-slot:item.createdAt="{ item }">
                         {{ $moment(item.createdAt).format("DD/MM/Y") }}
                       </template>
@@ -130,13 +122,8 @@
           </div>
         </div>
       </div>
-
-
     </div>
-    <!-- <div class="text-center">
 
-    </div> -->
-    <!-- Details Dialog -->
     <v-dialog v-model="detailDialog" max-width="500px">
       <v-card>
         <v-card-title class="text-h5">Detail</v-card-title>
@@ -146,16 +133,6 @@
             <p class="detail-value">
               {{ transaction_detail.message }}
             </p>
-
-            <!-- <p class="detail-title">Nomor Rekening</p>
-            <p class="detail-value">{{ transaction_detail.account_number }}</p>
-
-            <p class="detail-title">Nama Pemegang Rekening</p>
-            <p class="detail-value">{{ transaction_detail.holder_name }}</p>
-
-            <p class="detail-title">Bank</p>
-            <p class="detail-value">{{ transaction_detail.bank }}</p> -->
-
             <p class="detail-title">
               Jika tidak sesuai dapat menghubungi Customer Care 1-500-045
             </p>
@@ -165,7 +142,7 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="statusDetail.show" max-width="500px">
+    <v-dialog v-model="statusDetail.show" :max-width="1000" >
       <v-card>
         <v-card-title class="text-h5">Detail</v-card-title>
         <v-card-actions>
@@ -174,16 +151,6 @@
             <p class="detail-value">
               {{ statusDetail.message }}
             </p>
-
-            <!-- <p class="detail-title">Nomor Rekening</p>
-            <p class="detail-value">{{ transaction_detail.account_number }}</p>
-
-            <p class="detail-title">Nama Pemegang Rekening</p>
-            <p class="detail-value">{{ transaction_detail.holder_name }}</p>
-
-            <p class="detail-title">Bank</p>
-            <p class="detail-value">{{ transaction_detail.bank }}</p> -->
-
             <p class="detail-title">
               Jika tidak sesuai dapat menghubungi Customer Care 1-500-045
             </p>
@@ -194,29 +161,103 @@
     </v-dialog>
 
     <!-- Upload Dialog -->
-    <v-dialog v-model="uploadDialog" persistent max-width="500px">
+    <v-dialog v-model="uploadDialog">
       <v-card>
-        <v-card-title class="text-h5">Upload</v-card-title>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text>Cancel</v-btn>
-          <v-btn color="blue darken-1" text>Upload</v-btn>
-          <v-spacer></v-spacer>
-        </v-card-actions>
+        <v-card-title class="text-h5">Reupload Dokumen</v-card-title>
+
+        <div class="card-body" v-for="(item, index) in form.documents" :key="index">
+          <br v-if="index > 0">
+          <v-divider v-if="index > 0"></v-divider>
+          <br v-if="index > 0">
+
+          <div class="row" v-if="index > 0">
+            <div class="col-12">
+              <button
+                class="btn btn-primary btn-danger float-right"
+                @click.prevent="removeDocument(index)"
+              >
+                X
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12 col-sm-12">
+              <p class="data-title mb-2">Nama Dokumen ke-{{ index+1 }}</p>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="form.documents[index].name"
+                  />
+              </div>
+            </div>
+          </div>
+            
+          <div class="row">
+            <div class="col-lg-6 col-sm-12">
+              <ValidationProvider
+                rules="required|image"
+                v-slot="{ validate, errors }"
+              >
+                <p class="data-title mb-2">Unggah Dokumen ke-{{ index+1 }}</p>
+                <input
+                  type="file"
+                  :id="'inputDocumentImage-' + index"
+                  v-show="true"
+                  accept="image/*"
+                  @change="
+                    (e) => {
+                      validate(e);
+                      inputDocumentImage(e, index);
+                    }
+                  "
+                />
+                <!-- <button
+                  class="btn btn-primary-outlined"
+                  @click.prevent="$el.querySelector('#inputDocumentImage-' + index).click()"
+                >
+                  Unggah
+                </button> -->
+                <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+                <br />
+                <span class="text-error">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </div>
+          </div>
+
+          <br v-if="index == form.documents.length - 1">
+          <v-divider v-if="index == form.documents.length - 1"></v-divider>
+          <br v-if="index == form.documents.length - 1">
+
+          <div class="row" v-if="index == form.documents.length - 1">
+            <div class="col-12">
+              <button
+                class="btn btn-primary btn-save float-right"
+                @click.prevent="addDocument()"
+              >
+                + Dokumen
+              </button>
+            </div>
+          </div>
+
+          <ValidationMessage v-if="index == form.documents.length - 1" :validation-message="validationMessage" />
+
+          <div class="row" v-if="index == form.documents.length - 1">
+            <div class="col-12">
+              <button
+                class="btn btn-primary btn-save float-left"
+                @click.prevent="submit()"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+          
+        </div>
+        
       </v-card>
     </v-dialog>
-    <!-- Temp Overlay Loading -->
-    <!-- <div class="text-center">
-      <v-overlay :value="overlay" color="rgba(250, 250, 250, 0.9)">
-        <v-progress-circular indeterminate size="64" color="#F15921"></v-progress-circular>
-      </v-overlay>
-    </div> -->
-    <!-- <ModalMessage
-      :message="modal.message"
-      :show="modal.show"
-      :button="modal.button"
-      @closeModal="modal.show = false"
-    /> -->
   </div>
 
 </template>
@@ -250,6 +291,7 @@ export default {
       limitPages: [5, 10, 15, 20, 25],
       detailDialog: false,
       uploadDialog: false,
+      validationMessage: [],
       transaction_detail: {
         message: "",
         account_number: "",
@@ -257,7 +299,14 @@ export default {
         bank: "",
         status: "",
       },
-
+      form: {
+        documents: [{
+          name: null,
+          attachment: {},
+        }],
+        transaction_id: null,
+        service_id: null,
+      },
       statusDetail: {
         show: false,
         message: ""
@@ -300,18 +349,68 @@ export default {
         }
       );
       this.detailDialog = true;
-      // mapping detail if has different format with response
       this.transaction_detail = detail;
     },
-
+    async inputDocumentImage(e, i) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadDocumentFile",
+          { file: e.target.files[0] }
+        );
+        this.form.documents[i].attachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
+    validate: async function () {
+      this.validationMessage = [];
+      for (let i = 0; i < this.form.documents.length; i++){
+        if (!this.form.documents[i].name || this.form.documents[i].name == ""){
+          this.validationMessage.push(
+            "Nama dokumen ke-"+ (i+1) +" harus diisi"
+          );
+        }
+        if (!this.form.documents[i].attachment.name){
+          this.validationMessage.push(
+            "Upload file ke-" + (i+1)
+          );
+        }
+      }
+    },
+    async submit() {
+      this.validate();
+      if (this.validationMessage.length <= 0) {
+        this.uploadDialog = false;
+        this.$store.commit(
+          "submission_transaction/reupload_document/setReuploadDocument",
+          this.form
+        );
+        const result = await this.$store.dispatch(
+          "submission_transaction/reupload_document/reuploadDocument"
+        );
+        if (result && result.success == true) {
+          this.$router.push({
+            path: "/transaction/status",
+          });
+        }
+      }
+    },
+    addDocument: function () {
+      this.form.documents.push({
+        name: "",
+        attachment: {},
+      });
+    },
+    removeDocument: function (index) {
+      this.form.documents.splice(index, 1)
+    },
     async getData() {
       const list = await this.$store.dispatch(
         "transaction_status/getTransactionStatusList"
       );
-      // mapping if list has different format with response
       this.table.items = list.items;
     },
-
     showTransactionStatusDetail: function(message){
       this.statusDetail.show = true;
       this.statusDetail.message = message;
@@ -338,5 +437,10 @@ p.detail-title {
   line-height: 26px;
   color: #767676;
   margin: 0;
+}
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
 }
 </style>
