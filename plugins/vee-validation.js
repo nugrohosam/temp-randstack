@@ -25,8 +25,8 @@ Object.keys(rules).forEach(rule => {
 });
 
 extend('phone', {
-  message: 'Nomor harus diawali 62.',
-  validate: value => (new RegExp(/62[0-9]+$/g)).test(value)
+  message: 'Nomor harus diawali 6.',
+  validate: value => (new RegExp(/6[0-9]+$/g)).test(value)
 });
 
 Vue.component('ValidationObserver', ValidationObserver);

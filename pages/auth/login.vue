@@ -50,7 +50,7 @@
                   type="number"
                   class="w-100"
                   v-model="form.phone_number"
-                  placeholder="628xxxxx...."
+                  placeholder="6xxxxxxx...."
                 />
                 <br />
                 <span class="text-error">{{ errors[0] }}</span>
@@ -138,9 +138,9 @@ export default {
     return {
       signInDisable: true,
       form: {
-        policy_number: "", //9210000627,BLMS0000046
-        phone_number: "", //6288809139413,6285692203893
-        identity_number: "", //5315056301790004,3578204808680002
+        policy_number: "", 
+        phone_number: "", 
+        identity_number: "", 
         verified: "",
       },
       modal: {

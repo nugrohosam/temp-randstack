@@ -587,6 +587,9 @@ export default {
     },
     riderOptions() {
       const listRider = this.allowedRiders
+      if (!listRider) {
+        return [];
+      }
       return listRider.map(v => 
         ({
           value: v.productId,
@@ -606,6 +609,9 @@ export default {
   },
   methods: {
     isCanDoAddInsured: function (index) {
+      if (!this.allowedRiders) {
+        return false;
+      }
       const isCanDoAddInsured = this.allowedRiders.filter(x => this.form.add_riders[index].product_id == x.productId).filter(x => x.familyType == 1).length > 0
       if (!isCanDoAddInsured){
         this.form.add_riders[index].insured = null;
@@ -649,9 +655,15 @@ export default {
       this.isLoading = false;
     },
     riderOptionPlan(productId) {
+      if (!this.allowedRiders) {
+        return false;
+      }
       return this.allowedRiders.find(v => v.productId == productId)?.benefitLevelInfoVOList?.map(v => v.levelDescrp) || [];
     },
     isHavePlans(productId) {
+      if (!this.allowedRiders) {
+        return false;
+      }
       return this.allowedRiders.find(v => v.productId == productId)?.benefitLevelInfoVOList?.length > 0 || false;
     },
     isHaveHealth(productId) {
