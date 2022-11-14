@@ -16,7 +16,7 @@
           <div class="logo-container">
             <img
               style="width: 180px"
-              src="~/assets/svg/ipos_digital.svg"
+              src="~/assets/svg/bpos_digital.svg"
               alt=""
             />
             <p>Layanan Kepemilikan Polis Individual</p>
@@ -25,7 +25,7 @@
         <div class="col-md-6 col-xs-12 auth-section-form">
           <!-- <div class="row">
               <div class="col-12"> -->
-          <h2 class="d-md-none mobile-logo">iPos</h2>
+          <h2 class="d-md-none mobile-logo">bPos</h2>
           <p class="auth-title-form">Login</p>
           <!-- </div>
             </div> -->
