@@ -67,8 +67,10 @@
                       $convertCurrency(item ? item.nextPremium.sumAssured : "")
                     }}
                   </template>
-                  <template v-slot:item.productType="{ item }">
-                    Regular
+                  <template v-slot:item.riskStatus="{ item }">
+                    {{
+                      (item ? $riskStatus(item.riskStatus) : "-")
+                    }}
                   </template>
                 </v-data-table>
               </template>
@@ -103,12 +105,6 @@
                     v-model="sum_assured"
                   />
               </div>
-            </div>
-            <div class="col-lg-4 col-sm-6" v-if="!isHavePlans(coverages_selected)">
-              <p class="data-title mb-2">Minimal Uang Pertanggungan</p>
-              <p class="data-value">
-                {{ $convertCurrency(minSurValue(coverages_selected)) }}
-              </p>
             </div>
           </div>
 

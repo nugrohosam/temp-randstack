@@ -65,8 +65,10 @@
                       $convertCurrency(item ? item.nextPremium.sumAssured : "")
                     }}
                   </template>
-                  <template v-slot:item.productType="{ item }">
-                    Regular
+                  <template v-slot:item.riskStatus="{ item }">
+                    {{
+                      (item ? $riskStatus(item.riskStatus) : "-")
+                    }}
                   </template>
                 </v-data-table>
               </template>

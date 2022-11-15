@@ -409,9 +409,59 @@
               </ValidationProvider>
             </div>
           </div>
-
+          
+          <div class="row">
+            <div class="col-lg-6 col-sm-12">
+              <ValidationProvider
+                rules="required|image"
+                v-slot="{ validate, errors }"
+              >
+                <p class="data-title mb-2">Unggah Ilustrasi</p>
+                <input
+                  type="file"
+                  ref="inputIlustrationImage"
+                  v-show="false"
+                  accept="image/*"
+                  @change="
+                    (e) => {
+                      validate(e);
+                      addIlustrationImage(e);
+                    }
+                  "
+                />
+                <button
+                  class="btn btn-primary-outlined"
+                  @click.prevent="$refs.inputIlustrationImage.click()"
+                >
+                  Unggah
+                </button>
+                <small>{{ form.ilustration_attachment.name }}</small>
+                <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+                <br />
+                <span class="text-error">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </div>
+          </div>
+          
         </div>
 
+        <div class="row">
+          <div class="col-lg-12 col-sm-12">
+            <div class="message-bar rounded-lg">
+                <div class="d-flex">
+                  <info-icon class="ic-primary mr-2"></info-icon>
+                  Perhatian !
+                </div>
+                <br>
+                <ul>
+                  <li>
+                    Penambahan Rider dapat menghubungi Pemasar untuk bantuan dan illustrasi
+                  </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+        
         <ValidationMessage :validation-message="validationMessage" />
 
         <div class="row">
@@ -459,20 +509,6 @@ export default {
   components: {
     SaveIcon,
     InfoIcon,
-  },
-  computed: {
-    selfieKtpFileName() {
-      return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
-    },
-    KkFileName() {
-      return this.$store.getters["submission_transaction/getKkFileName"];
-    },
-    myPolicy() {
-      return this.$store.getters["submission_transaction/getMyPolicy"];
-    },
-    allowedRiders() {
-      return this.$store.getters["submission_transaction/getProductRiders"];
-    },
   },
   mounted() {
     this.getData();
@@ -566,16 +602,11 @@ export default {
           }
         ],
         ktp_selfie_attachment: {},
+        ilustration_attachment: {},
       },
     };
   },
   computed: {
-    selfieKtpFileName() {
-      return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
-    },
-    KkFileName() {
-      return this.$store.getters["submission_transaction/getKkFileName"];
-    },
     myPolicyLoanInfo() {
       return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
     },
@@ -696,6 +727,9 @@ export default {
       if (!this.form.ktp_selfie_attachment.name) {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
       }
+      if (!this.form.ilustration_attachment.name) {
+        this.validationMessage.push("Unggah Ilustrasi diperlukan");
+      }
       var countRider = []
       for (let i = 0; i < this.form.add_riders.length; i++) {
         countRider[this.form.add_riders[i].product_id] = countRider[this.form.add_riders[i].product_id] ? countRider[this.form.add_riders[i].product_id]++ : 1;
@@ -726,6 +760,18 @@ export default {
           { file: e.target.files[0] }
         );
         this.form.ktp_selfie_attachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
+    async addIlustrationImage(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadIlustrationFile",
+          { file: e.target.files[0] }
+        );
+        this.form.ilustration_attachment = {
           file: e.target.files[0],
           name: result.name,
         };

@@ -10,6 +10,7 @@ const state = () => ({
         show_modal_health: false,
         insured: null,
         ktp_selfie_attachment: {},
+        ilustration_attachment: {},
       }
     ],
     kk_attachment: {},
@@ -33,6 +34,7 @@ const actions = {
     form = { 
       ...form, 
       ktp_selfie_attachment: state.addRider.ktp_selfie_attachment.name,
+      ilustration_attachment: state.addRider.ilustration_attachment.name,
     }
 
     for (let i = 0; i < form.add_riders.length; i++){

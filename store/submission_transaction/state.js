@@ -144,6 +144,12 @@ export default {
         preview: "",
         upload_filename: "",
       },
+      ilustration: {
+        file: null,
+        name: "",
+        preview: "",
+        upload_filename: "",
+      },
       transfer: {
         file: null,
         name: "",

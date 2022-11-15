@@ -59,6 +59,18 @@ export default {
     state.attachments.upload.selfie_ktp.upload_filename = "";
   },
 
+  setUploadIlustrationFile(state, data) {
+    state.attachments.upload.ilustration.file = data.stream;
+    state.attachments.upload.ilustration.name = data.stream.name;
+    state.attachments.upload.ilustration.upload_filename =
+      data.upload;
+  },
+  clearUploadIlustrationFile(state) {
+    state.attachments.upload.ilustration.file = null;
+    state.attachments.upload.ilustration.name = "";
+    state.attachments.upload.ilustration.upload_filename = "";
+  },
+
   setDocumentKtpFile(state, data) {
     state.attachments.upload.document.file = data.stream;
     state.attachments.upload.document.name = data.stream.name;

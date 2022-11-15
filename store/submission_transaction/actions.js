@@ -244,6 +244,38 @@ export default {
         });
       },
   
+  async uploadIlustrationFile({ rootGetters, commit, dispatch }, data) {
+    let formData = new FormData();
+    formData.append("File", data.file);
+    formData.append("Type", "ILUSTRATION");
+    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+    dispatch(
+      "toggleOverlayLoading",
+      { show: true, message: "Mohon Tunggu..." },
+      { root: true }
+    );
+    return await this.$axios
+      .$post("/api/v1/attachments", formData)
+      .then((response) => {
+        if (response.success) {
+          commit("setUploadIlustrationFile", {
+            stream: data.file,
+            upload: response.data.name,
+          });
+          dispatch(
+            "toggleOverlayLoading",
+            { show: false, message: "Mohon Tunggu..." },
+            { root: true }
+          );
+          return response.data;
+        }
+        // return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+  },
+  
   async uploadSelieKtpFile({ rootGetters, commit, dispatch }, data) {
     let formData = new FormData();
     formData.append("File", data.file);
@@ -274,7 +306,7 @@ export default {
       .catch((error) => {
         return error;
       });
-    },
+  },
          
   async uploadDocumentFile({ rootGetters, commit, dispatch }, data) {
     let formData = new FormData();
