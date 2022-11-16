@@ -63,9 +63,7 @@
                     }}
                   </template>
                   <template v-slot:item.nextPremium.sumAssured="{ item }">
-                    {{
-                      $convertCurrency(item ? item.nextPremium.sumAssured : "")
-                    }}
+                    {{ $convertCurrency(totalPremAll(item)) }}
                   </template>
                   <template v-slot:item.riskStatus="{ item }">
                     {{
@@ -108,7 +106,7 @@
             </div>
           </div>
 
-          <div class="row" v-if="coverages_selected.length > 0">
+          <div class="row" v-if="(form.items.length == 0 && coverages_selected.length > 0) || !!form.items.find((item) => item.item_id === coverages_selected[0].itemId)">
             <div class="col-4">
               <button
                 class="btn btn-primary-outlined w-100 btn-add-investment"
@@ -459,6 +457,11 @@ export default {
       } else{
         this.validationAddDecreaseSA = []
       }
+    },
+    totalPremAll: (item) => {
+      return (
+        item ? (item.currentPremium.stdPremAf + (item.recurringTopup?.topupAmount || 0)) : 0
+      );
     },
     addDescreaseSA() {
       const choosenProduct = this.coverages_selected[0]

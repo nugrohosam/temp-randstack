@@ -61,9 +61,7 @@
                     }}
                   </template>
                   <template v-slot:item.nextPremium.sumAssured="{ item }">
-                    {{
-                      $convertCurrency(item ? item.nextPremium.sumAssured : "")
-                    }}
+                    {{ $convertCurrency(totalPremAll(item)) }}
                   </template>
                   <template v-slot:item.riskStatus="{ item }">
                     {{
