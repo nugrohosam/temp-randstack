@@ -7,6 +7,7 @@ import PolicyRecoveryModules from "./policy_recovery";
 import CutiPremiModules from "./cuti_premi";
 import RiderProduct from "./rider_product";
 import DecreaseSA from "./decrease_sa";
+import IncreaseSA from "./increase_sa";
 import BenefitAllocation from "./benefit_allocation";
 import ChangePayeeRefundAccount from "./change_payee_refund_account";
 import PeriodicalyTopUp from "./periodicaly_top_up";
@@ -26,6 +27,7 @@ const SubmissionTransactionModules = {
     reupload_document: ReuploadDocument,
     periodicaly_top_up: PeriodicalyTopUp,
     decrease_sa: DecreaseSA,
+    increase_sa: IncreaseSA,
     benefit_allocation: BenefitAllocation,
     change_payee_refund_account: ChangePayeeRefundAccount,
   },

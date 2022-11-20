@@ -31,7 +31,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, i) in getDecreaseSA.items" :key="item.item_id">
+              <tr v-for="(item, i) in getIncreaseSA.items" :key="item.item_id">
                 <td>{{ i + 1 }}</td>
                 <td>
                   {{ item.product_name }}
@@ -118,7 +118,7 @@ import { SaveIcon, InfoIcon } from "vue-feather-icons";
 import resumePageMixin from "@/mixins/resumePage";
 
 export default {
-  name: "decrease-sa-resume",
+  name: "increase-sa-resume",
   mixins: [resumePageMixin],
   components: {
     SaveIcon,
@@ -131,16 +131,16 @@ export default {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
-    getDecreaseSA() {
+    getIncreaseSA() {
       return this.$store.getters[
-        "submission_transaction/decrease_sa/getDecreaseSA"
+        "submission_transaction/increase_sa/getIncreaseSA"
       ];
     },
   },
   beforeMount() {
     this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
-      title: "Resume Penurunan uang pertanggungan",
-      sub: "Penurunan uang pertanggungan",
+      title: "Resume Penambahan uang pertanggungan",
+      sub: "Penambahan uang pertanggungan",
     });
   },
   destroyed() {
@@ -158,9 +158,9 @@ export default {
   },
   methods: {
     showSelfieKtpPreview: function () {
-      if (this.getDecreaseSA.ktpSelfieAttachment.file) {
+      if (this.getIncreaseSA.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
-          this.getDecreaseSA.ktpSelfieAttachment.file
+          this.getIncreaseSA.ktpSelfieAttachment.file
         );
         this.image_preview.show = true;
       }
@@ -177,7 +177,7 @@ export default {
       this.validate();
       if (this.validationMessage.length <= 0) {
         const result = await this.$store.dispatch(
-          "submission_transaction/decrease_sa/decreaseSA"
+          "submission_transaction/increase_sa/increaseSA"
         );
         if (result && result.success == true) {
           let transactionIds = result.data.transactionIds;

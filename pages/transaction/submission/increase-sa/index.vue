@@ -128,7 +128,7 @@
             <div class="col-4">
               <button
                 class="btn btn-primary-outlined w-100 btn-add-investment"
-                @click.prevent="addDescreaseSA()"
+                @click.prevent="addIncreaseSA()"
               >
                 {{
                   !!form.items.find(
@@ -501,7 +501,12 @@ export default {
         this.validationAddIncreaseSA = [];
       }
     },
-    addDescreaseSA() {
+    totalPremAll: (item) => {
+      return (
+        item ? (item.currentPremium.stdPremAf + (item.recurringTopup?.topupAmount || 0)) : 0
+      );
+    },
+    addIncreaseSA() {
       const choosenProduct = this.coverages_selected[0];
 
       const indexObject = this.$indexOfObject(
