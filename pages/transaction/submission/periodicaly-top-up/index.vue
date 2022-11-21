@@ -19,7 +19,12 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title">Premi Dasar Eksisting</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.coverages ? $convertCurrency(myPolicy.policyWithCode.coverages[0].currentPremium.stdPremAf) : 0 }} 
+          {{
+            $currencyName(
+              myPolicy.policyWithCode.currency
+            )
+          }}
+          {{ $convertCurrency(myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null).currentPremium.stdPremAf || 0) }} 
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -27,13 +32,25 @@
             Premi Top Up Berkala Eksisting
           </p>
           <p class="data-value">
-            {{ "1230123" }}
+            {{
+              $currencyName(
+                myPolicy.policyWithCode.currency
+              )
+            }}
+            {{ $convertCurrency(myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null).recurringTopup.topupAmount || 0) }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Total Premi</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.coverages ? $convertCurrency(myPolicy.policyWithCode.coverages[0].currentPremium.totalPremAf) : 0 }} 
+            {{
+              $currencyName(
+                myPolicy.policyWithCode.currency
+              )
+            }}
+            {{ 
+              $convertCurrency(totalPremAll(myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null) || null))
+            }} 
           </p>
         </div>
       </div>
@@ -70,7 +87,7 @@
                 :disabled="true"
                 type="number"
                 class="form-control"
-                v-model="form.totalPrem"
+                v-model="totalPrem"
               />
           </div>
         </div>
@@ -251,7 +268,6 @@ export default {
   },
   mounted() {
     var contractInvest = [];
-
     this.myPolicy.policyWithCode.coverages.forEach((item) => {
       if (item?.contractInvests.length > 0) {
         contractInvest = contractInvest.concat(item.contractInvests);
@@ -273,6 +289,12 @@ export default {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
+    totalPrem() {
+      if (this.form.basePrem == null && this.form.topUpPrem == null){
+        return null
+      }
+      return +(this.form.basePrem || 0) + +(this.form.topUpPrem || 0)
+    }
   },
   methods: {
     async addSelfieKtpImage(e) {
@@ -299,6 +321,11 @@ export default {
         };
       }
     },
+    totalPremAll: (item) => {
+      return (
+        item ? (item.currentPremium.stdPremAf + (item.recurringTopup?.topupAmount || 0)) : 0
+      );
+    },
     validate: async function () {
       this.validationMessage = [];
       if (!this.form.basePrem) {
@@ -317,6 +344,7 @@ export default {
     save: async function () {
       this.validate();
       if (this.validationMessage.length <= 0) {
+        this.form.totalPrem = this.totalPrem
         this.$store.commit(
           "submission_transaction/periodicaly_top_up/setPeriodicalyTopUp",
           this.form

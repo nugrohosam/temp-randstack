@@ -21,16 +21,17 @@
         <p class="data-title mb-2">Nama Tertanggung</p>
         <p class="data-value">
           {{
-            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person.firstName) +
-            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person.midName) +
-            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person.lastName)
+            myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person ? 
+            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person.firstName : null) +
+            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person.midName : null) +
+            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].person.lastName : null) : "-"
           }} 
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Existing Birth Date Life Assured</p>
         <p class="data-value">
-          {{ myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].birthDate }}
+          {{ (myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).insureds[0].birthDate || "-") }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -49,18 +50,33 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Perubahan Premi Dasar</p>
         <p class="data-value">
+          {{
+            $currencyName(
+              myPolicy.policyWithCode.currency
+            )
+          }}
           {{ $convertCurrency(getPeriodicalyTopUp.basePrem) }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Perubahan Premi Top Up Berkala</p>
         <p class="data-value">
+          {{
+            $currencyName(
+              myPolicy.policyWithCode.currency
+            )
+          }}
           {{ $convertCurrency(getPeriodicalyTopUp.topUpPrem) }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Total</p>
         <p class="data-value">
+          {{
+            $currencyName(
+              myPolicy.policyWithCode.currency
+            )
+          }}
           {{ $convertCurrency(getPeriodicalyTopUp.totalPrem) }}
         </p>
       </div>
@@ -169,7 +185,7 @@
     
     <HealthDeclarationFormModal
       :show="showModalHealth"
-      :default-value="getPolicyRecovery.healthQuestionnaire"
+      :default-value="getPeriodicalyTopUp.healthQuestionnaire"
       preview
       @close="showModalHealth = false"
     />
@@ -248,7 +264,7 @@ export default {
       this.validate();
       if (this.validationMessage.length <= 0) {
         const result = await this.$store.dispatch(
-          "submission_transaction/periodicaly_top_up/repaymentPolicyLoan"
+          "submission_transaction/periodicaly_top_up/periodicalyTopUp"
         );
         if (result && result.success == true) {
           let transactionIds = result.data.transactionIds;

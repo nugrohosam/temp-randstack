@@ -178,8 +178,6 @@ export default {
             url: "/login",
             method: "post",
           },
-          // refresh: { url: 'https://app.semesta.io/api/27b2cab7f9a61ad9c07077f5dc1f8315/customers/refresh-token', method: 'post' },
-          // logout: { url: 'https://app.semesta.io/api/27b2cab7f9a61ad9c07077f5dc1f8315/customers/logout', method: 'get' },
           user: {
             url: "/user",
             method: "get",

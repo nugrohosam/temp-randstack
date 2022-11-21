@@ -25,7 +25,7 @@ const actions = {
       base_prem: state.periodicalyTopUp.basePrem,
       top_up_prem: state.periodicalyTopUp.topUpPrem,
       total_prem: state.periodicalyTopUp.totalPrem,
-      health_questionnaire: state.periodicalyTopUp.healthQuestionnaire.name,
+      health_questionnaire: state.periodicalyTopUp.healthQuestionnaire,
       ktp_selfie_attachment: state.periodicalyTopUp.ktpSelfieAttachment.name,
       document_attachment: state.periodicalyTopUp.documentAttachment?.name || null,
     };
