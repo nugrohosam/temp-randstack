@@ -33,6 +33,7 @@ export default {
         href: "/favicon.ico",
       },
     ],
+    script: [{ src: "https://cdn.tailwindcss.com" }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css

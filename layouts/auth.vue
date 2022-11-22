@@ -1,50 +1,70 @@
 <template>
   <v-app>
     <v-main>
-      <v-container fluid>
-        <Nuxt />
-        <ResponseAlert
-            @closeModal="modal.show = false"
-        />
-        <OverlayLoading />
-      </v-container>
+      <div class="background">
+        <v-container>
+          <Nuxt />
+          <ResponseAlert @closeModal="modal.show = false" />
+          <OverlayLoading />
+        </v-container>
+      </div>
+      <!-- <img src="~/assets/img/backgroun-login-rounded.png" class="background" /> -->
     </v-main>
   </v-app>
 </template>
+
 <script>
-import {mapGetters} from 'vuex';
+import { mapGetters } from "vuex";
 export default {
-  beforeMount(){
+  beforeMount() {
     this.check();
   },
-  watch: {
-
-  },
-  data(){
+  watch: {},
+  data() {
     return {
       modal: {
         message: "",
         show: false,
       },
-    }
+    };
   },
   methods: {
-    check: async function(){
-      const isAuthenticated = await this.$store.dispatch('auth/check');
-      if(isAuthenticated){
+    check: async function () {
+      const isAuthenticated = await this.$store.dispatch("auth/check");
+      if (isAuthenticated) {
         this.$router.push({
           path: "/transaction/submission",
         });
-      }else{
+      } else {
         this.$router.push({
           path: "/auth/login",
         });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
+
 <style lang="scss" scoped>
+.background {
+  background-image: url("~/assets/img/backgroun-login-rounded.png");
+  background-position: center top;
+  background-size: contain;
+}
+// .background {
+//   width: 100%;
+//   height: 30vh;
+//   object-fit: cover;
+
+//   @media screen and (min-width: 426px) {
+//     //do Smth
+//     height: 90vh;
+//   }
+//   // height: 90vh;
+//   // clip-path: ellipse(80% 800px at top center);
+//   // position: absolute;
+// }
+
 #app {
   background-image: radial-gradient(
       circle at bottom right,

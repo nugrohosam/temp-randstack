@@ -1,101 +1,75 @@
 <template>
-  <div class="row main">
-    <div class="col-12 d-md-none bni_logo">
-      <img src="~/assets/icon/main_bni_life.svg" alt="logo" />
-    </div>
-      <ValidationObserver v-slot="{ handleSubmit }" class="col-md-12 col-xs-8">
-      <div
-        class="row v-card-auth-body"
-        style="justify-content: center; width: 100%; max-width: 1020px"
-      >
-        <div class="col-md-6 auth-section-logo d-none d-md-block">
-          <div class="bni_logo">
-            <img src="~/assets/icon/main_bni_life.svg" alt="logo" />
-          </div>
+  <div class="md:flex md:justify-end md:items-center md:h-screen">
+    <div class="bg-white md:bg-transparent p-6 rounded-lg md:w-80">
+      <img
+        src="~/assets/icon/main_bni_life.svg"
+        alt="logo"
+        class="w-12 mx-auto mb-12"
+      />
 
-          <div class="logo-container">
-            <img
-              style="width: 180px"
-              src="~/assets/svg/bpos_digital.svg"
-              alt=""
+      <img
+        src="~/assets/svg/bpos_digital.svg"
+        alt="bpos"
+        class="w-16 mx-auto mb-2"
+      />
+      <h5 class="text-center font-medium text-lg mb-8" style="color: #006884">
+        Selamat Datang
+      </h5>
+
+      <form @submit.prevent="handleSubmit(signIn)">
+        <div class="form-input auth">
+          <label>Nomor Polis</label>
+          <input
+            type="text"
+            class="w-100"
+            v-model="form.policy_number"
+            placeholder="BLMSXXXXX..."
+          />
+        </div>
+
+        <div class="form-input auth">
+          <ValidationProvider name="Nomor Hp" rules="phone" v-slot="{ errors }">
+            <label>Nomor HP</label>
+            <input
+              type="number"
+              class="w-100"
+              v-model="form.phone_number"
+              placeholder="6xxxxxxx...."
             />
-            <p>Layanan Kepemilikan Polis Individual</p>
-          </div>
+            <br />
+            <span class="text-error">{{ errors[0] }}</span>
+          </ValidationProvider>
         </div>
-        <div class="col-md-6 col-xs-12 auth-section-form">
-          <!-- <div class="row">
-              <div class="col-12"> -->
-          <h2 class="d-md-none mobile-logo">bPos</h2>
-          <p class="auth-title-form">Login</p>
-          <!-- </div>
-            </div> -->
-          <form @submit.prevent="handleSubmit(signIn)">
-            <div class="form-input auth">
-              <label style="color: black"><b>Nomor Polis</b></label>
-              <input
-                type="text"
-                class="w-100"
-                v-model="form.policy_number"
-                placeholder="BLMSXXXXX..."
-              />
-            </div>
-            <div class="form-input auth">
-              <ValidationProvider
-                name="Nomor Hp"
-                rules="phone"
-                v-slot="{ errors }"
-              >
-                <label style="color: black"><b>Nomor HP</b></label>
-                <input
-                  type="number"
-                  class="w-100"
-                  v-model="form.phone_number"
-                  placeholder="6xxxxxxx...."
-                />
-                <br />
-                <span class="text-error">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </div>
-            <div class="form-input auth" style="margin-bottom: 66px">
-              <label style="color: black"><b>Nomor Identitas</b></label>
-              <input
-                type="text"
-                class="w-100"
-                v-model="form.identity_number"
-                placeholder="357xxx..."
-              />
-            </div>
 
-            <vue-recaptcha
-              sitekey="6LeSQkYgAAAAAFmQ1KO1ADvIqvuXZVHGKmSw71u7"
-              @verify="verifyMethod"
-              @error="errorMethod"
-              class="g-recaptcha"
-            ></vue-recaptcha>
-
-            <button
-              class="btn btn-primary w-100 mt-12"
-              :disabled="signInDisable"
-              type="submit"
-            >
-              Sign In
-            </button>
-            <div id="auth_help">
-              <a href="" class=""> Help </a>
-            </div>
-
-            <!-- <p>{{user}}</p> -->
-          </form>
+        <div class="form-input auth">
+          <label>Nomor Identitas</label>
+          <input
+            type="text"
+            class="w-100"
+            v-model="form.identity_number"
+            placeholder="357xxx..."
+          />
         </div>
-      </div>
-    </ValidationObserver>
 
-    <!-- Modal Message -->
-    <ModalMessage
-      :message="modal.message"
-      :show="modal.show"
-      @closeModal="modal.show = false"
-    />
+        <vue-recaptcha
+          sitekey="6LeSQkYgAAAAAFmQ1KO1ADvIqvuXZVHGKmSw71u7"
+          @verify="verifyMethod"
+          @error="errorMethod"
+          class="d-flex justify-center my-8"
+        ></vue-recaptcha>
+
+        <button
+          class="btn btn-primary w-100"
+          :disabled="signInDisable"
+          type="submit"
+        >
+          Sign In
+        </button>
+        <div id="auth_help" class="underline text-sm">
+          <a href="" class=""> Help </a>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -138,9 +112,9 @@ export default {
     return {
       signInDisable: true,
       form: {
-        policy_number: "", 
-        phone_number: "", 
-        identity_number: "", 
+        policy_number: "",
+        phone_number: "",
+        identity_number: "",
         verified: "",
       },
       modal: {

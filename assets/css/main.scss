@@ -380,12 +380,13 @@ input {
     font-weight: 400;
     font-size: 14px;
     line-height: 16px;
-    color: #767676;
+    color: black;
   }
   &.auth input {
     height: 40px;
     border: 2px solid #e5e9f5;
     border-radius: 4px;
+    background-color: white;
   }
   &:not(:last-child) {
     &.auth {
