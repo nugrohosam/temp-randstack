@@ -3,10 +3,20 @@
     <div class="col-md-12 col-xs-8">
       <div
         class="row v-card-auth-body"
-        style="justify-content: center; width: 100%; max-width: 1020px"
+        style="
+          justify-content: center;
+          width: 100%;
+          max-width: 1020px;
+          background: rgba(255, 255, 255, 0.8);
+        "
       >
         <div class="col-lg-12 auth-section-otp">
-          <h2>Masukkan kode OTP untuk verifikasi akun anda</h2>
+          <img
+            src="~/assets/svg/bpos_digital.svg"
+            alt="bpos"
+            class="w-20 md:w-32 mx-auto mb-8"
+          />
+          <h2 class="text-2xl">Masukkan kode OTP untuk verifikasi akun anda</h2>
           <p id="otp_sent_to">
             Kode OTP telah dikirimkan ke nomor
             {{ this.$route.query.phonenumber }}
@@ -31,7 +41,7 @@
           >
             Verifikasi Akun
           </button>
-          <div id="resend">
+          <div id="resend" class="text-xs md:text-sm underline">
             <template v-if="otp_timer > 0">
               <a @click.prevent="resend" class="disabled">
                 {{ is_mobile ? resend_text_mobile : resend_text }} ({{

@@ -3,6 +3,13 @@
     <v-main>
       <div class="background">
         <v-container>
+          <div class="flex justify-end md:float-right">
+            <img
+              src="~/assets/icon/main_bni_life.svg"
+              alt="logo"
+              class="w-24 mb-4"
+            />
+          </div>
           <Nuxt />
           <ResponseAlert @closeModal="modal.show = false" />
           <OverlayLoading />

@@ -1,12 +1,9 @@
 <template>
   <div class="md:flex md:justify-end md:items-center md:h-screen">
-    <div class="bg-white md:bg-transparent p-6 rounded-lg md:w-80">
-      <img
-        src="~/assets/icon/main_bni_life.svg"
-        alt="logo"
-        class="w-12 mx-auto mb-12"
-      />
-
+    <div
+      class="md:bg-transparent p-6 rounded-lg md:w-80"
+      style="background: rgba(255, 255, 255, 0.8)"
+    >
       <img
         src="~/assets/svg/bpos_digital.svg"
         alt="bpos"
@@ -16,7 +13,7 @@
         Selamat Datang
       </h5>
 
-      <form @submit.prevent="handleSubmit(signIn)">
+      <form @submit.prevent="signIn">
         <div class="form-input auth">
           <label>Nomor Polis</label>
           <input
@@ -56,6 +53,7 @@
           @verify="verifyMethod"
           @error="errorMethod"
           class="d-flex justify-center my-8"
+          style="transform: scale(0.8)"
         ></vue-recaptcha>
 
         <button

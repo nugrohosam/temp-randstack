@@ -162,7 +162,7 @@
           <img
             v-if="type ? type : 'warning'"
             src="~/assets/icon/ic_warning_modal.svg"
-            class="modal-icon"
+            class="modal-icon mx-auto"
             alt=""
           />
           <p style="color: black">{{ error.message }}</p>
