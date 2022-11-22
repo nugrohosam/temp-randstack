@@ -55,7 +55,10 @@
                       </template>
                       <template v-slot:item.status="{ item }">
                         <a class="bni-primary" @click.prevent="showTransactionStatusDetail(item.status != 'Done' ? item.errorMessage : '')">
-                          <b>{{item.status}}  <info-icon v-if="item.status == 'Gagal'" style="position:relative; bottom:-3px;" size="1.3x" bottom="10px"></info-icon></b>
+                          <b>{{item.status}}  
+                            <info-icon v-if="item.status == 'Gagal'" style="position:relative; bottom:-3px;" size="1.3x" bottom="10px"></info-icon>
+                            <info-icon v-if="item.status == 'Pending'" style="position:relative; bottom:-3px;" size="1.3x" bottom="10px"></info-icon>
+                          </b>
                         </a>
                       </template>
                       <template v-slot:item.createdAt="{ item }">
@@ -213,12 +216,6 @@
                     }
                   "
                 />
-                <!-- <button
-                  class="btn btn-primary-outlined"
-                  @click.prevent="$el.querySelector('#inputDocumentImage-' + index).click()"
-                >
-                  Unggah
-                </button> -->
                 <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
                 <br />
                 <span class="text-error">{{ errors[0] }}</span>
