@@ -1,15 +1,15 @@
 <template>
-  <div class="md:flex md:justify-end md:items-center md:h-screen">
+  <div class="md:flex md:justify-end md:items-center lg:h-screen m-4 lg:m-0">
     <div
-      class="md:bg-transparent p-6 rounded-lg md:w-80"
+      class="md:bg-transparent p-6 rounded-lg md:w-96"
       style="background: rgba(255, 255, 255, 0.8)"
     >
       <img
         src="~/assets/svg/bpos_digital.svg"
         alt="bpos"
-        class="w-16 mx-auto mb-2"
+        class="w-32 mx-auto mb-2"
       />
-      <h5 class="text-center font-medium text-lg mb-8" style="color: #006884">
+      <h5 class="text-center font-medium text-xl mb-8" style="color: #006884">
         Selamat Datang
       </h5>
 

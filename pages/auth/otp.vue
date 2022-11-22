@@ -1,64 +1,58 @@
 <template>
-  <div class="row" style="height: 100%; align-items: center; height: 100vh">
-    <div class="col-md-12 col-xs-8">
-      <div
-        class="row v-card-auth-body"
-        style="
-          justify-content: center;
-          width: 100%;
-          max-width: 1020px;
-          background: rgba(255, 255, 255, 0.8);
-        "
-      >
-        <div class="col-lg-12 auth-section-otp">
-          <img
-            src="~/assets/svg/bpos_digital.svg"
-            alt="bpos"
-            class="w-20 md:w-32 mx-auto mb-8"
-          />
-          <h2 class="text-2xl">Masukkan kode OTP untuk verifikasi akun anda</h2>
-          <p id="otp_sent_to">
-            Kode OTP telah dikirimkan ke nomor
-            {{ this.$route.query.phonenumber }}
-            <br />
-            Akan berakhir dalam {{ Math.floor(otp_expired_time / 60) }} :
-            {{
-              otp_expired_time % 60 < 10
-                ? "0" + (otp_expired_time % 60)
-                : otp_expired_time % 60
-            }}
-          </p>
-          <v-otp-input
-            v-model="form.otp_number"
-            length="6"
-            type="number"
-          ></v-otp-input>
-          <button
-            id="verify"
-            class="btn btn-primary"
-            @click="verify"
-            :disabled="submitDisable"
-          >
-            Verifikasi Akun
-          </button>
-          <div id="resend" class="text-xs md:text-sm underline">
-            <template v-if="otp_timer > 0">
-              <a @click.prevent="resend" class="disabled">
-                {{ is_mobile ? resend_text_mobile : resend_text }} ({{
-                  otp_timer
-                }}
-                detik)
-              </a>
-            </template>
-            <template v-else>
-              <a @click.prevent="resend" class="">
-                {{ is_mobile ? resend_text_mobile : resend_text }}
-              </a>
-            </template>
-          </div>
+  <div class="md:flex md:justify-center md:items-center lg:h-screen m-4 lg:m-0">
+    <div
+      class="p-6 md:py-6 md:px-32 rounded-lg"
+      style="background: rgba(255, 255, 255, 0.8)"
+    >
+      <div class="text-center">
+        <img
+          src="~/assets/svg/bpos_digital.svg"
+          alt="bpos"
+          class="w-20 md:w-32 mx-auto mb-8"
+        />
+        <h2 class="text-2xl">Masukkan kode OTP untuk verifikasi akun anda</h2>
+        <p id="otp_sent_to">
+          Kode OTP telah dikirimkan ke nomor
+          {{ this.$route.query.phonenumber }}
+          <br />
+          Akan berakhir dalam {{ Math.floor(otp_expired_time / 60) }} :
+          {{
+            otp_expired_time % 60 < 10
+              ? "0" + (otp_expired_time % 60)
+              : otp_expired_time % 60
+          }}
+        </p>
+        <v-otp-input
+          v-model="form.otp_number"
+          length="6"
+          type="number"
+        ></v-otp-input>
+        <button
+          id="verify"
+          class="btn btn-primary"
+          @click="verify"
+          :disabled="submitDisable"
+        >
+          Verifikasi Akun
+        </button>
+        <div id="resend" class="text-xs md:text-sm underline">
+          <template v-if="otp_timer > 0">
+            <a @click.prevent="resend" class="disabled">
+              {{ is_mobile ? resend_text_mobile : resend_text }} ({{
+                otp_timer
+              }}
+              detik)
+            </a>
+          </template>
+          <template v-else>
+            <a @click.prevent="resend" class="">
+              {{ is_mobile ? resend_text_mobile : resend_text }}
+            </a>
+          </template>
         </div>
       </div>
     </div>
+
     <!-- Modal Message -->
     <ModalMessage
       :message="modal.message"
@@ -197,6 +191,10 @@ export default {
 ::v-deep .v-otp-input {
   max-width: 560px !important;
   margin: auto !important;
+}
+
+::v-deep .v-text-field--outlined > .v-input__control > .v-input__slot {
+  min-height: auto;
 }
 
 ::v-deep .v-input__control .v-input__slot {
