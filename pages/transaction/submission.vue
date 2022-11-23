@@ -1,73 +1,45 @@
 <template>
-  <div>
-    <div class="row">
-      <div class="col-12">
-        <!-- Head -->
-        <div class="row">
-          <div class="col-12">
-            <div class="page-header">
-              <h3 class="page-title">
-                {{ vuexCurrentHeaderTitle.title || current_header_title }}
-              </h3>
-              <p v-if="vuexCurrentHeaderTitle.sub" style="color: #fff">
-                {{ vuexCurrentHeaderTitle.sub }}
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <!-- Search -->
-          <div class="col-12 page-container">
-            <div class="page-body">
-              <div class="row" v-show="showMenu">
-                <div class="col-lg-6 col-md-12">
-                  <!-- <v-toolbar> -->
-                  <v-text-field
-                    class="search-bar"
-                    hide-details
-                    prepend-icon="mdi-magnify"
-                    single-line
-                    placeholder="Cari Menu"
-                    flat
-                    solo
-                    v-model="menu_search"
-                  ></v-text-field>
-                  <!-- </v-toolbar> -->
-                </div>
-              </div>
-              <!-- Transaction Status Menu -->
-              <div class="row" v-show="showMenu">
-                <div class="col-12">
-                  <div class="menu-grid">
-                    <Menu
-                      v-for="(menu, key) in menus"
-                      :key="key"
-                      :isActive="menu.active"
-                      :hidden="menu.hidden"
-                      :name="$checkSyariLabel(menu.name)"
-                      :icon="menu.icon"
-                      :link="menu.link"
-                      @click.native="
-                        current_header_title = $checkSyariLabel(menu.name)
-                      "
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <NuxtChild />
-                </div>
-              </div>
-            </div>
-          </div>
+  <body-page
+    :title="vuexCurrentHeaderTitle.title || current_header_title"
+    :sub-title="vuexCurrentHeaderTitle.sub"
+  >
+    <div v-show="showMenu">
+      <div class="row mb-8">
+        <div class="col-lg-6 col-md-12">
+          <v-text-field
+            class="search-bar"
+            hide-details
+            prepend-icon="mdi-magnify"
+            single-line
+            placeholder="Cari Menu"
+            flat
+            solo
+            v-model="menu_search"
+          ></v-text-field>
         </div>
       </div>
-    </div>
-    <!-- <div class="text-center">
 
-    </div> -->
-  </div>
+      <!-- Transaction Status Menu -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+        <Menu
+          v-for="(menu, key) in menus"
+          :key="key"
+          :isActive="menu.active"
+          :hidden="menu.hidden"
+          :name="$checkSyariLabel(menu.name)"
+          :icon="menu.icon"
+          :link="menu.link"
+          @click.native="current_header_title = $checkSyariLabel(menu.name)"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <NuxtChild />
+      </div>
+    </div>
+  </body-page>
 </template>
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
@@ -85,7 +57,7 @@ export default {
       showMenu: true,
       default_header_title: "Pengajuan Transaksi",
       current_header_title: "",
-      menu_search: ""
+      menu_search: "",
     };
   },
   watch: {
@@ -99,12 +71,12 @@ export default {
     },
     menu_search(keyword) {
       this.searchMenu({ keywords: keyword });
-      let menu_filtered = this.menus.filter(function(item){
-        let name = item['name'];
-        if(name.includes(keyword)){
-          return item['name'];
+      let menu_filtered = this.menus.filter(function (item) {
+        let name = item["name"];
+        if (name.includes(keyword)) {
+          return item["name"];
         }
-      })
+      });
 
       this.menus = menu_filtered;
     },
@@ -122,20 +94,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-  .menu-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 2fr);
-    grid-template-rows: repeat(3, 1fr);
-    grid-column-gap: 16px;
-    grid-row-gap: 40px;
-    @media screen and (max-width: 1460px) {
-      grid-template-columns: repeat(3, 1fr);
-      grid-row-gap: 0px;
-    }
-    @media screen and (max-width: 480px) {
-      grid-column-gap: 10px;
-    }
-  }
-  </style>

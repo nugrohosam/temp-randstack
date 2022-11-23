@@ -104,7 +104,7 @@ export default {
       // target: "http://34.124.156.103:8888/",
       // target: "http://localhost:5020/",
       // target: "http://cfdc-103-86-152-226.ngrok.io/",
-      target: "https://ee32-103-86-152-226.ngrok.io/",
+      target: "https://df84-66-96-229-250.ngrok.io/",
       pathRewrite: { "^/api/v1/": "/api/v1/" },
     },
     "/test/v1/": {
@@ -114,7 +114,7 @@ export default {
       // target: "http://34.124.156.103:8888/",
       // target: "http://localhost:5020/",
       // target: "http://cfdc-103-86-152-226.ngrok.io/",
-      target: "https://ee32-103-86-152-226.ngrok.io/",
+      target: "https://df84-66-96-229-250.ngrok.io/",
       pathRewrite: { "^/test/v1/": "/test/v1/" },
     },
   },

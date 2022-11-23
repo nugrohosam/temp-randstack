@@ -6,13 +6,30 @@
     > -->
     <template v-if="isChecked">
       <div class="navbar-container desktop">
-        <div class="navbar desktop">
-          <div class="logo_container">
-            <img src="~/assets/icon/main_bni_life.svg" alt="logo" />
-          </div>
-          <div class="list-container">
-            <v-list>
-              <v-list-item router to="/transaction/submission">
+        <div
+          class="navbar desktop"
+          style="
+            background: linear-gradient(180deg, #f7931d 50%, #fec34f 94.32%);
+          "
+        >
+          <img
+            src="~/assets/svg/wave-menu.svg"
+            class="absolute left-0 bottom-0"
+          />
+          <div class="h-full">
+            <div class="logo_container my-8">
+              <img
+                src="~/assets/icon/bpos-white.png"
+                alt="logo"
+                class="mx-auto"
+              />
+            </div>
+            <v-list class="bg-transparent">
+              <v-list-item
+                router
+                to="/transaction/submission"
+                class="text-white"
+              >
                 <v-list-item-action>
                   <refresh-cw-icon
                     size="1.5x"
@@ -24,7 +41,7 @@
                   <v-list-item-title v-text="'Pengajuan Transaksi'" />
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item router to="/transaction/status">
+              <v-list-item router to="/transaction/status" class="text-white">
                 <v-list-item-action>
                   <activity-icon
                     size="1.5x"
@@ -35,7 +52,7 @@
                   <v-list-item-title v-text="'Status Transaksi'" />
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item router to="/polis/information">
+              <v-list-item router to="/polis/information" class="text-white">
                 <v-list-item-action>
                   <clipboard-icon size="1.5x"></clipboard-icon>
                 </v-list-item-action>
@@ -46,8 +63,8 @@
             </v-list>
           </div>
           <div class="logout-container" @click="signOut()">
-            <v-list>
-              <v-list-item router exact>
+            <v-list class="bg-transparent">
+              <v-list-item router exact class="text-white">
                 <v-list-item-action>
                   <log-out-icon size="1.5x"></log-out-icon>
                 </v-list-item-action>
@@ -59,6 +76,7 @@
           </div>
         </div>
       </div>
+
       <template>
         <v-bottom-navigation class="navbar mobile" fixed color="#F15921" grow>
           <v-btn
@@ -90,6 +108,7 @@
           </v-btn>
         </v-bottom-navigation>
       </template>
+
       <v-main>
         <div class="app-drawer">
           <div class="action-container">
@@ -141,7 +160,7 @@
             </span>
           </div>
         </div>
-        <v-container>
+        <v-container class="p-0 lg:p-8">
           <Nuxt />
           <ResponseAlert @closeModal="modal.show = false" />
           <OverlayLoading />
@@ -382,7 +401,15 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
+::v-deep .v-list-item--active {
+  color: white !important;
+  background: #c96d00 !important;
+}
+::v-deep .navbar.mobile .v-btn.v-btn--active {
+  border-top: 2px solid #c96d00;
+}
 ::v-deep .v-navigation-drawer__content {
   display: flex;
   flex-direction: column;

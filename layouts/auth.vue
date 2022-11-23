@@ -3,19 +3,14 @@
     <v-main>
       <div>
         <img
+          src="~/assets/svg/wave-auth.svg"
+          class="absolute left-0 bottom-0"
+        />
+        <img
           src="~/assets/img/background-login-rounded.png"
           alt="background"
           class="background"
         />
-        <!-- <div class="background-shadow">
-          <div class="orange-oval"></div>
-        </div>
-        <div class="background-shadow">
-          <img
-            src="~/assets/img/background-login.png"
-            class="background-oval"
-          />
-        </div> -->
         <div class="hidden lg:block lg:absolute lg:right-0 mr-4">
           <img
             src="~/assets/icon/main_bni_life.svg"
