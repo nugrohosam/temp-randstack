@@ -257,6 +257,7 @@
                   v-if="healthQuestionnaire[4].tertanggung"
                   class="form-control"
                   type="number"
+                  min="0"
                   v-model="healthQuestionnaire[4].tertanggung_number"
                 />
               </div>
@@ -282,6 +283,7 @@
                   v-if="healthQuestionnaire[4].pemegang_polis"
                   class="form-control"
                   type="number"
+                  min="0"
                   v-model="healthQuestionnaire[4].pemegang_polis_number"
                 />
               </div>
@@ -361,6 +363,7 @@
                   v-if="healthQuestionnaire[6].tertanggung"
                   class="form-control"
                   type="number"
+                  min="0"
                   v-model="healthQuestionnaire[6].tertanggung_number"
                 />
               </div>
@@ -386,6 +389,7 @@
                   v-if="healthQuestionnaire[6].pemegang_polis"
                   class="form-control"
                   type="number"
+                  min="0"
                   v-model="healthQuestionnaire[6].pemegang_polis_number"
                 />
               </div>
@@ -573,6 +577,7 @@
                 v-if="healthQuestionnaire[10].tertanggung"
                 class="form-control"
                 type="number"
+                  min="0"
                 v-model="healthQuestionnaire[10].tertanggung_number"
               />
             </div>
@@ -594,6 +599,7 @@
                 v-if="healthQuestionnaire[10].pemegang_polis"
                 class="form-control"
                 type="number"
+                  min="0"
                 v-model="healthQuestionnaire[10].pemegang_polis_number"
               />
             </div>
@@ -637,6 +643,7 @@
               <input
                 class="form-control"
                 type="date"
+                :max="today"
                 v-model="healthQuestionnaire[12].tertanggung_date"
               />
             </div>
@@ -645,6 +652,7 @@
               <input
                 class="form-control"
                 type="date"
+                :max="today"
                 v-model="healthQuestionnaire[12].pemegang_polis_date"
               />
             </div>
@@ -658,6 +666,7 @@
               <input
                 class="form-control"
                 type="date"
+                :max="today"
                 v-model="healthQuestionnaire[13].tertanggung_date"
               />
             </div>
@@ -666,6 +675,7 @@
               <input
                 class="form-control"
                 type="date"
+                :max="today"
                 v-model="healthQuestionnaire[13].pemegang_polis_date"
               />
             </div>
@@ -685,6 +695,7 @@
                 <input
                   class="form-control"
                   type="number"
+                  min="0"
                   v-model="healthQuestionnaire[14].tertanggung_number"
                 />
               </ValidateForm>
@@ -695,6 +706,7 @@
                 <input
                   class="form-control"
                   type="number"
+                  min="0"
                   v-model="healthQuestionnaire[14].pemegang_polis_number"
                 />
               </ValidateForm>
@@ -710,6 +722,7 @@
                 <input
                   class="form-control"
                   type="number"
+                  min="0"
                   v-model="healthQuestionnaire[15].tertanggung_number"
                 />
               </ValidateForm>
@@ -720,6 +733,7 @@
                 <input
                   class="form-control"
                   type="number"
+                  min="0"
                   v-model="healthQuestionnaire[15].pemegang_polis_number"
                 />
               </ValidateForm>
@@ -877,6 +891,16 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    today() {
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+      return yyyy + "-" + mm + "-" + dd;
+    },
   },
   watch: {
     show(value) {
