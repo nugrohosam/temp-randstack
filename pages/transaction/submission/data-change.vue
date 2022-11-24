@@ -2,47 +2,47 @@
   <div>
     <div class="row">
       <div class="col-12">
-        <div class="menu-grid">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
           <Menu
             :isActive="true"
             :name="'Informasi Customer'"
-            :icon="'ic_cuti_premi.svg'"
+            :icon="'menu/perubahan-data-sub-menu.svg'"
             :link="'./change/customer-info'"
           />
           <Menu
             :isActive="false"
             :name="'Pembayar'"
-            :icon="'ic_cuti_premi.svg'"
+            :icon="'menu/perubahan-data-sub-menu.svg'"
             :link="'./change/payer'"
           />
           <Menu
             :isActive="false"
             :name="'Data Tertanggung'"
-            :icon="'ic_cuti_premi.svg'"
+            :icon="'menu/perubahan-data-sub-menu.svg'"
             :link="'./new-policy-loan'"
           />
           <Menu
             :isActive="false"
             :name="'Pemegang Polis'"
-            :icon="'ic_cuti_premi.svg'"
+            :icon="'menu/perubahan-data-sub-menu.svg'"
             :link="'./new-policy-loan'"
           />
           <Menu
             :isActive="false"
             :name="'Ahli Waris'"
-            :icon="'ic_cuti_premi.svg'"
+            :icon="'menu/perubahan-data-sub-menu.svg'"
             :link="'./new-policy-loan'"
           />
           <Menu
             :isActive="false"
             :name="'Tanggal Lahir dan Jenis Kelamin Tertanggung'"
-            :icon="'ic_cuti_premi.svg'"
+            :icon="'menu/perubahan-data-sub-menu.svg'"
             :link="'./new-policy-loan'"
           />
           <Menu
             :isActive="false"
             :name="'Pekerjaan Tertanggung'"
-            :icon="'ic_cuti_premi.svg'"
+            :icon="'menu/perubahan-data-sub-menu.svg'"
             :link="'./new-policy-loan'"
           />
         </div>

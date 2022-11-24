@@ -9,7 +9,7 @@ export default {
       hidden: false,
       name: "Perubahan Data",
       link: "/transaction/submission/data-change",
-      icon: "menu/cuti-premi.svg",
+      icon: "menu/perubahan-data.svg",
     },
     {
       active: true,
@@ -37,7 +37,7 @@ export default {
       hidden: false,
       name: "Pinjaman Polis",
       link: "/transaction/submission/policy-loan",
-      icon: "menu/pemulihan-polis.svg",
+      icon: "menu/pinjaman-polis.svg",
     },
     {
       active: true,
@@ -51,21 +51,21 @@ export default {
       hidden: false,
       name: "Penurunan Uang Pertanggungan",
       link: "/transaction/submission/decrease-sa",
-      icon: "menu/penambahan-dana.svg",
+      icon: "menu/penurunan-uang-pertanggungan.svg",
     },
     {
       active: true,
       hidden: false,
       name: "Pengajuan gagal transfer / SB / MB / NCB",
       link: "/transaction/submission/benefit-allocation",
-      icon: "menu/penarikan-sebagian.svg",
+      icon: "menu/pengajuan-gagal-transfer.svg",
     },
     {
       active: true,
       hidden: false,
       name: "Perubahan Nomor Rekening",
       link: "/transaction/submission/change-payee-refund-account",
-      icon: "menu/perubahan-alokasi.svg",
+      icon: "menu/perubahan-nomor-rek-manfaat.svg",
     },
     {
       active: true,
@@ -93,7 +93,7 @@ export default {
       hidden: false,
       name: "Perubahan Premi Dasar dan Topup Berkala",
       link: "/transaction/submission/periodicaly-top-up",
-      icon: "menu/penambahan-dana.svg",
+      icon: "menu/perubahan-premi-dasar.svg",
     },
     {
       active: false,

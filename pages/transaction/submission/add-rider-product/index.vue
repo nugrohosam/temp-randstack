@@ -519,7 +519,13 @@ export default {
     }
   },
   beforeMount() {
-    if (this.myPolicy.policyWithCode.riskStatus != 1) {
+    if (!this.myPolicy.policyWithCode)
+    {
+      this.modal.show = true;
+      this.modal.message =
+        "Transaksi yang dipilih tidak dapat dilakukan, untuk informasi lebih lanjut silahkan menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
+    }
+    else if (this.myPolicy.policyWithCode.riskStatus != 1) {
       this.modal.show = true;
       this.modal.message =
         "Transaksi yang dipilih tidak dapat dilakukan, untuk informasi lebih lanjut silahkan menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
@@ -586,6 +592,15 @@ export default {
             value: "person",
           },
         ]
+      },
+      modal: {
+        message: "",
+        show: false,
+        button: {
+          text: "Tutup",
+          redirect_link: "/transaction/submission",
+          redirect_type: "spa",
+        },
       },
       form: {
         add_riders: [
@@ -654,7 +669,7 @@ export default {
       let productIds = [],
         products = [];
       data.policyWithCode.coverages = data.policyWithCode.coverages.filter(
-        (coverage) => coverage.riskStatus == 1
+        (coverage) => coverage && coverage.riskStatus == 1
       );
       data.policyWithCode.coverages.forEach((v, i) => {
         productIds.push(v.productId);

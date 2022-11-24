@@ -1,16 +1,10 @@
 <template>
-  <div>
-    <div class="row">
-      <div class="col-12">
-        <div class="menu-grid">
-          <Menu
-            v-for="(item, index) in menus"
-            :key="index"
-            v-bind="item"
-          />
-        </div>
-      </div>
-    </div>
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+    <Menu
+      v-for="(item, index) in menus"
+      :key="index"
+      v-bind="item"
+    />
   </div>
 </template>
 
@@ -22,13 +16,13 @@ export default {
       menus: [
         {
           name: 'Pembayaran',
-          icon: 'ic_cuti_premi.svg',
+          icon: 'menu/pembayaran-pinjaman-polis.svg',
           link: './payment-policy-loan',
           isActive: true
         },
         {
           name: 'Pengajuan',
-          icon: 'ic_minus_circle.svg',
+          icon: 'menu/pengajuan-pinjaman-polis.svg',
           link: './request-policy-loan',
           isActive: true
         }

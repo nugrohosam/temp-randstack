@@ -91,7 +91,7 @@
                     :key="i"
                   >
                     <v-expansion-panel-header>{{
-                      item ? item.productName : "Memuat..."
+                      item ? item.productName : item === undefined ? "Produk Tidak Aktif" : "Memuat..."
                     }}</v-expansion-panel-header>
                     <v-expansion-panel-content>
                       <div class="row">
@@ -100,9 +100,10 @@
                           <p
                             class="data-title"
                             v-if="
-                              item.benefitLevelDescrp == null ||
+                              item &&
+                              (item.benefitLevelDescrp == null ||
                               item.benefitLevelDescrp == '-' ||
-                              item.benefitLevelDescrp == ''
+                              item.benefitLevelDescrp == '')
                             "
                           >
                             {{
@@ -114,9 +115,10 @@
                           <p
                             class="data-value mb-3"
                             v-if="
-                              item.benefitLevelDescrp == null ||
+                              item &&
+                              (item.benefitLevelDescrp == null ||
                               item.benefitLevelDescrp == '-' ||
-                              item.benefitLevelDescrp == ''
+                              item.benefitLevelDescrp == '')
                             "
                           >
                             {{
@@ -131,6 +133,7 @@
                           <p
                             class="data-title"
                             v-if="
+                              item &&
                               item.benefitLevelDescrp != null &&
                               item.benefitLevelDescrp != '-' &&
                               item.benefitLevelDescrp != ''
@@ -141,6 +144,7 @@
                           <p
                             class="data-value mb-3"
                             v-if="
+                              item &&
                               item.benefitLevelDescrp != null &&
                               item.benefitLevelDescrp != '-' &&
                               item.benefitLevelDescrp != ''
