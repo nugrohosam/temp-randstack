@@ -171,7 +171,7 @@
                           </p>
                           <p v-if="item.masterProduct == null" class="data-title">Next Due</p>
                           <p v-if="item.masterProduct == null" class="data-value">
-                            {{ item.coverageExtend.dueDate || "-" }}
+                            {{ $formatDate(item.coverageExtend.dueDate) || "-" }}
                           </p>
                           <p v-if="item.masterProduct == null" class="data-title">Frekuensi Pembayaran</p>
                           <p v-if="item.masterProduct == null" class="data-value">
