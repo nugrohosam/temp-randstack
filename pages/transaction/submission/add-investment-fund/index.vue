@@ -256,7 +256,7 @@
               <br>
               <ul>
                 <li>
-                  Amount Top up dan uang yang di transfer harus sama!
+                  - Amount Top up dan uang yang di transfer harus sama!
                 </li>
               </ul>
           </div>

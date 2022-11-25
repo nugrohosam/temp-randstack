@@ -244,8 +244,7 @@
           <p><b>Perhatian !</b></p>
           <ul>
             <li>
-              Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
-              silahkan hubungi Customer Care 1-500-045
+              - Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak silahkan hubungi Customer Care 1-500-045
             </li>
           </ul>
         </div>

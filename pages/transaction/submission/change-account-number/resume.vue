@@ -110,10 +110,10 @@
           <p><b>Perhatian !</b></p>
           <ul>
             <li>
-              Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
+              - Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
               silahkan hubungi Customer Care 1-500-045
             </li>
-            <li>Terdapat Biaya Penarikan Dana Investasi</li>
+            <li>- Terdapat Biaya Penarikan Dana Investasi</li>
           </ul>
         </div>
       </div>

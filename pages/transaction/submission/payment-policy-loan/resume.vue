@@ -86,7 +86,7 @@
         <div class="message-bar rounded-lg">
           <p><b>Perhatian !</b></p>
           <ul>
-            <li>Pembayaran dilakukan di hari yang sama</li>
+            <li>- Pembayaran dilakukan di hari yang sama</li>
           </ul>
         </div>
       </div>

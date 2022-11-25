@@ -272,7 +272,7 @@
               <br>
               <ul>
                 <li>
-                  Pengajuan ini hanya untuk manfaat hidup, bonus sehat, akhir asuransi dan anuitas
+                  - Pengajuan ini hanya untuk manfaat hidup, bonus sehat, akhir asuransi dan anuitas
                 </li>
               </ul>
           </div>

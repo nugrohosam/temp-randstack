@@ -90,9 +90,8 @@
           <div class="message-bar rounded-lg">
             <p><b>Perhatian !</b></p>
             <ul>
-              <li>Pembayaran dilakukan di hari yang sama</li>
-              <li>
-                Pembayaran bisa dilakukan melalui pemindahbukuan/transfer dari
+              <li>- Pembayaran dilakukan di hari yang sama</li>
+              <li>- Pembayaran bisa dilakukan melalui pemindahbukuan/transfer dari
                 Bank mana saja atau melalui ATM bersama, dengan mengisikan nomor
                 rekening tujuan Virtual Account tersebut
               </li>

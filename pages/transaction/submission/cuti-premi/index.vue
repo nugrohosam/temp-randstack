@@ -148,8 +148,8 @@
               </div>
               <br>
               <ul>
-                <li>Polis tidak dalam masa Cuti Premi Otomatis</li>
-                <li>Polis tidak dalam masa Must Pay Period</li>
+                <li>- Polis tidak dalam masa Cuti Premi Otomatis</li>
+                <li>- Polis tidak dalam masa Must Pay Period</li>
               </ul>
           </div>
         </div>

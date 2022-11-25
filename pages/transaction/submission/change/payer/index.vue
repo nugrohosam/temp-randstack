@@ -53,10 +53,10 @@
             <p><b>Perhatian !</b></p>
             <ul>
               <li>
-                Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
+                - Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
                 silahkan hubungi Customer Care 1-500-045
               </li>
-              <li>Pinjaman Polis akan dikenakan biaya bunga</li>
+              <li>- Pinjaman Polis akan dikenakan biaya bunga</li>
             </ul>
           </div>
         </div>

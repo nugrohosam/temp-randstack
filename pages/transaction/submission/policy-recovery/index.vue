@@ -100,11 +100,11 @@
             <p><b>Perhatian !</b></p>
             <ul>
               <li>
-                Pemulihan polis hanya berlaku jika usia dibawah atau sama dengan
+                - Pemulihan polis hanya berlaku jika usia dibawah atau sama dengan
                 2 tahun sejak tanggal <strong>lapsed date</strong>
               </li>
               <li>
-                Mohon lakukan pembayaran dahulu sebelum melakukan pengajuan
+                - Mohon lakukan pembayaran dahulu sebelum melakukan pengajuan
                 pemulihan polis
               </li>
             </ul>

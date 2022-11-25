@@ -209,13 +209,13 @@
                   <br>
                   <ul>
                     <li>
-                      Minimal dan Maksimal Uang pertanggungan berdasarkan atas premi yang dibayarkan! 
+                      - Minimal dan Maksimal Uang pertanggungan berdasarkan atas premi yang dibayarkan! 
                     </li>
                     <li>
-                      Penurunan Plan atau Benefit maksimal 1 tingkat!
+                      - Penurunan Plan atau Benefit maksimal 1 tingkat!
                     </li>
                     <li>
-                      Akan ada kemungkinan Penurunan atau Peningkatan Premi yang di tagihkan!
+                      - Akan ada kemungkinan Penurunan atau Peningkatan Premi yang di tagihkan!
                     </li>
                   </ul>
               </div>

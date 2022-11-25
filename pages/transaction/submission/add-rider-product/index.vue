@@ -458,7 +458,7 @@
                 <br>
                 <ul>
                   <li>
-                    Penambahan Rider dapat menghubungi Pemasar untuk bantuan dan illustrasi
+                    - Penambahan Rider dapat menghubungi Pemasar untuk bantuan dan illustrasi
                   </li>
                 </ul>
             </div>

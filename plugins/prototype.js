@@ -117,6 +117,18 @@ export default function ({ app, $axios }, inject) {
     return currencySymbol[id];
   };
 
+  const paymentFrequency = (id) => {
+    let paymentFreq = new Array();
+
+    paymentFreq["1"] = "Yearly";
+    paymentFreq["2"] = "Half Yearly";
+    paymentFreq["3"] = "Quarterly";
+    paymentFreq["4"] = "Monthly";
+    paymentFreq["5"] = "Single";
+
+    return paymentFreq[id];
+  };
+
   const fundName = (code) => {
     let fundCodeName = new Array();
     fundCodeName["BNLS"] = "BLife Link Dana Selaras";
@@ -340,6 +352,7 @@ export default function ({ app, $axios }, inject) {
   inject("labelRelationType", labelRelationType);
   inject("indexOfObject", indexOfObject);
   inject("convertCurrency", convertCurrency);
+  inject("paymentFrequency", paymentFrequency);
   inject("getBank", getBank);
   inject("getBankName", getBankName);
   inject("getProvinces", getProvinces);

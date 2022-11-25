@@ -270,7 +270,7 @@
               <br>
               <ul>
                 <li>
-                  Pemilik rekning baru harus pihak yang terdaftar dalam polis
+                  - Pemilik rekning baru harus pihak yang terdaftar dalam polis
                 </li>
               </ul>
           </div>

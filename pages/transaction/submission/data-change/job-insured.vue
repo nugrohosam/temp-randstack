@@ -69,9 +69,9 @@
           <div class="message-bar rounded-lg">
             <p><b>Perhatian !</b></p>
             <ul>
-              <li>Pastikan perubahaan pekerjaan sudah di isi dengan benar.</li>
-              <li>Perubahan pekerjaan diisi oleh tertanggung.</li>
-              <li>Premi dapat berubah sesuai dengan jenis pekerjaan.</li>
+              <li>- Pastikan perubahaan pekerjaan sudah di isi dengan benar.</li>
+              <li>- Perubahan pekerjaan diisi oleh tertanggung.</li>
+              <li>- Premi dapat berubah sesuai dengan jenis pekerjaan.</li>
             </ul>
           </div>
         </div>

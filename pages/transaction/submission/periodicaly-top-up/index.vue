@@ -181,10 +181,10 @@
               <br>
               <ul>
                 <li>
-                  Perubahan Premi total secara tidak langsung akan mempengaruhi Uang Pertanggungan
+                  - Perubahan Premi total secara tidak langsung akan mempengaruhi Uang Pertanggungan
                 </li>
                 <li>
-                  Dianjurkan Mengajukan transaksi penambahan atau penurunan Uang Pertanggung apabila Total premi naik atau turun
+                  - Dianjurkan Mengajukan transaksi penambahan atau penurunan Uang Pertanggung apabila Total premi naik atau turun
                 </li>
               </ul>
           </div>
