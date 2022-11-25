@@ -302,10 +302,6 @@ export default {
             (item.recurringTopup?.topupAmount || 0)
         : 0;
     },
-    // getInformationPolicyList: async function () {
-    //   await this.$store.dispatch("information_policy/getInformationPolicyList");
-    //   this.information_policy = this.informationPolicyList;
-    // },
   },
 };
 </script>

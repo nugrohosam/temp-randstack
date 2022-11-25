@@ -97,7 +97,10 @@
                   <template #header.data-table-select> Pilihan </template>
                   <template v-slot:item.nextPremium.sumAssured="{ item }">
                     {{
-                      $convertCurrency(item ? item.nextPremium.sumAssured : "")
+                      item && 
+                      (item.benefitLevelDescrp == null ||
+                      item.benefitLevelDescrp == '-' ||
+                      item.benefitLevelDescrp == '') ? $convertCurrency(item.nextPremium.sumAssured) : item.benefitLevelDescrp
                     }}
                   </template>
                   <template v-slot:item.issueDate="{ item }">

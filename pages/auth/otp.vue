@@ -2,7 +2,7 @@
   <div class="md:flex md:justify-center md:items-center lg:h-screen m-4 lg:m-0">
     <div
       class="p-6 md:py-6 md:px-32 rounded-lg"
-      style="background: rgba(255, 255, 255, 0.8)"
+      style="background: rgba(255, 255, 255, 0.6)"
     >
       <div class="text-center">
         <img

@@ -2,7 +2,7 @@
   <div class="md:flex md:justify-end md:items-center lg:h-screen m-4 lg:m-0">
     <div
       class="md:bg-transparent p-6 rounded-lg md:w-96"
-      style="background: rgba(255, 255, 255, 0.8)"
+      style="background: rgba(255, 255, 255, 0.6)"
     >
       <img
         src="~/assets/svg/bpos_digital.svg"
