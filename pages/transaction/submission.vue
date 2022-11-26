@@ -1,6 +1,6 @@
 <template>
   <body-page
-    :title="vuexCurrentHeaderTitle.title || current_header_title"
+    :title="current_header_title || vuexCurrentHeaderTitle.title"
     :sub-title="vuexCurrentHeaderTitle.sub"
   >
     <div v-show="showMenu">
@@ -41,17 +41,10 @@
     </div>
   </body-page>
 </template>
+
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
 export default {
-  mounted() {
-    if ($nuxt.$route.name != "transaction-submission") {
-      this.showMenu = false;
-    } else {
-      this.showMenu = true;
-      this.current_header_title = this.default_header_title;
-    }
-  },
   data() {
     return {
       showMenu: true,
@@ -61,13 +54,22 @@ export default {
     };
   },
   watch: {
-    $route(to, from) {
-      if (to.name != "transaction-submission") {
-        this.showMenu = false;
-      } else {
-        this.showMenu = true;
-        this.current_header_title = this.default_header_title;
-      }
+    $route: {
+      handler(to, from) {
+        if (to.name != "transaction-submission") {
+          this.showMenu = false;
+          const foundMenu = this.menus.find((item) => item.link === to.path);
+          if (foundMenu) {
+            this.current_header_title = foundMenu.name;
+          } else {
+            this.current_header_title = "";
+          }
+        } else {
+          this.showMenu = true;
+          this.current_header_title = this.default_header_title;
+        }
+      },
+      immediate: true,
     },
     menu_search(keyword) {
       this.searchMenu({ keywords: keyword });
@@ -77,8 +79,6 @@ export default {
           return item["name"];
         }
       });
-
-      this.menus = menu_filtered;
     },
   },
   computed: {
