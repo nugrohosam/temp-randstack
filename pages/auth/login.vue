@@ -110,9 +110,9 @@ export default {
     return {
       signInDisable: true,
       form: {
-        policy_number: "BLPM2010018353",
-        phone_number: "627978",
-        identity_number: "721213252203",
+        policy_number: "",
+        phone_number: "",
+        identity_number: "",
         verified: "",
       },
       modal: {

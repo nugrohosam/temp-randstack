@@ -120,10 +120,10 @@ export default function ({ app, $axios }, inject) {
   const paymentFrequency = (id) => {
     let paymentFreq = new Array();
 
-    paymentFreq["1"] = "Yearly";
-    paymentFreq["2"] = "Half Yearly";
-    paymentFreq["3"] = "Quarterly";
-    paymentFreq["4"] = "Monthly";
+    paymentFreq["1"] = "Tahunan";
+    paymentFreq["2"] = "Semesteran";
+    paymentFreq["3"] = "Triwulan";
+    paymentFreq["4"] = "Bulanan";
     paymentFreq["5"] = "Single";
 
     return paymentFreq[id];

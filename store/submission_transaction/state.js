@@ -44,7 +44,7 @@ export default {
       hidden: false,
       name: "Penarikan Sebagian Dana Investasi",
       link: "/transaction/submission/withdraw-partial-investment-fund",
-      icon: "menu/penambahan-dana.svg",
+      icon: "menu/penarikan-sebagian-investasi.svg",
     },
     {
       active: true,
@@ -72,7 +72,7 @@ export default {
       hidden: false,
       name: "Penambahan Uang Pertanggungan",
       link: "/transaction/submission/increase-sa",
-      icon: "menu/penambahan-dana.svg",
+      icon: "menu/penambahan-uang-petanggungan.svg",
     },
     {
       active: true,
@@ -100,14 +100,14 @@ export default {
       hidden: false,
       name: "Perubahan Alokasi Dana Investasi",
       link: "/transaction/submission/investment-fund-allocation-change",
-      icon: "menu/perubahan-alokasi.svg",
+      icon: "menu/perubahan-alokasi-investasi.svg",
     },
     {
       active: false,
       hidden: false,
       name: "Perubahan Pembayaran Premi",
       link: "/transaction/submission/premi-payment-change",
-      icon: "menu/perubahan-alokasi.svg",
+      icon: "menu/perubahan-pembayaran-premi.svg",
     },
   ],
 

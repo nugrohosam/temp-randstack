@@ -385,7 +385,6 @@
                           class="form-input"
                           v-if="phoneEditable"
                           name="Telepon Kantor"
-                          rules="phone"
                           v-slot="{ errors }"
                         >
                           <input
@@ -413,7 +412,6 @@
                           class="form-input"
                           v-if="phoneEditable"
                           name="Telepon Kantor Lain"
-                          rules="phone"
                           v-slot="{ errors }"
                         >
                           <input

@@ -12,37 +12,37 @@
           <Menu
             :isActive="false"
             :name="'Pembayar'"
-            :icon="'menu/perubahan-data-sub-menu.svg'"
+            :icon="'menu/pembayar.svg'"
             :link="'./change/payer'"
           />
           <Menu
             :isActive="false"
             :name="'Data Tertanggung'"
-            :icon="'menu/perubahan-data-sub-menu.svg'"
+            :icon="'menu/data-tertanggung.svg'"
             :link="'./new-policy-loan'"
           />
           <Menu
             :isActive="false"
             :name="'Pemegang Polis'"
-            :icon="'menu/perubahan-data-sub-menu.svg'"
+            :icon="'menu/pemegang-polis.svg'"
             :link="'./new-policy-loan'"
           />
           <Menu
             :isActive="false"
             :name="'Ahli Waris'"
-            :icon="'menu/perubahan-data-sub-menu.svg'"
+            :icon="'menu/perubahan-ahli-waris.svg'"
             :link="'./new-policy-loan'"
           />
           <Menu
             :isActive="false"
             :name="'Tanggal Lahir dan Jenis Kelamin Tertanggung'"
-            :icon="'menu/perubahan-data-sub-menu.svg'"
+            :icon="'menu/perubahan-jenis-kelamin.svg'"
             :link="'./new-policy-loan'"
           />
           <Menu
             :isActive="false"
             :name="'Pekerjaan Tertanggung'"
-            :icon="'menu/perubahan-data-sub-menu.svg'"
+            :icon="'menu/perubahan-pekerjaan-tertanggung.svg'"
             :link="'./new-policy-loan'"
           />
         </div>
