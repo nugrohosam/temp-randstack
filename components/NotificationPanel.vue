@@ -16,10 +16,10 @@
                 v-if="!item.opened"
               ></v-badge>
               <div class="items-value">
-                <p class="item-title">{{ item.title }}</p>
+                <p class="item-title">{{ item.transactionName }}</p>
                 <div class="item-bottom">
-                  <p class="item-data">{{ item.content }}</p>
-                  <p class="item-date">{{ item.date }}</p>
+                  <p class="item-data">{{ item.status }}</p>
+                  <p class="item-date">{{ $formatDate(new Date(item.updatedAt)) }}</p>
                 </div>
               </div>
             </div>
