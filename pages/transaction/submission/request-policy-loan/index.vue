@@ -107,8 +107,8 @@
             <p><b>Perhatian !</b></p>
             <ul>
               <li>
-                - Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
-                silahkan hubungi Customer Care 1-500-045
+                - Pastikan nomor rekening yang tercantum sudah sesuai, jika
+                tidak silahkan hubungi Customer Care 1-500-045
               </li>
               <li>- Pinjaman Polis akan dikenakan biaya bunga</li>
             </ul>
@@ -141,11 +141,11 @@ export default {
       validationMessage: [],
     };
   },
-  beforeMount() {
+  mounted() {
     this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
       title: "Pengajuan Pinjaman Polis",
-      sub: "Pengajuan Pinjaman Nilai Tunai Polis",
     });
+    console.log("loh he");
   },
   computed: {
     myPolicy() {

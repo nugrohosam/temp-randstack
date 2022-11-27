@@ -1,5 +1,5 @@
 <template>
-  <body-page :title="current_header_title">
+  <body-page>
     <div>
       <template v-if="table.items">
         <div class="row">
@@ -277,7 +277,9 @@ export default {
       this.showMenu = false;
     } else {
       this.showMenu = true;
-      this.current_header_title = this.default_header_title;
+      this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+        title: this.default_header_title,
+      });
     }
   },
   components: {

@@ -1,5 +1,5 @@
 <template>
-  <body-page :title="default_header_title">
+  <body-page>
     <template v-if="myPolicy">
       <div class="row">
         <div class="col-md-6 col-xs-12 v-card-parent">
@@ -91,7 +91,11 @@
                     :key="i"
                   >
                     <v-expansion-panel-header>{{
-                      item ? item.productName : item === undefined ? "Produk Tidak Aktif" : "Memuat..."
+                      item
+                        ? item.productName
+                        : item === undefined
+                        ? "Produk Tidak Aktif"
+                        : "Memuat..."
                     }}</v-expansion-panel-header>
                     <v-expansion-panel-content>
                       <div class="row">
@@ -102,8 +106,8 @@
                             v-if="
                               item &&
                               (item.benefitLevelDescrp == null ||
-                              item.benefitLevelDescrp == '-' ||
-                              item.benefitLevelDescrp == '')
+                                item.benefitLevelDescrp == '-' ||
+                                item.benefitLevelDescrp == '')
                             "
                           >
                             {{
@@ -117,8 +121,8 @@
                             v-if="
                               item &&
                               (item.benefitLevelDescrp == null ||
-                              item.benefitLevelDescrp == '-' ||
-                              item.benefitLevelDescrp == '')
+                                item.benefitLevelDescrp == '-' ||
+                                item.benefitLevelDescrp == '')
                             "
                           >
                             {{
@@ -169,13 +173,35 @@
                           <p class="data-value">
                             {{ item ? $riskStatus(item.riskStatus) : "-" }}
                           </p>
-                          <p v-if="item.masterProduct == null" class="data-title">Next Due</p>
-                          <p v-if="item.masterProduct == null" class="data-value">
-                            {{ $formatDate(item.coverageExtend.dueDate) || "-" }}
+                          <p
+                            v-if="item.masterProduct == null"
+                            class="data-title"
+                          >
+                            Next Due
                           </p>
-                          <p v-if="item.masterProduct == null" class="data-title">Frekuensi Pembayaran</p>
-                          <p v-if="item.masterProduct == null" class="data-value">
-                            {{ $paymentFrequency(item.currentPremium.paymentFreq) || "-" }}
+                          <p
+                            v-if="item.masterProduct == null"
+                            class="data-value"
+                          >
+                            {{
+                              $formatDate(item.coverageExtend.dueDate) || "-"
+                            }}
+                          </p>
+                          <p
+                            v-if="item.masterProduct == null"
+                            class="data-title"
+                          >
+                            Frekuensi Pembayaran
+                          </p>
+                          <p
+                            v-if="item.masterProduct == null"
+                            class="data-value"
+                          >
+                            {{
+                              $paymentFrequency(
+                                item.currentPremium.paymentFreq
+                              ) || "-"
+                            }}
                           </p>
                         </div>
                       </div>
@@ -251,6 +277,9 @@
 <script>
 export default {
   mounted() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: this.default_header_title,
+    });
     if ($nuxt.$route.name != "polis-information") {
       this.showMenu = false;
     } else {

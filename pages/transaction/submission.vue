@@ -1,8 +1,5 @@
 <template>
-  <body-page
-    :title="current_header_title || vuexCurrentHeaderTitle.title"
-    :sub-title="vuexCurrentHeaderTitle.sub"
-  >
+  <body-page>
     <div v-show="showMenu">
       <div class="row mb-8">
         <div class="col-lg-6 col-md-12">
@@ -59,19 +56,14 @@ export default {
         if (to.name != "transaction-submission") {
           this.showMenu = false;
           const foundMenu = this.menus.find((item) => item.link === to.path);
-          if (foundMenu) {
-            this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
-              title: foundMenu.name,
-            });
-          }
-          // if (foundMenu) {
-          //   this.current_header_title = foundMenu.name;
-          // } else {
-          //   this.current_header_title = "";
-          // }
+          this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+            title: foundMenu ? foundMenu.name : "",
+          });
         } else {
           this.showMenu = true;
-          this.current_header_title = this.default_header_title;
+          this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+            title: this.default_header_title,
+          });
         }
       },
       immediate: true,
@@ -89,7 +81,6 @@ export default {
   computed: {
     ...mapGetters({
       menus: "submission_transaction/getMenus",
-      vuexCurrentHeaderTitle: "submission_transaction/getCurrentHeaderTitle",
     }),
   },
   methods: {
