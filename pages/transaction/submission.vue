@@ -60,10 +60,15 @@ export default {
           this.showMenu = false;
           const foundMenu = this.menus.find((item) => item.link === to.path);
           if (foundMenu) {
-            this.current_header_title = foundMenu.name;
-          } else {
-            this.current_header_title = "";
+            this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+              title: foundMenu.name,
+            });
           }
+          // if (foundMenu) {
+          //   this.current_header_title = foundMenu.name;
+          // } else {
+          //   this.current_header_title = "";
+          // }
         } else {
           this.showMenu = true;
           this.current_header_title = this.default_header_title;

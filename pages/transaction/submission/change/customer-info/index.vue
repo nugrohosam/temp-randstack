@@ -455,9 +455,7 @@
             <div class="d-flex flex-column flex-md-row">
               <p class="data-value" v-show="!emailEditable">
                 {{
-                  selectedPolicy.person.email
-                    ? selectedPolicy.person.email
-                    : ""
+                  selectedPolicy.person.email ? selectedPolicy.person.email : ""
                 }}
               </p>
               <div class="form-input" v-show="emailEditable">
@@ -550,6 +548,11 @@ export default {
   components: {
     SaveIcon,
     InfoIcon,
+  },
+  beforeMount() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: "Informasi Customer",
+    });
   },
   mounted() {
     this.getMyPolicy();
