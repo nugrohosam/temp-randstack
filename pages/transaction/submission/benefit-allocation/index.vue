@@ -64,6 +64,7 @@
             <div class="form-input">
               <input
                 type="text"
+                pattern="[a-zA-Z0-9.,]*"
                 class="form-control"
                 v-model="form.newNoRek"
               />
@@ -74,6 +75,7 @@
             <div class="form-input">
               <input
                 type="text"
+                pattern="[a-zA-Z0-9.,]*"
                 class="form-control"
                 v-model="form.rekOwner"
               />
@@ -84,6 +86,7 @@
             <div class="form-input">
               <input
                 type="text"
+                pattern="[a-zA-Z0-9.,]*"
                 class="form-control"
                 v-model="form.branch"
               />
