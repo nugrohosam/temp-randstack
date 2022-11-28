@@ -177,7 +177,7 @@
                             v-if="item.masterProduct == null"
                             class="data-title"
                           >
-                            Next Due
+                            Tanggal Jatuh Tempo
                           </p>
                           <p
                             v-if="item.masterProduct == null"
