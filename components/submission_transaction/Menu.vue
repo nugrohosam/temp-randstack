@@ -2,11 +2,11 @@
 <template>
   <NuxtLink :to="link">
     <div
-      class="col-span-1 flex flex-col rounded-xl bg-white text-center h-full"
+      class="rounded-xl bg-white text-center h-full"
       :class="!isActive ? 'bg-gray-50' : 'drop-shadow-lg'"
       style="min-height: 160px"
     >
-      <div class="flex flex-1 flex-col p-4 lg:p-8">
+      <div class="p-4 lg:p-8">
         <img
           class="mx-auto h-12 w-12 lg:h-24 lg:w-24 flex-shrink-0 rounded-full"
           :src="require(`@/assets/icon/${icon}`)"
