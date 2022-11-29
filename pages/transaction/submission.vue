@@ -25,7 +25,7 @@
           :hidden="menu.hidden"
           :name="$checkSyariLabel(menu.name)"
           :icon="menu.icon"
-          :link="menu.link"
+          :link="menu.active ? menu.link : '/transaction/submission/coming-soon'"
           @click.native="current_header_title = $checkSyariLabel(menu.name)"
         />
       </div>
