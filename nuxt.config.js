@@ -98,25 +98,11 @@ export default {
   proxy: {
     // Simple proxy
     "/api/v1/": {
-      // target: "http://10.22.13.217/",
-      // target: "http://172.20.8.75/",
-      target: "http://0.0.0.0:5020/",
-      // target: "http://10.20.10.34/",
-      // target: "http://34.124.156.103:8888/",
-      // target: "https://6931-66-96-229-250.ngrok.io/",
-      // target: "http://cfdc-103-86-152-226.ngrok.io/",
-      // target: "https://70b9-66-96-229-250.ngrok.io/",
+      target: "http://10.22.10.34/",
       pathRewrite: { "^/api/v1/": "/api/v1/" },
     },
     "/test/v1/": {
-      // target: "http://10.22.13.217/",
-      // target: "http://172.20.8.75/",
-      target: "http://0.0.0.0:5020/",
-      // target: "http://10.20.10.34/",
-      // target: "http://34.124.156.103:8888/",
-      // target: "https://6931-66-96-229-250.ngrok.io/",
-      // target: "http://cfdc-103-86-152-226.ngrok.io/",
-      // target: "https://70b9-66-96-229-250.ngrok.io/",
+      target: "http://10.22.10.34/",
       pathRewrite: { "^/test/v1/": "/test/v1/" },
     },
   },
