@@ -103,6 +103,13 @@ export default {
       icon: "menu/perubahan-alokasi-investasi.svg",
     },
     {
+      active: true,
+      hidden: false,
+      name: "Pengalihan Dana (Switching)",
+      link: "/transaction/submission/transfer-of-funds",
+      icon: "menu/perubahan-alokasi-investasi.svg",
+    },
+    {
       active: false,
       hidden: false,
       name: "Perubahan Pembayaran Premi",
