@@ -14,6 +14,7 @@ import PeriodicalyTopUp from "./periodicaly_top_up";
 import ReuploadDocument from "./reupload_document";
 import WithdrawPartialInvestmentFund from "./withdraw_partial_investment_fund";
 import AddInvestmentFund from "./add_investment_fund";
+import TransferOfFund from "./transfer_of_fund";
 
 const SubmissionTransactionModules = {
   namespaced: true,
@@ -30,6 +31,7 @@ const SubmissionTransactionModules = {
     increase_sa: IncreaseSA,
     benefit_allocation: BenefitAllocation,
     change_payee_refund_account: ChangePayeeRefundAccount,
+    transfer_of_fund: TransferOfFund,
   },
   state,
   getters,

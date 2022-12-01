@@ -105,7 +105,7 @@ export default {
       // target: "http://34.124.156.103:8888/",
       // target: "https://6931-66-96-229-250.ngrok.io/",
       // target: "http://cfdc-103-86-152-226.ngrok.io/",
-      // target: "https://70b9-66-96-229-250.ngrok.io/",
+      target: "https://439e-66-96-229-250.ngrok.io/",
       pathRewrite: { "^/api/v1/": "/api/v1/" },
     },
     "/test/v1/": {
@@ -116,7 +116,7 @@ export default {
       // target: "http://34.124.156.103:8888/",
       // target: "https://6931-66-96-229-250.ngrok.io/",
       // target: "http://cfdc-103-86-152-226.ngrok.io/",
-      // target: "https://70b9-66-96-229-250.ngrok.io/",
+      target: "https://439e-66-96-229-250.ngrok.io/",
       pathRewrite: { "^/test/v1/": "/test/v1/" },
     },
   },

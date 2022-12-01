@@ -3,9 +3,9 @@
     <div class="col-lg-8 col-sm-12">
       <div class="validation-bar d-flex rounded-lg">
         <info-icon class="ic-primary mr-2"></info-icon>
-        <ul>
+        <ul class="list-disc">
           <li v-for="(value, key) in validationMessage" :key="key">
-            {{ value }}
+            <small>{{ value }}</small>
           </li>
         </ul>
       </div>
