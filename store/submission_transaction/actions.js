@@ -368,11 +368,14 @@ export default {
       cancel_reason: getters.getReasonSelected[0].name,
     };
 
-    const isUseChangePayeeAccount = changePayeeAccount.bank != null
+    const isUseChangePayeeAccount = changePayeeAccount.bank != null || changePayeeAccount.bank != ""
     if (isUseChangePayeeAccount) {
 
       changePayeeAccount = {
-        ...changePayeeAccount,
+        new_no_rek: changePayeeAccount.new_no_rek,
+        bank: changePayeeAccount.bank,
+        branch: changePayeeAccount.branch,
+        rek_owner: changePayeeAccount.rek_owner,
         saving_book_attachment: changePayeeAccount.saving_book_attachment?.name || null,
         ktp_attachment: changePayeeAccount.ktp_attachment?.name || null,
         document_attachment: changePayeeAccount.document_attachment?.name || null,
@@ -383,8 +386,7 @@ export default {
         if (changePayeeAccount.status_family_attachment === "KK") {
           changePayeeAccount.kk_attachment = changePayeeAccount.family_attachment?.name || null;
         } else {
-          changePayeeAccount.birth_certificate_attachment =
-            changePayeeAccount.family_attachment?.name || null;
+          changePayeeAccount.birth_certificate_attachment = changePayeeAccount.family_attachment?.name || null;
         }
       }
 
@@ -399,7 +401,6 @@ export default {
 
     const endpoint = !isUseChangePayeeAccount ? "/api/v1/transaction-proposal/surrender" : "/api/v1/transaction-proposal/surrender-with-payee";
     return await this.$axios
-      // .$post("/api/v1/transaction-proposal/surrender", form)
       .$post(endpoint, form)
       .then((response) => {
         dispatch(
