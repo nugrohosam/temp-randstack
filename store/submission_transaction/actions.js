@@ -372,7 +372,12 @@ export default {
     if (isUseChangePayeeAccount) {
 
       changePayeeAccount = {
-        ...changePayeeAccount,
+        family_attachment: changePayeeAccount.family_attachment,
+        status_family_attachment: changePayeeAccount.status_family_attachment,
+        new_no_rek: changePayeeAccount.new_no_rek,
+        bank: changePayeeAccount.bank,
+        branch: changePayeeAccount.branch,
+        rek_owner: changePayeeAccount.rek_owner,
         saving_book_attachment: changePayeeAccount.saving_book_attachment?.name || null,
         ktp_attachment: changePayeeAccount.ktp_attachment?.name || null,
         document_attachment: changePayeeAccount.document_attachment?.name || null,
