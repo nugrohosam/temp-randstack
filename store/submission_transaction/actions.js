@@ -372,6 +372,8 @@ export default {
     if (isUseChangePayeeAccount) {
 
       changePayeeAccount = {
+        family_attachment: changePayeeAccount.family_attachment,
+        status_family_attachment: changePayeeAccount.status_family_attachment,
         new_no_rek: changePayeeAccount.new_no_rek,
         bank: changePayeeAccount.bank,
         branch: changePayeeAccount.branch,
@@ -386,7 +388,8 @@ export default {
         if (changePayeeAccount.status_family_attachment === "KK") {
           changePayeeAccount.kk_attachment = changePayeeAccount.family_attachment?.name || null;
         } else {
-          changePayeeAccount.birth_certificate_attachment = changePayeeAccount.family_attachment?.name || null;
+          changePayeeAccount.birth_certificate_attachment =
+            changePayeeAccount.family_attachment?.name || null;
         }
       }
 
