@@ -60,6 +60,21 @@
       </div>
     </div>
 
+
+    <div class="row">
+      <div class="col-lg-6 col-sm-12">
+        <p class="data-title mb-2">Unggah Ilustrasi</p>
+        <p class="data-value">
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showIlustrationPreview"
+          >
+            Lihat
+          </button>
+        </p>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
@@ -157,6 +172,14 @@ export default {
     };
   },
   methods: {
+    showIlustartionPreview: function () {
+      if (this.getIncreaseSA.ilustrationAttachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getIncreaseSA.ilustrationAttachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
     showSelfieKtpPreview: function () {
       if (this.getIncreaseSA.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(

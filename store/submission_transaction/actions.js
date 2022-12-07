@@ -368,7 +368,7 @@ export default {
       cancel_reason: getters.getReasonSelected[0].name,
     };
 
-    const isUseChangePayeeAccount = changePayeeAccount.bank != null
+    const isUseChangePayeeAccount = changePayeeAccount.bank != null || changePayeeAccount.bank != ""
     if (isUseChangePayeeAccount) {
 
       changePayeeAccount = {
@@ -404,7 +404,6 @@ export default {
 
     const endpoint = !isUseChangePayeeAccount ? "/api/v1/transaction-proposal/surrender" : "/api/v1/transaction-proposal/surrender-with-payee";
     return await this.$axios
-      // .$post("/api/v1/transaction-proposal/surrender", form)
       .$post(endpoint, form)
       .then((response) => {
         dispatch(

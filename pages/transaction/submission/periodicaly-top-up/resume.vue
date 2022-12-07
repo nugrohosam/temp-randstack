@@ -111,6 +111,20 @@
     </div>
 
     <div class="row">
+      <div class="col-lg-6 col-sm-12">
+        <p class="data-title mb-2">Unggah Ilustrasi</p>
+        <p class="data-value">
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showIlustrationPreview"
+          >
+            Lihat
+          </button>
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-12">
         <p class="data-title mb-2">Isi Formulir Kesehatan</p>
         <button
@@ -231,6 +245,14 @@ export default {
     this.$store.commit("submission_transaction/removeCurrentHeaderTitle");
   },
   methods: {
+    showIlustartionPreview: function () {
+      if (this.getPeriodicalyTopUp.ilustrationAttachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getPeriodicalyTopUp.ilustrationAttachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
     showSelfieKtpPreview: function () {
       if (this.getPeriodicalyTopUp.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
