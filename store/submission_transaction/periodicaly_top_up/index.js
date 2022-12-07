@@ -5,7 +5,8 @@ const state = () => ({
     totalPrem: null,
     healthQuestionnaire: [],
     ktpSelfieAttachment: {},
-    documentAttachment: {}
+    documentAttachment: {},
+    ilustrationAttachment: {}
   },
 });
 
@@ -28,6 +29,7 @@ const actions = {
       health_questionnaire: state.periodicalyTopUp.healthQuestionnaire,
       ktp_selfie_attachment: state.periodicalyTopUp.ktpSelfieAttachment.name,
       document_attachment: state.periodicalyTopUp.documentAttachment?.name || null,
+      ilustration_attachment: state.periodicalyTopUp.ilustrationAttachment?.name || null,
     };
 
     dispatch(

@@ -17,7 +17,7 @@
     </div>
       <div class="row">
         <div class="col-lg-4 col-sm-6">
-          <p class="data-title">Premi Dasar Eksisting</p>
+          <p class="data-title">Premi Dasar Saat Ini</p>
           <p class="data-value">
           {{
             $currencyName(
@@ -29,7 +29,7 @@
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">
-            Premi Top Up Berkala Eksisting
+            Premi Top Up Berkala Saat Ini
           </p>
           <p class="data-value">
             {{
@@ -160,6 +160,39 @@
       </div>
 
       <div class="row">
+        <div class="col-lg-6 col-sm-12">
+          <ValidationProvider
+            rules="required|image"
+            v-slot="{ validate, errors }"
+          >
+            <p class="data-title mb-2">Unggah Ilustrasi</p>
+            <input
+              type="file"
+              ref="inputIlustrationImage"
+              v-show="false"
+              accept="image/*"
+              @change="
+                (e) => {
+                  validate(e);
+                  addIlustrationImage(e);
+                }
+              "
+            />
+            <button
+              class="btn btn-primary-outlined"
+              @click.prevent="$refs.inputIlustrationImage.click()"
+            >
+              Unggah
+            </button>
+            <small>{{ form.ilustrationAttachment.name }}</small>
+            <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+            <br />
+            <span class="text-error">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-12">
           <p class="data-title mb-2">Isi Formulir Kesehatan</p>
           <button
@@ -240,6 +273,7 @@ export default {
         healthQuestionnaire: [],
         ktpSelfieAttachment: {},
         documentAttachment: {},
+        ilustrationAttachment: {},
       },
       modal: {
         message: "",
@@ -326,8 +360,23 @@ export default {
         item ? (item.currentPremium.stdPremAf + (item.recurringTopup?.topupAmount || 0)) : 0
       );
     },
+    async addIlustrationImage(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadIlustrationFile",
+          { file: e.target.files[0] }
+        );
+        this.form.ilustrationAttachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
     validate: async function () {
       this.validationMessage = [];
+      if (!this.form.ilustrationAttachment.name) {
+        this.validationMessage.push("Unggah Ilustrasi diperlukan");
+      }
       if (!this.form.basePrem) {
         this.validationMessage.push("Premium Dasar diperlukan");
       }

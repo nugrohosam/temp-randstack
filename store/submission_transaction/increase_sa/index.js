@@ -1,7 +1,8 @@
 const state = () => ({
   increaseSA: {
     items: [],
-    ktpSelfieAttachment: "",
+    ktpSelfieAttachment: {},
+    ilustrationAttachment: {}
   },
 });
 
@@ -20,6 +21,7 @@ const actions = {
     const form = {
       items: state.increaseSA.items,
       ktp_selfie_attachment: state.increaseSA.ktpSelfieAttachment.name,
+      ilustration_attachment: state.increaseSA.ilustrationAttachment?.name || null,
     };
 
     dispatch(
