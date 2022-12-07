@@ -352,14 +352,21 @@
 
           </div>
 
-          <div class="row">
-            <div class="col-lg-8 col-sm-12">
-              <div class="message-bar d-flex rounded-lg">
-                <info-icon class="ic-primary mr-2"></info-icon>
-                Transaksi ini akan dikenakan biaya
-              </div>
+        <div class="row">
+          <div class="col-lg-12 col-sm-12">
+            <div class="message-bar rounded-lg">
+                <div class="d-flex">
+                  <info-icon class="ic-primary mr-2"></info-icon>
+                  Perhatian !
+                </div>
+                <br>
+                <ul>
+                  <li>- Transaksi ini akan dikenakan biaya</li>
+                  <li v-if="form.is_should_fill_payee_refund">- Rekening manfaat harus atas nama pemegang polis</li>
+                </ul>
             </div>
           </div>
+        </div>
 
           <div class="row" v-if="validationMessage.length > 0">
             <div class="col-lg-8 col-sm-12">
