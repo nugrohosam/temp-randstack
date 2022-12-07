@@ -383,11 +383,11 @@ export default {
       if (!this.form.topUpPrem) {
         this.validationMessage.push("Top Up Berkala diperlukan");
       }
+      if (this.form.totalPrem >= this.totalPremAll(this.myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null) || null) && this.form.healthQuestionnaire.length < 1) {
+        this.validationMessage.push("Form Kesehatan diperlukan");
+      }
       if (!this.form.ktpSelfieAttachment.name) {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
-      }
-      if (this.form.healthQuestionnaire.length < 1) {
-        this.validationMessage.push("Form Kesehatan diperlukan");
       }
     },
     save: async function () {

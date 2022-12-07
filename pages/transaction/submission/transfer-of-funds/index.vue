@@ -397,7 +397,6 @@ export default {
     },
     getFundPriceDate(fundPrices = [], fundCode) {
       if (!fundPrices.length) return 0;
-
       const found = fundPrices.find((item) => item.fundCode === fundCode);
       return found ? this.$moment(found.pricingDate).format("DD/MM/Y") : "-";
     },
@@ -405,10 +404,20 @@ export default {
       const found = this.tableResult.body.find(
         (item) => item.to === this.addItemForm.to
       );
+      const totalUnitSource = this.contractInvests(this.myPolicy.policyWithCode.coverages).find((item) => item.fundCode == this.addItemForm.from).accumUnits
+      const countSource = this.tableResult.body.filter(
+        (item) => item.from === this.addItemForm.from
+      ).map((item) => item.totalUnit).reduce((a, b) => (a, b, 0))
+
       this.errorMessage.haveInvesmentFrom = []
       if (found) {
         this.errorMessage.haveInvesmentFrom.push(
           "Jenis Dana Investasi tujuan yang akan Dipindahkan sudah ditambahkan."
+        );
+        return false;
+      } else if (countSource > totalUnitSource) {
+        this.errorMessage.haveInvesmentFrom.push(
+          "Pemindahan Dana Investasi Melebihi Dana Saat Ini."
         );
         return false;
       } else if (this.addItemForm.from == null || this.addItemForm.from == "") {
