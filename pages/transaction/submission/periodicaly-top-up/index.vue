@@ -393,9 +393,6 @@ export default {
       } else if (this.form.topUpPrem <= 0) {
         this.validationMessage.push("Top Up Berkala harus lebih dr 0");
       }
-      if (this.form.topUpPrem >= this.form.basePrem) {
-        this.validationMessage.push("Premi Dasar harus lebih besar dr Top Up Berkala");
-      }
       if (!this.isDecreasePrem && this.form.healthQuestionnaire.length < 1) {
         this.validationMessage.push("Form Kesehatan diperlukan");
       }
