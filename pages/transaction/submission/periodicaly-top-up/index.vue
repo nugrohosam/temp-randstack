@@ -37,7 +37,7 @@
                 myPolicy.policyWithCode.currency
               )
             }}
-            {{ myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null) ? $convertCurrency(myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null).recurringTopup.topupAmount || 0) : "0" }}
+            {{ myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null).recurringTopup ? $convertCurrency(myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null).recurringTopup.topupAmount || 0) : "0" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
