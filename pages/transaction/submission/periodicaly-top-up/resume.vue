@@ -21,17 +21,17 @@
         <p class="data-title mb-2">Nama Tertanggung</p>
         <p class="data-value">
           {{
-            myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person ? 
-            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person.firstName : null) +
-            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person.midName : null) +
-            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.person.lastName : null) : "-"
+            myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured1.insured.person ? 
+            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured1.insured.person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured1.insured.person.firstName : null) +
+            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured1.insured.person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured1.insured.person.midName : null) +
+            $isNullWithSpace(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured1.insured.person ? myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured1.insured.person.lastName : null) : "-"
           }} 
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Existing Birth Date Life Assured</p>
         <p class="data-value">
-          {{ ($formatDate(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured.insured.birthDate) || "-") }}
+          {{ ($formatDate(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).lifeInsured1.insured.birthDate) || "-") }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
