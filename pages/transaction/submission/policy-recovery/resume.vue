@@ -17,11 +17,7 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Due Date Premium</p>
-<<<<<<< HEAD
         <p class="data-value">{{ $formatDate(dueDatePremi) }}</p>
-=======
-          <p class="data-value">{{ dueDatePremi }}</p>
->>>>>>> 2552bcc (Add Feature | Hit API P2P)
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Informasi Virtual Account</p>
@@ -41,14 +37,10 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tagihan Premi</p>
-<<<<<<< HEAD
         <p class="data-value">
           {{ $currencyName(myPolicy.policyWithCode.currency) }}
           {{ $convertCurrency(billReinstate) }}
         </p>
-=======
-          <p class="data-value">{{ $currencyName(myPolicy.policyWithCode.currency) }} {{ $convertCurrency(billReinstate) }}</p>
->>>>>>> 2552bcc (Add Feature | Hit API P2P)
       </div>
     </div>
 
