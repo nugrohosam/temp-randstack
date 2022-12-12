@@ -40,7 +40,7 @@
               {{ (item && $convertCurrency(item.accumUnits)) || 0 }}
             </template>
             <template v-slot:item.accumUnits="{ item }">
-              {{ ((item && $convertCurrency((item.accumUnits * 100) / totalUnits)) || 0) }}%
+              {{ (item && $convertCurrency(getAssignRateFund(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).premInvestRates, item.fundCode)) * 100) }}%
             </template>
             <template v-slot:item.priceUnit="{ item }">
               {{
@@ -373,6 +373,12 @@ export default {
 
       const found = fundPrices.find((item) => item.fundCode === fundCode);
       return found ? found.bidPrice : 0;
+    },
+    getAssignRateFund(premInvestRates = [], fundCode) {
+      if (!premInvestRates.length) return 0;
+
+      const found = premInvestRates.find((item) => item.fundCode === fundCode);
+      return found ? found.assignRate : 0;
     },
     async addSelfieKtpImage(e) {
       if (e.target.files[0]) {
