@@ -368,7 +368,7 @@ export default {
       cancel_reason: getters.getReasonSelected[0].name,
     };
 
-    const isUseChangePayeeAccount = changePayeeAccount.bank != null || changePayeeAccount.bank != ""
+    const isUseChangePayeeAccount = changePayeeAccount.bank != null && changePayeeAccount.bank != ""
     if (isUseChangePayeeAccount) {
 
       changePayeeAccount = {

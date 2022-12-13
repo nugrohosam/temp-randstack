@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <div>Penurunan Uang Pertangguhan</div> -->
+    <!-- <div>Penurunan Uang Pertanggungan</div> -->
     <NuxtChild />
     <ModalMessage
       :message="modal.message"

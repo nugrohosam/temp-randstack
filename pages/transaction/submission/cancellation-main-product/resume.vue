@@ -309,7 +309,7 @@ export default {
             value: "productName",
           },
           {
-            text: "Uang Pertangguhan/Benefit",
+            text: "Uang Pertanggungan/Benefit",
             value: "nextPremium.sumAssured",
           },
           {
