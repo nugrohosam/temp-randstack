@@ -665,9 +665,9 @@ export default {
     validate: async function () {
       this.validationMessage = [];
       let result = null
-      const alphanumeric = /^[a-zA-Z0-9\s]+/
-      const alphabet = /^[a-zA-Z.,\s]+/
-      const numeric = /^[a-zA-Z.,\s]+/
+      const alphanumeric = /^[a-zA-Z0-9,.\s]+$/
+      const alphabet = /^[a-zA-Z.,\s]+$/
+      const numeric = /^[0-9]+$/
 
       if (this.form.is_should_fill_payee_refund) {
           if (!this.form.new_no_rek) {

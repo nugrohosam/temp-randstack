@@ -531,11 +531,11 @@ export default {
     validate: async function () {
       this.validationMessage = [];
 
-      const alphanumeric = /^[a-zA-Z0-9\s]+/
-      const alphabet = /^[a-zA-Z.,\s]+/
-      const numeric = /^[a-zA-Z.,\s]+/
+      const alphanumeric = /^[a-zA-Z0-9,.\s]+$/
+      const alphabet = /^[a-zA-Z.,\s]+$/
+      const numeric = /^[0-9]+$/
 
-      if (!numeric.test(this.form.rekOwner)) {
+      if (!numeric.test(this.form.newNoRek)) {
         this.validationMessage.push("Nomor Rekening Baru harus angka");
       }
       if (!alphabet.test(this.form.rekOwner)) {
