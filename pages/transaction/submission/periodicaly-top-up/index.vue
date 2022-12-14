@@ -37,7 +37,7 @@
                 myPolicy.policyWithCode.currency
               )
             }}
-            {{ myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null).recurringTopup ? $convertCurrency(myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null).recurringTopup.topupAmount || 0) : "0" }}
+            {{ myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null) && myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null).recurringTopup ? $convertCurrency(myPolicy.policyWithCode.coverages.find(x => x.riskStatus == 1 && x.masterProduct == null).recurringTopup.topupAmount || 0) : "0" }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -247,6 +247,13 @@
       @submit="form.healthQuestionnaire = $event"
       @close="showModalHealth = false"
     />
+    <NuxtChild />
+    <ModalMessage
+      :message="modal.message"
+      :show="modal.show"
+      :button="modal.button"
+      @closeModal="modal.show = false"
+    />
   </div>
 </template>
 <script>
@@ -256,6 +263,13 @@ export default {
   components: {
     SaveIcon,
     InfoIcon,
+  },
+  beforeMount() {
+    if (this.myPolicy.policyWithCode.riskStatus != 1) {
+      this.modal.show = true;
+      this.modal.message =
+        "Polis Anda sudah tidak aktif transaksi tidak dapat dilakukan, untuk informasi lebih lanjut silahkan menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
+    }
   },
   mounted() {
     if ($nuxt.$route.name != "periodicaly-top-up") {

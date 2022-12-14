@@ -64,7 +64,7 @@
             <div class="form-input">
               <input
                 type="text"
-                pattern="[a-zA-Z0-9.,]*"
+                pattern="[0-9]+"
                 class="form-control"
                 v-model="form.newNoRek"
               />
@@ -75,7 +75,7 @@
             <div class="form-input">
               <input
                 type="text"
-                pattern="[a-zA-Z0-9.,]*"
+                pattern="[a-zA-Z.,\s]+"
                 class="form-control"
                 v-model="form.rekOwner"
               />
@@ -86,7 +86,7 @@
             <div class="form-input">
               <input
                 type="text"
-                pattern="[a-zA-Z0-9.,]*"
+                pattern="[a-zA-Z0-9.,\s]+"
                 class="form-control"
                 v-model="form.branch"
               />
@@ -452,8 +452,22 @@ export default {
     },
     validate: async function () {
       this.validationMessage = [];
+
+      const alphanumeric = /^[a-zA-Z0-9\s]+/
+      const alphabet = /^[a-zA-Z.,\s]+/
+      const numeric = /^[a-zA-Z.,\s]+/
+
       if (!this.form.newNoRek) {
         this.validationMessage.push("Nomor Rekening Baru diperlukan");
+      }
+      if (!numeric.test(this.form.rekOwner)) {
+        this.validationMessage.push("Nomor Rekening Baru harus angka");
+      }
+      if (!alphabet.test(this.form.rekOwner)) {
+        this.validationMessage.push("Nama Pemilik Rekening Baru harus huruf");
+      }
+      if (!alphanumeric.test(this.form.branch)) {
+        this.validationMessage.push("Cabang hanya bisa huruf dan angka");
       }
       if (!this.form.rekOwner) {
         this.validationMessage.push("Nama Pemilik Rekening Baru diperlukan");

@@ -154,6 +154,7 @@
                   <div class="form-input">
                     <input
                       type="text"
+                      pattern="[0-9]+"
                       class="form-control"
                       v-model="form.new_no_rek"
                     />
@@ -164,6 +165,7 @@
                   <div class="form-input">
                     <input
                       type="text"
+                      pattern="[a-zA-Z.,\s]+"
                       class="form-control"
                       v-model="form.rek_owner"
                     />
@@ -174,6 +176,7 @@
                   <div class="form-input">
                     <input
                       type="text"
+                      pattern="[a-zA-Z0-9.,\s]+"
                       class="form-control"
                       v-model="form.branch"
                     />
@@ -432,7 +435,7 @@ export default {
     if (this.myPolicy.policyWithCode.riskStatus != 1) {
       this.modal.show = true;
       this.modal.message =
-        "Transaksi yang dipilih tidak dapat dilakukan, untuk informasi lebih lanjut silahkan menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
+        "Polis Anda sudah tidak aktif transaksi tidak dapat dilakukan, untuk informasi lebih lanjut silahkan menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
     }
   },
   mounted() {
@@ -662,19 +665,31 @@ export default {
     validate: async function () {
       this.validationMessage = [];
       let result = null
+      const alphanumeric = /^[a-zA-Z0-9\s]+/
+      const alphabet = /^[a-zA-Z.,\s]+/
+      const numeric = /^[a-zA-Z.,\s]+/
 
       if (this.form.is_should_fill_payee_refund) {
           if (!this.form.new_no_rek) {
             this.validationMessage.push("Nomor Rekening Baru diperlukan");
           }
+          if (!numeric.test(this.form.new_no_rek)) {
+            this.validationMessage.push("Nomor Rekening harus angka");
+          }
           if (!this.form.rek_owner) {
             this.validationMessage.push("Nama Pemilik Rekening Baru diperlukan");
+          }
+          if (!alphabet.test(this.form.rek_owner)) {
+            this.validationMessage.push("Nama Pemilik Rekening harus huruf");
           }
           if (!this.form.bank) {
             this.validationMessage.push("Bank diperlukan");
           }
           if (!this.form.branch) {
             this.validationMessage.push("Cabang diperlukan");
+          }
+          if (!alphanumeric.test(this.form.branch)) {
+            this.validationMessage.push("Cabang hanya bisa huruf dan angka");
           }
           if (!this.form.ktp_selfie_attachment.name) {
             this.validationMessage.push("Unggah Selfie + KTP diperlukan");
