@@ -1,5 +1,5 @@
 <template>
-  <v-app class="app">
+  <v-app class="app" style="padding-bottom: 56px">
     <!-- <v-navigation-drawer
       fixed
       app
