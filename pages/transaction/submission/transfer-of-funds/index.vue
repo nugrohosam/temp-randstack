@@ -366,7 +366,7 @@ export default {
         }
       });
 
-      return contractInvest.filter(item => item.accumUnits > 0);
+      return contractInvest.filter(item => this.getAssignRateFund(this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).premInvestRates, item.fundCode) > 0);
     },
     getFundPrices(fundPrices = [], fundCode) {
       if (!fundPrices.length) return 0;
