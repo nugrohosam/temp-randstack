@@ -212,11 +212,18 @@ export default {
       
       this.getTransferofFund.items.forEach(item => {
         const invest = contractInvests.find(investExisting => investExisting.fundCode == item.from);
-        if (invest !== undefined){
-          newContractInvest.push({...invest, accumUnits: (invest.accumUnits - item.totalUnit)});
+        const totalInvestSwitch = this.getTransferofFund.items.filter(fund => fund.from == item.from).map(item => item.totalUnit).reduce((a, b) => a + b, 0)
+        if (newContractInvest.find(x => x.fundCode == item.from) == null && invest !== undefined){
+          newContractInvest.push({fundCode: item.from, accumUnits: (invest.accumUnits - totalInvestSwitch)});
         }
-      })
+      });
 
+      const movedFund = newContractInvest.map(x => x.fundCode);
+      const investNotMoved = contractInvests.filter(x => !movedFund.includes(x.fundCode)).map(x => ({fundCode: x.fundCode, accumUnits: x.accumUnits}));
+      if (investNotMoved.length > 0){
+        newContractInvest.push({...investNotMoved});
+      }
+      
       return newContractInvest;
     },
     getFundPrices(fundPrices = [], fundCode) {

@@ -40,7 +40,7 @@
               {{ (item && $convertCurrency(item.accumUnits)) || 0 }}
             </template>
             <template v-slot:item.accumUnits="{ item }">
-              {{ (item && $convertCurrency(getAssignRateFund(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).premInvestRates, item.fundCode)) * 100) }}%
+              {{ (item && $convertCurrency(getAssignRateFund(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).premInvestRates, item.fundCode) * 100)) }}%
             </template>
             <template v-slot:item.priceUnit="{ item }">
               {{
