@@ -58,7 +58,7 @@
         {{ (item.fundCode && $fundName(item.fundCode)) || "-" }}
       </template>
       <template v-slot:item.fundComposition="{ item }">
-        {{ ((item && $convertCurrency((item.accumUnits * 100) / totalUnits)) || 0) }}%
+        {{ (item && $convertCurrency(item.percentage)) }}%
       </template>
     </v-data-table>
 
@@ -201,29 +201,37 @@ export default {
   },
   methods: {
     mergeSwitching(contractInvests) {
+      var newContractInvestCalc = {};
       var newContractInvest = [];
-
-      this.getTransferofFund.items.forEach(item => {
-        newContractInvest.push({
-          fundCode: item.to,
-          accumUnits: item.totalUnit
-        });
-      })
       
       this.getTransferofFund.items.forEach(item => {
-        const invest = contractInvests.find(investExisting => investExisting.fundCode == item.from);
-        const totalInvestSwitch = this.getTransferofFund.items.filter(fund => fund.from == item.from).map(item => item.totalUnit).reduce((a, b) => a + b, 0)
-        if (newContractInvest.find(x => x.fundCode == item.from) == null && invest !== undefined){
-          newContractInvest.push({fundCode: item.from, accumUnits: (invest.accumUnits - totalInvestSwitch)});
-        }
+        const to = item.to;
+        const from = item.from;
+        const percentage = this.getAssignRateFund(this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).premInvestRates, from) * (item.percentage / 100);
+        newContractInvestCalc[to] = newContractInvestCalc[to] ? newContractInvestCalc[to] + percentage : percentage;
+        newContractInvestCalc[from] = newContractInvestCalc[from] ? newContractInvestCalc[from] - percentage : -percentage;
       });
 
+      Object.keys(newContractInvestCalc).forEach((key) => {
+        const index = newContractInvest.indexOf({
+            fundCode: key,
+        })
+
+        const existingFund = this.getAssignRateFund(this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).premInvestRates, key)
+        const calc = existingFund ? existingFund + newContractInvestCalc[key] : newContractInvestCalc[key];
+
+        newContractInvest.push({
+          fundCode: key,
+          percentage: Math.round(100 * calc)
+        })
+      })
+
       const movedFund = newContractInvest.map(x => x.fundCode);
-      const investNotMoved = contractInvests.filter(x => !movedFund.includes(x.fundCode)).map(x => ({fundCode: x.fundCode, accumUnits: x.accumUnits}));
-      if (investNotMoved.length > 0){
-        newContractInvest.push({...investNotMoved});
+      if (movedFund.length > 0){
+        const investNotMoved = contractInvests.filter(x => !movedFund.includes(x.fundCode)).map(x => ({fundCode: x.fundCode, accumUnits: x.accumUnits, percentage: 100 * this.getAssignRateFund(this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).premInvestRates, x.fundCode)}));
+        newContractInvest.push(...investNotMoved);
       }
-      
+
       return newContractInvest;
     },
     getFundPrices(fundPrices = [], fundCode) {
@@ -243,6 +251,19 @@ export default {
 
       return contractInvest.filter(item => this.getAssignRateFund(this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).premInvestRates, item.fundCode) > 0);
     },
+    getAssignRateFund(premInvestRates = [], fundCode) {
+      if (!premInvestRates.length) return 0;
+
+      const found = premInvestRates.find((item) => item.fundCode === fundCode);
+      if (found) {
+        return found.assignRate;
+      } else {
+        const contractInvests = this.contractInvests(this.myPolicy.policyWithCode.coverages)
+        const movedFundCode = this.getTransferofFund.items.find(x => x.to == fundCode)
+        const from = contractInvests.find(investExisting => investExisting.fundCode == movedFundCode.from);
+        return movedFundCode.totalUnits / from.accumUnits;
+      }
+    },
     showSelfieKtpPreview: function () {
       if (this.getTransferofFund.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
@@ -253,6 +274,12 @@ export default {
     },
     validate: async function () {
       this.validationMessage = [];
+      const calcPrecentage = this.mergeSwitching(this.contractInvests(this.myPolicy.policyWithCode.coverages)).map(x => x.percentage).reduce((a, b) => a + b, 0);
+      if (calcPrecentage > 100) {
+        this.validationMessage.push(
+          "Total Alokasi Investasi Premi tidak 100%, adjust untuk membetulkan"
+        );
+      }
       if (!this.accepted1) {
         this.validationMessage.push(
           "Setujui transaksi untuk memproses pengajuan"
