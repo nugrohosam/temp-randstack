@@ -221,6 +221,8 @@
         </div>
       </div>
 
+      <ValidationMessage :validation-message="validationMessage" />
+
       <div class="row">
         <div class="col-12">
           <button class="btn btn-primary btn-save float-right" type="submit">
@@ -243,6 +245,7 @@ export default {
   },
   data() {
     return {
+      validationMessage: [],
       table: {
         headers: [
           { text: "No", value: "no" },
@@ -462,7 +465,15 @@ export default {
       this.form.items.splice(index, 1);
       this.tableResult.body.splice(index, 1);
     },
+    validate() {
+      this.validationMessage = [];
+      if (!this.myPolicy.policyWithCode.premiumAdvanceIndi == "Y") {
+        this.validationMessage.push("Polis tidak bisa dalam kondisi advanced premium");
+      }
+    },
     save() {
+      this.validate();
+      if (this.validationMessage.length) return false;
       this.$store.commit(
         "submission_transaction/transfer_of_fund/setTransferOfFund",
         this.form

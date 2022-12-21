@@ -175,6 +175,12 @@ export default {
       },
     };
   },
+  beforeMount() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: "Resume Pengalihan Dana (Switching)",
+      sub: "Pengalihan Dana (Switching)",
+    });
+  },
   computed: {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
