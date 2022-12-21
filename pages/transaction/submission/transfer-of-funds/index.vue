@@ -375,7 +375,7 @@ export default {
       if (!fundPrices.length) return 0;
 
       const found = fundPrices.find((item) => item.fundCode === fundCode);
-      return found ? found.bidPrice : 0;
+      return found?.assignRate || 0;
     },
     getAssignRateFund(premInvestRates = [], fundCode) {
       if (!premInvestRates.length) return 0;
@@ -467,8 +467,11 @@ export default {
     },
     validate() {
       this.validationMessage = [];
-      if (!this.myPolicy.policyWithCode.premiumAdvanceIndi == "Y") {
+      if (this.myPolicy.policyWithCode.advancePremIndi == "Y") {
         this.validationMessage.push("Polis tidak bisa dalam kondisi advanced premium");
+      }
+      if (!this.form.ktpSelfieAttachment.name) {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
       }
     },
     save() {

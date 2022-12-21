@@ -261,14 +261,7 @@ export default {
       if (!premInvestRates.length) return 0;
 
       const found = premInvestRates.find((item) => item.fundCode === fundCode);
-      if (found) {
-        return found.assignRate;
-      } else {
-        const contractInvests = this.contractInvests(this.myPolicy.policyWithCode.coverages)
-        const movedFundCode = this.getTransferofFund.items.find(x => x.to == fundCode)
-        const from = contractInvests.find(investExisting => investExisting.fundCode == movedFundCode.from);
-        return movedFundCode.totalUnits / from.accumUnits;
-      }
+      return found?.assignRate || 0;
     },
     showSelfieKtpPreview: function () {
       if (this.getTransferofFund.ktpSelfieAttachment.file) {
