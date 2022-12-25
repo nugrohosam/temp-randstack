@@ -37,7 +37,7 @@ const actions = {
     );
     this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
     return await this.$axios
-      .$post("/api/v1/transaction-proposal/apportionment", form)
+      .$post("/api/v1/transaction-proposal/change-apportionment", form)
       .then((response) => {
         dispatch(
           "toggleOverlayLoading",

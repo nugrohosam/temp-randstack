@@ -18,7 +18,7 @@
 
       <div class="row mb-4">
         <div class="col-md-12">
-          <p class="data-title">Jenis dan Dana Investasi yang dimiliki</p>
+          <p class="data-title">Alokasi Dana Premi Saat Ini</p>
         </div>
         <div class="col-12">
           <v-data-table
@@ -34,7 +34,7 @@
               {{ (item.fundCode && $fundName(item.fundCode)) || "-" }}
             </template>
             <template v-slot:item.accumUnits="{ item }">
-              {{ ((item && $convertCurrency((item.accumUnits * 100) / totalUnits)) || 0) }}%
+              {{ (item && $convertCurrency(getAssignRateFund(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).premInvestRates, item.fundCode) * 100)) }}%
             </template>
             <template v-slot:body.append>
               <tr class="lg:hidden md:hidden">
@@ -47,7 +47,7 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
           <p class="data-title mb-2">
             Jenis Dana Investasi yang akan Dipilih
           </p>
@@ -60,7 +60,7 @@
             />
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
           <p class="data-title mb-2">
             Komposisi Fund Yang Dirubah
           </p>
@@ -85,6 +85,9 @@
 
       <hr class="mb-4" />
 
+      <div class="col-md-12">
+        <p class="data-title">Data Perubahan Alokasi Dana Premi Lanjutan</p>
+      </div>
       <v-data-table
         :headers="tableResult.headers"
         mobile-breakpoint="480"
@@ -206,7 +209,6 @@ export default {
       },
       addItemForm: {
         from: "",
-        totalUnit: "",
         percentage: null,
       },
       form: {
@@ -219,28 +221,6 @@ export default {
         haveInvesmentFrom: [],
       },
     };
-  },
-  created() {
-    this.$watch(
-      () => ({
-        from: this.addItemForm.from,
-        percentage: this.addItemForm.percentage,
-      }),
-      (data) => {
-        if (data.from && data.percentage) {
-          const found = this.contractInvests(
-            this.myPolicy.policyWithCode.coverages
-          ).find((item) => item.fundCode === data.from);
-          this.addItemForm.totalUnit =
-            (found.accumUnits * +data.percentage) / 100;
-          this.addItemForm.amount =
-            this.addItemForm.totalUnit * this.getFundPrices(
-              this.myPolicy.policyWithCode.fundPrices,
-              found.fundCode
-            )
-        }
-      }
-    );
   },
   computed: {
     myPolicy() {
@@ -298,13 +278,19 @@ export default {
         }
       });
 
-      return contractInvest.filter(item => item.accumUnits > 0);
+      return contractInvest.filter(item => this.getAssignRateFund(this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).premInvestRates, item.fundCode) > 0);
     },
     getFundPrices(fundPrices = [], fundCode) {
       if (!fundPrices.length) return 0;
 
       const found = fundPrices.find((item) => item.fundCode === fundCode);
       return found ? found.bidPrice : 0;
+    },
+    getAssignRateFund(premInvestRates = [], fundCode) {
+      if (!premInvestRates.length) return 0;
+
+      const found = premInvestRates.find((item) => item.fundCode === fundCode);
+      return found?.assignRate || 0;
     },
     async addSelfieKtpImage(e) {
       if (e.target.files[0]) {
@@ -324,7 +310,8 @@ export default {
       return found ? this.$moment(found.pricingDate).format("DD/MM/Y") : "-";
     },
     addItem() {
-      this.errorMessage.haveInvesmentFrom = []
+      this.errorMessage.haveInvesmentFrom = []; 
+      const isBodyFill = this.tableResult.body.length > 0;
       const found = isBodyFill ? this.tableResult.body.find(
         (item) => item.from === this.addItemForm.from
       ) : null;
@@ -339,12 +326,7 @@ export default {
           "Jenis Dana Investasi harus dipilih."
         );
         return false;
-      } else if (this.addItemForm.totalUnit == null || this.addItemForm.totalUnit == 0) {
-        this.errorMessage.haveInvesmentFrom.push(
-          "Persentase Unit harus terisi."
-        );
-        return false;
-      }
+      } 
 
       if (this.errorMessage.haveInvesmentFrom.length == 0){
         this.tableResult.body.push(this.addItemForm);
@@ -352,14 +334,16 @@ export default {
         this.addItemForm = {
           from: "",
           percentage: null,
-          totalUnit: "",
         };
       }
     },
     validate() {
       this.validationMessage = [];
-      if (this.form.items.map(x => x.percentage).reduce((a, b) => a + b, 0) != 100) {
+      if (this.form.items.map(x => x.percentage).reduce((a, b) => +a + +b, 0) != 100) {
         this.validationMessage.push("Komposisi Fund harus sama dengan 100%");
+      }
+      if (!this.form.ktpSelfieAttachment.name) {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
       }
     },
     removeItem(index) {
@@ -370,7 +354,7 @@ export default {
       this.validate();
       if (this.validationMessage.length) return false;
       this.$store.commit(
-        "submission_transaction/transfer_of_fund/setTransferOfFund",
+        "submission_transaction/apportionment/setApportionment",
         this.form
       );
       this.$router.push({

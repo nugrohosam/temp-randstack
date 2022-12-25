@@ -16,11 +16,42 @@
       </div>
     </div>
       
+    <div class="col-md-12">
+      <p class="data-title">Alokasi Dana Premi Saat Ini</p>
+    </div>
+    <v-data-table
+      :headers="tableExisting.headers"
+      mobile-breakpoint="480"
+      hide-default-footer
+      :items="contractInvests(myPolicy.policyWithCode.coverages)"
+      class="mb-4"
+    >
+      <template v-slot:item.no="{ index }">
+        {{ index + 1 }}
+      </template>
+      <template v-slot:item.from="{ item }">
+        {{ (item.fundCode && $fundName(item.fundCode)) || "-" }}
+      </template>
+      <template v-slot:item.percentage="{ item }">
+        {{ (item && $convertCurrency(getAssignRateFund(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).premInvestRates, item.fundCode) * 100)) }}%
+      </template>
+      <template v-slot:body.append>
+        <tr>
+          <td colspan="1"></td>
+          <td>Total</td>
+          <td>{{ $convertCurrency(100) }}%</td>
+        </tr>
+      </template>
+    </v-data-table>
+
+    <div class="col-md-12">
+      <p class="data-title">Data Perubahan Alokasi Dana Premi Lanjutan</p>
+    </div>
     <v-data-table
       :headers="tableResult.headers"
       mobile-breakpoint="480"
       hide-default-footer
-      :items="getTransferofFund.items"
+      :items="getApportionment.items"
       class="mb-4"
     >
       <template v-slot:item.no="{ index }">
@@ -29,33 +60,15 @@
       <template v-slot:item.from="{ item }">
         {{ $fundName(item.from) }}
       </template>
-      <template v-slot:item.to="{ item }">
-        {{ $fundName(item.to) }}
+      <template v-slot:item.percentage="{ item }">
+        {{ $convertCurrency(item.percentage) }}%
       </template>
       <template v-slot:body.append>
         <tr>
-          <td colspan="2"></td>
+          <td colspan="1"></td>
           <td>Total</td>
-          <td>{{ totalUnitChoosen }}</td>
+          <td>{{ $convertCurrency(totalPercentageChoosen) }}%</td>
         </tr>
-      </template>
-    </v-data-table>
-
-    <v-data-table
-      :headers="tableMerger.headers"
-      mobile-breakpoint="480"
-      hide-default-footer
-      :items="mergeSwitching(contractInvests(myPolicy.policyWithCode.coverages))"
-      class="mb-4"
-    >
-      <template v-slot:item.no="{ index }">
-        {{ index + 1 }}
-      </template>
-      <template v-slot:item.investmentType="{ item }">
-        {{ (item.fundCode && $fundName(item.fundCode)) || "-" }}
-      </template>
-      <template v-slot:item.fundComposition="{ item }">
-        {{ ((item && $convertCurrency((item.accumUnits * 100) / totalUnits)) || 0) }}%
       </template>
     </v-data-table>
 
@@ -83,7 +96,7 @@
         ></v-checkbox>
         <p>
           Saya Setuju bahwa pengajuan ini juga akan merubah alokasi fund pada
-          penempatan dana premi berikutnya
+          penempatan dana premi berikutnya.
         </p>
       </div>
       <div class="col-12 d-flex">
@@ -94,8 +107,7 @@
           hide-details
         ></v-checkbox>
         <p>
-          Saya menyetujui transaksi dan kebenaran data yang disampaikan. Baca
-          selengkapnya
+          Saya menyetujui transaksi dan kebenaran data yang disampaikan.
         </p>
       </div>
     </div>
@@ -146,20 +158,19 @@ export default {
   },
   data() {
     return {
+      tableExisting: {
+        headers: [
+          { text: "No", value: "no" },
+          { text: "Sumber Dana Investasi", value: "from" },
+          { text: "Dana Investasi Saat Ini", value: "percentage" },
+        ],
+        body: [],
+      },
       tableResult: {
         headers: [
           { text: "No", value: "no" },
           { text: "Sumber Dana Investasi", value: "from" },
-          { text: "Dana Investasi yang akan dipindahkan", value: "to" },
-          { text: "Jumlah Unit Dituju", value: "totalUnit" },
-        ],
-        body: [],
-      },
-      tableMerger: {
-        headers: [
-          { text: "No", value: "no" },
-          { text: "Jenis Dana Investasi", value: "investmentType" },
-          { text: "Komposisi Fund", value: "fundComposition" },
+          { text: "Dana Investasi yang akan dipindahkan", value: "percentage" },
         ],
         body: [],
       },
@@ -172,16 +183,22 @@ export default {
       },
     };
   },
+  beforeMount() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: "Resume Perubahan Alokasi Dana Investasi",
+      sub: "Perubahan Alokasi Dana Investasi",
+    });
+  },
   computed: {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
-    totalUnitChoosen() {
-      return this.getTransferofFund.items.map((item) => +item.totalUnit).reduce((a, b) => a + b, 0);
+    totalPercentageChoosen() {
+      return this.getApportionment.items.map((item) => +item.percentage).reduce((a, b) => +a + +b, 0);
     },
-    getTransferofFund() {
+    getApportionment() {
       return this.$store.getters[
-        "submission_transaction/transfer_of_fund/getTransferOfFund"
+        "submission_transaction/apportionment/getApportionment"
       ];
     },
     selfieKtpFileName() {
@@ -197,24 +214,11 @@ export default {
     },
   },
   methods: {
-    mergeSwitching(contractInvests) {
-      var newContractInvest = [];
+    getAssignRateFund(premInvestRates = [], fundCode) {
+      if (!premInvestRates.length) return 0;
 
-      this.getTransferofFund.items.forEach(item => {
-        newContractInvest.push({
-          fundCode: item.to,
-          accumUnits: item.totalUnit
-        });
-      })
-      
-      this.getTransferofFund.items.forEach(item => {
-        const invest = contractInvests.find(investExisting => investExisting.fundCode == item.from);
-        if (invest !== undefined){
-          newContractInvest.push({...invest, accumUnits: (invest.accumUnits - item.totalUnit)});
-        }
-      })
-
-      return newContractInvest;
+      const found = premInvestRates.find((item) => item.fundCode === fundCode);
+      return found?.assignRate || 0;
     },
     getFundPrices(fundPrices = [], fundCode) {
       if (!fundPrices.length) return 0;
@@ -234,9 +238,9 @@ export default {
       return contractInvest.filter(item => item.accumUnits > 0);
     },
     showSelfieKtpPreview: function () {
-      if (this.getTransferofFund.ktpSelfieAttachment.file) {
+      if (this.getApportionment.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
-          this.getTransferofFund.ktpSelfieAttachment.file
+          this.getApportionment.ktpSelfieAttachment.file
         );
         this.image_preview.show = true;
       }
@@ -257,7 +261,7 @@ export default {
       this.validate();
       if (this.validationMessage.length <= 0) {
         const result = await this.$store.dispatch(
-          "submission_transaction/transfer_of_fund/transferOfFund",
+          "submission_transaction/apportionment/apportionment",
         );
         if (result && result.success == true) {
           let transactionIds = result.data.transactionIds;

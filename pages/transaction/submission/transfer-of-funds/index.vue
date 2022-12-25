@@ -381,7 +381,7 @@ export default {
       if (!premInvestRates.length) return 0;
 
       const found = premInvestRates.find((item) => item.fundCode === fundCode);
-      return found ? found.assignRate : 0;
+      return found?.assignRate || 0;
     },
     async addSelfieKtpImage(e) {
       if (e.target.files[0]) {
