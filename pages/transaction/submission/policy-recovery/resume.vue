@@ -159,7 +159,7 @@
           class="btn btn-primary btn-save float-right"
           @click.prevent="submit()"
         >
-          Submit
+        <save-icon></save-icon> Submit
         </button>
       </div>
     </div>

@@ -743,7 +743,7 @@
 
         <div v-if="!preview" class="d-flex flex-row-reverse">
           <button type="submit" class="btn btn-primary btn-save mb-0">
-            Submit
+          <save-icon></save-icon> Submit
           </button>
         </div>
       </form>
@@ -752,6 +752,8 @@
 </template>
 
 <script>
+
+import { SaveIcon } from "vue-feather-icons";
 import ValidateForm from "./ValidateForm.vue";
 export default {
   props: {

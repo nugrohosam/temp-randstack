@@ -110,7 +110,7 @@ export default {
       icon: "menu/perubahan-alokasi-investasi.svg",
     },
     {
-      active: false,
+      active: true,
       hidden: false,
       name: "Perubahan Pembayaran Premi",
       link: "/transaction/submission/premi-payment-change",

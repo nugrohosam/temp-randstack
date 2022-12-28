@@ -117,6 +117,19 @@ export default function ({ app, $axios }, inject) {
     return currencySymbol[id];
   };
 
+  const listPaymentFrequency = () => {
+
+    let paymentFreq = new Array();
+
+    paymentFreq["1"] = "Tahunan";
+    paymentFreq["2"] = "Semesteran";
+    paymentFreq["3"] = "Triwulan";
+    paymentFreq["4"] = "Bulanan";
+    paymentFreq["5"] = "Single";
+
+    return paymentFreq;
+  }
+
   const paymentFrequency = (id) => {
     let paymentFreq = new Array();
 
@@ -353,6 +366,7 @@ export default function ({ app, $axios }, inject) {
   inject("indexOfObject", indexOfObject);
   inject("convertCurrency", convertCurrency);
   inject("paymentFrequency", paymentFrequency);
+  inject("listPaymentFrequency", listPaymentFrequency);
   inject("getBank", getBank);
   inject("getBankName", getBankName);
   inject("getProvinces", getProvinces);

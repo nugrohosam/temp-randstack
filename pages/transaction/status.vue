@@ -257,7 +257,7 @@
                   class="btn btn-primary btn-save float-left"
                   @click.prevent="submit()"
                 >
-                  Submit
+                <save-icon></save-icon> Submit
                 </button>
               </div>
             </div>
