@@ -276,7 +276,6 @@ import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
   name: "withdraw-partial-investment-fund",
   components: { 
-    
     SaveIcon,
     InfoIcon,
   },

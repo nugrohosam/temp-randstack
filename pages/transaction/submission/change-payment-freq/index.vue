@@ -129,7 +129,7 @@
       <div class="row">
         <div class="col-12">
           <button class="btn btn-primary btn-save float-right" type="submit">
-            Simpan
+            <save-icon></save-icon> Simpan
           </button>
         </div>
       </div>
@@ -138,11 +138,12 @@
 </template>
 
 <script>
-import { InfoIcon } from "vue-feather-icons";
+import { SaveIcon, InfoIcon } from "vue-feather-icons";
 import InfoPanel from "../../../../components/InfoPanel.vue";
 
 export default {
   components: {
+    SaveIcon,
     InfoIcon,
     InfoPanel
   },  
@@ -153,10 +154,6 @@ export default {
         paymentFreq: "",
         ktpSelfieAttachment: {},
       },
-      radios: [
-        { label: "Perubahan Tanggal Cuti", value: "change" },
-        { label: "Pembatalan Cuti Premi", value: "cancel" },
-      ],
       validationMessage: [],
     };
   },
@@ -187,9 +184,6 @@ export default {
       })
     }
   },
-  mounted() {
-    this.accountMapping();
-  },
   methods: {
     async addSelfieKtpImage(e) {
       if (e.target.files[0]) {
@@ -209,35 +203,24 @@ export default {
             (item.recurringTopup?.topupAmount || 0)
         : 0;
     },
-    accountMapping: async function () {
-      if (
-        this.myPolicy.policyWithCode.payerAccounts[0].paymentMethodNext == 93
-      ) {
-        this.payerBankAccount.bankAccount =
-          this.myPolicy.policyWithCode.virtualAccountInfo[0].virtualAccountNumber;
-        this.payerBankAccount.bankName =
-          this.myPolicy.policyWithCode.virtualAccountInfo[0].bankName;
-      } else if (this.myPolicy.policyWithCode.payerBankAccount.length > 0 && this.myPolicy.policyWithCode.payerBankAccount[0] != null) {
-        this.payerBankAccount.bankAccount =
-          this.myPolicy.policyWithCode.payerBankAccount[0].bankAccount
-        this.payerBankAccount.accoName =
-          this.myPolicy.policyWithCode.payerBankAccount[0].accoName
-        this.payerBankAccount.bankName = 
-          this.myPolicy.policyWithCode.payerBankAccount[0].bankName
-      }
-    },
     validate() {
       this.validationMessage = [];
+      if (!this.form.ktpSelfieAttachment.name) {
+        this.validationMessage.push("Unggah Selfie + KTP diperlukan");
+      }
+      if (this.form.paymentFreq == this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).currentPremium.paymentFreq) {
+        this.validationMessage.push("Frekuensi pembayaran harus beda dari sebelumnya");
+      }
     },
     save() {
       this.validate();
       if (this.validationMessage.length) return false;
       this.$store.commit(
-        "submission_transaction/cuti_premi/setCutiPremi",
+        "submission_transaction/change_payment_freq/setChangePaymentFreq",
         this.form
       );
       this.$router.push({
-        path: "/transaction/submission/cuti-premi/resume",
+        path: "/transaction/submission/change-payment-freq/resume",
       });
     },
   },

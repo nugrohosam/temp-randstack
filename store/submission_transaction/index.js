@@ -15,6 +15,7 @@ import ReuploadDocument from "./reupload_document";
 import WithdrawPartialInvestmentFund from "./withdraw_partial_investment_fund";
 import AddInvestmentFund from "./add_investment_fund";
 import TransferOfFund from "./transfer_of_fund";
+import ChangePaymentFreq from "./change_payment_freq";
 import Apportionment from "./apportionment";
 
 const SubmissionTransactionModules = {
@@ -34,6 +35,7 @@ const SubmissionTransactionModules = {
     change_payee_refund_account: ChangePayeeRefundAccount,
     transfer_of_fund: TransferOfFund,
     apportionment: Apportionment,
+    change_payment_freq: ChangePaymentFreq,
   },
   state,
   getters,

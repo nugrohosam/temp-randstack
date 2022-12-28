@@ -160,7 +160,7 @@
       <div class="row">
         <div class="col-12">
           <button class="btn btn-primary btn-save float-right" type="submit">
-            Simpan
+            <save-icon></save-icon> Simpan
           </button>
         </div>
       </div>
@@ -174,6 +174,7 @@ import InfoPanel from "../../../../components/InfoPanel.vue";
 
 export default {
   components: {
+    SaveIcon,
     InfoIcon,
     InfoPanel
   },  
