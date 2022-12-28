@@ -1,6 +1,5 @@
 <template>
   <div>
-    <BackButton />
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
@@ -18,66 +17,53 @@
 
     <div class="row">
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title">Nomor Rekening Manfaat</p>
-        <p class="data-value">
-          {{
-            myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
-            myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
-              ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankAccount
-              : "-"
-          }}
-        </p>
+        <p class="data-title mb-2">Masa Tahun Premi Saat Ini</p>
+        <p class="data-value">{{ "-" }} Tahun</p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title">Nama Pemegang Rekening Manfaat</p>
-        <p class="data-value">
-          {{
-            myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
-            myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
-              ? myPolicy.policyWithCode.refundPayeeBankAccount[0].accoName
-              : "-"
-          }}
-        </p>
+        <p class="data-title mb-2">Tanggal Jatuh Tempo Polis</p>
+        <p class="data-value">{{ $formatDate(dueDatePremi) }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Nama Bank</p>
-        <p class="data-value">
-          {{
-            myPolicy.policyWithCode.refundPayeeBankAccount.length > 0 &&
-            myPolicy.policyWithCode.refundPayeeBankAccount[0] != null
-              ? myPolicy.policyWithCode.refundPayeeBankAccount[0].bankName
-              : "-"
-          }}
-        </p>
-      </div>
-      <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Batas Pinjaman Polis</p>
-        <p class="data-value">
-          {{
-            myPolicyLoanInfo
-              ? $convertCurrency(myPolicyLoanInfo.financialInfo.netLoan)
-              : "0"
-          }}
-        </p>
+        <p class="data-title mb-2">Akhir Premi</p>
+        <p class="data-value">{{ $formatDate(paidupDatePremi) }}</p>
       </div>
     </div>
 
+    <hr class="my-4" />
+
     <div class="row">
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Pinjaman</p>
-        <div class="data-value">
-          {{ $convertCurrency(getRequestPolicyLoan.loanAmount) }}
-        </div>
+        <p class="data-title mb-2">Masa Pembayaran Baru</p>
+        <p class="data-value">
+          {{
+            getChangeTerm.term
+          }} Tahun
+        </p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
-        <p class="data-value">
+        <div class="data-value">
           <button
             class="btn btn-primary-outlined"
             @click.prevent="showSelfieKtpPreview"
+          >
+            Lihat
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-6 col-sm-12">
+        <p class="data-title mb-2">Unggah Ilustrasi</p>
+        <p class="data-value">
+          <button
+            class="btn btn-primary-outlined"
+            @click.prevent="showIlustrationPreview"
           >
             Lihat
           </button>
@@ -95,7 +81,6 @@
         ></v-checkbox>
         <p>
           Saya menyetujui transaksi dan kebenaran data yang disampaikan.
-          
         </p>
       </div>
     </div>
@@ -109,11 +94,7 @@
               </div>
               <br>
           <ul>
-            <li>
-              - Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
-              silahkan hubungi Customer Care 1-500-045
-            </li>
-            <li>- Pinjaman Polis akan dikenakan biaya bunga</li>
+            <li>- Perubahan Masa Pembayaran Premi akan mempengaruhi berapa premi yang harus dibayar</li>
           </ul>
         </div>
       </div>
@@ -123,11 +104,8 @@
 
     <div class="row">
       <div class="col-12">
-        <button
-          class="btn btn-primary btn-save float-right"
-          @click.prevent="submit()"
-        >
-        <save-icon></save-icon> Submit
+        <button class="btn btn-primary btn-save float-right" @click="submit">
+          <save-icon></save-icon> Submit
         </button>
       </div>
     </div>
@@ -142,15 +120,16 @@
 
 <script>
 import resumePageMixin from "@/mixins/resumePage";
+import InfoPanel from "../../../../components/InfoPanel.vue";
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
 
 export default {
-  name: "request-policy-loan-resume",
-  mixins: [resumePageMixin],
   components: {
     SaveIcon,
     InfoIcon,
+    InfoPanel
   },
+  mixins: [resumePageMixin],
   data() {
     return {
       accepted: false,
@@ -165,20 +144,39 @@ export default {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
-    myPolicyLoanInfo() {
-      return this.$store.getters["submission_transaction/getMyPolicyLoanInfo"];
+    paidupDatePremi() {
+      return (
+        this.myPolicy.policyWithCode.coverages.find(
+          (x) => x.masterProduct == null
+        )?.paidupDate || "-"
+      );
     },
-    getRequestPolicyLoan() {
+    dueDatePremi() {
+      return (
+        this.myPolicy.policyWithCode.coverages.find(
+          (x) => x.masterProduct == null
+        )?.coverageExtend?.dueDate || "-"
+      );
+    },
+    getChangeTerm() {
       return this.$store.getters[
-        "submission_transaction/policy_loan/getRequestPolicyLoan"
+        "submission_transaction/change_term/getChangeTerm"
       ];
     },
   },
   methods: {
     showSelfieKtpPreview: function () {
-      if (this.getRequestPolicyLoan.ktpSelfieAttachment.file) {
+      if (this.getChangeTerm.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
-          this.getRequestPolicyLoan.ktpSelfieAttachment.file
+          this.getChangeTerm.ktpSelfieAttachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
+    showIlustrationPreview: function () {
+      if (this.getChangeTerm.ilustrationAttachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getChangeTerm.ilustrationAttachment.file
         );
         this.image_preview.show = true;
       }
@@ -191,16 +189,24 @@ export default {
         );
       }
     },
+    totalPremAll: (item) => {
+      return item
+        ? item.currentPremium.stdPremAf +
+            (item.recurringTopup?.topupAmount || 0)
+        : 0;
+    },
     async submit() {
       this.validate();
       if (this.validationMessage.length <= 0) {
         const result = await this.$store.dispatch(
-          "submission_transaction/policy_loan/applyPolicyLoan"
+          "submission_transaction/change_term/changeTerm"
         );
         if (result && result.success == true) {
           let transactionIds = result.data.transactionIds;
           this.$router.push({
-            path: "./thankyou?transaction_ids=" + transactionIds.join(","),
+            path:
+              "/transaction/submission/change-term/thankyou?transaction_ids=" +
+              transactionIds.join(","),
           });
         }
       }

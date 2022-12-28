@@ -172,7 +172,7 @@ export default {
     };
   },
   methods: {
-    showIlustartionPreview: function () {
+    showIlustrationPreview: function () {
       if (this.getIncreaseSA.ilustrationAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
           this.getIncreaseSA.ilustrationAttachment.file

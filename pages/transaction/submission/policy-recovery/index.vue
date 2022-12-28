@@ -97,7 +97,11 @@
       <div class="row">
         <div class="col-lg-12 col-sm-12">
           <div class="message-bar rounded-lg">
-            <p><b>Perhatian !</b></p>
+                          <div class="d-flex">
+                <info-icon class="ic-primary mr-2"></info-icon>
+                Perhatian !
+              </div>
+              <br>
             <ul>
               <li>
                 - Pemulihan polis hanya berlaku jika usia dibawah atau sama dengan
@@ -117,7 +121,7 @@
       <div class="row">
         <div class="col-12">
           <button class="btn btn-primary btn-save float-right" type="submit">
-            Simpan
+                        <save-icon></save-icon> Simpan
           </button>
         </div>
       </div>
@@ -133,8 +137,14 @@
 </template>
 
 <script>
+import { SaveIcon, InfoIcon } from "vue-feather-icons";
+
 export default {
   name: "policy-recovery",
+  components: {
+    SaveIcon,
+    InfoIcon,
+  },
   data() {
     return {
       form: {

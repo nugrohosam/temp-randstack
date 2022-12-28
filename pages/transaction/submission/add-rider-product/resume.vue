@@ -253,7 +253,7 @@
     <div class="row">
       <div class="col-12">
         <button class="btn btn-primary btn-save float-right" @click="submit">
-          Simpan
+          <save-icon></save-icon> Simpan
         </button>
       </div>
     </div>
@@ -275,9 +275,14 @@ import {
   nationality,
   martialStatus,
 } from "@/utils/constant";
+import { SaveIcon, InfoIcon } from "vue-feather-icons";
 
 export default {
   name: "add-rider-product-resume",
+  components: {
+    SaveIcon,
+    InfoIcon,
+  },
   data() {
     return {
       accepted: null,
@@ -337,7 +342,7 @@ export default {
         this.image_preview.show = true;
       }
     },
-    showIlustartionPreview: function () {
+    showIlustrationPreview: function () {
       if (this.getAddRider.ilustration_attachment.file) {
         this.image_preview.src = URL.createObjectURL(
           this.getAddRider.ilustration_attachment.file

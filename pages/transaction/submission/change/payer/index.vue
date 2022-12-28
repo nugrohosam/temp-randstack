@@ -50,7 +50,11 @@
       <div class="row">
         <div class="col-lg-12 col-sm-12">
           <div class="message-bar rounded-lg">
-            <p><b>Perhatian !</b></p>
+                          <div class="d-flex">
+                <info-icon class="ic-primary mr-2"></info-icon>
+                Perhatian !
+              </div>
+              <br>
             <ul>
               <li>
                 - Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak

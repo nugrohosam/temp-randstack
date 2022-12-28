@@ -102,7 +102,6 @@
         </div>
       </div>
 
-
       <div v-else class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tanggal Batal</p>
@@ -169,7 +168,7 @@
 </template>
 
 <script>
-import { InfoIcon } from "vue-feather-icons";
+import { SaveIcon, InfoIcon } from "vue-feather-icons";
 import InfoPanel from "../../../../components/InfoPanel.vue";
 
 export default {

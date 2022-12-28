@@ -113,7 +113,11 @@
     <div class="row">
       <div class="col-lg-12 col-sm-12">
         <div class="message-bar rounded-lg">
-          <p><b>Perhatian !</b></p>
+                        <div class="d-flex">
+                <info-icon class="ic-primary mr-2"></info-icon>
+                Perhatian !
+              </div>
+              <br>
           <ul>
             <li>- Jumlah Premi yang harus dibayarkan akan disesuaikan dengan frekuensi pembayaran yang dipilih</li>
           </ul>
@@ -186,14 +190,6 @@ export default {
     },
   },
   methods: {
-    showSelfieKtpPreview: function () {
-      if (this.getChangePaymentFreq.ktpSelfieAttachment.file) {
-        this.image_preview.src = URL.createObjectURL(
-          this.getChangePaymentFreq.ktpSelfieAttachment.file
-        );
-        this.image_preview.show = true;
-      }
-    },
     showSelfieKtpPreview: function () {
       if (this.getChangePaymentFreq.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(

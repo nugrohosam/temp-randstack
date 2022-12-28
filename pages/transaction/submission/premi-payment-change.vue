@@ -16,14 +16,14 @@ export default {
       menus: [
         {
           name: 'Masa Pembayaran Premi',
-          icon: 'menu/pembayaran-pinjaman-polis.svg',
-          link: './payment-policy-loan',
-          isActive: false
+          icon: 'menu/perubahan-masa-pembayaran.svg',
+          link: './change-term',
+          isActive: true
         },
         {
           name: 'Metode Pembayaran',
           icon: 'menu/pengajuan-pinjaman-polis.svg',
-          link: './request-policy-loan',
+          link: './change-term',
           isActive: false
         },
         {

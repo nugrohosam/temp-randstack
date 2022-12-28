@@ -248,7 +248,7 @@ export default {
     this.$store.commit("submission_transaction/removeCurrentHeaderTitle");
   },
   methods: {
-    showIlustartionPreview: function () {
+    showIlustrationPreview: function () {
       if (this.getPeriodicalyTopUp.ilustrationAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
           this.getPeriodicalyTopUp.ilustrationAttachment.file
