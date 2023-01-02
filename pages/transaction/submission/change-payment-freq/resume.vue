@@ -21,22 +21,6 @@
         <p class="data-value">{{ $formatDate(dueDatePremi) }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">Installment Premium<span>
-            <VDropdown :distance="6" :skidding="-190">
-              <button>
-                <info-icon class="ic-primary mr-2"></info-icon>
-              </button>
-              <template #popper>
-                <div style="width: 240px; border-radius: 40px">
-                  <InfoPanel :style="'max-height: 420px;'" :information="'Berapa kali pembayaran premi sampai dengan selesai'" />
-                </div>
-              </template>
-            </VDropdown>
-          </span>
-        </p>
-        <p class="data-value">-</p>
-      </div>
-      <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Premi yang ditagihkan</p>
         <p class="data-value">
           {{

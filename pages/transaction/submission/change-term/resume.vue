@@ -18,7 +18,7 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Masa Tahun Premi Saat Ini</p>
-        <p class="data-value">{{ "-" }} Tahun</p>
+          <p class="data-value">{{ (+(paidupDatePremi.substring(0, 4)) - +(issueDatePremi.substring(0, 4))) }} Tahun</p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Jatuh Tempo Polis</p>
@@ -157,6 +157,9 @@ export default {
           (x) => x.masterProduct == null
         )?.coverageExtend?.dueDate || "-"
       );
+    },
+    issueDatePremi() {
+      return this.myPolicy.policyWithCode.coverages?.find(x => x?.masterProduct == null || false)?.issueDate || '-'
     },
     getChangeTerm() {
       return this.$store.getters[
