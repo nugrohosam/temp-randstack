@@ -149,6 +149,12 @@ export default {
       },
     };
   },
+  beforeMount() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: "Resume Perubahan Frekuensi Pembayaran",
+      sub: "Perubahan Frekuensi Pembayaran",
+    });
+  },
   computed: {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];

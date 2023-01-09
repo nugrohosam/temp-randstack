@@ -140,6 +140,12 @@ export default {
       },
     };
   },
+  beforeMount() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: "Resume Perubahan Masa Pembayaran Premi",
+      sub: "Perubahan Masa Pembayaran Premi",
+    });
+  },
   computed: {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];

@@ -219,7 +219,6 @@
               <li>
                 - Pengajuan transaksi Perubahan Alokasi Dana Investasi akan dikenakan biaya
               </li>
-              <li>- Maksimal fund yang bisa diubah 4</li>
             </ul>
           </div>
         </div>

@@ -203,6 +203,9 @@ export default {
       if (!this.form.ktpSelfieAttachment.name) {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
       }
+      if (!this.form.ilustrationAttachment.name) {
+        this.validationMessage.push("Unggah Ilustrasi diperlukan");
+      }
       if (this.form.paymentFreq == this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).currentPremium.paymentFreq) {
         this.validationMessage.push("Frekuensi pembayaran harus beda dari sebelumnya");
       }

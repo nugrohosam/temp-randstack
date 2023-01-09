@@ -165,7 +165,6 @@
               <li>
                 - Pembayaran premi selanjutnya akan <b>dialokasikan sesuai dengan perubahan yang ada</b>
               </li>
-              <li>- Maksimal fund yang bisa diubah 4</li>
             </ul>
           </div>
         </div>
