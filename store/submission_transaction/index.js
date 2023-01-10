@@ -17,6 +17,7 @@ import AddInvestmentFund from "./add_investment_fund";
 import TransferOfFund from "./transfer_of_fund";
 import Apportionment from "./apportionment";
 import ChangePaymentFreq from "./change_payment_freq";
+import ChangePaymentMethod from "./change_payment_method";
 import ChangeTerm from "./change_term";
 
 const SubmissionTransactionModules = {
@@ -38,6 +39,7 @@ const SubmissionTransactionModules = {
     apportionment: Apportionment,
     change_term: ChangeTerm,
     change_payment_freq: ChangePaymentFreq,
+    change_payment_method: ChangePaymentMethod,
   },
   state,
   getters,

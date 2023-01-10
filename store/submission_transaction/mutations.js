@@ -36,6 +36,28 @@ export default {
     state.attachments.upload.saving_book.upload_filename = "";
   },
 
+  setUploadBankAuthorizationFile(state, data) {
+    state.attachments.upload.bank_authorization.file = data.stream;
+    state.attachments.upload.bank_authorization.name = data.stream.name;
+    state.attachments.upload.bank_authorization.upload_filename = data.upload;
+  },
+  clearUploadBankAuthorizationFile(state) {
+    state.attachments.upload.bank_authorization.file = null;
+    state.attachments.upload.bank_authorization.name = "";
+    state.attachments.upload.bank_authorization.upload_filename = "";
+  },
+
+  setUploadBeneficaryOwnerFile(state, data) {
+    state.attachments.upload.beneficary_owner.file = data.stream;
+    state.attachments.upload.beneficary_owner.name = data.stream.name;
+    state.attachments.upload.beneficary_owner.upload_filename = data.upload;
+  },
+  clearUploadBeneficaryOwnerFile(state) {
+    state.attachments.upload.beneficary_owner.file = null;
+    state.attachments.upload.beneficary_owner.name = "";
+    state.attachments.upload.beneficary_owner.upload_filename = "";
+  },
+
   setUploadBirthCertificateFile(state, data) {
     state.attachments.upload.saving_book.file = data.stream;
     state.attachments.upload.saving_book.name = data.stream.name;

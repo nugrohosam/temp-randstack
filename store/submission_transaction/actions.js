@@ -212,6 +212,70 @@ export default {
       });
       },
     
+  async uploadBankAuthorizationFile({ rootGetters, commit, dispatch }, data) {
+    let formData = new FormData();
+    formData.append("File", data.file);
+    formData.append("Type", "BANKAUTHORIZATION");
+    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+    dispatch(
+      "toggleOverlayLoading",
+      { show: true, message: "Mohon Tunggu..." },
+      { root: true }
+    );
+    return await this.$axios
+      .$post("/api/v1/attachments", formData)
+      .then((response) => {
+        if (response.success) {
+          commit("setUploadBankAuthorizationFile", {
+            stream: data.file,
+            upload: response.data.name,
+          });
+          dispatch(
+            "toggleOverlayLoading",
+            { show: false, message: "Mohon Tunggu..." },
+            { root: true }
+          );
+          return response.data;
+        }
+        // return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+    },
+
+      async uploadBeneficaryOwnerFile({ rootGetters, commit, dispatch }, data) {
+        let formData = new FormData();
+        formData.append("File", data.file);
+        formData.append("Type", "BENEFICARYOWNER");
+        this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+        dispatch(
+          "toggleOverlayLoading",
+          { show: true, message: "Mohon Tunggu..." },
+          { root: true }
+        );
+        return await this.$axios
+          .$post("/api/v1/attachments", formData)
+          .then((response) => {
+            if (response.success) {
+              commit("setUploadBeneficaryOwnerFile", {
+                stream: data.file,
+                upload: response.data.name,
+              });
+              dispatch(
+                "toggleOverlayLoading",
+                { show: false, message: "Mohon Tunggu..." },
+                { root: true }
+              );
+              return response.data;
+            }
+            // return response;
+          })
+          .catch((error) => {
+            return error;
+          });
+          },
+    
     async uploadTransferFile({ rootGetters, commit, dispatch }, data) {
       let formData = new FormData();
       formData.append("File", data.file);

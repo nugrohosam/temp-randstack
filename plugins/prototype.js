@@ -41,6 +41,15 @@ export default function ({ app, $axios }, inject) {
     return methods[code];
   };
 
+  const labelPaymentType = (code) => {
+    let methods = new Array();
+    methods[3] = "AUTO DEBIT - TABUGAN";
+    methods[30] = "AUTO DEBIT - KARTU KREDIT";
+    methods[93] = "VIRTUAL ACCOUNT";
+
+    return methods[code];
+  };
+
   const labelCardType = (code) => {
     let types = new Array();
     types[0] = "Both";
@@ -357,9 +366,19 @@ export default function ({ app, $axios }, inject) {
     return "-";
   };
 
+  const formatCCExpireDate = (date) => {
+    if (date) {
+      return moment(date).format("MM/YY");
+    }
+
+    return "-";
+  };
+
   inject("isNull", isNull);
   inject("isNullWithSpace", isNullWithSpace);
   inject("labelPaymentMethod", labelPaymentMethod);
+  inject("formatCCExpireDate", formatCCExpireDate);
+  inject("labelPaymentType", labelPaymentType);
   inject("labelIdentityType", labelIdentityType);
   inject("labelCardType", labelCardType);
   inject("labelRelationType", labelRelationType);

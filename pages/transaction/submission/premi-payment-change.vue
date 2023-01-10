@@ -22,9 +22,9 @@ export default {
         },
         {
           name: 'Metode Pembayaran',
-          icon: 'menu/pengajuan-pinjaman-polis.svg',
-          link: './change-term',
-          isActive: false
+          icon: 'menu/perubahan-metode-pembayaran.svg',
+          link: './change-payment-method',
+          isActive: true
         },
         {
           name: 'Frekuensi Pembayaran',

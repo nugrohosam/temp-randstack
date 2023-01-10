@@ -163,6 +163,18 @@ export default {
         preview: "",
         upload_filename: "",
       },
+      beneficary_owner: {
+        file: null,
+        name: "",
+        preview: "",
+        upload_filename: "",
+      },
+      bank_authorization: {
+        file: null,
+        name: "",
+        preview: "",
+        upload_filename: "",
+      },
       document: {
         file: null,
         name: "",
