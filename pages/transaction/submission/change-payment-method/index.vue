@@ -334,7 +334,7 @@
             rules="required|image"
             v-slot="{ validate, errors }"
           >
-            <p class="data-title mb-2">{{ form.paymentMethod == 3 ? "Halaman Depan Buku Tabungan" : "Foto Kartu Kredit" }}</p>
+            <p class="data-title mb-2">{{ form.paymentMethod == 3 ? "Unggah Halaman Depan Buku Tabungan" : "Unggah Foto Kartu Kredit" }}</p>
             <input
               type="file"
               ref="inputSavingBookImage"
@@ -546,6 +546,49 @@ export default {
       }
       if (!this.form.ktpAttachment.name) {
         this.validationMessage.push("Unggah KTP diperlukan");
+      }
+      if (!this.form.isPayerRegisteredInPolicy && !this.form.beneficaryOwnerAttachment.name) {
+        this.validationMessage.push("Unggah Beneficary Owner");
+      }
+
+      if (!this.form.bank) {
+        this.validationMessage.push("Bank harus dipilih");
+      }
+      
+      if (this.form.paymentMethod == 93 && !this.form.accountVA) {
+        this.validationMessage.push("Nomor VA diperlukan");
+      } else if (this.form.paymentMethod == 3) {
+        if (!this.form.accountDebit) {
+          this.validationMessage.push("Nomor Rekening diperlukan");
+        }
+        if (!this.form.ownerAccount) {
+          this.validationMessage.push("Nama Pemilik Rekening diperlukan");
+        }
+        if (!this.form.branch) {
+          this.validationMessage.push("Cabang diperlukan");
+        }
+      } else if (this.form.paymentMethod == 30) {
+        if (!this.form.accountCC) {
+          this.validationMessage.push("Nomor Rekening diperlukan");
+        }
+        if (!this.form.ownerAccount) {
+          this.validationMessage.push("Nama Pemilik Kartu Kredit diperlukan");
+        }
+        if (!this.form.creditCardType) {
+          this.validationMessage.push("Tipe Kartu Kredit diperlukan");
+        }
+        if (!this.form.expireDateCC) {
+          this.validationMessage.push("Tanggal Kadaluarsa Kartu Kredit diperlukan");
+        }
+      }
+
+      if (this.form.paymentMethod != 93) {
+        if (!this.form.bankAuthorizationAttachment.name) {
+          this.validationMessage.push((this.form.paymentMethod == 3 ? "Unggah Scan Surat Otorisasi Debit Rekening" : "Unggah Scan Surat Otorisasi Kredit") + " diperlukan");
+        }
+        if (!this.form.savingBookAttachment.name) {
+          this.validationMessage.push((this.form.paymentMethod == 3 ? "Unggah Halaman Depan Buku Tabungan" : "Unggah Foto Kartu Kredit") + " diperlukan");
+        }
       }
     },
     save() {
