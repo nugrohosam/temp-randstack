@@ -115,7 +115,7 @@
               <br>
               <ul>
                 <li>- Perubahan Masa Pembayaran Premi akan mempengaruhi berapa premi yang harus dibayar</li>
-                <li>- Perubahan Masa Pembayaran Premi dapat menghubungi Pemasar untuk bantuan dan illustrasih</li>
+                <li>- Perubahan Masa Pembayaran Premi dapat menghubungi Pemasar untuk bantuan dan ilustrasi</li>
               </ul>
           </div>
         </div>
