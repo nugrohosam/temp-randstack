@@ -77,7 +77,6 @@
           <p class="data-title mb-2">Bank</p>
           <p class="data-value">
             {{ myPolicy.policyWithCode.payerBankAccount[0].bankName || "-" }}</p>
-          </p>
         </div>
       </div>
     </div>
@@ -113,7 +112,6 @@
           <p class="data-title mb-2">Bank</p>
           <p class="data-value">
             {{ myPolicy.policyWithCode.virtualAccountInfo[0].bankName || "-" }}</p>
-          </p>
         </div>
       </div>
     </div>
