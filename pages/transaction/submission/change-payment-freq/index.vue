@@ -195,6 +195,9 @@ export default {
       if (this.form.paymentFreq == this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).currentPremium.paymentFreq) {
         this.validationMessage.push("Frekuensi pembayaran harus beda dari sebelumnya");
       }
+      if (!this.form.paymentFreq) {
+        this.validationMessage.push("Frekuensi pembayaran diperlukan");
+      }
     },
     save() {
       this.validate();

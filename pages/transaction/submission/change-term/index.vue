@@ -206,8 +206,8 @@ export default {
       if (!this.form.ilustrationAttachment.name) {
         this.validationMessage.push("Unggah Ilustrasi diperlukan");
       }
-      if (this.form.paymentFreq == this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).currentPremium.paymentFreq) {
-        this.validationMessage.push("Frekuensi pembayaran harus beda dari sebelumnya");
+      if (!this.form.term) {
+        this.validationMessage.push("Masa Tahun Premi diperlukan");
       }
     },
     async addIlustrationImage(e) {
