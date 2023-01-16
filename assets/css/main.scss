@@ -15,6 +15,10 @@ body {
   font-style: normal;
 }
 
+.v-list-item__title {
+  white-space: pre-wrap !important;
+}
+
 // Anchor a
 a {
   &.no-border {

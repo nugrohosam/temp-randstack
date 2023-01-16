@@ -32,6 +32,8 @@
           <p class="data-title mb-2">Nama Bank</p>
           <div>
             <v-select
+              outlined
+              dense
               :items="bankList"
               v-model="form.virtualAccountNumber"
               label="Pilih Bank"

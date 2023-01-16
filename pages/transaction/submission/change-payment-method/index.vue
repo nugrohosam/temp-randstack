@@ -154,6 +154,8 @@
           <p class="data-title mb-2">Bank</p>
             <div >
               <v-select
+                outlined
+                dense
                 class="bank_option"
                 :items="optionBank"
                 v-model="form.bank"
@@ -165,6 +167,8 @@
           <p class="data-title mb-2">Tipe Kartu Kredit</p>
             <div >
               <v-select
+                outlined
+                dense
                 class="bank_option"
                 :items="optionCreditCardType"
                 v-model="form.creditCardType"

@@ -99,6 +99,8 @@
           <p class="data-title mb-2">Bank</p>
             <div >
               <v-select
+                outlined
+                dense
                 class="bank_option"
                 :items="optionBank"
                 v-model="form.bank"

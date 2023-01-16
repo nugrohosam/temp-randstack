@@ -84,6 +84,8 @@
               <p class="data-title mb-2">Pilih Benefit Baru</p>
               <div >
                 <v-select
+                  outlined
+                  dense
                   class="plan_type_option"
                   :items="optionPlan(coverages_selected)"
                   v-model="plan"

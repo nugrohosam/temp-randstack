@@ -109,6 +109,8 @@
                 <p class="data-title mb-2">Rider Plan</p>
                 <div >
                   <v-select
+                    outlined
+                    dense
                     class="rider_plan_type_option"
                     :items="riderOptionPlan(form.add_riders[index].product_id)"
                     v-model="form.add_riders[index].plan"
@@ -193,6 +195,8 @@
                 <p class="data-title mb-2">Kartu Identitas</p>
                 <div class="form-input">
                   <v-select
+                    outlined
+                    dense
                     :items="options.identityType"
                     v-model="form.add_riders[index].insured.identity_type"
                   ></v-select>
@@ -212,6 +216,8 @@
                 <p class="data-title mb-2">Hubungan dengan Tertanggung Utama</p>
                 <div class="form-input">
                   <v-select
+                    outlined
+                    dense
                     :items="options.relationType"
                     v-model="form.add_riders[index].insured.relation"
                   ></v-select>
@@ -221,6 +227,8 @@
                 <p class="data-title mb-2">Jenis Kelamin</p>
                 <div class="form-input">
                   <v-select
+                    outlined
+                    dense
                     :items="options.gender"
                     v-model="form.add_riders[index].insured.gender"
                   ></v-select>
@@ -250,6 +258,8 @@
                 <p class="data-title mb-2">Kewarganegaraan</p>
                 <div class="form-input">
                   <v-select
+                    outlined
+                    dense
                     :items="options.nationality"
                     v-model="form.add_riders[index].insured.nationality"
                   ></v-select>
@@ -259,6 +269,8 @@
                 <p class="data-title mb-2">Status Perkawinan</p>
                 <div class="form-input">
                   <v-select
+                    outlined
+                    dense
                     :items="options.martialStatus"
                     v-model="form.add_riders[index].insured.marital_status"
                   ></v-select>
@@ -288,6 +300,8 @@
                 <p class="data-title mb-2">Apakah Merokok</p>
                 <div class="form-input">
                   <v-select
+                    outlined
+                    dense
                     :items="[
                       { text: 'Iya', value: true },
                       { text: 'Tidak', value: false },
