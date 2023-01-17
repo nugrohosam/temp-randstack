@@ -20,6 +20,9 @@ export default {
   getBanks: (state) => {
     return state.banks;
   },
+  getCreditCardBanks: (state) => {
+    return state.creditCardBanks;
+  },
   getProductRiders: (state) => {
     return state.riders;
   },

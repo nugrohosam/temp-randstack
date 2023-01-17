@@ -43,7 +43,7 @@ export default function ({ app, $axios }, inject) {
 
   const labelPaymentType = (code) => {
     let methods = new Array();
-    methods[3] = "AUTO DEBIT - TABUGAN";
+    methods[3] = "AUTO DEBIT - TABUNGAN";
     methods[30] = "AUTO DEBIT - KARTU KREDIT";
     methods[93] = "VIRTUAL ACCOUNT";
 

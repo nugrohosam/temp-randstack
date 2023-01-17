@@ -26,7 +26,7 @@
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Metode Pembayaran Saat Ini</p>
-        <p class="data-value">{{ myPolicy.policyWithCode.payerAccounts[0].paymentMethod == 93 ? "VIRTUAL" : "SAVING" }}</p>
+        <p class="data-value">{{ myPolicy.policyWithCode.payerAccounts[0].paymentMethod == 93 ? "VIRTUAL" : "TABUNGAN" }}</p>
       </div>
     </div>
 
@@ -284,10 +284,8 @@
           </div>
           <br>
           <ul>
-            <li>- Perubahan Premi total secara tidak langsung akan mempengaruhi Uang Pertanggungan
-            </li>
-            <li>- Dianjurkan Mengajukan transaksi penambahan atau penurunan Uang Pertanggungan apabila Total premi naik atau turun
-            </li>
+            <li>- Untuk Perubahan Pembayaran menggunakan Bank BCA dan Mandiri, mohon menggunakan formulir asli</li>
+            <li>- Hubungi kantor layanan atau pemasar terdekat untuk mendapatkan formulir Otorisasi Kredit, formulir Otorisasi Debit Rekening dan formulir Beneficiary Owner</li>
           </ul>
         </div>
       </div>

@@ -337,6 +337,7 @@ export default {
       if (isAuthenticated) {
         this.getMyPolicy();
         this.getBanks();
+        this.getCreditCardBanks();
       } else if (!isAuthenticated) {
         this.$router.push({
           path: "/auth/login",
@@ -364,6 +365,10 @@ export default {
 
     getBanks: async function () {
       await this.$store.dispatch("submission_transaction/getBanks");
+    },
+
+    getCreditCardBanks: async function () {
+      await this.$store.dispatch("submission_transaction/getCreditCardBanks");
     },
 
     showNotification: function () {

@@ -27,7 +27,7 @@
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Metode Pembayaran Saat Ini</p>
-          <p class="data-value">{{ myPolicy.policyWithCode.payerAccounts[0].paymentMethod == 93 ? "VIRTUAL" : "SAVING" }}</p>
+          <p class="data-value">{{ myPolicy.policyWithCode.payerAccounts[0].paymentMethod == 93 ? "VIRTUAL" : "TABUNGAN" }}</p>
         </div>
       </div>
 
@@ -150,14 +150,14 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-2 col-sm-4">
+        <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 3 || form.paymentMethod == 30">
           <p class="data-title mb-2">Bank</p>
             <div >
               <v-select
                 outlined
                 dense
                 class="bank_option"
-                :items="optionBank"
+                :items="form.paymentMethod == 30 ? optionBank : optionCreditCardBank"
                 v-model="form.bank"
                 label=""
               ></v-select>
@@ -180,19 +180,22 @@
           <p class="data-title mb-2">Nomor Kartu Kredit</p>
             <div class="form-input">
               <input
-                type="text"
-                pattern="[0-9\s]+"
-                class="form-control"
-                v-model="form.accountCC"
-              />
-          </div>
-        </div>
+                  v-mask="'####-####-####-####'"
+                  type="text"
+                  pattern="[0-9\-\s]+"
+                  class="form-control"
+                  v-model="form.accountCC"
+                />
+            </div>
+        </div>  
         <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 30">
           <p class="data-title mb-2">Tanggal Kadaluarsa</p>
             <div class="form-input">
               <input
+                v-mask="'##/##'"
                 type="text"
-                pattern="[0-9\s]+"
+                placeholder="mm/yy"
+                pattern="[0-9\/\s]+"
                 class="form-control"
                 v-model="form.expireDateCC"
               />
@@ -201,12 +204,13 @@
         <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 93">
           <p class="data-title mb-2">Nomor VA</p>
             <div class="form-input">
-              <input
-                type="text"
-                pattern="[0-9\s]+"
-                class="form-control"
+              <v-select
+                :items="virtualAccountOptions"
                 v-model="form.accountVA"
-              />
+                label="Virtual Account"
+                dense
+                outlined
+              ></v-select>
           </div>
         </div>
         <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 3">
@@ -288,7 +292,7 @@
         </div>
       </div>
 
-      <div class="row" v-if="!form.isPayerRegisteredInPolicy && form.paymentMethod != 93">
+      <div class="row" v-if="!form.isPayerRegisteredInPolicy">
         <div class="col-12">
           <p class="data-title mb-2">Unggah Beneficary Owner</p>
           <input
@@ -338,7 +342,7 @@
             rules="required|image"
             v-slot="{ validate, errors }"
           >
-            <p class="data-title mb-2">{{ form.paymentMethod == 3 ? "Unggah Halaman Depan Buku Tabungan" : "Unggah Foto Kartu Kredit" }}</p>
+            <p class="data-title mb-2">{{ form.paymentMethod == 3 ? "Unggah Halaman Depan Buku Tabungan" : "Unggah Halaman depan Foto Kartu Kredit" }}</p>
             <input
               type="file"
               ref="inputSavingBookImage"
@@ -374,7 +378,8 @@
               </div>
               <br>
               <ul>
-                <li>- Untuk Perubahan Pembayaran menggunakan Bank BCA, mohon menggunakan formulir asli</li>
+                <li>- Untuk Perubahan Pembayaran menggunakan Bank BCA dan Mandiri, mohon menggunakan formulir asli</li>
+                <li>- Hubungi kantor layanan atau pemasar terdekat untuk mendapatkan formulir Otorisasi Kredit, formulir Otorisasi Debit Rekening dan formulir Beneficiary Owner</li>
               </ul>
           </div>
         </div>
@@ -451,10 +456,8 @@ export default {
     },
     optionCreditCardType() {
       return [
-        { value: "A", text: "A" },
-        { value: "B", text: "B" },
-        { value: "C", text: "C" },
-        { value: "D", text: "D" },
+        { value: "Visa Card", text: "Visa Card" },
+        { value: "Master Card", text: "Master Card" },
       ]
     },
     banks() {
@@ -463,9 +466,15 @@ export default {
     optionBank() {
       return this.banks.map(v => ({ value: v.bankId, text: v.name }))
     },
+    creditCardBanks() {
+      return this.$store.getters["submission_transaction/getCreditCardBanks"];
+    },
+    optionCreditCardBank() {
+      return this.creditCardBanks.map(v => ({ value: v.bankId, text: v.name }))
+    },
     optionPaymentMethod() {
       let methods = new Array();
-      methods[3] = "AUTO DEBIT - TABUGAN";
+      methods[3] = "AUTO DEBIT - TABUNGAN";
       methods[30] = "AUTO DEBIT - KARTU KREDIT";
       methods[93] = "VIRTUAL ACCOUNT";
 
@@ -473,6 +482,16 @@ export default {
         value: index,
         name: value
       }));
+    },
+    virtualAccountOptions() {
+      if (this.myPolicy.policyWithCode.virtualAccountInfo.length) {
+        return this.myPolicy.policyWithCode.virtualAccountInfo.map((item) => ({
+          text: `${item.bankAbbrName} - ${item.virtualAccountNumber}`,
+          value: item.virtualAccountNumber,
+        }));
+      }
+
+      return [];
     },
     paidupDatePremi() {
       console.log(this.myPolicy.policyWithCode.payerBankAccount[0])
@@ -555,7 +574,7 @@ export default {
         this.validationMessage.push("Unggah Beneficary Owner");
       }
 
-      if (!this.form.bank) {
+      if (!this.form.bank && (this.form.paymentMethod == 3 || this.form.paymentMethod == 30)) {
         this.validationMessage.push("Bank harus dipilih");
       }
       
@@ -598,6 +617,11 @@ export default {
     save() {
       this.validate();
       if (this.validationMessage.length) return false;
+      else if (form.accountVA) {
+        const virtualAccount = this.myPolicy.policyWithCode.virtualAccountInfo.find(x => x.virtualAccountNumber);
+        this.form.bank = virtualAccount.bankAbbrName
+      }
+
       this.$store.commit(
         "submission_transaction/change_payment_method/setChangePaymentMethod",
         this.form

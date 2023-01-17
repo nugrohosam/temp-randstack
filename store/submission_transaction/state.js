@@ -124,6 +124,7 @@ export default {
   },
 
   banks: [],
+  creditCardBanks: [],
 
   attachments: {
     upload: {

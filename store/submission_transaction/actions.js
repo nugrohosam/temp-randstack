@@ -16,6 +16,20 @@ export default {
         return error;
       });
   },
+  async getCreditCardBanks({ rootGetters, commit, dispatch }) {
+    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+    await this.$axios
+      .$get("/api/v1/credit-cards")
+      .then((response) => {
+        if (response.success) {
+          commit("setCreditCardBanks", response.data);
+        }
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+  },
   async getMyPolicy({ rootGetters, commit, dispatch }) {
     this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
     const response = await this.$axios

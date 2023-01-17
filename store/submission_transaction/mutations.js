@@ -132,6 +132,9 @@ export default {
   setBanks(state, data) {
     state.banks = data;
   },
+  setCreditCardBanks(state, data) {
+    state.creditCardBanks = data;
+  },
   setMyPolicyLoanInfo(state, data) {
     state.myPolicyLoanInfo = data;
   },
