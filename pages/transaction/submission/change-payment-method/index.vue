@@ -189,7 +189,7 @@
             </div>
         </div>  
         <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 30">
-          <p class="data-title mb-2">Tanggal Kadaluarsa</p>
+          <p class="data-title mb-2">Tanggal Kadaluarsa (mm/yy)</p>
             <div class="form-input">
               <input
                 v-mask="'##/##'"
