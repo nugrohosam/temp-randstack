@@ -41,7 +41,7 @@
         <p class="data-value">
           {{
             $paymentFrequency(
-              myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).currentPremium.paymentMethod
+              myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).currentPremium.paymentFreq
             ) || "-"
           }}
         </p>

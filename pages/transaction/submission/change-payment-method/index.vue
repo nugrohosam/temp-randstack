@@ -42,7 +42,7 @@
           <p class="data-value">
             {{
               $paymentFrequency(
-                myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).currentPremium.paymentMethod
+                myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).currentPremium.paymentFreq
               ) || "-"
             }}
           </p>
@@ -189,7 +189,7 @@
             </div>
         </div>  
         <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 30">
-          <p class="data-title mb-2">Tanggal Kadaluarsa (mm/yy)</p>
+          <p class="data-title mb-2">Tanggal Kadaluarsa</p>
             <div class="form-input">
               <input
                 v-mask="'##/##'"
@@ -619,7 +619,7 @@ export default {
     save() {
       this.validate();
       if (this.validationMessage.length) return false;
-      else if (form.accountVA) {
+      else if (this.form.accountVA) {
         const virtualAccount = this.myPolicy.policyWithCode.virtualAccountInfo.find(x => x.virtualAccountNumber);
         this.form.bank = virtualAccount.bankAbbrName
       }
