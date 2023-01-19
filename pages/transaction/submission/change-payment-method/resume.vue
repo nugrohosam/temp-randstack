@@ -176,6 +176,21 @@
       </div>
     </div>
 
+    <div v-if="getChangePaymentMethod.paymentMethod == 93">
+      <div class="row">
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nomor VA Baru</p>
+          <p class="data-value">
+            {{ getChangePaymentMethod.accountVA || "-" }}</p>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <p class="data-title mb-2">Nama Bank Perubahan</p>
+          <p class="data-value">
+            {{ getChangePaymentMethod.bank }}</p>
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
@@ -201,21 +216,6 @@
             Lihat
           </button>
         </p>
-      </div>
-    </div>
-
-    <div v-if="getChangePaymentMethod.paymentMethod == 93">
-      <div class="row">
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Nomor VA Baru</p>
-          <p class="data-value">
-            {{ getChangePaymentMethod.accountVA || "-" }}</p>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Nama Bank Perubahan</p>
-          <p class="data-value">
-            {{ optionBank.find(x => x.value == getChangePaymentMethod.bank) !== undefined  ? optionBank.find(x => x.value == getChangePaymentMethod.bank).text : "-" }}</p>
-        </div>
       </div>
     </div>
 

@@ -108,8 +108,10 @@
                 2 tahun sejak tanggal <strong>lapsed date</strong>
               </li>
               <li>
-                - Mohon lakukan pembayaran dahulu sebelum melakukan pengajuan
-                pemulihan polis
+                - Dianjurkan melakukan pembayaran dahulu agar penyelesaian proses lebih cepat
+              </li>
+              <li>
+                - Khusus telemarketing jika terjadi perubahan rekening debet, lakukan juga perubahan metode bayar
               </li>
             </ul>
           </div>
@@ -192,12 +194,6 @@ export default {
       this.validationMessage = [];
       if (!this.form.healthQuestionnaire.length) {
         this.validationMessage.push("Health Questionnaire diperlukan");
-      }
-      if (!this.form.virtualAccountNumber) {
-        this.validationMessage.push("Virtual Account Number diperlukan");
-      }
-      if (!this.form.transferAttachment.name) {
-        this.validationMessage.push("Bukti Transfer diperlukan");
       }
       if (!this.form.ktpSelfieAttachment.name) {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");

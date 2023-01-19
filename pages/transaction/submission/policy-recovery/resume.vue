@@ -147,8 +147,10 @@
               tahun sejak tanggal <strong>lapsed date</strong>
             </li>
             <li>
-              - Mohon lakukan pembayaran dahulu sebelum melakukan pengajuan
-              pemulihan polis
+              - Dianjurkan melakukan pembayaran dahulu agar penyelesaian proses lebih cepat
+            </li>
+            <li>
+              - Khusus telemarketing jika terjadi perubahan rekening debet, lakukan juga perubahan metode bayar
             </li>
           </ul>
         </div>

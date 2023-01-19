@@ -150,7 +150,7 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 3 || form.paymentMethod == 30">
+        <div class="col-lg-3 col-sm-4" v-if="form.paymentMethod == 3 || form.paymentMethod == 30">
           <p class="data-title mb-2">Bank</p>
             <div >
               <v-select
@@ -163,7 +163,7 @@
               ></v-select>
             </div>
         </div>
-        <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 30">
+        <div class="col-lg-3 col-sm-4" v-if="form.paymentMethod == 30">
           <p class="data-title mb-2">Tipe Kartu Kredit</p>
             <div >
               <v-select
@@ -176,7 +176,7 @@
               ></v-select>
             </div>
         </div>
-        <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 30">
+        <div class="col-lg-3 col-sm-4" v-if="form.paymentMethod == 30">
           <p class="data-title mb-2">Nomor Kartu Kredit</p>
             <div class="form-input">
               <input
@@ -188,7 +188,7 @@
                 />
             </div>
         </div>  
-        <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 30">
+        <div class="col-lg-3 col-sm-4" v-if="form.paymentMethod == 30">
           <p class="data-title mb-2">Tanggal Kadaluarsa</p>
             <div class="form-input">
               <input
@@ -201,7 +201,7 @@
               />
           </div>
         </div>
-        <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 93">
+        <div class="col-lg-3 col-sm-4" v-if="form.paymentMethod == 93">
           <p class="data-title mb-2">Nomor VA</p>
             <div class="form-input">
               <v-select
@@ -213,7 +213,7 @@
               ></v-select>
           </div>
         </div>
-        <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 3">
+        <div class="col-lg-3 col-sm-4" v-if="form.paymentMethod == 3">
           <p class="data-title mb-2">Nomor Rekening Debit</p>
             <div class="form-input">
               <input
@@ -224,7 +224,7 @@
               />
           </div>
         </div>
-        <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 3">
+        <div class="col-lg-3 col-sm-4" v-if="form.paymentMethod == 3">
           <p class="data-title mb-2">Nama Cabang</p>
             <div class="form-input">
               <input
@@ -235,7 +235,7 @@
               />
           </div>
         </div>
-        <div class="col-lg-2 col-sm-4" v-if="form.paymentMethod == 3 || form.paymentMethod == 30">
+        <div class="col-lg-3 col-sm-4" v-if="form.paymentMethod == 3 || form.paymentMethod == 30">
           <p class="data-title mb-2">Nama Pemilik Rekening</p>
             <div class="form-input">
               <input
@@ -620,7 +620,7 @@ export default {
       this.validate();
       if (this.validationMessage.length) return false;
       else if (this.form.accountVA) {
-        const virtualAccount = this.myPolicy.policyWithCode.virtualAccountInfo.find(x => x.virtualAccountNumber);
+        const virtualAccount = this.myPolicy.policyWithCode.virtualAccountInfo.find(x => x.virtualAccountNumber == this.form.accountVA);
         this.form.bank = virtualAccount.bankAbbrName
       }
 
