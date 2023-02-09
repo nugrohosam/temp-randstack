@@ -152,28 +152,29 @@
       <div class="row">
         <div class="col-lg-3 col-sm-4" v-if="form.paymentMethod == 3 || form.paymentMethod == 30">
           <p class="data-title mb-2">Bank</p>
-            <div >
-              <v-select
+            <div>
+              <v-autocomplete
                 outlined
                 dense
                 class="bank_option"
-                :items="form.paymentMethod == 30 ? optionBank : optionCreditCardBank"
+                :items="form.paymentMethod == 30 ? optionCreditCardBank : optionBank"
                 v-model="form.bank"
                 label=""
-              ></v-select>
+              ></v-autocomplete>
             </div>
         </div>
+
         <div class="col-lg-3 col-sm-4" v-if="form.paymentMethod == 30">
           <p class="data-title mb-2">Tipe Kartu Kredit</p>
-            <div >
-              <v-select
+            <div>
+              <v-autocomplete
                 outlined
                 dense
                 class="bank_option"
                 :items="optionCreditCardType"
                 v-model="form.creditCardType"
                 label=""
-              ></v-select>
+              ></v-autocomplete>
             </div>
         </div>
         <div class="col-lg-3 col-sm-4" v-if="form.paymentMethod == 30">
@@ -234,6 +235,7 @@
                 v-model="form.branch"
               />
           </div>
+          <small>Nama Cabang tidak bisa menggunakan huruf dan tanda baca</small>
         </div>
         <div class="col-lg-3 col-sm-4" v-if="form.paymentMethod == 3 || form.paymentMethod == 30">
           <p class="data-title mb-2">Nama Pemilik Rekening</p>
@@ -245,6 +247,7 @@
                 v-model="form.ownerAccount"
               />
           </div>
+          <small>Nama Pemilik Rekening tidak bisa menggunakan huruf dan tanda baca</small>
         </div>
       </div>
 
@@ -294,21 +297,21 @@
 
       <div class="row" v-if="!form.isPayerRegisteredInPolicy">
         <div class="col-12">
-          <p class="data-title mb-2">Unggah Beneficary Owner</p>
+          <p class="data-title mb-2">Unggah Beneficiary Owner</p>
           <input
             type="file"
-            ref="inputBeneficaryOwnerImage"
+            ref="inputBeneficiaryOwnerImage"
             v-show="false"
             accept="image/*"
-            @change="(e) => addBeneficaryOwnerImage(e)"
+            @change="(e) => addBeneficiaryOwnerImage(e)"
           />
           <button
             class="btn btn-primary-outlined"
-            @click.prevent="$refs.inputBeneficaryOwnerImage.click()"
+            @click.prevent="$refs.inputBeneficiaryOwnerImage.click()"
           >
             Unggah
           </button>
-          <small>{{ form.beneficaryOwnerAttachment.name }}</small>
+          <small>{{ form.beneficiaryOwnerAttachment.name }}</small>
           <br />
           <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
         </div>
@@ -425,13 +428,16 @@ export default {
         ktpSelfieAttachment: {},
         ktpAttachment: {},
         savingBookAttachment: {},
-        beneficaryOwnerAttachment: {},
+        beneficiaryOwnerAttachment: {},
         bankAuthorizationAttachment: {},
       },
       validationMessage: [],
     };
   },
-  beforeMount() {
+  async beforeMount() {
+    await this.$store.dispatch("submission_transaction/getBanks", { serviceId : "173"});
+    await this.$store.dispatch("submission_transaction/getCreditCardBanks", { serviceId : "173" });
+
     this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
       title: "Perubahan Metode Pembayaran",
       sub: "Pengajuan Perubahan Metode Pembayaran",
@@ -538,13 +544,13 @@ export default {
         };
       }
     },
-    async addBeneficaryOwnerImage(e) {
+    async addBeneficiaryOwnerImage(e) {
       if (e.target.files[0]) {
         const result = await this.$store.dispatch(
-          "submission_transaction/uploadBeneficaryOwnerFile",
+          "submission_transaction/uploadBeneficiaryOwnerFile",
           { file: e.target.files[0] }
         );
-        this.form.beneficaryOwnerAttachment = {
+        this.form.beneficiaryOwnerAttachment = {
           file: e.target.files[0],
           name: result.name,
         };
@@ -572,8 +578,8 @@ export default {
         this.validationMessage.push("Unggah KTP diperlukan");
       }
 
-      if (!this.form.isPayerRegisteredInPolicy && !this.form.beneficaryOwnerAttachment.name) {
-        this.validationMessage.push("Unggah Beneficary Owner");
+      if (!this.form.isPayerRegisteredInPolicy && !this.form.beneficiaryOwnerAttachment.name) {
+        this.validationMessage.push("Unggah Beneficiary Owner");
       }
 
       if (!this.form.bank && (this.form.paymentMethod == 3 || this.form.paymentMethod == 30)) {

@@ -47,15 +47,15 @@ export default {
     state.attachments.upload.bank_authorization.upload_filename = "";
   },
 
-  setUploadBeneficaryOwnerFile(state, data) {
-    state.attachments.upload.beneficary_owner.file = data.stream;
-    state.attachments.upload.beneficary_owner.name = data.stream.name;
-    state.attachments.upload.beneficary_owner.upload_filename = data.upload;
+  setUploadBeneficiaryOwnerFile(state, data) {
+    state.attachments.upload.beneficiary_owner.file = data.stream;
+    state.attachments.upload.beneficiary_owner.name = data.stream.name;
+    state.attachments.upload.beneficiary_owner.upload_filename = data.upload;
   },
-  clearUploadBeneficaryOwnerFile(state) {
-    state.attachments.upload.beneficary_owner.file = null;
-    state.attachments.upload.beneficary_owner.name = "";
-    state.attachments.upload.beneficary_owner.upload_filename = "";
+  clearUploadBeneficiaryOwnerFile(state) {
+    state.attachments.upload.beneficiary_owner.file = null;
+    state.attachments.upload.beneficiary_owner.name = "";
+    state.attachments.upload.beneficiary_owner.upload_filename = "";
   },
 
   setUploadBirthCertificateFile(state, data) {
@@ -131,6 +131,12 @@ export default {
   },
   setBanks(state, data) {
     state.banks = data;
+  },
+  setOccupations(state, data) {
+    state.occupations = data;
+  },
+  setIndustries(state, data) {
+    state.industries = data;
   },
   setCreditCardBanks(state, data) {
     state.creditCardBanks = data;

@@ -80,6 +80,7 @@
                 v-model="form.rekOwner"
               />
           </div>
+          <small>Nama Pemilik Rekening tidak bisa menggunakan huruf dan tanda baca</small>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Cabang</p>
@@ -97,15 +98,15 @@
       <div class="row">
         <div class="col-lg-2 col-sm-6">
           <p class="data-title mb-2">Bank</p>
-            <div >
-              <v-select
+            <div>
+              <v-autocomplete
                 outlined
                 dense
                 class="bank_option"
                 :items="optionBank"
                 v-model="form.bank"
                 label=""
-              ></v-select>
+              ></v-autocomplete>
             </div>
         </div>
       </div>

@@ -52,7 +52,7 @@
         <p class="data-value">
           <button
             class="btn btn-primary-outlined"
-            @click.prevent="showSelfieKtpPreview"
+            @click.prevent="showKtpSelfiePreview"
           >
             Lihat
           </button>
@@ -180,7 +180,7 @@ export default {
         this.image_preview.show = true;
       }
     },
-    showSelfieKtpPreview: function () {
+    showKtpSelfiePreview: function () {
       if (this.getIncreaseSA.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
           this.getIncreaseSA.ktpSelfieAttachment.file

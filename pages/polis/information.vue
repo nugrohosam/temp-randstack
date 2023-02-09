@@ -63,13 +63,6 @@
                   <p class="data-value">
                     {{ getAddress() }}
                   </p>
-                  <!-- <p class="data-title">Alamat Koresponden</p>
-                            <p class="data-value">
-                              {{
-                                myPolicy.policyWithCode.policyHolder.address
-                                  .address1
-                              }}
-                            </p> -->
                   <p class="data-title">Nomor HP</p>
                   <p class="data-value">
                     {{ myPolicy.policyWithCode.policyHolder.person.mobile }}
@@ -295,7 +288,7 @@ export default {
       insured_title: "Tertanggung", //Peserta Yang Diasuransikan
       myitems: [
         { index: 0, tab: "Tertanggung", link: "/polis/information/insured" },
-        { index: 1, tab: "Data Ahli Waris", link: "/polis/information/heirs" },
+        { index: 1, tab: "Data Ahli Waris", link: "/polis/information/beneficiary" },
         {
           index: 2,
           tab: "Data Rekening Pembayaran",

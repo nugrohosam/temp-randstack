@@ -104,7 +104,7 @@
         <p class="data-value">
           <button
             class="btn btn-primary-outlined"
-            @click.prevent="showSelfieKtpPreview"
+            @click.prevent="showKtpSelfiePreview"
           >
             Lihat
           </button>
@@ -217,7 +217,7 @@ export default {
     };
   },
   methods: {
-    showSelfieKtpPreview: function () {
+    showKtpSelfiePreview: function () {
       if (this.getWithdrawPartialInvestmentFund.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
           this.getWithdrawPartialInvestmentFund.ktpSelfieAttachment.file

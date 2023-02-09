@@ -21,7 +21,6 @@ export const relationType = [
   "Anak tiri",
   "Calon Pemegang Polis",
   "Calon Tertanggung",
-  "Lainnya (Wajib Mengisi Form Beneficiary Owner)",
   "Instansi",
   "Ayah angkat",
   "Ayah tiri",
@@ -40,9 +39,7 @@ export const identityType = [
   "SIM",
   "Passport",
   "KIA",
-  "Lainnya",
 ];
-
 
 export const martialStatus = ["KAWIN", "BELUM KAWIN"];
 

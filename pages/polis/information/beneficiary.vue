@@ -1,6 +1,5 @@
 <template>
   <div class="row">
-    <!-- Search -->
     <div class="col-12">
       <div class="page-body">
         <h4>
@@ -53,7 +52,7 @@ export default {
           { text: "Nama", value: "name" },
           { text: "Persentase", value: "shareRate" },
           { text: "Jenis Kelamin", value: "gender" },
-          { text: "Hubungan dengan Tertanggung", value: "designation" },
+          { text: "Hubungan dengan Pemegang Polis", value: "designation" },
         ],
       },
     };

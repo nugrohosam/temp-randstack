@@ -10,10 +10,28 @@
             :link="'./change/customer-info'"
           />
           <Menu
+            :isActive="true"
+            :name="'Pekerjaan Tertanggung'"
+            :icon="'menu/perubahan-pekerjaan-tertanggung.svg'"
+            :link="'./change/occupation'"
+          />
+          <Menu
+            :isActive="true"
+            :name="'Tanggal Lahir dan Jenis Kelamin Tertanggung'"
+            :icon="'menu/perubahan-jenis-kelamin.svg'"
+            :link="'./change/birth-and-gender'"
+          />
+          <Menu
+            :isActive="true"
+            :name="'Ahli Waris'"
+            :icon="'menu/perubahan-ahli-waris.svg'"
+            :link="'./change/beneficiary'"
+          />
+          <Menu
             :isActive="false"
             :name="'Pembayar'"
             :icon="'menu/pembayar.svg'"
-            :link="'./coming-soon'"
+            :link="'./change/payer'"
           />
           <Menu
             :isActive="false"
@@ -25,24 +43,6 @@
             :isActive="false"
             :name="'Pemegang Polis'"
             :icon="'menu/pemegang-polis.svg'"
-            :link="'./coming-soon'"
-          />
-          <Menu
-            :isActive="false"
-            :name="'Ahli Waris'"
-            :icon="'menu/perubahan-ahli-waris.svg'"
-            :link="'./coming-soon'"
-          />
-          <Menu
-            :isActive="false"
-            :name="'Tanggal Lahir dan Jenis Kelamin Tertanggung'"
-            :icon="'menu/perubahan-jenis-kelamin.svg'"
-            :link="'./coming-soon'"
-          />
-          <Menu
-            :isActive="false"
-            :name="'Pekerjaan Tertanggung'"
-            :icon="'menu/perubahan-pekerjaan-tertanggung.svg'"
             :link="'./coming-soon'"
           />
         </div>

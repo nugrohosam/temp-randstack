@@ -170,6 +170,7 @@
                       v-model="form.rek_owner"
                     />
                 </div>
+                <small>Nama Pemilik Rekening tidak bisa menggunakan huruf dan tanda baca</small>
               </div>
               <div class="col-lg-4 col-sm-6">
                 <p class="data-title mb-2">Nama Cabang</p>
@@ -181,21 +182,22 @@
                       v-model="form.branch"
                     />
                 </div>
+                <small>Nama Cabang tidak bisa menggunakan huruf dan tanda baca</small>
               </div>
             </div>
 
             <div class="row">
               <div class="col-lg-2 col-sm-6">
                 <p class="data-title mb-2">Bank</p>
-                  <div >
-                    <v-select
+                  <div>
+                    <v-autocomplete
                       outlined
                       dense
                       class="bank_option"
                       :items="optionBank"
                       v-model="form.bank"
                       label=""
-                    ></v-select>
+                    ></v-autocomplete>
                   </div>
               </div>
             </div>
@@ -776,6 +778,9 @@ export default {
 </script>
 <style lang="scss" scoped>
   .investment_type_option {
+    max-width: 250px !important;
+  }
+  .bank_option {
     max-width: 250px !important;
   }
   .btn-add-investment {

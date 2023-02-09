@@ -53,7 +53,6 @@
       </div>
     </div>
 
-    <!-- Modal Message -->
     <ModalMessage
       :message="modal.message"
       :show="modal.show"

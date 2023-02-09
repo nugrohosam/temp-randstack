@@ -47,11 +47,10 @@
         </div>
       </div>
       <div class="row">
-        <!-- Search -->
+     
         <div class="col-12">
           <template>
             <div class="page-body">
-              <!-- Transaction Status Menu -->
               <div class="row">
                 <div class="col-12">
                   <div class="d-flex justify-sm-space-between">
@@ -154,7 +153,6 @@
         <div class="col-12">
           <template>
             <div class="page-body">
-              <!-- Transaction Status Menu -->
               <div class="row">
                 <div class="col-12">
                   <div class="d-flex justify-sm-space-between">
@@ -229,7 +227,7 @@
           <p class="data-title mb-2">Lihat Foto Selfie dengan KTP</p>
           <button
             class="btn btn-primary-outlined"
-            @click.prevent="showSelfieKtpPreview"
+            @click.prevent="showKtpSelfiePreview"
           >
             Lihat Foto
           </button>
@@ -342,7 +340,7 @@ export default {
         }
       }
     },
-    showSelfieKtpPreview: function () {
+    showKtpSelfiePreview: function () {
       if (this.selfieKtpFile) {
         this.image_preview.src = URL.createObjectURL(this.selfieKtpFile);
         this.image_preview.show = true;

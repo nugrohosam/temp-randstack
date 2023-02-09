@@ -106,7 +106,7 @@
             </p>
           </div>
           <div class="col-lg-4 col-sm-6">
-            <p class="data-title mb-2">Hubungan dengan Tertanggung Utama</p>
+            <p class="data-title mb-2">Hubungan dengan Pemegang Polis</p>
             <p class="data-value">
               {{ getAddRider.add_riders[index].insured ? getAddRider.add_riders[index].insured.relation : "" }}
             </p>
@@ -211,7 +211,7 @@
         <p class="data-value">
           <button
             class="btn btn-primary-outlined"
-            @click.prevent="showSelfieKtpPreview"
+            @click.prevent="showKtpSelfiePreview"
           >
             Lihat
           </button>
@@ -334,7 +334,7 @@ export default {
                         this.$isNullWithSpace(person?.midName || '') +
                         this.$isNullWithSpace(person?.lastName || '')
     },
-    showSelfieKtpPreview: function () {
+    showKtpSelfiePreview: function () {
       if (this.getAddRider.ktp_selfie_attachment.file) {
         this.image_preview.src = URL.createObjectURL(
           this.getAddRider.ktp_selfie_attachment.file

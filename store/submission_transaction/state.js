@@ -123,6 +123,8 @@ export default {
     reason_selected: null,
   },
 
+  industries: [],
+  occupations: [],
   banks: [],
   creditCardBanks: [],
 
@@ -164,7 +166,7 @@ export default {
         preview: "",
         upload_filename: "",
       },
-      beneficary_owner: {
+      beneficiary_owner: {
         file: null,
         name: "",
         preview: "",

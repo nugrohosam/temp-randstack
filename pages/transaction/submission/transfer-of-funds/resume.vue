@@ -68,7 +68,7 @@
         <p class="data-value">
           <button
             class="btn btn-primary-outlined"
-            @click.prevent="showSelfieKtpPreview"
+            @click.prevent="showKtpSelfiePreview"
           >
             Lihat
           </button>
@@ -263,7 +263,7 @@ export default {
       const found = premInvestRates.find((item) => item.fundCode === fundCode);
       return found?.assignRate || 0;
     },
-    showSelfieKtpPreview: function () {
+    showKtpSelfiePreview: function () {
       if (this.getTransferofFund.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
           this.getTransferofFund.ktpSelfieAttachment.file

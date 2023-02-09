@@ -1,5 +1,4 @@
 <template>
-   <!-- Temp Overlay Loading -->
     <div class="text-center">
       <v-overlay :value="show" color="rgba(250, 250, 250, 0.9)">
         <v-progress-circular  indeterminate size="64" color="#F15921" width="7">

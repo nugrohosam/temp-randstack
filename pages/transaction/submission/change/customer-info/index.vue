@@ -40,11 +40,10 @@
           </div>
         </div>
         <div class="row">
-          <!-- Search -->
+       
           <div class="col-12">
             <template>
               <div class="page-body">
-                <!-- Transaction Status Menu -->
                 <div class="row">
                   <div class="col-12">
                     <div
@@ -298,7 +297,6 @@
           <div class="col-12">
             <template>
               <div class="page-body">
-                <!-- Transaction Cok Menu -->
                 <div class="row">
                   <div class="col-12">
                     <div
@@ -544,7 +542,7 @@
 <script>
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
-  name: "investment-fund-allocation-change",
+  name: "change-customer-info",
   components: {
     SaveIcon,
     InfoIcon,

@@ -20,6 +20,12 @@ export default {
   getBanks: (state) => {
     return state.banks;
   },
+  getOccupations: (state) => {
+    return state.occupations;
+  },
+  getIndustries: (state) => {
+    return state.industries;
+  },
   getCreditCardBanks: (state) => {
     return state.creditCardBanks;
   },

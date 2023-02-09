@@ -431,9 +431,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.bank_option {
-  max-width: 250px !important;
-}
 .btn-add-investment {
   max-width: 250px !important;
 }

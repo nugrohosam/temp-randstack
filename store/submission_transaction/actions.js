@@ -2,10 +2,38 @@ export default {
   searchMenu({ dispatch, commit }, data) {
     commit("setMenuKeyword", data);
   },
-  async getBanks({ rootGetters, commit, dispatch }) {
+  async getOccupations({ rootGetters, commit, dispatch }) {
     this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
     await this.$axios
-      .$get("/api/v1/banks")
+      .$get("/api/v1/occupations")
+      .then((response) => {
+        if (response.success) {
+          commit("setOccupations", response.data);
+        }
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+  },
+  async getIndustries({ rootGetters, commit, dispatch }) {
+    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+    await this.$axios
+      .$get("/api/v1/industries")
+      .then((response) => {
+        if (response.success) {
+          commit("setIndustries", response.data);
+        }
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+  },
+  async getBanks({ rootGetters, commit, dispatch }, data) {
+    this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
+    await this.$axios
+      .$get("/api/v1/banks?service_id=" + (data?.serviceId || ""))
       .then((response) => {
         if (response.success) {
           commit("setBanks", response.data);
@@ -16,10 +44,10 @@ export default {
         return error;
       });
   },
-  async getCreditCardBanks({ rootGetters, commit, dispatch }) {
+  async getCreditCardBanks({ rootGetters, commit, dispatch }, data) {
     this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
     await this.$axios
-      .$get("/api/v1/credit-cards")
+      .$get("/api/v1/credit-cards?service_id=" + (data?.serviceId || ""))
       .then((response) => {
         if (response.success) {
           commit("setCreditCardBanks", response.data);
@@ -258,10 +286,10 @@ export default {
       });
     },
 
-      async uploadBeneficaryOwnerFile({ rootGetters, commit, dispatch }, data) {
+      async uploadBeneficiaryOwnerFile({ rootGetters, commit, dispatch }, data) {
         let formData = new FormData();
         formData.append("File", data.file);
-        formData.append("Type", "BENEFICARYOWNER");
+        formData.append("Type", "BENEFICIARYOWNER");
         this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
         dispatch(
           "toggleOverlayLoading",
@@ -272,7 +300,7 @@ export default {
           .$post("/api/v1/attachments", formData)
           .then((response) => {
             if (response.success) {
-              commit("setUploadBeneficaryOwnerFile", {
+              commit("setUploadBeneficiaryOwnerFile", {
                 stream: data.file,
                 upload: response.data.name,
               });

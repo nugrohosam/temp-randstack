@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <!-- Search -->
+ 
     <div class="col-12">
       <div class="page-body">
         <h4>

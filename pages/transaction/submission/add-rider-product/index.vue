@@ -107,7 +107,7 @@
             <div class="row">
               <div class="col-lg-4 col-sm-6" v-if="isHavePlans(form.add_riders[index].product_id)">
                 <p class="data-title mb-2">Rider Plan</p>
-                <div >
+                <div>
                   <v-select
                     outlined
                     dense
@@ -213,7 +213,7 @@
                 </div>
               </div>
               <div class="col-lg-4 col-sm-6">
-                <p class="data-title mb-2">Hubungan dengan Tertanggung Utama</p>
+                <p class="data-title mb-2">Hubungan dengan Pemegang Polis</p>
                 <div class="form-input">
                   <v-select
                     outlined

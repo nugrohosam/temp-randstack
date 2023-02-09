@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <div>Perubahan Pembayaran Premi</div> -->
     <NuxtChild />
     <ModalMessage
       :message="modal.message"

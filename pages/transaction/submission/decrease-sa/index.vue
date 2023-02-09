@@ -82,7 +82,7 @@
           <div class="row" v-if="coverages_selected.length > 0">
             <div class="col-lg-4 col-sm-6" v-if="isHavePlans(coverages_selected)">
               <p class="data-title mb-2">Pilih Benefit Baru</p>
-              <div >
+              <div>
                 <v-select
                   outlined
                   dense

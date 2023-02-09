@@ -13,7 +13,7 @@ const state = () => ({
     ktpSelfieAttachment: {},
     ktpAttachment: {},
     savingBookAttachment: {},
-    beneficaryOwnerAttachment: {},
+    beneficiaryOwnerAttachment: {},
     bankAuthorizationAttachment: {},
   },
 });
@@ -39,7 +39,7 @@ const actions = {
     };
 
     if (!state.changePaymentMethod.isPayerRegisteredInPolicy && state.changePaymentMethod.paymentMethod != 93) {
-      form.beneficary_owner_attachment = state.changePaymentMethod.beneficaryOwnerAttachment.name;
+      form.beneficiary_owner_attachment = state.changePaymentMethod.beneficiaryOwnerAttachment.name;
     }
 
     if (state.changePaymentMethod.paymentMethod == 93) {

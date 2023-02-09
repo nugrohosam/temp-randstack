@@ -58,7 +58,7 @@
 
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Unggah Bukti Transfer</p>
+        <p class="data-title mb-2">Unggah Bukti Transfer (Opsional)</p>
         <p class="data-value">
           <button
             class="btn btn-primary-outlined"
@@ -76,7 +76,7 @@
         <p class="data-value">
           <button
             class="btn btn-primary-outlined"
-            @click.prevent="showSelfieKtpPreview"
+            @click.prevent="showKtpSelfiePreview"
           >
             Lihat
           </button>
@@ -257,7 +257,7 @@ export default {
         this.image_preview.show = true;
       }
     },
-    showSelfieKtpPreview: function () {
+    showKtpSelfiePreview: function () {
       if (this.getPolicyRecovery.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
           this.getPolicyRecovery.ktpSelfieAttachment.file

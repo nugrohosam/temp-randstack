@@ -16,7 +16,6 @@
         </div>
       </div>
 
-      <!-- Transaction Status Menu -->
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 max-w-fit">
         <Menu
           v-for="(menu, key) in menus"

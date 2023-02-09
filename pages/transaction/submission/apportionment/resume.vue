@@ -78,7 +78,7 @@
         <p class="data-value">
           <button
             class="btn btn-primary-outlined"
-            @click.prevent="showSelfieKtpPreview"
+            @click.prevent="showKtpSelfiePreview"
           >
             Lihat
           </button>
@@ -237,7 +237,7 @@ export default {
 
       return contractInvest.filter(item => item.accumUnits > 0);
     },
-    showSelfieKtpPreview: function () {
+    showKtpSelfiePreview: function () {
       if (this.getApportionment.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
           this.getApportionment.ktpSelfieAttachment.file

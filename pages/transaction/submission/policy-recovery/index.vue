@@ -52,7 +52,7 @@
 
       <div class="row">
         <div class="col-12">
-          <p class="data-title mb-2">Unggah Bukti Transfer</p>
+          <p class="data-title mb-2">Unggah Bukti Transfer (Opsional)</p>
           <input
             type="file"
             ref="inputBuktiTransferImage"

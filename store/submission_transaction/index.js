@@ -18,7 +18,11 @@ import TransferOfFund from "./transfer_of_fund";
 import Apportionment from "./apportionment";
 import ChangePaymentFreq from "./change_payment_freq";
 import ChangePaymentMethod from "./change_payment_method";
+import ChangeOccupation from "./change_occupation";
+import ChangeBirthDateAndGender from "./change_birth_date_and_gender";
 import ChangeTerm from "./change_term";
+import ChangePayer from "./change_payer";
+import ChangeBeneficiary from "./change_beneficiary";
 
 const SubmissionTransactionModules = {
   namespaced: true,
@@ -38,8 +42,12 @@ const SubmissionTransactionModules = {
     transfer_of_fund: TransferOfFund,
     apportionment: Apportionment,
     change_term: ChangeTerm,
+    change_occupation: ChangeOccupation,
     change_payment_freq: ChangePaymentFreq,
+    change_payer: ChangePayer,
     change_payment_method: ChangePaymentMethod,
+    change_birth_date_and_gender: ChangeBirthDateAndGender,
+    change_beneficiary: ChangeBeneficiary,
   },
   state,
   getters,

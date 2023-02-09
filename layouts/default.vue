@@ -1,9 +1,5 @@
 <template>
   <v-app class="app" style="padding-bottom: 56px">
-    <!-- <v-navigation-drawer
-      fixed
-      app
-    > -->
     <template v-if="isChecked">
       <div class="navbar-container desktop">
         <div
@@ -214,9 +210,6 @@
       :button="idle.button"
       @closeModal="idle.show = false"
     />
-    <!-- <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer> -->
   </v-app>
 </template>
 
@@ -248,8 +241,6 @@ export default {
   onActive() {},
   watch: {
     windowWidth(newWidth, oldWidth) {
-      // breakpoint mobile <960px
-      // breakpoint tablet <1264px
       this.changeAppDrawer(newWidth);
     },
     $route(to, from) {
@@ -366,6 +357,8 @@ export default {
       if (isAuthenticated) {
         this.getMyPolicy();
         this.getBanks();
+        this.getOccupations();
+        this.getIndustries();
         this.getCreditCardBanks();
       } else if (!isAuthenticated) {
         this.$router.push({
@@ -392,12 +385,20 @@ export default {
       }
     },
 
-    getBanks: async function () {
-      await this.$store.dispatch("submission_transaction/getBanks");
+    getBanks: async function (serviceId = "") {
+      await this.$store.dispatch("submission_transaction/getBanks", { serviceId });
     },
 
-    getCreditCardBanks: async function () {
-      await this.$store.dispatch("submission_transaction/getCreditCardBanks");
+    getOccupations: async function () {
+      await this.$store.dispatch("submission_transaction/getOccupations");
+    },
+
+    getIndustries: async function () {
+      await this.$store.dispatch("submission_transaction/getIndustries");
+    },
+    
+    getCreditCardBanks: async function (serviceId = "") {
+      await this.$store.dispatch("submission_transaction/getCreditCardBanks", { serviceId });
     },
 
     showNotification: function () {
