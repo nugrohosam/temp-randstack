@@ -4,7 +4,15 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
         <p class="data-value">
-          {{ myPolicy.policyWithCode.policyHolder.person.firstName }}
+          {{ $isNullWithSpace(
+                        myPolicy.policyWithCode.policyHolder.person.firstName
+            ) +
+            $isNullWithSpace(
+              myPolicy.policyWithCode.policyHolder.person.midName
+            ) +
+            $isNullWithSpace(
+              myPolicy.policyWithCode.policyHolder.person.lastName
+            ) }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -37,7 +45,7 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Kartu Identitas</p>
           <p class="data-value">
-            {{ getChangeBeneficiary.addItem.person.certiType }}
+            {{ options.identityType[+getChangeBeneficiary.addItem.person.certiType] }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -76,7 +84,7 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Hubungan dengan Pemegang Polis</p>
           <p class="data-value">
-            {{ $labelRelationType(getChangeBeneficiary.addItem.designation) }}
+            {{ getChangeBeneficiary.addItem.designation == '52' ? getChangeBeneficiary.addItem.otherDesignation : $labelRelationType(getChangeBeneficiary.addItem.designation) }}
           </p>
         </div>
       </div>
@@ -258,6 +266,10 @@
 </template>
 
 <script>
+import {
+  identityType,
+} from "@/utils/constant";
+
 import resumePageMixin from "@/mixins/resumePage";
 import InfoPanel from "../../../../../components/InfoPanel.vue";
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
@@ -271,6 +283,9 @@ export default {
   mixins: [resumePageMixin],
   data() {
     return {
+      options: {
+        identityType,
+      },
       accepted1: false,
       accepted2: false,
       table: {

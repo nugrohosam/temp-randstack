@@ -5,7 +5,15 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemegang Polis</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.policyHolder.person.firstName }}
+            {{ $isNullWithSpace(
+                        myPolicy.policyWithCode.policyHolder.person.firstName
+            ) +
+            $isNullWithSpace(
+              myPolicy.policyWithCode.policyHolder.person.midName
+            ) +
+            $isNullWithSpace(
+              myPolicy.policyWithCode.policyHolder.person.lastName
+            ) }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -212,7 +220,7 @@
           <div class="form-input">
             <input
               type="text"
-                pattern="[0-9a-zA-Z.,\s]+"
+                pattern="[0-9a-zA-Z\s]+"
               class="form-control"
               v-model="form.addItem.person.certiCode"
             />
@@ -279,6 +287,17 @@
             ></v-select>
           </div>
         </div>
+        <div class="col-lg-4 col-sm-6" v-if="form.addItem.designation == '52'">
+          <p class="data-title mb-2">Tulis Hubungan</p>
+          <div class="form-input">
+            <input
+              type="text"
+              pattern="[a-zA-Z.,\s]+"
+              class="form-control"
+              v-model="form.addItem.otherDesignation"
+            />
+          </div>
+        </div>
       </div>
 
       <div class="row" v-if="form.changes == 'Penambahan / Revisi' && !submitClicked">
@@ -287,7 +306,7 @@
             class="btn btn-primary-outlined"
             @click.prevent="addOrReviseBeneficiary()"
           >
-            {{ beneficiarySelected.lenght > 0 ? "Submit" : "Tambah Ahli Waris"}}
+            {{ !isAddNewBeneficiary ? "Submit" : "Tambah Ahli Waris"}}
           </button>
         </div>
       </div>
@@ -360,7 +379,7 @@
             rules="required|image"
             v-slot="{ validate, errors }"
           >
-            <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+            <p class="data-title mb-2">{{ "Unggah Foto Selfie dengan KTP" + (isAddNewBeneficiary ? " Pemegang Polis" : "") }}</p>
             <input
               type="file"
               ref="inputSelfieKtpImage"
@@ -387,7 +406,7 @@
         </div>
       </div>
 
-      <div class="row" v-if="form.changes == 'Penambahan / Revisi'">
+      <div class="row" v-if="form.changes == 'Penambahan / Revisi' && isAddNewBeneficiary">
         <div class="col-lg-6 col-sm-12">
           <ValidationProvider
             rules="required|image"
@@ -452,7 +471,7 @@
             rules="required|image"
             v-slot="{ validate, errors }"
           >
-            <p class="data-title mb-2">Unggah Foto KTP</p>
+            <p class="data-title mb-2">Unggah Foto KTP Pemegang Polis</p>
             <input
               type="file"
               ref="inputKtpImage"
@@ -604,6 +623,9 @@ export default {
 
       return []
     },
+    isAddNewBeneficiary() {
+      return this.beneficiarySelected.length == 0
+    },
     restOfBeneficiaries() {
       return this.myPolicy.policyWithCode.beneficiaries.filter(
         x => !this.partyIdsBeneficiarySelected.includes(x.partyId)
@@ -716,6 +738,7 @@ export default {
           maritalStatus: ""
         },
         designation: "",
+        otherdesignation: "",
         percentage: "0",
       };
 
@@ -782,10 +805,23 @@ export default {
       if (!this.form.ktpAttachment.name) {
         this.validationMessage.push("Unggah KTP diperlukan");
       }
+      if (this.isAddNewBeneficiary && !this.form.beneficiaryKtpAttachment.name) {
+        this.validationMessage.push("Unggah KTP Ahli Waris Baru diperlukan");
+      }
+      if (this.form.addItem.designation == '52' && !this.form.addItem.otherDesignation) {
+        this.validationMessage.push("Hubungan Ahli Waris diperlukan");
+      } else if (!this.form.addItem.designation) {
+        this.validationMessage.push("Hubungan Ahli Waris diperlukan");
+      }
       if (this.form.changes == 'Penambahan / Revisi' && !this.form.documentAttachment.name) {
         this.validationMessage.push("Unggah Kartu Keluarga diperlukan");
       }
-    },
+      for (let i = 0; i < this.form.changeItems.length; i++) {
+        if (+this.form.changeItems[i].percentage <= 0) {
+          this.validationMessage.push("Persentase tidak boleh 0%");
+        }
+      }
+     },
     save() {
       this.form.changeItems = this.form.changeItems.filter(x => !this.partyIdsBeneficiarySelected.includes(x.partyId));
       this.validate();

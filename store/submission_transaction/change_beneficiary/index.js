@@ -28,7 +28,7 @@ const actions = {
       document_attachment: state.changeBeneficiary.documentAttachment?.name || '',
       beneficiary_ktp_attachment: '',
       change_items: state.changeBeneficiary.changeItems.map(x => ({
-        party_id: x.partyId,
+        party_id: +x.partyId,
         percentage: +x.percentage,
       })),
       changes: state.changeBeneficiary.changes
@@ -39,6 +39,8 @@ const actions = {
       form.add_item = {
         ...state.changeBeneficiary.addItem,
         party_id: 0,
+        designation: +state.changeBeneficiary.addItem.designation,
+        other_designation: state.changeBeneficiary.addItem.designation == '52' ? state.changeBeneficiary.addItem.otherDesignation : '',
         person: {
           first_name: state.changeBeneficiary.addItem.person.firstName,
           mid_name: state.changeBeneficiary.addItem.person.midName,

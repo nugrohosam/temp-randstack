@@ -5,11 +5,11 @@
       style="background: linear-gradient(90deg, #f7931d 48.44%, #fec34f 97.15%)"
     >
       <img
-        src="~/assets/svg/ware-header.svg"
+        src="~/assets/svg/wave-header.svg"
         class="hidden lg:block lg:absolute lg:right-0 lg:top-0"
       />
       <img
-        src="~/assets/svg/ware-header-mobile.svg"
+        src="~/assets/svg/wave-header-mobile.svg"
         class="absolute right-0 top-0 lg:hidden"
         style="height: 100%"
       />

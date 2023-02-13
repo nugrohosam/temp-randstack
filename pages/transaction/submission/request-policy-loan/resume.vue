@@ -5,7 +5,15 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
         <p class="data-value">
-          {{ myPolicy.policyWithCode.policyHolder.person.firstName }}
+          {{ $isNullWithSpace(
+                        myPolicy.policyWithCode.policyHolder.person.firstName
+            ) +
+            $isNullWithSpace(
+              myPolicy.policyWithCode.policyHolder.person.midName
+            ) +
+            $isNullWithSpace(
+              myPolicy.policyWithCode.policyHolder.person.lastName
+            ) }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">

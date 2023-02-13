@@ -83,7 +83,7 @@ export default function ({ app, $axios }, inject) {
     types[21] = "Anak tiri";
     types[50] = "Calon Pemegang Polis";
     types[51] = "Calon Tertanggung";
-    types[52] = "Lainnya (Wajib Mengisi Form Beneficiary Owner)";
+    types[52] = "Lainnya";
     types[19] = "Instansi";
     types[22] = "Ayah angkat";
     types[23] = "Ayah tiri";
@@ -96,39 +96,8 @@ export default function ({ app, $axios }, inject) {
   }
 
   const labelRelationType = (code) => {
-    let types = new Array();
-    types[1] = "Suami";
-    types[2] = "Istri";
-    types[3] = "Ayah";
-    types[4] = "Ibu";
-    types[5] = "Anak";
-    types[6] = "Adik";
-    types[7] = "Kakak";
-    types[8] = "Paman";
-    types[9] = "Bibi";
-    types[10] = "Keponakan";
-    types[11] = "Kakek";
-    types[12] = "Nenek";
-    types[13] = "Cucu";
-    types[14] = "Anak angkat";
-    types[15] = "Other";
-    types[16] = "Anak tiri";
-    types[17] = "Yayasan";
-    types[18] = "Perusahaan";
-    types[20] = "Anak angkat";
-    types[21] = "Anak tiri";
-    types[50] = "Calon Pemegang Polis";
-    types[51] = "Calon Tertanggung";
-    types[52] = "Lainnya (Wajib Mengisi Form Beneficiary Owner)";
-    types[19] = "Instansi";
-    types[22] = "Ayah angkat";
-    types[23] = "Ayah tiri";
-    types[24] = "Ibu angkat";
-    types[25] = "Ibu tiri";
-    types[26] = "Yayasan";
-    types[27] = "Perusahaan";
-
-    return types[code];
+    const type = relationType();
+    return type[code];
   };
 
   const currencyName = (id) => {
