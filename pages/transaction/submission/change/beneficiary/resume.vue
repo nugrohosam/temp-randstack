@@ -5,7 +5,7 @@
         <p class="data-title mb-2">Nama Pemegang Polis</p>
         <p class="data-value">
           {{ $isNullWithSpace(
-                        myPolicy.policyWithCode.policyHolder.person.firstName
+              myPolicy.policyWithCode.policyHolder.person.firstName
             ) +
             $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.midName
@@ -45,7 +45,7 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Kartu Identitas</p>
           <p class="data-value">
-            {{ options.identityType[+getChangeBeneficiary.addItem.person.certiType] }}
+            {{ options.identityType[+getChangeBeneficiary.addItem.person.certiType - 1] }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -190,7 +190,7 @@
       </div>
     </div>
 
-    <div class="row" v-if="getChangeBeneficiary.changes == 'Penambahan / Revisi'">
+    <div class="row" v-if="getChangeBeneficiary.changes == 'Penambahan / Revisi' && getChangeBeneficiary.changeItems.length > myPolicy.policyWithCode.beneficiaries.length">
       <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">Unggah KTP Ahli Waris Baru</p>
         <div class="data-value">

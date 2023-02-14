@@ -805,16 +805,18 @@ export default {
       if (!this.form.ktpAttachment.name) {
         this.validationMessage.push("Unggah KTP diperlukan");
       }
-      if (this.isAddNewBeneficiary && !this.form.beneficiaryKtpAttachment.name) {
-        this.validationMessage.push("Unggah KTP Ahli Waris Baru diperlukan");
-      }
-      if (this.form.addItem.designation == '52' && !this.form.addItem.otherDesignation) {
-        this.validationMessage.push("Hubungan Ahli Waris diperlukan");
-      } else if (!this.form.addItem.designation) {
-        this.validationMessage.push("Hubungan Ahli Waris diperlukan");
-      }
-      if (this.form.changes == 'Penambahan / Revisi' && !this.form.documentAttachment.name) {
-        this.validationMessage.push("Unggah Kartu Keluarga diperlukan");
+      if (this.form.changes == 'Penambahan / Revisi') {
+        if (this.isAddNewBeneficiary && !this.form.beneficiaryKtpAttachment.name) {
+         this.validationMessage.push("Unggah KTP Ahli Waris Baru diperlukan");
+        }
+        if (this.form.addItem.designation == '52' && !this.form.addItem.otherDesignation) {
+          this.validationMessage.push("Hubungan Ahli Waris diperlukan");
+        } else if (!this.form.addItem.designation) {
+          this.validationMessage.push("Hubungan Ahli Waris diperlukan");
+        }
+        if (!this.form.documentAttachment.name) {
+          this.validationMessage.push("Unggah Kartu Keluarga diperlukan");
+        }
       }
       for (let i = 0; i < this.form.changeItems.length; i++) {
         if (+this.form.changeItems[i].percentage <= 0) {
