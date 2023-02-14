@@ -103,7 +103,7 @@ export default {
     "/api/v1/": {
       // target: "http://10.22.13.217/",
       // target: "http://172.20.8.75/",
-      target: "http://10.1.1.5:5020/",
+      target: "http://0.0.0.0:5020/",
       // target: "http://10.20.10.34/",
       // target: "http://34.124.156.103:8888/",
       // target: "http://localhost:5020/",
@@ -112,7 +112,7 @@ export default {
     "/test/v1/": {
       // target: "http://10.22.13.217/",
       // target: "http://172.20.8.75/",
-      target: "http://10.1.1.5:5020/",
+      target: "http://0.0.0.0:5020/",
       // target: "http://10.20.10.34/",
       // target: "http://34.124.156.103:8888/",
       // target: "http://localhost:5020/",
