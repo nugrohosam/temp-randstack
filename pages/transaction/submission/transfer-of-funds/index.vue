@@ -48,13 +48,26 @@
               {{ (item && $convertCurrency(item.accumUnits)) || 0 }}
             </template>
             <template v-slot:item.accumUnits="{ item }">
-              {{ (item && $convertCurrency(getAssignRateFund(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).premInvestRates, item.fundCode) * 100)) }}%
+              {{
+                item &&
+                $convertCurrency(
+                  getAssignRateFund(
+                    myPolicy.policyWithCode.coverages.find(
+                      (x) => x.masterProduct == null
+                    ).premInvestRates,
+                    item.fundCode
+                  ) * 100
+                )
+              }}%
             </template>
             <template v-slot:item.priceUnit="{ item }">
               {{
                 item &&
                 $convertCurrency(
-                  getFundPrices(myPolicy.policyWithCode.fundPrices, item.fundCode)
+                  getFundPrices(
+                    myPolicy.policyWithCode.fundPrices,
+                    item.fundCode
+                  )
                 )
               }}
             </template>
@@ -72,8 +85,10 @@
             </template>
             <template v-slot:body.append>
               <tr class="lg:hidden">
-                <td colspan="6" >Total</td>
-                <td style="text-align: right">{{ $convertCurrency(sumTotalInvestemnt) }}</td>
+                <td colspan="6">Total</td>
+                <td style="text-align: right">
+                  {{ $convertCurrency(sumTotalInvestemnt) }}
+                </td>
               </tr>
               <tr class="hidden lg:w-auto lg:visible">
                 <td colspan="2"></td>
@@ -88,7 +103,9 @@
         </div>
       </div>
 
-      <p class="text-gray-600">Tanggal NAB {{ tanggalNAB(addItemForm.from) }}</p>
+      <p class="text-gray-600">
+        Tanggal NAB {{ tanggalNAB(addItemForm.from) }}
+      </p>
       <div class="row">
         <div class="col-lg-3">
           <p class="data-title mb-2">
@@ -117,7 +134,9 @@
           </div>
         </div>
         <div class="col-lg-3">
-          <p class="data-title mb-2">Persentase Unit yang Akan Dipindahkan (%)</p>
+          <p class="data-title mb-2">
+            Persentase Unit yang Akan Dipindahkan (%)
+          </p>
           <div class="data-value">
             <input
               type="number"
@@ -129,7 +148,9 @@
           </div>
         </div>
         <div class="col-lg-3">
-          <p class="data-title mb-2">Jumlah Unit yang dipindah</p>
+          <p class="data-title mb-2" style="margin-top: auto">
+            Jumlah Unit yang dipindah
+          </p>
           <div class="data-value">
             <input
               type="text"
@@ -146,7 +167,9 @@
         class="mb-4"
       />
 
-      <button class="btn btn-primary-outlined mt-4" @click.prevent="addItem">Tambah</button>
+      <button class="btn btn-primary-outlined mt-4" @click.prevent="addItem">
+        Tambah
+      </button>
 
       <hr class="mb-4" />
 
@@ -218,14 +241,15 @@
       <div class="row">
         <div class="col-lg-12 col-sm-12">
           <div class="message-bar rounded-lg">
-                          <div class="d-flex">
-                <info-icon class="ic-primary mr-2"></info-icon>
-                Perhatian !
-              </div>
-              <br>
+            <div class="d-flex">
+              <info-icon class="ic-primary mr-2"></info-icon>
+              Perhatian !
+            </div>
+            <br />
             <ul>
               <li>
-                - Pengajuan transaksi Perubahan Alokasi Dana Investasi akan dikenakan biaya
+                - Pengajuan transaksi Perubahan Alokasi Dana Investasi akan
+                dikenakan biaya
               </li>
             </ul>
           </div>
@@ -248,7 +272,7 @@
 <script>
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
 
-export default {  
+export default {
   name: "transfer-to-fund",
   components: {
     SaveIcon,
@@ -283,7 +307,7 @@ export default {
         to: "",
         percentage: null,
         totalUnit: "",
-        amount: 0
+        amount: 0,
       },
       form: {
         items: [],
@@ -304,21 +328,23 @@ export default {
     },
     totalUnits() {
       return this.contractInvests(this.myPolicy.policyWithCode.coverages)
-        .map(
-          (item) =>
-            item.accumUnits 
-        )
+        .map((item) => item.accumUnits)
         .reduce((a, b) => a + b, 0);
     },
     totalPrices() {
       return this.contractInvests(this.myPolicy.policyWithCode.coverages)
-        .map(
-          (item) => this.getFundPrices(this.myPolicy.policyWithCode.fundPrices, item.fundCode)
+        .map((item) =>
+          this.getFundPrices(
+            this.myPolicy.policyWithCode.fundPrices,
+            item.fundCode
+          )
         )
         .reduce((a, b) => a + b, 0);
     },
     totalUnitChoosen() {
-      return this.tableResult.body.map((item) => +item.totalUnit).reduce((a, b) => a + b, 0);
+      return this.tableResult.body
+        .map((item) => +item.totalUnit)
+        .reduce((a, b) => a + b, 0);
     },
     sumTotalInvestemnt() {
       return this.contractInvests(this.myPolicy.policyWithCode.coverages)
@@ -347,10 +373,11 @@ export default {
           this.addItemForm.totalUnit =
             (found.accumUnits * +data.percentage) / 100;
           this.addItemForm.amount =
-            this.addItemForm.totalUnit * this.getFundPrices(
+            this.addItemForm.totalUnit *
+            this.getFundPrices(
               this.myPolicy.policyWithCode.fundPrices,
               found.fundCode
-            )
+            );
         }
       }
     );
@@ -365,9 +392,15 @@ export default {
     );
     this.invesmentOptions = {
       from: this.contractInvests(this.myPolicy.policyWithCode.coverages).map(
-        (item) => ({'value' : item.fundCode, 'text' : this.$fundName(item.fundCode)})
+        (item) => ({
+          value: item.fundCode,
+          text: this.$fundName(item.fundCode),
+        })
       ),
-      to: result.product.fundCodes.map((fundCode) =>  ({'value' : fundCode, 'text' : this.$fundName(fundCode)})),
+      to: result.product.fundCodes.map((fundCode) => ({
+        value: fundCode,
+        text: this.$fundName(fundCode),
+      })),
     };
   },
   methods: {
@@ -380,7 +413,15 @@ export default {
         }
       });
 
-      return contractInvest.filter(item => this.getAssignRateFund(this.myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).premInvestRates, item.fundCode) > 0);
+      return contractInvest.filter(
+        (item) =>
+          this.getAssignRateFund(
+            this.myPolicy.policyWithCode.coverages.find(
+              (x) => x.masterProduct == null
+            ).premInvestRates,
+            item.fundCode
+          ) > 0
+      );
     },
     getFundPrices(fundPrices = [], fundCode) {
       if (!fundPrices.length) return 0;
@@ -410,8 +451,8 @@ export default {
       const fundPriceDate = this.getFundPriceDate(
         this.myPolicy.policyWithCode.fundPrices,
         fundCode
-      )
-      return fundPriceDate || "-"
+      );
+      return fundPriceDate || "-";
     },
     getFundPriceDate(fundPrices = [], fundCode) {
       if (!fundPrices.length) return 0;
@@ -419,17 +460,22 @@ export default {
       return found ? this.$moment(found.pricingDate).format("DD/MM/Y") : "-";
     },
     addItem() {
-      const isBodyFill = this.tableResult.body.length > 0 ;
-      const found = isBodyFill ? this.tableResult.body.find(
-        (item) => item.to === this.addItemForm.to
-      ) : null;
-      const totalUnitSource = this.contractInvests(this.myPolicy.policyWithCode.coverages).find((item) => item.fundCode == this.addItemForm.from).accumUnits
-      const countSource = isBodyFill ? this.tableResult.body.filter(
-        (item) => item.from === this.addItemForm.from
-      ).map((item) => +item.totalUnit).reduce((a, b) => a + b, 0) + this.addItemForm.totalUnit : 0;
-      
-      this.errorMessage.haveInvesmentFrom = []
-      if (this.addItemForm.from ==this.addItemForm.to) {
+      const isBodyFill = this.tableResult.body.length > 0;
+      const found = isBodyFill
+        ? this.tableResult.body.find((item) => item.to === this.addItemForm.to)
+        : null;
+      const totalUnitSource = this.contractInvests(
+        this.myPolicy.policyWithCode.coverages
+      ).find((item) => item.fundCode == this.addItemForm.from).accumUnits;
+      const countSource = isBodyFill
+        ? this.tableResult.body
+            .filter((item) => item.from === this.addItemForm.from)
+            .map((item) => +item.totalUnit)
+            .reduce((a, b) => a + b, 0) + this.addItemForm.totalUnit
+        : 0;
+
+      this.errorMessage.haveInvesmentFrom = [];
+      if (this.addItemForm.from == this.addItemForm.to) {
         this.errorMessage.haveInvesmentFrom.push(
           "Jenis Dana Investasi tidak bisa sama"
         );
@@ -445,23 +491,24 @@ export default {
         );
         return false;
       } else if (this.addItemForm.from == null || this.addItemForm.from == "") {
-        this.errorMessage.haveInvesmentFrom.push(
-          "Dana sumber harus dipilih."
-        );
+        this.errorMessage.haveInvesmentFrom.push("Dana sumber harus dipilih.");
         return false;
       } else if (this.addItemForm.to == null || this.addItemForm.to == "") {
         this.errorMessage.haveInvesmentFrom.push(
           "Tujuan pengalihan dana harus terisi."
         );
         return false;
-      } else if (this.addItemForm.totalUnit == null || this.addItemForm.totalUnit == 0) {
+      } else if (
+        this.addItemForm.totalUnit == null ||
+        this.addItemForm.totalUnit == 0
+      ) {
         this.errorMessage.haveInvesmentFrom.push(
           "Persentase Unit harus terisi."
         );
         return false;
       }
 
-      if (this.errorMessage.haveInvesmentFrom.length == 0){
+      if (this.errorMessage.haveInvesmentFrom.length == 0) {
         this.tableResult.body.push(this.addItemForm);
         this.form.items.push(this.addItemForm);
         this.addItemForm = {
@@ -479,7 +526,9 @@ export default {
     validate() {
       this.validationMessage = [];
       if (this.myPolicy.policyWithCode.advancePremIndi == "Y") {
-        this.validationMessage.push("Polis tidak bisa dalam kondisi advanced premium");
+        this.validationMessage.push(
+          "Polis tidak bisa dalam kondisi advanced premium"
+        );
       }
       if (!this.form.ktpSelfieAttachment.name) {
         this.validationMessage.push("Unggah Selfie + KTP diperlukan");
