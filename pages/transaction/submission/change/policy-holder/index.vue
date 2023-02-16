@@ -1175,6 +1175,46 @@ export default {
 
     validate() {
       this.validationMessage = [];
+      
+      if (!this.form.firstName) {
+        this.validationMessage.push("Nama Depan diperlukan");
+      }
+      if (!this.form.lastName) {
+        this.validationMessage.push("Nama Belakang diperlukan");
+      }
+      if (!this.form.certiType) {
+        this.validationMessage.push("Kartu Identitas diperlukan");
+      }
+      if (!this.form.certiCode) {
+        this.validationMessage.push("Nomor Identitas diperlukan");
+      }
+      if (!this.form.birthDate) {
+        this.validationMessage.push("Tanggal Lahir diperlukan");
+      }
+      if (!this.form.birthPlace) {
+        this.validationMessage.push("Tempat lahir diperlukan");
+      }
+      if (!this.form.phoneNumber) {
+        this.validationMessage.push("No Handphone diperlukan");
+      }
+      if (!this.form.email) {
+        this.validationMessage.push("Alamat Email diperlukan");
+      }
+      if (!this.form.gender) {
+        this.validationMessage.push("Jenis Kelamin diperlukan");
+      }
+      if (!this.form.marrigeStatus) {
+        this.validationMessage.push("Status Perkawinan diperlukan");
+      }
+      if (!this.form.ktpAttachment.name) {
+        this.validationMessage.push("Unggah Fotocopy KTP Pemegang polis diperlukan");
+      }
+      if (!this.form.documentAttachment.name) {
+        this.validationMessage.push("Unggah Fotocopy KTP Pembayar diperlukan");
+      }
+      if (!this.form.ktpSelfieAttachment.name) {
+        this.validationMessage.push("Unggah Selfie + KTP Pembayar diperlukan");
+      }
     },
 
     save() {
