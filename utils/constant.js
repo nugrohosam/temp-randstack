@@ -30,6 +30,13 @@ export const relationType = [
   "Perusahaan",
 ];
 
+export const addressType = [
+  { "identifier": 5, label: "Kantor" },
+  { "identifier": 4, label: "Korespondensi" },
+  { "identifier": 7, label: "ID" },
+  { "identifier": 8, label: "Kantor Cabang" },
+]
+
 export const identityType = [
   "E-KTP",
   "ID WNA",

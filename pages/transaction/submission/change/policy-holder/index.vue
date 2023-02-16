@@ -2,27 +2,95 @@
   <div>
     <form v-if="!isLoading" @submit.prevent="save">
       <div class="row">
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Nama Pemegang Polis</p>
+        <div class="col-lg-3 col-sm-6">
+          <p class="data-title mb-2">Nomor Polis</p>
+          <p class="data-value">
+            {{ myPolicy.policyWithCode.policyNumber }}
+          </p>
+        </div>
+        
+        <div class="col-lg-3 col-sm-6">
+          <p class="data-title mb-2">Nama Depan</p>
           <p class="data-value">
             {{
               $isNullWithSpace(
                 myPolicy.policyWithCode.policyHolder.person.firstName
-              ) +
-              $isNullWithSpace(
-                myPolicy.policyWithCode.policyHolder.person.midName
-              ) +
-              $isNullWithSpace(
-                myPolicy.policyWithCode.policyHolder.person.lastName
               )
             }}
           </p>
         </div>
 
-        <div class="col-lg-4 col-sm-6">
-          <p class="data-title mb-2">Nomor Polis</p>
+        <div class="col-lg-3 col-sm-6">
+          <p class="data-title mb-2">Nama Belakang</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.policyNumber }}
+            {{
+              myPolicy.policyWithCode.policyHolder.person.lastName ? $isNullWithSpace(
+                myPolicy.policyWithCode.policyHolder.person.lastName
+              ) : '-'
+            }}
+          </p>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+          <p class="data-title mb-2">Tipe Identitas</p>
+          <p class="data-value">
+            {{
+              $labelIdentityType(+myPolicy.policyWithCode.policyHolder.person.certiType)
+            }}
+          </p>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+          <p class="data-title mb-2">Nomor Identitas</p>
+          <p class="data-value">
+            {{
+              myPolicy.policyWithCode.policyHolder.person.certiCode
+            }}
+          </p>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+          <p class="data-title mb-2">Tanggal Lahir</p>
+          <p class="data-value">
+            {{
+              $formatDate(myPolicy.policyWithCode.policyHolder.person.birthday)
+            }}
+          </p>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+          <p class="data-title mb-2">Tempat Lahir</p>
+          <p class="data-value">
+            {{
+              myPolicy.policyWithCode.policyHolder.person.birthPlace || '-'
+            }}
+          </p>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+          <p class="data-title mb-2">Jenis Kelamin</p>
+          <p class="data-value">
+            {{
+              myPolicy.policyWithCode.policyHolder.person.gender == "M" ? "Laki laki" : "Perempuan"
+            }}
+          </p>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+          <p class="data-title mb-2">No Handphone</p>
+          <p class="data-value">
+            {{
+              myPolicy.policyWithCode.policyHolder.mobileTelephone || '-'
+            }}
+          </p>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+          <p class="data-title mb-2">Alamat Email</p>
+          <p class="data-value">
+            {{
+              myPolicy.policyWithCode.policyHolder.person.email || '-'
+            }}
           </p>
         </div>
       </div>
@@ -588,8 +656,8 @@ export default {
 
   beforeMount() {
     this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
-      title: "Perubahan Data Pembayar Polis",
-      sub: "Pengajuan Perubahan Data Pembayar Polis",
+      title: "Perubahan Data Pemegang Polis",
+      sub: "Pengajuan Perubahan Data Pemegang Polis",
     });
     
   },
@@ -611,7 +679,7 @@ export default {
 
   methods: {
     getMyPolicy: async function () {
-      this.selectedPolicy = this.myPolicy.policyWithCode.payers[0];
+      this.selectedPolicy = this.myPolicy.policyWithCode.policyHolder;
       
       if (this.selectedPolicy.address.addressFormat == "Y") {
         if (!isNaN(parseInt(this.selectedPolicy.address.province))) {

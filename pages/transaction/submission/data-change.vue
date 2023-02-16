@@ -28,22 +28,22 @@
             :link="'./change/beneficiary'"
           />
           <Menu
-            :isActive="false"
+            :isActive="true"
             :name="'Pembayar'"
             :icon="'menu/pembayar.svg'"
             :link="'./change/payer'"
           />
           <Menu
-            :isActive="false"
-            :name="'Data Tertanggung'"
-            :icon="'menu/data-tertanggung.svg'"
-            :link="'./coming-soon'"
-          />
-          <Menu
-            :isActive="false"
+            :isActive="true"
             :name="'Pemegang Polis'"
             :icon="'menu/pemegang-polis.svg'"
-            :link="'./coming-soon'"
+            :link="'./change/policy-holder'"
+          />
+          <Menu
+            :isActive="true"
+            :name="'Data Tertanggung'"
+            :icon="'menu/data-tertanggung.svg'"
+            :link="'./change/insured'"
           />
         </div>
       </div>
