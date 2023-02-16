@@ -486,6 +486,36 @@
           </ValidationProvider>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-sm-12">
+          <div class="message-bar rounded-lg">
+            <div class="d-flex">
+              <info-icon class="ic-primary mr-2"></info-icon>
+              Perhatian !
+            </div>
+            <br>
+            <ul>
+              <li>
+                - Pengajuan ini hanya bersifat merubah tidak mengganti untuk informasi lebih lanjut, dapat menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id atau Service point atau Kantor Layanan BNI Life
+              </li>
+              <li>
+                - Untuk perubahan data pembayaran (Auto debit Tabungan, Kartu kredit, ataupun VA, dapat menggunakan perubahan Metode Pembayaran 
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <ValidationMessage :validation-message="validationMessage" />
+
+      <div class="row">
+        <div class="col-12">
+          <button class="btn btn-primary btn-save float-right" type="submit">
+            <save-icon></save-icon> Simpan
+          </button>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -542,11 +572,22 @@ export default {
         collection: [],
       }],
       form: {
+        firstName: '',
+        lastName: '',
+        identityType: '',
+        identityNumber: '',
+        birthdate: '',
+        birthplace: '',
+        phone: '',
+        email: '',
+        gender: '',
+        martialStatus: '',
         addressChanges: [],
         ktpAttachment: {},
         payerKtpAttachment: {},
         payerSelfieKtpAttachment: {},
       },
+      validationMessage: [],
     };
   },
   computed: {
@@ -983,6 +1024,33 @@ export default {
           name: result.name,
         };
       }
+    },
+
+    validate() {
+      this.validationMessage = [];
+
+      if (!this.form.ktpAttachment.name) {
+        this.validationMessage.push("Unggah Fotocopy KTP Pemegang polis diperlukan");
+      }
+      if (!this.form.payerKtpAttachment.name) {
+        this.validationMessage.push("Unggah Fotocopy KTP Pembayar diperlukan");
+      }
+      if (!this.form.payerSelfieKtpAttachment.name) {
+        this.validationMessage.push("Unggah Selfie + KTP Pembayar diperlukan");
+      }
+    },
+
+    save() {
+      this.validate();
+      if (this.validationMessage.length) return false
+
+      this.$store.commit(
+        "submission_transaction/change_customer_payer/setCutiPremi",
+        this.form
+      );
+      this.$router.push({
+        path: "/transaction/change/payer/resume",
+      });
     },
   },
 };
