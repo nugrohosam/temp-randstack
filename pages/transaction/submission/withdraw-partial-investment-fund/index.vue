@@ -6,7 +6,7 @@
           <p class="data-title mb-2">Nama Pemegang Polis</p>
           <p class="data-value">
             {{ $isNullWithSpace(
-                        myPolicy.policyWithCode.policyHolder.person.firstName
+              myPolicy.policyWithCode.policyHolder.person.firstName
             ) +
             $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.midName

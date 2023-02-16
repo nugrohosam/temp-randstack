@@ -8,7 +8,7 @@
             {{ myPolicy.policyWithCode.policyNumber }}
           </p>
         </div>
-        
+
         <div class="col-lg-3 col-sm-6">
           <p class="data-title mb-2">Nama Depan</p>
           <p class="data-value">
@@ -24,9 +24,11 @@
           <p class="data-title mb-2">Nama Belakang</p>
           <p class="data-value">
             {{
-              myPolicy.policyWithCode.policyHolder.person.lastName ? $isNullWithSpace(
-                myPolicy.policyWithCode.policyHolder.person.lastName
-              ) : '-'
+              myPolicy.policyWithCode.policyHolder.person.lastName
+                ? $isNullWithSpace(
+                    myPolicy.policyWithCode.policyHolder.person.lastName
+                  )
+                : "-"
             }}
           </p>
         </div>
@@ -35,7 +37,9 @@
           <p class="data-title mb-2">Tipe Identitas</p>
           <p class="data-value">
             {{
-              $labelIdentityType(+myPolicy.policyWithCode.policyHolder.person.certiType)
+              $labelIdentityType(
+                +myPolicy.policyWithCode.policyHolder.person.certiType
+              )
             }}
           </p>
         </div>
@@ -43,9 +47,7 @@
         <div class="col-lg-3 col-sm-6">
           <p class="data-title mb-2">Nomor Identitas</p>
           <p class="data-value">
-            {{
-              myPolicy.policyWithCode.policyHolder.person.certiCode
-            }}
+            {{ myPolicy.policyWithCode.policyHolder.person.certiCode }}
           </p>
         </div>
 
@@ -61,9 +63,7 @@
         <div class="col-lg-3 col-sm-6">
           <p class="data-title mb-2">Tempat Lahir</p>
           <p class="data-value">
-            {{
-              myPolicy.policyWithCode.policyHolder.person.birthPlace || '-'
-            }}
+            {{ myPolicy.policyWithCode.policyHolder.person.birthPlace || "-" }}
           </p>
         </div>
 
@@ -71,7 +71,9 @@
           <p class="data-title mb-2">Jenis Kelamin</p>
           <p class="data-value">
             {{
-              myPolicy.policyWithCode.policyHolder.person.gender == "M" ? "Laki laki" : "Perempuan"
+              myPolicy.policyWithCode.policyHolder.person.gender == "M"
+                ? "Laki laki"
+                : "Perempuan"
             }}
           </p>
         </div>
@@ -79,18 +81,14 @@
         <div class="col-lg-3 col-sm-6">
           <p class="data-title mb-2">No Handphone</p>
           <p class="data-value">
-            {{
-              myPolicy.policyWithCode.policyHolder.mobileTelephone || '-'
-            }}
+            {{ myPolicy.policyWithCode.policyHolder.mobileTelephone || "-" }}
           </p>
         </div>
 
         <div class="col-lg-3 col-sm-6">
           <p class="data-title mb-2">Alamat Email</p>
           <p class="data-value">
-            {{
-              myPolicy.policyWithCode.policyHolder.person.email || '-'
-            }}
+            {{ myPolicy.policyWithCode.policyHolder.person.email || "-" }}
           </p>
         </div>
       </div>
@@ -101,13 +99,23 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Depan</p>
           <div class="form-input">
-            <input type="text" pattern="[a-zA-Z.,\s]+" class="form-control" />
+            <input
+              type="text"
+              v-model="form.firstName"
+              pattern="[a-zA-Z.,\s]+"
+              class="form-control"
+            />
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Belakang</p>
           <div class="form-input">
-            <input type="text" pattern="[a-zA-Z.,\s]+" class="form-control" />
+            <input
+              type="text"
+              v-model="form.lastName"
+              pattern="[a-zA-Z.,\s]+"
+              class="form-control"
+            />
           </div>
         </div>
       </div>
@@ -122,13 +130,19 @@
               item-text="name"
               item-value="value"
               :items="optionCertiType"
+              v-model="form.certiType"
             ></v-select>
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Identitas</p>
           <div class="form-input">
-            <input type="text" pattern="[0-9a-zA-Z\s]+" class="form-control" />
+            <input
+              type="text"
+              v-model="form.certiCode"
+              pattern="[0-9a-zA-Z\s]+"
+              class="form-control"
+            />
           </div>
         </div>
       </div>
@@ -137,13 +151,18 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tanggal Lahir</p>
           <div class="form-input">
-            <input type="date" class="form-control" />
+            <input type="date" v-model="form.birthDate" class="form-control" />
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Tempat lahir</p>
           <div class="form-input">
-            <input type="text" pattern="[a-zA-Z.,\s]+" class="form-control" />
+            <input
+              type="text"
+              v-model="form.birthPlace"
+              pattern="[a-zA-Z.,\s]+"
+              class="form-control"
+            />
           </div>
         </div>
       </div>
@@ -152,13 +171,17 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">No Handphone</p>
           <div class="form-input">
-            <input type="number" class="form-control" />
+            <input
+              type="number"
+              v-model="form.phoneNumber"
+              class="form-control"
+            />
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Alamat Email</p>
           <div class="form-input">
-            <input type="email" class="form-control" />
+            <input type="email" v-model="form.email" class="form-control" />
           </div>
         </div>
       </div>
@@ -173,13 +196,19 @@
               item-text="name"
               item-value="value"
               :items="optionGenders"
+              v-model="form.gender"
             ></v-select>
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Status Perkawinan</p>
           <div class="form-input">
-            <v-select outlined dense :items="options.martialStatus"></v-select>
+            <v-select
+              outlined
+              dense
+              v-model="form.marrigeStatus"
+              :items="options.martialStatus"
+            ></v-select>
           </div>
         </div>
       </div>
@@ -189,10 +218,18 @@
           <p><b>Alamat</b></p>
           <template>
             <div class="page-body">
-              <div class="row" v-for="(item, index) in form.addressChanges" :key="index">
+              <div
+                class="row"
+                v-for="(item, index) in form.addresses"
+                :key="index"
+              >
                 <div class="col-12">
                   <div
-                    class="d-flex flex-column flex-md-row justify-sm-space-between"
+                    class="
+                      d-flex
+                      flex-column flex-md-row
+                      justify-sm-space-between
+                    "
                   >
                     <button
                       class="btn btn-primary-outlined btn-mini"
@@ -207,9 +244,7 @@
                       class="btn btn-primary-outlined btn-mini"
                       @click.prevent="deleteAddressEditable(index)"
                     >
-                      {{
-                        "Hapus Alamat"
-                      }}
+                      {{ "Hapus Alamat" }}
                     </button>
                   </div>
                   <br /><br />
@@ -217,20 +252,20 @@
                     <template
                       v-if="
                         !isEditable(index) &&
-                        form.addressChanges[index].addressFormat == 'N'
+                        form.addresses[index].addressFormat == 'N'
                       "
                     >
                       <div class="col-lg-12 col-sm-12">
                         <p class="data-title">Alamat</p>
                         <p class="data-value" v-show="!isEditable(index)">
                           {{
-                            $isNullWithSpace(form.addressChanges[index].province) +
-                            $isNullWithSpace(form.addressChanges[index].city) +
-                            $isNullWithSpace(form.addressChanges[index].street) +
-                            $isNullWithSpace(form.addressChanges[index].village) +
-                            $isNullWithSpace(form.addressChanges[index].address1) +
-                            $isNullWithSpace(form.addressChanges[index].address2) +
-                            $isNullWithSpace(form.addressChanges[index].address3)
+                            $isNullWithSpace(form.addresses[index].province) +
+                            $isNullWithSpace(form.addresses[index].city) +
+                            $isNullWithSpace(form.addresses[index].street) +
+                            $isNullWithSpace(form.addresses[index].village) +
+                            $isNullWithSpace(form.addresses[index].address1) +
+                            $isNullWithSpace(form.addresses[index].address2) +
+                            $isNullWithSpace(form.addresses[index].address3)
                           }}
                         </p>
                         <div class="form-input" v-show="isEditable(index)">
@@ -238,7 +273,7 @@
                             type="text"
                             class="outlined"
                             placeholder="Jl Jenderal Ahmad Yani By Pass"
-                            v-model="form.addressChanges[index].address1"
+                            v-model="form.addresses[index].address1"
                           />
                         </div>
                       </div>
@@ -246,7 +281,7 @@
 
                     <template
                       v-if="
-                        form.addressChanges[index].addressFormat == 'Y' ||
+                        form.addresses[index].addressFormat == 'Y' ||
                         isEditable(index)
                       "
                     >
@@ -259,6 +294,7 @@
                             item-text="name"
                             item-value="value"
                             :items="optionAddressType"
+                            v-model="form.addresses[index].addressType"
                           ></v-select>
                         </div>
                       </div>
@@ -291,8 +327,8 @@
                         <p class="data-title">Kota</p>
                         <p class="data-value" v-show="!isEditable(index)">
                           {{
-                            form.addressChanges[index].city
-                              ? form.addressChanges[index].city
+                            form.addresses[index].city
+                              ? form.addresses[index].city
                               : "-"
                           }}
                         </p>
@@ -322,8 +358,8 @@
                         <p class="data-title">Kecamatan</p>
                         <p class="data-value" v-show="!isEditable(index)">
                           {{
-                            form.addressChanges[index].street
-                              ? form.addressChanges[index].street
+                            form.addresses[index].street
+                              ? form.addresses[index].street
                               : "-"
                           }}
                         </p>
@@ -353,8 +389,8 @@
                         <p class="data-title">Kelurahan</p>
                         <p class="data-value" v-show="!isEditable(index)">
                           {{
-                            form.addressChanges[index].village
-                              ? form.addressChanges[index].village
+                            form.addresses[index].village
+                              ? form.addresses[index].village
                               : "-"
                           }}
                         </p>
@@ -384,8 +420,8 @@
                         <p class="data-title">Alamat</p>
                         <p class="data-value" v-show="!isEditable(index)">
                           {{
-                            form.addressChanges[index].address1
-                              ? form.addressChanges[index].address1
+                            form.addresses[index].address1
+                              ? form.addresses[index].address1
                               : "-"
                           }}
                         </p>
@@ -394,7 +430,7 @@
                             type="text"
                             class="outlined w-100"
                             placeholder="Jl Jenderal Ahmad Yani By Pass"
-                            v-model="form.addressChanges[index].address1"
+                            v-model="form.addresses[index].address1"
                           />
                         </div>
                       </div>
@@ -402,8 +438,8 @@
                         <p class="data-title">Blok / No Jalan</p>
                         <p class="data-value" v-show="!isEditable(index)">
                           {{
-                            form.addressChanges[index].address2
-                              ? form.addressChanges[index].address2
+                            form.addresses[index].address2
+                              ? form.addresses[index].address2
                               : "-"
                           }}
                         </p>
@@ -412,7 +448,7 @@
                             type="text"
                             class="outlined w-100"
                             placeholder="F66"
-                            v-model="form.addressChanges[index].address2"
+                            v-model="form.addresses[index].address2"
                           />
                         </div>
                       </div>
@@ -420,8 +456,8 @@
                         <p class="data-title">RT/RW</p>
                         <p class="data-value" v-show="!isEditable(index)">
                           {{
-                            form.addressChanges[index].address3
-                              ? form.addressChanges[index].address3
+                            form.addresses[index].address3
+                              ? form.addresses[index].address3
                               : "-"
                           }}
                         </p>
@@ -430,7 +466,7 @@
                             type="text"
                             class="outlined w-100"
                             placeholder="001/001"
-                            v-model="form.addressChanges[index].address3"
+                            v-model="form.addresses[index].address3"
                           />
                         </div>
                       </div>
@@ -438,7 +474,10 @@
                   </div>
                 </div>
 
-                <hr class="col-12 my-4" v-if="index != form.addressChanges.length - 1"/>
+                <hr
+                  class="col-12 my-4"
+                  v-if="index != form.addresses.length - 1"
+                />
               </div>
             </div>
           </template>
@@ -451,7 +490,7 @@
             class="btn btn-primary-outlined"
             @click.prevent="addAddressChanges()"
           >
-            {{ "Tambah Alamat"}}
+            {{ "Tambah Alamat" }}
           </button>
         </div>
       </div>
@@ -495,26 +534,26 @@
             rules="required|image"
             v-slot="{ validate, errors }"
           >
-            <p class="data-title mb-2">Fotocopy KTP Pembayar</p>
+            <p class="data-title mb-2">Fotocopy KTP Pemegang Polis</p>
             <input
               type="file"
-              ref="payerKtpAttachment"
+              ref="ktpSelfieAttachment"
               v-show="false"
               accept="image/*"
               @change="
                 (e) => {
                   validate(e);
-                  addPayerKtpImage(e);
+                  addSelfieKtpImage(e);
                 }
               "
             />
             <button
               class="btn btn-primary-outlined"
-              @click.prevent="$refs.payerKtpAttachment.click()"
+              @click.prevent="$refs.ktpSelfieAttachment.click()"
             >
               Unggah
             </button>
-            <small>{{ form.payerKtpAttachment.name }}</small>
+            <small>{{ form.ktpSelfieAttachment.name }}</small>
             <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
             <br />
             <span class="text-error">{{ errors[0] }}</span>
@@ -528,30 +567,67 @@
             rules="required|image"
             v-slot="{ validate, errors }"
           >
-            <p class="data-title mb-2">Selfie + KTP Pembayar</p>
+            <p class="data-title mb-2">Selfie + KTP Pemegang Polis</p>
             <input
               type="file"
-              ref="inputPayerSelfieKtpImage"
+              ref="inputDocumentImage"
               v-show="false"
               accept="image/*"
               @change="
                 (e) => {
                   validate(e);
-                  addPayerSelfieKtpImage(e);
+                  addDocumentImage(e);
                 }
               "
             />
             <button
               class="btn btn-primary-outlined"
-              @click.prevent="$refs.inputPayerSelfieKtpImage.click()"
+              @click.prevent="$refs.inputDocumentImage.click()"
             >
               Unggah
             </button>
-            <small>{{ form.payerSelfieKtpAttachment.name }}</small>
+            <small>{{ form.documentAttachment.name }}</small>
             <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
             <br />
             <span class="text-error">{{ errors[0] }}</span>
           </ValidationProvider>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-sm-12">
+          <div class="message-bar rounded-lg">
+            <div class="d-flex">
+              <info-icon class="ic-primary mr-2"></info-icon>
+              Perhatian !
+            </div>
+            <br />
+            <ul>
+              <li>
+                - Pengajuan ini hanya bersifat merubah tidak mengganti untuk
+                informasi lebih lanjut, dapat menghubungi Customer Care
+                1-500-045 atau e-mail ke care@bni-life.co.id atau Service point
+                atau Kantor Layanan BNI Life Untuk perubahan data pembayaran
+                (Auto debit Tabungan, Kartu kredit, ataupun VA, dapat
+                menggunakan perubahan metode pembayaran.
+              </li>
+              <li>
+                - Jika Pemegang polis dan Tertanggung sama, mohon merubah jenis
+                kelamin dan Tanggal lahir melalui menu Perubahan Data tgl lahir
+                & Jenis Kelamin tertanggung.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <ValidationMessage :validation-message="validationMessage" />
+
+      <div class="row">
+        <div class="col-12">
+          <button class="btn btn-primary btn-save float-right" type="submit">
+            <save-icon></save-icon> Simpan
+          </button>
         </div>
       </div>
     </form>
@@ -559,13 +635,29 @@
 </template>
 
 <script>
-
 import { identityType, martialStatus, addressType } from "@/utils/constant";
 
 export default {
   components: {},
   data() {
     return {
+      form: {
+        firstName: "",
+        lastName: "",
+        marrigeStatus: "",
+        certiType: "",
+        certiCode: "",
+        birthDate: "",
+        birthPlace: "",
+        phoneNumber: "",
+        email: "",
+        gender: "",
+        addresses: [],
+        ktpAttachment: {},
+        ktpSelfieAttachment: {},
+        documentAttachment: {},
+      },
+      validationMessage: [],
       isLoading: true,
       options: {
         identityType,
@@ -573,59 +665,62 @@ export default {
         martialStatus,
       },
       selectedPolicy: null,
-      province: [{
-        observer: null,
-        limit: 10,
-        search: "",
-        page: 1,
-        selected: null,
-        hasNextPage: false,
-        collection: [],
-      }],
-      city: [{
-        observer: null,
-        limit: 10,
-        search: "",
-        page: 1,
-        selected: null,
-        hasNextPage: false,
-        collection: [],
-      }],
-      district: [{
-        observer: null,
-        limit: 10,
-        search: "",
-        page: 1,
-        selected: null,
-        hasNextPage: false,
-        collection: [],
-      }],
-      village: [{
-        observer: null,
-        limit: 10,
-        search: "",
-        page: 1,
-        selected: null,
-        hasNextPage: false,
-        collection: [],
-      }],
-      form: {
-        addressChanges: [],
-        ktpAttachment: {},
-        payerKtpAttachment: {},
-        payerSelfieKtpAttachment: {},
-      },
+      province: [
+        {
+          observer: null,
+          limit: 10,
+          search: "",
+          page: 1,
+          selected: null,
+          hasNextPage: false,
+          collection: [],
+        },
+      ],
+      city: [
+        {
+          observer: null,
+          limit: 10,
+          search: "",
+          page: 1,
+          selected: null,
+          hasNextPage: false,
+          collection: [],
+        },
+      ],
+      district: [
+        {
+          observer: null,
+          limit: 10,
+          search: "",
+          page: 1,
+          selected: null,
+          hasNextPage: false,
+          collection: [],
+        },
+      ],
+      village: [
+        {
+          observer: null,
+          limit: 10,
+          search: "",
+          page: 1,
+          selected: null,
+          hasNextPage: false,
+          collection: [],
+        },
+      ],
     };
   },
+
   computed: {
     selfieKtpFileName() {
       return this.$store.getters["submission_transaction/getSelfieKtpFileName"];
     },
-    
+
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
-    
+
     optionGenders() {
       return ["M", "F"].map((item) => {
         return {
@@ -634,7 +729,7 @@ export default {
         };
       });
     },
-    
+
     optionCertiType() {
       return this.options.identityType.map((item, index) => {
         return {
@@ -643,7 +738,7 @@ export default {
         };
       });
     },
-    
+
     optionAddressType() {
       return this.options.addressType.map((item) => {
         return {
@@ -659,28 +754,36 @@ export default {
       title: "Perubahan Data Pemegang Polis",
       sub: "Pengajuan Perubahan Data Pemegang Polis",
     });
-    
   },
 
   mounted() {
     this.getMyPolicy();
 
-    this.form.addressChanges.push({
+    this.form.addresses.push({
       ...this.selectedPolicy.address,
-      addressEditable: false
-    })
+      addressEditable: false,
+      addressType: "",
+    });
 
     this.getProvinces(0);
-    this.province[0].observer = new IntersectionObserver((data) => this.onScrollProvince(data, 0));
-    this.city[0].observer = new IntersectionObserver((data) => this.onScrollCity(data, 0));
-    this.district[0].observer = new IntersectionObserver((data) => this.onScrollDistrict(data, 0));
-    this.village[0].observer = new IntersectionObserver((data) => this.onScrollVillage(data, 0));
+    this.province[0].observer = new IntersectionObserver((data) =>
+      this.onScrollProvince(data, 0)
+    );
+    this.city[0].observer = new IntersectionObserver((data) =>
+      this.onScrollCity(data, 0)
+    );
+    this.district[0].observer = new IntersectionObserver((data) =>
+      this.onScrollDistrict(data, 0)
+    );
+    this.village[0].observer = new IntersectionObserver((data) =>
+      this.onScrollVillage(data, 0)
+    );
   },
 
   methods: {
     getMyPolicy: async function () {
       this.selectedPolicy = this.myPolicy.policyWithCode.policyHolder;
-      
+
       if (this.selectedPolicy.address.addressFormat == "Y") {
         if (!isNaN(parseInt(this.selectedPolicy.address.province))) {
           this.selectedPolicy.address.province = await this.findProvince(
@@ -708,7 +811,7 @@ export default {
     },
 
     isEditable: function (index) {
-      return this.form.addressChanges[index].addressEditable;
+      return this.form.addresses[index].addressEditable;
     },
 
     getProvinces: async function (index) {
@@ -731,7 +834,9 @@ export default {
     onOpenProvince: async function (index) {
       if (this.province[index].hasNextPage) {
         await this.$nextTick();
-        this.province[index].observer.observe(this.$el.querySelector('.load-province-' + index));
+        this.province[index].observer.observe(
+          this.$el.querySelector(".load-province-" + index)
+        );
       }
     },
 
@@ -758,7 +863,7 @@ export default {
       this.city[index].collection = this.city[index].selected = [];
       this.district[index].collection = this.district[index].selected = [];
       this.village[index].collection = this.village[index].selected = [];
-      this.form.addressChanges[index].province = this.province[index].selected.name;
+      this.form.addresses[index].province = this.province[index].selected.name;
       this.getCities(index);
     },
 
@@ -782,7 +887,9 @@ export default {
     onOpenCity: async function (index) {
       if (this.city[index].hasNextPage) {
         await this.$nextTick();
-        this.city[index].observer.observe(this.$el.querySelector('.load-city-' + index));
+        this.city[index].observer.observe(
+          this.$el.querySelector(".load-city-" + index)
+        );
       }
     },
 
@@ -805,7 +912,7 @@ export default {
       this.district[index].page = 1;
       this.district[index].collection = this.district[index].selected = [];
       this.village[index].collection = this.village[index].selected = [];
-      this.form.addressChanges[index].city = this.city[index].selected.name;
+      this.form.addresses[index].city = this.city[index].selected.name;
       this.getDistricts(index);
     },
 
@@ -829,7 +936,9 @@ export default {
     onOpenDistrict: async function (index) {
       if (this.district[index].hasNextPage) {
         await this.$nextTick();
-        this.district[index].observer.observe(this.$el.querySelector('.load-district-' + index));
+        this.district[index].observer.observe(
+          this.$el.querySelector(".load-district-" + index)
+        );
       }
     },
 
@@ -851,7 +960,7 @@ export default {
     onInputDistrict: async function (index) {
       this.village[index].page = 1;
       this.village[index].collection = this.village[index].selected = [];
-      this.form.addressChanges[index].street = this.district[index].selected.name;
+      this.form.addresses[index].street = this.district[index].selected.name;
       this.getVillages(index);
     },
 
@@ -875,7 +984,9 @@ export default {
     onOpenVillage: async function (index) {
       if (this.village[index].hasNextPage) {
         await this.$nextTick();
-        this.village[index].observer.observe(this.$el.querySelector('.load-village-' + index));
+        this.village[index].observer.observe(
+          this.$el.querySelector(".load-village-" + index)
+        );
       }
     },
 
@@ -895,20 +1006,21 @@ export default {
     },
 
     onInputVillage: async function (index) {
-      this.form.addressChanges[index].village = this.village[index].selected.name;
+      this.form.addresses[index].village = this.village[index].selected.name;
     },
 
     toggleAddressEditable(index) {
-      this.form.addressChanges[index].addressEditable = !this.form.addressChanges[index].addressEditable;
+      this.form.addresses[index].addressEditable =
+        !this.form.addresses[index].addressEditable;
     },
 
     deleteAddressEditable(index) {
-      this.form.addressChanges.splice(index, 1)
-      
-      this.province.splice(index, 1)
-      this.city.splice(index, 1)
-      this.district.splice(index, 1)
-      this.village.splice(index, 1)
+      this.form.addresses.splice(index, 1);
+
+      this.province.splice(index, 1);
+      this.city.splice(index, 1);
+      this.district.splice(index, 1);
+      this.village.splice(index, 1);
     },
 
     findProvince: async function (provinceId = null) {
@@ -960,13 +1072,13 @@ export default {
     },
 
     addAddressChanges() {
-      const cloneIndex = this.form.addressChanges.length - 1
-      const clonedAddressChange = this.form.addressChanges[cloneIndex];
-      this.form.addressChanges.push({
+      const cloneIndex = this.form.addresses.length - 1;
+      const clonedAddressChange = this.form.addresses[cloneIndex];
+      this.form.addresses.push({
         ...clonedAddressChange,
         addressEditable: false,
-        addressType: ""
-      })
+        addressType: "",
+      });
 
       this.province.push({
         observer: null,
@@ -1005,13 +1117,21 @@ export default {
         collection: [],
       });
 
-      const lastIndexProvince = this.province.length - 1
+      const lastIndexProvince = this.province.length - 1;
 
       this.getProvinces(lastIndexProvince);
-      this.province[lastIndexProvince].observer = new IntersectionObserver((data) => this.onScrollProvince(data, lastIndexProvince));
-      this.city[lastIndexProvince].observer = new IntersectionObserver((data) => this.onScrollCity(data, lastIndexProvince));
-      this.district[lastIndexProvince].observer = new IntersectionObserver((data) => this.onScrollDistrict(data, lastIndexProvince));
-      this.village[lastIndexProvince].observer = new IntersectionObserver((data) => this.onScrollVillage(data, lastIndexProvince));
+      this.province[lastIndexProvince].observer = new IntersectionObserver(
+        (data) => this.onScrollProvince(data, lastIndexProvince)
+      );
+      this.city[lastIndexProvince].observer = new IntersectionObserver((data) =>
+        this.onScrollCity(data, lastIndexProvince)
+      );
+      this.district[lastIndexProvince].observer = new IntersectionObserver(
+        (data) => this.onScrollDistrict(data, lastIndexProvince)
+      );
+      this.village[lastIndexProvince].observer = new IntersectionObserver(
+        (data) => this.onScrollVillage(data, lastIndexProvince)
+      );
     },
 
     async addKtpImage(e) {
@@ -1027,30 +1147,66 @@ export default {
       }
     },
 
-    async addPayerKtpImage(e) {
+    async addSelfieKtpImage(e) {
       if (e.target.files[0]) {
         const result = await this.$store.dispatch(
-          "submission_transaction/uploadKtpFile",
-          { file: e.target.files[0] }
+          "submission_transaction/uploadAttachment",
+          { file: e.target.files[0], type: "KTPSELFIE" }
         );
-        this.form.payerKtpAttachment = {
+        this.form.ktpSelfieAttachment = {
           file: e.target.files[0],
           name: result.name,
         };
       }
     },
 
-    async addPayerSelfieKtpImage(e) {
+    async addDocumentImage(e) {
       if (e.target.files[0]) {
         const result = await this.$store.dispatch(
           "submission_transaction/uploadKtpFile",
           { file: e.target.files[0] }
         );
-        this.form.payerSelfieKtpAttachment = {
+        this.form.documentAttachment = {
           file: e.target.files[0],
           name: result.name,
         };
       }
+    },
+
+    validate() {
+      this.validationMessage = [];
+    },
+
+    save() {
+      this.validate();
+      if (this.validationMessage.length) return false;
+
+      for (
+        let i = 0;
+        i < this.province.length &&
+        this.form.addresses.length == this.province.length;
+        i++
+      ) {
+        this.form.addresses[i].provinceId = this.province[i].selected.id;
+        this.form.addresses[i].province = this.province[i].selected.name;
+
+        this.form.addresses[i].cityId = this.city[i].selected.id;
+        this.form.addresses[i].city = this.city[i].selected.name;
+
+        this.form.addresses[i].districtId = this.district[i].selected.id;
+        this.form.addresses[i].district = this.province[i].selected.name;
+
+        this.form.addresses[i].villageId = this.village[i].selected.id;
+        this.form.addresses[i].village = this.village[i].selected.name;
+      }
+
+      this.$store.commit(
+        "submission_transaction/change_policy_holder/setChangePolicyHolder",
+        this.form
+      );
+      this.$router.push({
+        path: "/transaction/submission/change/policy-holder/resume",
+      });
     },
   },
 };
