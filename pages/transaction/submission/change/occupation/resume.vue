@@ -4,15 +4,17 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
         <p class="data-value">
-          {{ $isNullWithSpace(
-                        myPolicy.policyWithCode.policyHolder.person.firstName
+          {{
+            $isNullWithSpace(
+              myPolicy.policyWithCode.policyHolder.person.firstName
             ) +
             $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.midName
             ) +
             $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.lastName
-            ) }}
+            )
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -26,15 +28,33 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Profesi Saat Ini</p>
-        <p class="data-value">{{ myPolicy.policyWithCode.policyHolder.person.occupCate == 0 ? myPolicy.policyWithCode.policyHolder.person.otherOccupation : myPolicy.policyWithCode.policyHolder.person.occupCateName }}</p>
+        <p class="data-value">
+          {{
+            myPolicy.policyWithCode.policyHolder.person.occupCate == 0
+              ? myPolicy.policyWithCode.policyHolder.person.otherOccupation
+              : myPolicy.policyWithCode.policyHolder.person.occupCateName
+          }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Jabatan Saat Ini</p>
-        <p class="data-value">{{ myPolicy.policyWithCode.policyHolder.person.occupCate == 0 ? "-" : (myPolicy.policyWithCode.policyHolder.person.positionLevel || "-") }}</p>
+        <p class="data-value">
+          {{
+            myPolicy.policyWithCode.policyHolder.person.occupCate == 0
+              ? "-"
+              : myPolicy.policyWithCode.policyHolder.person.positionLevel || "-"
+          }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Perusahaan Saat Ini</p>
-        <p class="data-value">{{ myPolicy.policyWithCode.policyHolder.person.occupCate == 0 ? "-" : (myPolicy.policyWithCode.policyHolder.person.jobCom || "-")}}</p>
+        <p class="data-value">
+          {{
+            myPolicy.policyWithCode.policyHolder.person.occupCate == 0
+              ? "-"
+              : myPolicy.policyWithCode.policyHolder.person.jobCom || "-"
+          }}
+        </p>
       </div>
     </div>
 
@@ -42,7 +62,14 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Industri</p>
         <p class="data-value">
-          {{ myPolicy.policyWithCode.policyHolder.person.occupCate == 0 ? myPolicy.policyWithCode.policyHolder.person.otherIndustry : (!myPolicy.policyWithCode.policyHolder.person.industryName ? "-" : myPolicy.policyWithCode.policyHolder.person.industryName)}}</p>
+          {{
+            myPolicy.policyWithCode.policyHolder.person.occupCate == 0
+              ? myPolicy.policyWithCode.policyHolder.person.otherIndustry
+              : !myPolicy.policyWithCode.policyHolder.person.industryName
+              ? "-"
+              : myPolicy.policyWithCode.policyHolder.person.industryName
+          }}
+        </p>
       </div>
     </div>
 
@@ -51,14 +78,44 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tertanggung Yang Dirubah</p>
-        <p class="data-value">{{ $isNullWithSpace(myPolicy.policyWithCode.insureds.find(x => x.partyId == this.getChangeOccupation.partyId).person.firstName) + " " + $isNullWithSpace(myPolicy.policyWithCode.insureds.find(x => x.partyId == this.getChangeOccupation.partyId).person.midName) + " " + $isNullWithSpace(myPolicy.policyWithCode.insureds.find(x => x.partyId == this.getChangeOccupation.partyId).person.lastName) }}</p>
+        <p class="data-value">
+          {{
+            $isNullWithSpace(
+              myPolicy.policyWithCode.insureds.find(
+                (x) => x.partyId == this.getChangeOccupation.partyId
+              ).person.firstName
+            ) +
+            " " +
+            $isNullWithSpace(
+              myPolicy.policyWithCode.insureds.find(
+                (x) => x.partyId == this.getChangeOccupation.partyId
+              ).person.midName
+            ) +
+            " " +
+            $isNullWithSpace(
+              myPolicy.policyWithCode.insureds.find(
+                (x) => x.partyId == this.getChangeOccupation.partyId
+              ).person.lastName
+            )
+          }}
+        </p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Profesi Baru</p>
-        <p class="data-value">{{ occupations.find(x => x.categoryCode == getChangeOccupation.occupation).name.includes('Other') ? getChangeOccupation.otherOccupation : occupations.find(x => x.categoryCode == getChangeOccupation.occupation).name }}</p>
+        <p class="data-value">
+          {{
+            occupations
+              .find((x) => x.categoryCode == getChangeOccupation.occupation)
+              .name.includes("Other")
+              ? getChangeOccupation.otherOccupation
+              : occupations.find(
+                  (x) => x.categoryCode == getChangeOccupation.occupation
+                ).name
+          }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Jabatan Baru</p>
@@ -74,7 +131,14 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Industri Baru</p>
         <p class="data-value">
-          {{ getChangeOccupation.industry == '8' ? getChangeOccupation.otherIndustry : industries.find(x => x.industryId == getChangeOccupation.industry).name }}</p>
+          {{
+            getChangeOccupation.industry == "8"
+              ? getChangeOccupation.otherIndustry
+              : industries.find(
+                  (x) => x.industryId == getChangeOccupation.industry
+                ).name
+          }}
+        </p>
       </div>
     </div>
 
@@ -91,7 +155,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
@@ -100,9 +164,7 @@
           value="orange darken-3"
           hide-details
         ></v-checkbox>
-        <p>
-          Saya menyetujui transaksi dan kebenaran data yang disampaikan.
-        </p>
+        <p>Saya menyetujui transaksi dan kebenaran data yang disampaikan.</p>
       </div>
     </div>
 
@@ -115,7 +177,10 @@
           hide-details
         ></v-checkbox>
         <p>
-          Saya <b>tertanggung</b> telah mengisi <b>perubahan pekerjaan</b> dengan benar dan tanpa paksaan, apabila dikemudian hari ditemukan kesalahan pengisian maka saya siap menanggung segala risiko dan akibatnya
+          Saya <b>tertanggung</b> telah mengisi
+          <b>perubahan pekerjaan</b> dengan benar dan tanpa paksaan, apabila
+          dikemudian hari ditemukan kesalahan pengisian maka saya siap
+          menanggung segala risiko dan akibatnya
         </p>
       </div>
     </div>
@@ -125,9 +190,9 @@
         <div class="message-bar rounded-lg">
           <div class="d-flex">
             <info-icon class="ic-primary mr-2"></info-icon>
-                Perhatian !
+            Perhatian !
           </div>
-          <br>
+          <br />
           <ul>
             <li>- Pastikan perubahaan pekerjaan sudah di isi dengan benar.</li>
             <li>- Perubahan pekerjaan diisi oleh tertanggung.</li>
@@ -164,7 +229,7 @@ export default {
   components: {
     SaveIcon,
     InfoIcon,
-    InfoPanel
+    InfoPanel,
   },
   mixins: [resumePageMixin],
   data() {

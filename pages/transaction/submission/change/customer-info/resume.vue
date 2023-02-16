@@ -46,8 +46,8 @@
           </div>
         </div>
       </div>
+
       <div class="row">
-     
         <div class="col-12">
           <template>
             <div class="page-body">
@@ -241,10 +241,7 @@
             value="orange darken-3"
             hide-details
           ></v-checkbox>
-          <p>
-            Saya menyetujui transaksi dan kebenaran data yang disampaikan.
-            
-          </p>
+          <p>Saya menyetujui transaksi dan kebenaran data yang disampaikan.</p>
         </div>
       </div>
 
@@ -256,7 +253,7 @@
             class="btn btn-primary btn-save float-right"
             @click.prevent="submit()"
           >
-          <save-icon></save-icon> Submit
+            <save-icon></save-icon> Submit
           </button>
         </div>
       </div>
