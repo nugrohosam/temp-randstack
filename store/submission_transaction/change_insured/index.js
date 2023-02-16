@@ -1,5 +1,5 @@
 const state = () => ({
-  changePolicyHolder: {
+  changeInsured: {
     addresses: [],
     partyId: "",
     firstName: "",
@@ -19,33 +19,33 @@ const state = () => ({
 });
 
 const getters = {
-  getChangePolicyHolder: (state) => state.changePolicyHolder,
+  getChangeInsured: (state) => state.changeInsured,
 };
 
 const mutations = {
-  setChangePolicyHolder(state, data) {
-    state.changePolicyHolder = data;
+  setChangeInsured(state, data) {
+    state.changeInsured = data;
   },
 };
 
 const actions = {
-  async changePolicyHolder({ state, rootGetters, dispatch }) {
+  async changeInsured({ state, rootGetters, dispatch }) {
     const form = {
-      addresses: state.getChangePolicyHolder.addresses,
-      party_id: state.getChangePolicyHolder.partyId,
-      first_name: state.getChangePolicyHolder.firstName,
-      last_name: state.getChangePolicyHolder.lastName,
-      certi_type: state.getChangePolicyHolder.certiType,
-      certi_code: state.getChangePolicyHolder.certiCode,
-      birth_date: state.getChangePolicyHolder.birthDate,
-      birth_place: state.getChangePolicyHolder.birthPlace,
-      phone_number: state.getChangePolicyHolder.phoneNumber,
-      email: state.getChangePolicyHolder.email,
-      marrige_status: state.getChangePolicyHolder.marrigeStatus,
-      gender: state.getChangePolicyHolder.gender,
-      ktp_selfie_attachment: state.getChangePolicyHolder.ktpSelfieAttachment.name,
-      ktp_attachment: state.getChangePolicyHolder.ktpAttachment.name,
-      beneficiary_ktp_attachment: state.getChangePolicyHolder.beneficiaryKtpAttachment.name,
+      addresses: state.getChangeInsured.addresses,
+      party_id: state.getChangeInsured.partyId,
+      first_name: state.getChangeInsured.firstName,
+      last_name: state.getChangeInsured.lastName,
+      certi_type: state.getChangeInsured.certiType,
+      certi_code: state.getChangeInsured.certiCode,
+      birth_date: state.getChangeInsured.birthDate,
+      birth_place: state.getChangeInsured.birthPlace,
+      phone_number: state.getChangeInsured.phoneNumber,
+      email: state.getChangeInsured.email,
+      marrige_status: state.getChangeInsured.marrigeStatus,
+      gender: state.getChangeInsured.gender,
+      ktp_selfie_attachment: state.getChangeInsured.ktpSelfieAttachment.name,
+      ktp_attachment: state.getChangeInsured.ktpAttachment.name,
+      beneficiary_ktp_attachment: state.getChangeInsured.beneficiaryKtpAttachment.name,
     };
 
     dispatch(

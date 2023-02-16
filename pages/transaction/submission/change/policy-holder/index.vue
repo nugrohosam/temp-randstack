@@ -636,9 +636,10 @@
 
 <script>
 import { identityType, martialStatus, addressType } from "@/utils/constant";
+import { SaveIcon, InfoIcon } from "vue-feather-icons";
 
 export default {
-  components: {},
+  components: { SaveIcon, InfoIcon },
   data() {
     return {
       form: {

@@ -25,6 +25,7 @@ import ChangePayer from "./change_payer";
 import ChangeBeneficiary from "./change_beneficiary";
 import ChangePolicyHolder from "./change_policy_holder";
 import ChangeCustomerPayer from "./change_customer_payer";
+import ChangeInsured from './change_insured'
 
 const SubmissionTransactionModules = {
   namespaced: true,
@@ -51,7 +52,8 @@ const SubmissionTransactionModules = {
     change_birth_date_and_gender: ChangeBirthDateAndGender,
     change_beneficiary: ChangeBeneficiary,
     change_policy_holder: ChangePolicyHolder,
-    change_customer_payer: ChangeCustomerPayer
+    change_customer_payer: ChangeCustomerPayer,
+    change_insured: ChangeInsured
   },
   state,
   getters,
