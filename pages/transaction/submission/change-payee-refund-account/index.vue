@@ -5,15 +5,17 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemegang Polis</p>
           <p class="data-value">
-            {{ $isNullWithSpace(
-              myPolicy.policyWithCode.policyHolder.person.firstName
-            ) +
-            $isNullWithSpace(
-              myPolicy.policyWithCode.policyHolder.person.midName
-            ) +
-            $isNullWithSpace(
-              myPolicy.policyWithCode.policyHolder.person.lastName
-            ) }}
+            {{
+              $isNullWithSpace(
+                myPolicy.policyWithCode.policyHolder.person.firstName
+              ) +
+              $isNullWithSpace(
+                myPolicy.policyWithCode.policyHolder.person.midName
+              ) +
+              $isNullWithSpace(
+                myPolicy.policyWithCode.policyHolder.person.lastName
+              )
+            }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
@@ -62,43 +64,46 @@
         </div>
       </div>
 
-      <br>
+      <br />
       <v-divider></v-divider>
-      <br>
+      <br />
 
       <div class="row">
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Rekening Baru</p>
-            <div class="form-input">
-              <input
-                type="text"
-                pattern="[0-9]+"
-                class="form-control"
-                v-model="form.newNoRek"
-              />
+          <div class="form-input">
+            <input
+              type="text"
+              pattern="[0-9]+"
+              class="form-control"
+              v-model="form.newNoRek"
+            />
           </div>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemilik Rekening Baru</p>
-            <div class="form-input">
-              <input
-                type="text"
-                pattern="[a-zA-Z.,\s]+"
-                class="form-control"
-                v-model="form.rekOwner"
-              />
+          <div class="form-input">
+            <input
+              type="text"
+              pattern="[a-zA-Z.,\s]+"
+              class="form-control"
+              v-model="form.rekOwner"
+            />
           </div>
-          <small>Nama Pemilik Rekening tidak bisa menggunakan huruf dan tanda baca</small>
+          <small
+            >Nama Pemilik Rekening tidak bisa menggunakan huruf dan tanda
+            baca</small
+          >
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Cabang</p>
-            <div class="form-input">
-              <input
-                type="text"
-                pattern="[a-zA-Z0-9.,\s]+"
-                class="form-control"
-                v-model="form.branch"
-              />
+          <div class="form-input">
+            <input
+              type="text"
+              pattern="[a-zA-Z0-9.,\s]+"
+              class="form-control"
+              v-model="form.branch"
+            />
           </div>
         </div>
       </div>
@@ -106,19 +111,19 @@
       <div class="row">
         <div class="col-lg-2 col-sm-6">
           <p class="data-title mb-2">Bank</p>
-            <div>
-              <v-autocomplete
-                outlined
-                dense
-                class="bank_option"
-                :items="optionBank"
-                v-model="form.bank"
-                label=""
-              ></v-autocomplete>
-            </div>
+          <div>
+            <v-autocomplete
+              outlined
+              dense
+              class="bank_option"
+              :items="optionBank"
+              v-model="form.bank"
+              label=""
+            ></v-autocomplete>
+          </div>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <ValidationProvider
@@ -247,6 +252,7 @@
                   ? "Unggah Kartu Keluarga"
                   : "Akte Kelahiran (Pemegang polis)"
               }}
+              (Opsional)
             </p>
             <input
               type="file"
@@ -277,20 +283,20 @@
       <div class="row">
         <div class="col-lg-12 col-sm-12">
           <div class="message-bar rounded-lg">
-              <div class="d-flex">
-                <info-icon class="ic-primary mr-2"></info-icon>
-                Perhatian !
-              </div>
-              <br>
-              <ul>
-                <li>
-                  - Pemilik rekning baru harus pihak yang terdaftar dalam polis
-                </li>
-              </ul>
+            <div class="d-flex">
+              <info-icon class="ic-primary mr-2"></info-icon>
+              Perhatian !
+            </div>
+            <br />
+            <ul>
+              <li>
+                - Pemilik rekning baru harus pihak yang terdaftar dalam polis
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-      
+
       <ValidationMessage :validation-message="validationMessage" />
 
       <div class="row">
@@ -311,15 +317,12 @@
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
 export default {
   name: "change-payee-refund-account",
-  components: { 
+  components: {
     SaveIcon,
     InfoIcon,
   },
   mounted() {
-    if (
-      $nuxt.$route.name !=
-      "change-payee-refund-account"
-    ) {
+    if ($nuxt.$route.name != "change-payee-refund-account") {
       this.showMe = false;
     } else {
       this.showMe = true;
@@ -393,7 +396,7 @@ export default {
       return this.$store.getters["submission_transaction/getBanks"];
     },
     optionBank() {
-      return this.banks.map(v => ({ value: v.bankId, text: v.name }))
+      return this.banks.map((v) => ({ value: v.bankId, text: v.name }));
     },
   },
   methods: {
@@ -465,9 +468,9 @@ export default {
     validate: async function () {
       this.validationMessage = [];
 
-      const alphanumeric = /^[a-zA-Z0-9,.\s]+$/
-      const alphabet = /^[a-zA-Z.,\s]+$/
-      const numeric = /^[0-9]+$/
+      const alphanumeric = /^[a-zA-Z0-9,.\s]+$/;
+      const alphabet = /^[a-zA-Z.,\s]+$/;
+      const numeric = /^[0-9]+$/;
 
       if (!this.form.newNoRek) {
         this.validationMessage.push("Nomor Rekening Baru diperlukan");
@@ -497,10 +500,9 @@ export default {
         this.validationMessage.push("Unggah KTP diperlukan");
       }
       if (!this.form.savingBookAttachment.name) {
-        this.validationMessage.push("Unggah Halaman Depan Buku Tabungan Yang Baru diperlukan");
-      }
-      if (!this.form.familyAttachment.name) {
-        this.validationMessage.push("Unggah " + (this.form.statusFamilyAttachment == "KK" ? "KK" : "Akte Kelahiran") + " diperlukan");
+        this.validationMessage.push(
+          "Unggah Halaman Depan Buku Tabungan Yang Baru diperlukan"
+        );
       }
     },
     save: async function () {
@@ -520,14 +522,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .bank_option {
-    max-width: 250px !important;
-  }
-  .btn-save {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 150px;
-    justify-content: center;
-  }
+.bank_option {
+  max-width: 250px !important;
+}
+.btn-save {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 150px;
+  justify-content: center;
+}
 </style>

@@ -5,7 +5,8 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
         <p class="data-value">
-          {{ $isNullWithSpace(
+          {{
+            $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.firstName
             ) +
             $isNullWithSpace(
@@ -13,7 +14,8 @@
             ) +
             $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.lastName
-            ) }}
+            )
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -24,9 +26,9 @@
       </div>
     </div>
 
-    <br>
+    <br />
     <v-divider></v-divider>
-    <br>
+    <br />
 
     <div class="row">
       <div class="col-lg-4 col-sm-6">
@@ -85,21 +87,15 @@
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title mb-2">
-          Nama Cabang Baru
-        </p>
+        <p class="data-title mb-2">Nama Cabang Baru</p>
         <p class="data-value">
-          {{
-            getBenefitAllocation.branch
-          }}
+          {{ getBenefitAllocation.branch }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Bank Baru</p>
         <p class="data-value">
-          {{
-            choosenBank(getBenefitAllocation.bank)
-          }}
+          {{ choosenBank(getBenefitAllocation.bank) }}
         </p>
       </div>
     </div>
@@ -176,33 +172,32 @@
           value="orange darken-3"
           hide-details
         ></v-checkbox>
-        <p>
-          Saya menyetujui transaksi dan kebenaran data yang disampaikan.
-          
-        </p>
+        <p>Saya menyetujui transaksi dan kebenaran data yang disampaikan.</p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12 col-sm-12">
         <div class="message-bar rounded-lg">
-            <div class="d-flex">
-              <info-icon class="ic-primary mr-2"></info-icon>
-              Perhatian !
-            </div>
-            <br>
-            <ul>
-              <li>
-                - Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak silahkan hubungi Customer Care 1-500-045
-              </li>
-              <li>
-                - Pengajuan ini hanya untuk manfaat hidup, bonus sehat, akhir asuransi dan anuitas
-              </li>
-            </ul>
+          <div class="d-flex">
+            <info-icon class="ic-primary mr-2"></info-icon>
+            Perhatian !
+          </div>
+          <br />
+          <ul>
+            <li>
+              - Pastikan nomor rekening yang tercantum sudah sesuai, jika tidak
+              silahkan hubungi Customer Care 1-500-045
+            </li>
+            <li>
+              - Pengajuan ini hanya untuk manfaat hidup, bonus sehat, akhir
+              asuransi dan anuitas
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-    
+
     <ValidationMessage :validation-message="validationMessage" />
 
     <div class="row">
@@ -211,7 +206,7 @@
           class="btn btn-primary btn-save float-right"
           @click.prevent="submit()"
         >
-        <save-icon></save-icon> Submit
+          <save-icon></save-icon> Submit
         </button>
       </div>
     </div>
@@ -233,9 +228,7 @@ export default {
     SaveIcon,
     InfoIcon,
   },
-  mounted() {
-    
-  },
+  mounted() {},
   computed: {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];

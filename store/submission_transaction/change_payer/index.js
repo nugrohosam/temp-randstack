@@ -14,6 +14,7 @@ const state = () => ({
     ktpSelfieAttachment: {},
     ktpAttachment: {},
     beneficiaryKtpAttachment: {},
+    documentAttachment: {},
   },
 });
 
@@ -30,20 +31,37 @@ const mutations = {
 const actions = {
   async changePayer({ state, rootGetters, dispatch }) {
     const form = {
-      addresses: state.getChangePayer.addresses,
-      first_name: state.getChangePayer.firstName,
-      last_name: state.getChangePayer.lastName,
-      certi_type: state.getChangePayer.certiType,
-      certi_code: state.getChangePayer.certiCode,
-      birth_date: state.getChangePayer.birthDate,
-      birth_place: state.getChangePayer.birthPlace,
-      phone_number: state.getChangePayer.phoneNumber,
-      email: state.getChangePayer.email,
-      marrige_status: state.getChangePayer.marrigeStatus,
-      gender: state.getChangePayer.gender,
-      ktp_selfie_attachment: state.getChangePayer.ktpSelfieAttachment.name,
-      ktp_attachment: state.getChangePayer.ktpAttachment.name,
-      beneficiary_ktp_attachment: state.getChangePayer.beneficiaryKtpAttachment.name,
+      addresses: state.changePayer.addresses.map(address => {
+        return ({
+          post_code: "-",
+          address_1: address.address1,
+          address_2: address.address2,
+          address_3: address.address3,
+          address_4: address.address4,
+          address_5: address.address5,
+          address_6: address.address6,
+          address_7: address.address7,
+          address_type: address.addressType,
+          province_id: address.provinceId,
+          city_id: address.cityId,
+          district_id: address.districtId,
+          village_id: address.villageId,
+        })
+      }),
+      first_name: state.changePayer.firstName,
+      last_name: state.changePayer.lastName,
+      certi_type: state.changePayer.certiType,
+      certi_code: state.changePayer.certiCode,
+      birth_date: state.changePayer.birthDate,
+      birth_place: state.changePayer.birthPlace,
+      phone_number: state.changePayer.phoneNumber,
+      email: state.changePayer.email,
+      marrige_status: state.changePayer.marrigeStatus,
+      gender: state.changePayer.gender,
+      ktp_selfie_attachment: state.changePayer.ktpSelfieAttachment.name,
+      ktp_attachment: state.changePayer.ktpAttachment.name,
+      beneficiary_ktp_attachment: state.changePayer.beneficiaryKtpAttachment.name,
+      document_attachment: state.changePayer.documentAttachment.name,
     };
 
     dispatch(

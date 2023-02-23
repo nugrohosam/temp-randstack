@@ -1,10 +1,12 @@
 <template>
   <div>
+    <BackButton />
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
         <p class="data-value">
-          {{ $isNullWithSpace(
+          {{
+            $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.firstName
             ) +
             $isNullWithSpace(
@@ -12,7 +14,8 @@
             ) +
             $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.lastName
-            ) }}
+            )
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -42,7 +45,8 @@
         <p class="data-value">{{ $formatDate(paidupDatePremi) }}</p>
       </div>
       <div class="col-lg-4 col-sm-6">
-        <p class="data-title d-flex mb-2">Masa Wajib Bayar Premi&nbsp
+        <p class="data-title d-flex mb-2">
+          Masa Wajib Bayar Premi&nbsp
           <span>
             <VDropdown :distance="6" :skidding="-190">
               <button>
@@ -50,7 +54,10 @@
               </button>
               <template #popper>
                 <div style="width: 240px; border-radius: 40px">
-                  <InfoPanel :style="'max-height: 420px;'" :information="'Pengajuan cuti tidak bisa diajukan jika masa wajib bayar premi masih di atas tanggal awal pengajuan cuti premi'" />
+                  <InfoPanel
+                    :style="'max-height: 420px;'"
+                    :information="'Pengajuan cuti tidak bisa diajukan jika masa wajib bayar premi masih di atas tanggal awal pengajuan cuti premi'"
+                  />
                 </div>
               </template>
             </VDropdown>
@@ -64,7 +71,13 @@
 
     <hr class="my-4" />
 
-    <div v-if="getCutiPremi.oldStartPremiumHolidayDate != '' && getCutiPremi.oldEndPremiumHolidayDate != ''" class="row">
+    <div
+      v-if="
+        getCutiPremi.oldStartPremiumHolidayDate != '' &&
+        getCutiPremi.oldEndPremiumHolidayDate != ''
+      "
+      class="row"
+    >
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Awal Cuti Premi Sebelumnya</p>
         <div class="data-value">
@@ -82,11 +95,15 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Awal Cuti Premi Yang Diajukan</p>
-        <p class="data-value">{{ $formatDate(getCutiPremi.startPremiumHolidayDate) }}</p>
+        <p class="data-value">
+          {{ $formatDate(getCutiPremi.startPremiumHolidayDate) }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Akhir Cuti Premi Yang Diajukan</p>
-        <p class="data-value">{{ $formatDate(getCutiPremi.endPremiumHolidayDate) }}</p>
+        <p class="data-value">
+          {{ $formatDate(getCutiPremi.endPremiumHolidayDate) }}
+        </p>
       </div>
     </div>
 
@@ -112,21 +129,18 @@
           value="orange darken-3"
           hide-details
         ></v-checkbox>
-        <p>
-          Saya menyetujui transaksi dan kebenaran data yang disampaikan.
-          
-        </p>
+        <p>Saya menyetujui transaksi dan kebenaran data yang disampaikan.</p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12 col-sm-12">
         <div class="message-bar rounded-lg">
-                        <div class="d-flex">
-                <info-icon class="ic-primary mr-2"></info-icon>
-                Perhatian !
-              </div>
-              <br>
+          <div class="d-flex">
+            <info-icon class="ic-primary mr-2"></info-icon>
+            Perhatian !
+          </div>
+          <br />
           <ul>
             <li>- Polis tidak dalam masa Cuti Premi Otomatis</li>
             <li>- Polis tidak dalam masa Must Pay Period</li>
@@ -161,7 +175,7 @@ export default {
   components: {
     SaveIcon,
     InfoIcon,
-    InfoPanel
+    InfoPanel,
   },
   mixins: [resumePageMixin],
   data() {
@@ -173,6 +187,12 @@ export default {
         show: false,
       },
     };
+  },
+  beforeMount() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: "Resume Cuti Premi",
+      sub: "Cuti Premi",
+    });
   },
   computed: {
     myPolicy() {

@@ -1,17 +1,17 @@
 const state = () => ({
   changePayeeRefundAccount: {
-      newNoRek: null,
-      bank: null,
-      branch: null,
-      rekOwner: null,
-      ktpAttachment: null,
-      documentAttachment: null,
-      savingBookAttachment: null,
-      birthCertificateAttachment: null,
-      kkAttachment: null,
-      familyAttachment: null,
-      statusFamilyAttachment: "KK",
-      ktpSelfieAttachment: null,
+    newNoRek: null,
+    bank: null,
+    branch: null,
+    rekOwner: null,
+    ktpAttachment: null,
+    documentAttachment: null,
+    savingBookAttachment: null,
+    birthCertificateAttachment: null,
+    kkAttachment: null,
+    familyAttachment: null,
+    statusFamilyAttachment: "KK",
+    ktpSelfieAttachment: null,
   },
 });
 
@@ -38,7 +38,7 @@ const actions = {
       ktp_selfie_attachment: state.changePayeeRefundAccount.ktpSelfieAttachment?.name || null,
     };
 
-    if (state.changePayeeRefundAccount.familyAttachment) {
+    if (state.changePayeeRefundAccount.familyAttachment.file) {
       if (state.changePayeeRefundAccount.statusFamilyAttachment === "KK") {
         form.kk_attachment = state.changePayeeRefundAccount.familyAttachment?.name || null;
       } else {
@@ -47,12 +47,11 @@ const actions = {
       }
     }
 
-    
     dispatch(
       "toggleOverlayLoading",
       { show: true, message: "Mohon Tunggu..." },
       { root: true }
-      );
+    );
     this.$axios.setToken(rootGetters["auth/getAuthAccessToken"], "Bearer");
     return await this.$axios
       .$post("/api/v1/transaction-proposal/change-payee-refund-account", form)

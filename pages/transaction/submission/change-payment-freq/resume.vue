@@ -1,10 +1,12 @@
 <template>
   <div>
+    <BackButton />
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
         <p class="data-value">
-          {{ $isNullWithSpace(
+          {{
+            $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.firstName
             ) +
             $isNullWithSpace(
@@ -12,7 +14,8 @@
             ) +
             $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.lastName
-            ) }}
+            )
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -31,10 +34,16 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Premi yang ditagihkan</p>
         <p class="data-value">
+          {{ $currencyName(myPolicy.policyWithCode.currency) }}
           {{
-            $currencyName(myPolicy.policyWithCode.currency)
+            $convertCurrency(
+              totalPremAll(
+                myPolicy.policyWithCode.coverages.find(
+                  (x) => x.masterProduct == null
+                )
+              )
+            )
           }}
-          {{ $convertCurrency(totalPremAll(myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null))) }}
         </p>
       </div>
     </div>
@@ -43,21 +52,30 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Metode Pembayaran</p>
         <p class="data-value">
-          {{ $labelPaymentMethod(myPolicy.policyWithCode.payerAccounts[0].paymentMethod) }}</p>
+          {{
+            $labelPaymentMethod(
+              myPolicy.policyWithCode.payerAccounts[0].paymentMethod
+            )
+          }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Frekuensi Pembayaran Saat Ini</p>
         <p class="data-value">
           {{
             $paymentFrequency(
-              myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).currentPremium.paymentFreq
+              myPolicy.policyWithCode.coverages.find(
+                (x) => x.masterProduct == null
+              ).currentPremium.paymentFreq
             ) || "-"
           }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2 d-flex">Masa Pembayaran Premi</p>
-        <p class="data-value">{{ $formatDate(myPolicy.policyWithCode.lockedPeriodDate) }}</p>
+        <p class="data-value">
+          {{ $formatDate(myPolicy.policyWithCode.lockedPeriodDate) }}
+        </p>
       </div>
     </div>
 
@@ -67,9 +85,7 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Frekuensi Pembayaran Baru</p>
         <p class="data-value">
-          {{
-            $paymentFrequency(getChangePaymentFreq.paymentFreq) || "-"
-          }}
+          {{ $paymentFrequency(getChangePaymentFreq.paymentFreq) || "-" }}
         </p>
       </div>
     </div>
@@ -87,7 +103,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col-lg-6 col-sm-12 d-flex">
         <v-checkbox
@@ -96,22 +112,23 @@
           value="orange darken-3"
           hide-details
         ></v-checkbox>
-        <p>
-          Saya menyetujui transaksi dan kebenaran data yang disampaikan.
-        </p>
+        <p>Saya menyetujui transaksi dan kebenaran data yang disampaikan.</p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12 col-sm-12">
         <div class="message-bar rounded-lg">
-                        <div class="d-flex">
-                <info-icon class="ic-primary mr-2"></info-icon>
-                Perhatian !
-              </div>
-              <br>
+          <div class="d-flex">
+            <info-icon class="ic-primary mr-2"></info-icon>
+            Perhatian !
+          </div>
+          <br />
           <ul>
-            <li>- Jumlah Premi yang harus dibayarkan akan disesuaikan dengan frekuensi pembayaran yang dipilih</li>
+            <li>
+              - Jumlah Premi yang harus dibayarkan akan disesuaikan dengan
+              frekuensi pembayaran yang dipilih
+            </li>
           </ul>
         </div>
       </div>
@@ -144,7 +161,7 @@ export default {
   components: {
     SaveIcon,
     InfoIcon,
-    InfoPanel
+    InfoPanel,
   },
   mixins: [resumePageMixin],
   data() {

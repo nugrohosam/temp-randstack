@@ -1,5 +1,6 @@
 <template>
   <div>
+    <BackButton />
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>

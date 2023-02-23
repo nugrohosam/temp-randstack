@@ -283,6 +283,12 @@ export default {
       this.showMe = true;
     }
   },
+  beforeMount() {
+    this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
+      title: "Resume Perubahan Informasi Customer",
+      sub: "Pengajuan Perubahan Informasi Customer",
+    });
+  },
   data() {
     return {
       accepted: false,

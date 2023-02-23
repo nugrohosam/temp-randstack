@@ -38,7 +38,7 @@ const actions = {
       ktp_selfie_attachment: state.benefitAllocation.ktpSelfieAttachment?.name || null,
     };
 
-    if (state.benefitAllocation.familyAttachment) {
+    if (state.benefitAllocation.familyAttachment.file) {
       if (state.benefitAllocation.statusFamilyAttachment === "KK") {
         form.kk_attachment = state.benefitAllocation.familyAttachment?.name || null;
       } else {

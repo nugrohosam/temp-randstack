@@ -24,7 +24,6 @@ import ChangeTerm from "./change_term";
 import ChangePayer from "./change_payer";
 import ChangeBeneficiary from "./change_beneficiary";
 import ChangePolicyHolder from "./change_policy_holder";
-import ChangeCustomerPayer from "./change_customer_payer";
 import ChangeInsured from './change_insured'
 
 const SubmissionTransactionModules = {
@@ -47,12 +46,11 @@ const SubmissionTransactionModules = {
     change_term: ChangeTerm,
     change_occupation: ChangeOccupation,
     change_payment_freq: ChangePaymentFreq,
-    change_payer: ChangePayer,
     change_payment_method: ChangePaymentMethod,
     change_birth_date_and_gender: ChangeBirthDateAndGender,
     change_beneficiary: ChangeBeneficiary,
     change_policy_holder: ChangePolicyHolder,
-    change_customer_payer: ChangeCustomerPayer,
+    change_payer: ChangePayer,
     change_insured: ChangeInsured
   },
   state,

@@ -1,10 +1,12 @@
 <template>
   <div>
+    <BackButton />
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
         <p class="data-value">
-          {{ $isNullWithSpace(
+          {{
+            $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.firstName
             ) +
             $isNullWithSpace(
@@ -12,7 +14,8 @@
             ) +
             $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.lastName
-            ) }}
+            )
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -26,7 +29,12 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Masa Tahun Premi Saat Ini</p>
-          <p class="data-value">{{ (+(paidupDatePremi.substring(0, 4)) - +(issueDatePremi.substring(0, 4))) }} Tahun</p>
+        <p class="data-value">
+          {{
+            +paidupDatePremi.substring(0, 4) - +issueDatePremi.substring(0, 4)
+          }}
+          Tahun
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Jatuh Tempo Polis</p>
@@ -43,11 +51,7 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Masa Pembayaran Baru</p>
-        <p class="data-value">
-          {{
-            getChangeTerm.term
-          }} Tahun
-        </p>
+        <p class="data-value">{{ getChangeTerm.term }} Tahun</p>
       </div>
     </div>
 
@@ -64,7 +68,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">Unggah Ilustrasi</p>
@@ -87,22 +91,23 @@
           value="orange darken-3"
           hide-details
         ></v-checkbox>
-        <p>
-          Saya menyetujui transaksi dan kebenaran data yang disampaikan.
-        </p>
+        <p>Saya menyetujui transaksi dan kebenaran data yang disampaikan.</p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12 col-sm-12">
         <div class="message-bar rounded-lg">
-                        <div class="d-flex">
-                <info-icon class="ic-primary mr-2"></info-icon>
-                Perhatian !
-              </div>
-              <br>
+          <div class="d-flex">
+            <info-icon class="ic-primary mr-2"></info-icon>
+            Perhatian !
+          </div>
+          <br />
           <ul>
-            <li>- Perubahan Masa Pembayaran Premi akan mempengaruhi berapa premi yang harus dibayar</li>
+            <li>
+              - Perubahan Masa Pembayaran Premi akan mempengaruhi berapa premi
+              yang harus dibayar
+            </li>
           </ul>
         </div>
       </div>
@@ -135,7 +140,7 @@ export default {
   components: {
     SaveIcon,
     InfoIcon,
-    InfoPanel
+    InfoPanel,
   },
   mixins: [resumePageMixin],
   data() {
@@ -173,7 +178,11 @@ export default {
       );
     },
     issueDatePremi() {
-      return this.myPolicy.policyWithCode.coverages?.find(x => x?.masterProduct == null || false)?.issueDate || '-'
+      return (
+        this.myPolicy.policyWithCode.coverages?.find(
+          (x) => x?.masterProduct == null || false
+        )?.issueDate || "-"
+      );
     },
     getChangeTerm() {
       return this.$store.getters[

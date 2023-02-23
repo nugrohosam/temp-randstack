@@ -40,7 +40,6 @@
           </div>
         </div>
         <div class="row">
-       
           <div class="col-12">
             <template>
               <div class="page-body">
@@ -92,7 +91,7 @@
                             <input
                               type="text"
                               class="outlined"
-                              placeholder="Jl Jenderal Ahmad Yani By Pass"
+                              placeholder="Jl Jenderal XXX..."
                               v-model="selectedPolicy.address.address1"
                             />
                           </div>
@@ -246,7 +245,7 @@
                             <input
                               type="text"
                               class="outlined w-100"
-                              placeholder="Jl Jenderal Ahmad Yani By Pass"
+                              placeholder="Jl Jenderal XXX..."
                               v-model="selectedPolicy.address.address1"
                             />
                           </div>
@@ -692,7 +691,7 @@ export default {
         .then((res) => {
           this.$router.push({ path: "./customer-info/resume" });
         });
-      // 
+      //
     },
     addSelfieKtpImage: function (e) {
       if (e.target.files[0]) {

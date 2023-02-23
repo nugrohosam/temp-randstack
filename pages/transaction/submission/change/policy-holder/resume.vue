@@ -1,5 +1,6 @@
 <template>
   <div>
+    <BackButton />
     <div class="row">
       <div class="col-lg-3 col-sm-6">
         <p class="data-title mb-2">Nomor Polis</p>
@@ -93,6 +94,28 @@
 
                 <div class="row">
                   <div class="col-lg-4 col-sm-12">
+                    <p class="data-title">Jenis Alamat</p>
+                    <p class="data-value">
+                      {{
+                        options.addressType.find(
+                          (x) =>
+                            x.identifier ==
+                            +getChangePolicyHolder.addresses[index].addressType
+                        ).label
+                          ? options.addressType.find(
+                              (x) =>
+                                x.identifier ==
+                                +getChangePolicyHolder.addresses[index]
+                                  .addressType
+                            ).label
+                          : "-"
+                      }}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 col-sm-12">
                     <p class="data-title">Provinsi</p>
                     <p class="data-value">
                       {{
@@ -143,16 +166,6 @@
                     </p>
                   </div>
                   <div class="col-lg-4 col-sm-12">
-                    <p class="data-title">Blok</p>
-                    <p class="data-value">
-                      {{
-                        getChangePolicyHolder.addresses[index].address2
-                          ? getChangePolicyHolder.addresses[index].address2
-                          : "-"
-                      }}
-                    </p>
-                  </div>
-                  <div class="col-lg-4 col-sm-12">
                     <p class="data-title">Blok / No Jalan</p>
                     <p class="data-value">
                       {{
@@ -182,7 +195,7 @@
 
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Unggah Foto Selfie dengan KTP</p>
+        <p class="data-title mb-2">Unggah Foto Selfie dengan KTP Pemegang Polis</p>
         <div class="data-value">
           <button
             class="btn btn-primary-outlined"
@@ -196,7 +209,7 @@
 
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Unggah Foto KTP</p>
+        <p class="data-title mb-2">Unggah Foto KTP Pemegang Polis</p>
         <div class="data-value">
           <button
             class="btn btn-primary-outlined"
@@ -210,7 +223,7 @@
 
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Unggah Foto KK/Akte Kelahiran</p>
+        <p class="data-title mb-2">Unggah Foto KK/Akte Kelahiran Pemegang Polis</p>
         <div class="data-value">
           <button
             class="btn btn-primary-outlined"
@@ -244,14 +257,14 @@
           <br />
           <ul>
             <li>
-              - Pengajuan ini hanya bersifat merubah tidak mengganti untuk
+              - Pengajuan ini hanya bersifat merevisi tidak mengganti untuk
               informasi lebih lanjut, dapat menghubungi Customer Care 1-500-045
               atau e-mail ke care@bni-life.co.id atau Service point atau Kantor
               Layanan BNI Life.
             </li>
             <li>
               - Untuk perubahan data pembayaran (Auto debit Tabungan, Kartu
-              kredit, ataupun VA, dapat menggunakan perubahan metode pembayaran.
+              kredit, ataupun VA) dapat menggunakan perubahan metode pembayaran.
             </li>
           </ul>
         </div>
@@ -277,6 +290,7 @@
 </template>
 
 <script>
+import { addressType } from "@/utils/constant";
 import resumePageMixin from "@/mixins/resumePage";
 import InfoPanel from "../../../../../components/InfoPanel.vue";
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
@@ -290,6 +304,9 @@ export default {
   mixins: [resumePageMixin],
   data() {
     return {
+      options: {
+        addressType,
+      },
       accepted: false,
       validationMessage: [],
       image_preview: {
@@ -355,7 +372,7 @@ export default {
       this.validate();
       if (this.validationMessage.length <= 0) {
         const result = await this.$store.dispatch(
-          "submission_transaction/change_policy_holder/getChangePolicyHolder"
+          "submission_transaction/change_policy_holder/changePolicyHolder"
         );
         if (result && result.success == true) {
           let transactionIds = result.data.transactionIds;

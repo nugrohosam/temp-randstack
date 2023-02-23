@@ -1,10 +1,12 @@
 <template>
   <div>
+    <BackButton />
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
         <p class="data-value">
-          {{ $isNullWithSpace(
+          {{
+            $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.firstName
             ) +
             $isNullWithSpace(
@@ -12,7 +14,8 @@
             ) +
             $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.lastName
-            ) }}
+            )
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -28,7 +31,9 @@
     <div class="row">
       <div class="col-12">
         <div class="col-md-12">
-          <p class="data-title">Informasi Tanggal dan Jenis Kelamin Tertanggung</p>
+          <p class="data-title">
+            Informasi Tanggal dan Jenis Kelamin Tertanggung
+          </p>
         </div>
         <template>
           <v-data-table
@@ -47,15 +52,9 @@
             <template v-slot:item.person="{ item }">
               {{
                 item
-                  ? $isNullWithSpace(
-                      item.person.firstName
-                    ) +
-                    $isNullWithSpace(
-                      item.person.midName
-                    ) +
-                    $isNullWithSpace(
-                      item.person.lastName
-                    )
+                  ? $isNullWithSpace(item.person.firstName) +
+                    $isNullWithSpace(item.person.midName) +
+                    $isNullWithSpace(item.person.lastName)
                   : ""
               }}
             </template>
@@ -63,21 +62,21 @@
               {{ item.person.gender == "M" ? "Laki Laki" : "Perempuan" }}
             </template>
             <template v-slot:item.birthday="{ item }">
-              {{
-                $formatDate(item.person.birthday)
-              }}
+              {{ $formatDate(item.person.birthday) }}
             </template>
           </v-data-table>
         </template>
       </div>
     </div>
-    
+
     <hr class="my-4" />
-    
+
     <div class="row">
       <div class="col-12">
         <div class="col-md-12">
-          <p class="data-title">Informasi Tanggal dan Jenis Kelamin Tertanggung Dirubah</p>
+          <p class="data-title">
+            Informasi Tanggal dan Jenis Kelamin Tertanggung Dirubah
+          </p>
         </div>
         <template>
           <v-data-table
@@ -96,13 +95,19 @@
               {{
                 item
                   ? $isNullWithSpace(
-                      myPolicy.policyWithCode.insureds.find(x => x.partyId == item.partyId).person.firstName
+                      myPolicy.policyWithCode.insureds.find(
+                        (x) => x.partyId == item.partyId
+                      ).person.firstName
                     ) +
                     $isNullWithSpace(
-                      myPolicy.policyWithCode.insureds.find(x => x.partyId == item.partyId).person.midName
+                      myPolicy.policyWithCode.insureds.find(
+                        (x) => x.partyId == item.partyId
+                      ).person.midName
                     ) +
                     $isNullWithSpace(
-                      myPolicy.policyWithCode.insureds.find(x => x.partyId == item.partyId).person.lastName
+                      myPolicy.policyWithCode.insureds.find(
+                        (x) => x.partyId == item.partyId
+                      ).person.lastName
                     )
                   : ""
               }}
@@ -111,27 +116,25 @@
               {{ item.gender == "M" ? "Laki Laki" : "Perempuan" }}
             </template>
             <template v-slot:item.birthday="{ item }">
-              {{
-                $formatDate(item.birthDate)
-              }}
+              {{ $formatDate(item.birthDate) }}
             </template>
             <template v-slot:item.document="{ item }">
               <b
-                style="cursor:pointer; text-color:orange"
+                style="cursor: pointer; text-color: orange"
                 @click="showKtpSelfiePreview(findIndexItems(item.partyId))"
               >
                 Selfie KTP
               </b>
               &nbsp
               <b
-                style="cursor:pointer; text-color:orange"
+                style="cursor: pointer; text-color: orange"
                 @click="showKtpPreview(findIndexItems(item.partyId))"
               >
                 KTP
               </b>
               &nbsp
               <b
-                style="cursor:pointer; text-color:orange"
+                style="cursor: pointer; text-color: orange"
                 @click="showDocumentPreview(findIndexItems(item.partyId))"
               >
                 Akte/Ijazah
@@ -150,9 +153,7 @@
           value="orange darken-3"
           hide-details
         ></v-checkbox>
-        <p>
-          Saya menyetujui transaksi dan kebenaran data yang disampaikan.
-        </p>
+        <p>Saya menyetujui transaksi dan kebenaran data yang disampaikan.</p>
       </div>
     </div>
 
@@ -165,7 +166,10 @@
           hide-details
         ></v-checkbox>
         <p>
-          Saya <b>tertanggung</b> telah mengisi perubahan <b>Tanggal lahir dan/atau jenis kelamin tertanggung</b> dengan benar dan tanpa paksaan, apabila dikemudian hari ditemukan kesalahan pengisian maka saya siap menanggung segala risiko dan akibatnya
+          Saya <b>tertanggung</b> telah mengisi perubahan
+          <b>Tanggal lahir dan/atau jenis kelamin tertanggung</b> dengan benar
+          dan tanpa paksaan, apabila dikemudian hari ditemukan kesalahan
+          pengisian maka saya siap menanggung segala risiko dan akibatnya
         </p>
       </div>
     </div>
@@ -175,9 +179,9 @@
         <div class="message-bar rounded-lg">
           <div class="d-flex">
             <info-icon class="ic-primary mr-2"></info-icon>
-                Perhatian !
+            Perhatian !
           </div>
-          <br>
+          <br />
           <ul>
             <li>- Akan ada kemungkinan perubahan Premi</li>
           </ul>
@@ -212,7 +216,7 @@ export default {
   components: {
     SaveIcon,
     InfoIcon,
-    InfoPanel
+    InfoPanel,
   },
   mixins: [resumePageMixin],
   data() {
@@ -280,10 +284,14 @@ export default {
   },
   methods: {
     findIndexItems(partyId) {
-      return this.getChangeBirthDateAndGender.items.findIndex(x => x.partyId == partyId)
+      return this.getChangeBirthDateAndGender.items.findIndex(
+        (x) => x.partyId == partyId
+      );
     },
     showKtpSelfiePreview: function (index) {
-      if (this.getChangeBirthDateAndGender.items[index].ktpSelfieAttachment.file) {
+      if (
+        this.getChangeBirthDateAndGender.items[index].ktpSelfieAttachment.file
+      ) {
         this.image_preview.src = URL.createObjectURL(
           this.getChangeBirthDateAndGender.items[index].ktpSelfieAttachment.file
         );
@@ -299,7 +307,9 @@ export default {
       }
     },
     showDocumentPreview: function (index) {
-      if (this.getChangeBirthDateAndGender.items[index].documentAttachment.file) {
+      if (
+        this.getChangeBirthDateAndGender.items[index].documentAttachment.file
+      ) {
         this.image_preview.src = URL.createObjectURL(
           this.getChangeBirthDateAndGender.items[index].documentAttachment.file
         );

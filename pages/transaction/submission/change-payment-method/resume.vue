@@ -1,10 +1,12 @@
 <template>
   <div>
+    <BackButton />
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
         <p class="data-value">
-          {{ $isNullWithSpace(
+          {{
+            $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.firstName
             ) +
             $isNullWithSpace(
@@ -12,7 +14,8 @@
             ) +
             $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.lastName
-            ) }}
+            )
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -26,7 +29,12 @@
     <div class="row">
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Masa Tahun Premi</p>
-        <p class="data-value">{{ (+(paidupDatePremi.substring(0, 4)) - +(issueDatePremi.substring(0, 4))) }} Tahun</p>
+        <p class="data-value">
+          {{
+            +paidupDatePremi.substring(0, 4) - +issueDatePremi.substring(0, 4)
+          }}
+          Tahun
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Tanggal Jatuh Tempo</p>
@@ -34,7 +42,13 @@
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Metode Pembayaran Saat Ini</p>
-        <p class="data-value">{{ myPolicy.policyWithCode.payerAccounts[0].paymentMethod == 93 ? "VIRTUAL" : "TABUNGAN" }}</p>
+        <p class="data-value">
+          {{
+            myPolicy.policyWithCode.payerAccounts[0].paymentMethod == 93
+              ? "VIRTUAL"
+              : "TABUNGAN"
+          }}
+        </p>
       </div>
     </div>
 
@@ -42,14 +56,21 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Jenis Pembayaran</p>
         <p class="data-value">
-          {{ $labelPaymentType(myPolicy.policyWithCode.payerAccounts[0].paymentMethod) }}</p>
+          {{
+            $labelPaymentType(
+              myPolicy.policyWithCode.payerAccounts[0].paymentMethod
+            )
+          }}
+        </p>
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Frekuensi Pembayaran Saat Ini</p>
         <p class="data-value">
           {{
             $paymentFrequency(
-              myPolicy.policyWithCode.coverages.find(x => x.masterProduct == null).currentPremium.paymentFreq
+              myPolicy.policyWithCode.coverages.find(
+                (x) => x.masterProduct == null
+              ).currentPremium.paymentFreq
             ) || "-"
           }}
         </p>
@@ -61,17 +82,28 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Kartu Kredit</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.payerBankAccount[0].bankAccount || "-" }}</p>
+            {{ myPolicy.policyWithCode.payerBankAccount[0].bankAccount || "-" }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Masa Kadaluarsa Kartu Kredit</p>
           <p class="data-value">
-            {{ $formatCCExpireDate(myPolicy.policyWithCode.payerBankAccount[0].expireDate) }}
+            {{
+              $formatCCExpireDate(
+                myPolicy.policyWithCode.payerBankAccount[0].expireDate
+              )
+            }}
           </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2 d-flex">Tipe Kartu Kredit</p>
-          <p class="data-value">{{ myPolicy.policyWithCode.payerBankAccount[0].creditCardType == "2" ? "MASTER CARD" : "VISA" }}</p>
+          <p class="data-value">
+            {{
+              myPolicy.policyWithCode.payerBankAccount[0].creditCardType == "2"
+                ? "MASTER CARD"
+                : "VISA"
+            }}
+          </p>
         </div>
       </div>
 
@@ -79,12 +111,14 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemilik Kartu Kredit</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.payerBankAccount[0].accoName || "-" }}</p>
+            {{ myPolicy.policyWithCode.payerBankAccount[0].accoName || "-" }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Bank</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.payerBankAccount[0].bankName || "-" }}</p>
+            {{ myPolicy.policyWithCode.payerBankAccount[0].bankName || "-" }}
+          </p>
         </div>
       </div>
     </div>
@@ -94,17 +128,20 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Rekening</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.payerBankAccount[0].bankAccount || "-" }}</p>
+            {{ myPolicy.policyWithCode.payerBankAccount[0].bankAccount || "-" }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemilik Rekening</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.payerBankAccount[0].accoName || "-" }}</p>
+            {{ myPolicy.policyWithCode.payerBankAccount[0].accoName || "-" }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Bank</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.payerBankAccount[0].bankName || "-" }}</p>
+            {{ myPolicy.policyWithCode.payerBankAccount[0].bankName || "-" }}
+          </p>
         </div>
       </div>
     </div>
@@ -114,12 +151,17 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor VA</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.virtualAccountInfo[0].virtualAccountNumber || "-" }}</p>
+            {{
+              myPolicy.policyWithCode.virtualAccountInfo[0]
+                .virtualAccountNumber || "-"
+            }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Bank</p>
           <p class="data-value">
-            {{ myPolicy.policyWithCode.virtualAccountInfo[0].bankName || "-" }}</p>
+            {{ myPolicy.policyWithCode.virtualAccountInfo[0].bankName || "-" }}
+          </p>
         </div>
       </div>
     </div>
@@ -131,7 +173,8 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Kartu Kredit Baru</p>
           <p class="data-value">
-            {{ getChangePaymentMethod.accountCC || "-" }}</p>
+            {{ getChangePaymentMethod.accountCC || "-" }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Masa Kadaluarsa Kartu Kredit Baru</p>
@@ -149,12 +192,20 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemilik Kartu Kredit Baru</p>
           <p class="data-value">
-            {{ getChangePaymentMethod.ownerAccount || "-" }}</p>
+            {{ getChangePaymentMethod.ownerAccount || "-" }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Bank Perubahan</p>
           <p class="data-value">
-            {{ optionBank.find(x => x.value == getChangePaymentMethod.bank) !== undefined  ? optionBank.find(x => x.value == getChangePaymentMethod.bank).text : "-" }}</p>
+            {{
+              optionBank.find((x) => x.value == getChangePaymentMethod.bank) !==
+              undefined
+                ? optionBank.find((x) => x.value == getChangePaymentMethod.bank)
+                    .text
+                : "-"
+            }}
+          </p>
         </div>
       </div>
     </div>
@@ -164,22 +215,32 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor Rekening Baru</p>
           <p class="data-value">
-            {{ getChangePaymentMethod.accountDebit || "-" }}</p>
+            {{ getChangePaymentMethod.accountDebit || "-" }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Pemilik Rekening Baru</p>
           <p class="data-value">
-            {{ getChangePaymentMethod.ownerAccount || "-" }}</p>
+            {{ getChangePaymentMethod.ownerAccount || "-" }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Bank Perubahan</p>
           <p class="data-value">
-            {{ optionBank.find(x => x.value == getChangePaymentMethod.bank) !== undefined  ? optionBank.find(x => x.value == getChangePaymentMethod.bank).text : "-" }}</p>
+            {{
+              optionBank.find((x) => x.value == getChangePaymentMethod.bank) !==
+              undefined
+                ? optionBank.find((x) => x.value == getChangePaymentMethod.bank)
+                    .text
+                : "-"
+            }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Cabang Baru</p>
           <p class="data-value">
-            {{ getChangePaymentMethod.branch || "-" }}</p>
+            {{ getChangePaymentMethod.branch || "-" }}
+          </p>
         </div>
       </div>
     </div>
@@ -189,12 +250,14 @@
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nomor VA Baru</p>
           <p class="data-value">
-            {{ getChangePaymentMethod.accountVA || "-" }}</p>
+            {{ getChangePaymentMethod.accountVA || "-" }}
+          </p>
         </div>
         <div class="col-lg-4 col-sm-6">
           <p class="data-title mb-2">Nama Bank Perubahan</p>
           <p class="data-value">
-            {{ getChangePaymentMethod.bank }}</p>
+            {{ getChangePaymentMethod.bank }}
+          </p>
         </div>
       </div>
     </div>
@@ -229,7 +292,14 @@
 
     <div class="row" v-if="getChangePaymentMethod.paymentMethod != 93">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Unggah Foto {{ getChangePaymentMethod.paymentMethod == 3 ? "Halaman Depan Buku Tabungan" : "Foto Kartu Kredit" }}</p>
+        <p class="data-title mb-2">
+          Unggah Foto
+          {{
+            getChangePaymentMethod.paymentMethod == 3
+              ? "Halaman Depan Buku Tabungan"
+              : "Foto Kartu Kredit"
+          }}
+        </p>
         <p class="data-value">
           <button
             class="btn btn-primary-outlined"
@@ -243,7 +313,14 @@
 
     <div class="row" v-if="getChangePaymentMethod.paymentMethod != 93">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Unggah Foto {{ getChangePaymentMethod.paymentMethod == 3 ? "Scan Surat Otorisasi Debit Rekening" : "Scan Surat Otorisasi Kredit" }}</p>
+        <p class="data-title mb-2">
+          Unggah Foto
+          {{
+            getChangePaymentMethod.paymentMethod == 3
+              ? "Scan Surat Otorisasi Debit Rekening"
+              : "Scan Surat Otorisasi Kredit"
+          }}
+        </p>
         <p class="data-value">
           <button
             class="btn btn-primary-outlined"
@@ -255,9 +332,22 @@
       </div>
     </div>
 
-    <div class="row" v-if="getChangePaymentMethod.isPayerRegisteredInPolicy != 93 && !getChangePaymentMethod.isPayerRegisteredInPolicy">
+    <div
+      class="row"
+      v-if="
+        getChangePaymentMethod.isPayerRegisteredInPolicy != 93 &&
+        !getChangePaymentMethod.isPayerRegisteredInPolicy
+      "
+    >
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Unggah Foto {{ getChangePaymentMethod.paymentMethod == 3 ? "Scan Surat Otorisasi Debit Rekening" : "Scan Surat Otorisasi Kredit" }}</p>
+        <p class="data-title mb-2">
+          Unggah Foto
+          {{
+            getChangePaymentMethod.paymentMethod == 3
+              ? "Scan Surat Otorisasi Debit Rekening"
+              : "Scan Surat Otorisasi Kredit"
+          }}
+        </p>
         <p class="data-value">
           <button
             class="btn btn-primary-outlined"
@@ -277,9 +367,7 @@
           value="orange darken-3"
           hide-details
         ></v-checkbox>
-        <p>
-          Saya menyetujui transaksi dan kebenaran data yang disampaikan.
-        </p>
+        <p>Saya menyetujui transaksi dan kebenaran data yang disampaikan.</p>
       </div>
     </div>
 
@@ -290,10 +378,17 @@
             <info-icon class="ic-primary mr-2"></info-icon>
             Perhatian !
           </div>
-          <br>
+          <br />
           <ul>
-            <li>- Untuk Perubahan Pembayaran menggunakan Bank BCA dan Mandiri, mohon menggunakan formulir asli</li>
-            <li>- Hubungi kantor layanan atau pemasar terdekat untuk mendapatkan formulir Otorisasi Kredit, formulir Otorisasi Debit Rekening dan formulir Beneficiary Owner</li>
+            <li>
+              - Untuk Perubahan Pembayaran menggunakan Bank BCA dan Mandiri,
+              mohon menggunakan formulir asli
+            </li>
+            <li>
+              - Hubungi kantor layanan atau pemasar terdekat untuk mendapatkan
+              formulir Otorisasi Kredit, formulir Otorisasi Debit Rekening dan
+              formulir Beneficiary Owner
+            </li>
           </ul>
         </div>
       </div>
@@ -326,7 +421,7 @@ export default {
   components: {
     SaveIcon,
     InfoIcon,
-    InfoPanel
+    InfoPanel,
   },
   mixins: [resumePageMixin],
   data() {
@@ -365,15 +460,23 @@ export default {
       return this.$store.getters["submission_transaction/getBanks"];
     },
     optionBank() {
-      return this.banks.map(v => ({ value: v.bankId, text: v.name }))
+      return this.banks.map((v) => ({ value: v.bankId, text: v.name }));
     },
     paidupDatePremi() {
-      console.log(this.myPolicy.policyWithCode.payerBankAccount[0])
-      return this.myPolicy.policyWithCode.coverages?.find(x => x?.masterProduct == null || false)?.paidupDate || '-'
+      console.log(this.myPolicy.policyWithCode.payerBankAccount[0]);
+      return (
+        this.myPolicy.policyWithCode.coverages?.find(
+          (x) => x?.masterProduct == null || false
+        )?.paidupDate || "-"
+      );
     },
     issueDatePremi() {
-      return this.myPolicy.policyWithCode.coverages?.find(x => x?.masterProduct == null || false)?.issueDate || '-'
-    }
+      return (
+        this.myPolicy.policyWithCode.coverages?.find(
+          (x) => x?.masterProduct == null || false
+        )?.issueDate || "-"
+      );
+    },
   },
   methods: {
     showKtpSelfiePreview: function () {

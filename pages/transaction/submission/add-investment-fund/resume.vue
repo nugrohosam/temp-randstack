@@ -5,15 +5,17 @@
       <div class="col-lg-4 col-sm-6">
         <p class="data-title mb-2">Nama Pemegang Polis</p>
         <p class="data-value">
-          {{ $isNullWithSpace(
-            myPolicy.policyWithCode.policyHolder.person.firstName
+          {{
+            $isNullWithSpace(
+              myPolicy.policyWithCode.policyHolder.person.firstName
             ) +
             $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.midName
             ) +
             $isNullWithSpace(
               myPolicy.policyWithCode.policyHolder.person.lastName
-            ) }}
+            )
+          }}
         </p>
       </div>
       <div class="col-lg-4 col-sm-6">
@@ -24,7 +26,9 @@
       </div>
       <div class="col-lg-4 col-sm-6">
         <p class="data-title">Informasi Virtual Account</p>
-        <p class="data-value">{{ getAddInvestmentFund.virtualAccountNumber }}</p>
+        <p class="data-value">
+          {{ getAddInvestmentFund.virtualAccountNumber }}
+        </p>
       </div>
     </div>
 
@@ -40,7 +44,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, i) in getAddInvestmentFund.items" :key="item.name">
+              <tr
+                v-for="(item, i) in getAddInvestmentFund.items"
+                :key="item.name"
+              >
                 <template v-if="i < getAddInvestmentFund.items.length">
                   <td>{{ i + 1 }}</td>
                   <td>{{ item.fund_name }}</td>
@@ -87,7 +94,10 @@
       </div>
     </div>
 
-    <div class="row" v-if="this.getAddInvestmentFund.transferAttachment.file != null">
+    <div
+      class="row"
+      v-if="this.getAddInvestmentFund.transferAttachment.file != null"
+    >
       <div class="col-lg-6 col-sm-12">
         <p class="data-title mb-2">Unggah Foto Bukti Transfer</p>
         <p class="data-value">
@@ -109,30 +119,25 @@
           value="orange darken-3"
           hide-details
         ></v-checkbox>
-        <p>
-          Saya menyetujui transaksi dan kebenaran data yang disampaikan.
-          
-        </p>
+        <p>Saya menyetujui transaksi dan kebenaran data yang disampaikan.</p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-12 col-sm-12">
         <div class="message-bar rounded-lg">
-            <div class="d-flex">
-              <info-icon class="ic-primary mr-2"></info-icon>
-              Perhatian !
-            </div>
-            <br>
-            <ul>
-              <li>
-                - Amount Top up dan uang yang di transfer harus sama!
-              </li>
-            </ul>
+          <div class="d-flex">
+            <info-icon class="ic-primary mr-2"></info-icon>
+            Perhatian !
+          </div>
+          <br />
+          <ul>
+            <li>- Amount Top up dan uang yang di transfer harus sama!</li>
+          </ul>
         </div>
       </div>
     </div>
-    
+
     <ValidationMessage :validation-message="validationMessage" />
 
     <div class="row">
@@ -141,7 +146,7 @@
           class="btn btn-primary btn-save float-right"
           @click.prevent="submit()"
         >
-        <save-icon></save-icon> Submit
+          <save-icon></save-icon> Submit
         </button>
       </div>
     </div>
@@ -161,9 +166,7 @@ export default {
     SaveIcon,
     InfoIcon,
   },
-  mounted() {
-    
-  },
+  mounted() {},
   computed: {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
@@ -174,7 +177,11 @@ export default {
       ];
     },
     totalAmount() {
-      return this.getAddInvestmentFund.items.length > 0 ? this.getAddInvestmentFund.items.map(a => a.amount).reduce((a, b) => +a + +b) : 0;  
+      return this.getAddInvestmentFund.items.length > 0
+        ? this.getAddInvestmentFund.items
+            .map((a) => a.amount)
+            .reduce((a, b) => +a + +b)
+        : 0;
     },
   },
   beforeMount() {

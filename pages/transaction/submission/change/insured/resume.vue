@@ -12,7 +12,7 @@
       <div class="col-lg-3 col-sm-6">
         <p class="data-title mb-2">Nama Depan</p>
         <p class="data-value">
-          {{ $isNullWithSpace(getChangePayer.firstName) }}
+          {{ $isNullWithSpace(getChangeInsured.firstName) }}
         </p>
       </div>
 
@@ -20,8 +20,8 @@
         <p class="data-title mb-2">Nama Belakang</p>
         <p class="data-value">
           {{
-            getChangePayer.lastName
-              ? $isNullWithSpace(getChangePayer.lastName)
+            getChangeInsured.lastName
+              ? $isNullWithSpace(getChangeInsured.lastName)
               : "-"
           }}
         </p>
@@ -30,35 +30,21 @@
       <div class="col-lg-3 col-sm-6">
         <p class="data-title mb-2">Tipe Identitas</p>
         <p class="data-value">
-          {{ $labelIdentityType(+getChangePayer.certiType) }}
+          {{ $labelIdentityType(+getChangeInsured.certiType) }}
         </p>
       </div>
 
       <div class="col-lg-3 col-sm-6">
         <p class="data-title mb-2">Nomor Identitas</p>
         <p class="data-value">
-          {{ getChangePayer.certiCode }}
-        </p>
-      </div>
-
-      <div class="col-lg-3 col-sm-6">
-        <p class="data-title mb-2">Tanggal Lahir</p>
-        <p class="data-value">
-          {{ $formatDate(getChangePayer.birthDate) }}
+          {{ getChangeInsured.certiCode }}
         </p>
       </div>
 
       <div class="col-lg-3 col-sm-6">
         <p class="data-title mb-2">Tempat Lahir</p>
         <p class="data-value">
-          {{ getChangePayer.birthPlace || "-" }}
-        </p>
-      </div>
-
-      <div class="col-lg-3 col-sm-6">
-        <p class="data-title mb-2">Jenis Kelamin</p>
-        <p class="data-value">
-          {{ getChangePayer.gender == "M" ? "Laki laki" : "Perempuan" }}
+          {{ getChangeInsured.birthPlace || "-" }}
         </p>
       </div>
 
@@ -72,14 +58,14 @@
       <div class="col-lg-3 col-sm-6">
         <p class="data-title mb-2">Alamat Email</p>
         <p class="data-value">
-          {{ getChangePayer.email || "-" }}
+          {{ getChangeInsured.email || "-" }}
         </p>
       </div>
     </div>
 
     <div
       class="row"
-      v-for="(item, index) in getChangePayer.addresses"
+      v-for="(item, index) in getChangeInsured.addresses"
       :key="index"
     >
       <div class="col-12">
@@ -100,12 +86,13 @@
                         options.addressType.find(
                           (x) =>
                             x.identifier ==
-                            +getChangePayer.addresses[index].addressType
+                            +getChangeInsured.addresses[index].addressType
                         ).label
                           ? options.addressType.find(
                               (x) =>
                                 x.identifier ==
-                                +getChangePayer.addresses[index].addressType
+                                +getChangeInsured.addresses[index]
+                                  .addressType
                             ).label
                           : "-"
                       }}
@@ -118,8 +105,8 @@
                     <p class="data-title">Provinsi</p>
                     <p class="data-value">
                       {{
-                        getChangePayer.addresses[index].province
-                          ? getChangePayer.addresses[index].province
+                        getChangeInsured.addresses[index].province
+                          ? getChangeInsured.addresses[index].province
                           : "-"
                       }}
                     </p>
@@ -128,8 +115,8 @@
                     <p class="data-title">Kota</p>
                     <p class="data-value">
                       {{
-                        getChangePayer.addresses[index].city
-                          ? getChangePayer.addresses[index].city
+                        getChangeInsured.addresses[index].city
+                          ? getChangeInsured.addresses[index].city
                           : "-"
                       }}
                     </p>
@@ -138,8 +125,8 @@
                     <p class="data-title">Kecamatan</p>
                     <p class="data-value">
                       {{
-                        getChangePayer.addresses[index].street
-                          ? getChangePayer.addresses[index].street
+                        getChangeInsured.addresses[index].street
+                          ? getChangeInsured.addresses[index].street
                           : "-"
                       }}
                     </p>
@@ -148,8 +135,8 @@
                     <p class="data-title">Kelurahan</p>
                     <p class="data-value">
                       {{
-                        getChangePayer.addresses[index].village
-                          ? getChangePayer.addresses[index].village
+                        getChangeInsured.addresses[index].village
+                          ? getChangeInsured.addresses[index].village
                           : "-"
                       }}
                     </p>
@@ -158,8 +145,8 @@
                     <p class="data-title">Alamat</p>
                     <p class="data-value">
                       {{
-                        getChangePayer.addresses[index].address1
-                          ? getChangePayer.addresses[index].address1
+                        getChangeInsured.addresses[index].address1
+                          ? getChangeInsured.addresses[index].address1
                           : "-"
                       }}
                     </p>
@@ -168,8 +155,8 @@
                     <p class="data-title">Blok / No Jalan</p>
                     <p class="data-value">
                       {{
-                        getChangePayer.addresses[index].address2
-                          ? getChangePayer.addresses[index].address2
+                        getChangeInsured.addresses[index].address2
+                          ? getChangeInsured.addresses[index].address2
                           : "-"
                       }}
                     </p>
@@ -178,8 +165,8 @@
                     <p class="data-title">RT/RW</p>
                     <p class="data-value">
                       {{
-                        getChangePayer.addresses[index].address3
-                          ? getChangePayer.addresses[index].address3
+                        getChangeInsured.addresses[index].address3
+                          ? getChangeInsured.addresses[index].address3
                           : "-"
                       }}
                     </p>
@@ -192,13 +179,14 @@
       </div>
     </div>
 
+
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Unggah Foto Selfie dengan KTP Tertanggung</p>
+        <p class="data-title mb-2">Unggah Foto KTP Pemegang Polis</p>
         <div class="data-value">
           <button
             class="btn btn-primary-outlined"
-            @click.prevent="showKtpSelfiePreview"
+            @click.prevent="showKtpPreview"
           >
             Lihat
           </button>
@@ -208,11 +196,11 @@
 
     <div class="row">
       <div class="col-lg-6 col-sm-12">
-        <p class="data-title mb-2">Unggah Foto KTP Pemgang Polis</p>
+        <p class="data-title mb-2">Unggah Foto Selfie dengan KTP Tertanggung</p>
         <div class="data-value">
           <button
             class="btn btn-primary-outlined"
-            @click.prevent="showKtpPreview"
+            @click.prevent="showKtpSelfiePreview"
           >
             Lihat
           </button>
@@ -330,52 +318,52 @@ export default {
   },
   beforeMount() {
     this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
-      title: "Resume Perubahan Data Pembayar Polis",
-      sub: "Pengajuan Perubahan Data Pembayar Polis",
+      title: "Resume Perubahan Data Tertanggung",
+      sub: "Pengajuan Perubahan Data Tertanggung",
     });
   },
   computed: {
     myPolicy() {
       return this.$store.getters["submission_transaction/getMyPolicy"];
     },
-    getChangePayer() {
+    getChangeInsured() {
       return this.$store.getters[
-        "submission_transaction/change_payer/getChangePayer"
+        "submission_transaction/change_insured/getChangeInsured"
       ];
     },
   },
   methods: {
     showKtpSelfiePreview: function () {
-      if (this.getChangePayer.ktpSelfieAttachment.file) {
+      if (this.getChangeInsured.ktpSelfieAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
-          this.getChangePayer.ktpSelfieAttachment.file
+          this.getChangeInsured.ktpSelfieAttachment.file
         );
         this.image_preview.show = true;
       }
     },
 
     showKtpPreview: function () {
-      if (this.getChangePayer.ktpAttachment.file) {
+      if (this.getChangeInsured.ktpAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
-          this.getChangePayer.ktpAttachment.file
-        );
-        this.image_preview.show = true;
-      }
-    },
-
-    showDocumentPreview: function () {
-      if (this.getChangePayer.documentAttachment.file) {
-        this.image_preview.src = URL.createObjectURL(
-          this.getChangePayer.documentAttachment.file
+          this.getChangeInsured.ktpAttachment.file
         );
         this.image_preview.show = true;
       }
     },
 
     showBeneficiaryKtpPreview: function () {
-      if (this.getChangePayer.beneficiaryKtpAttachment.file) {
+      if (this.getChangeInsured.beneficiaryKtpAttachment.file) {
         this.image_preview.src = URL.createObjectURL(
-          this.getChangePayer.beneficiaryKtpAttachment.file
+          this.getChangeInsured.beneficiaryKtpAttachment.file
+        );
+        this.image_preview.show = true;
+      }
+    },
+    
+    showDocumentPreview: function () {
+      if (this.getChangeInsured.documentAttachment.file) {
+        this.image_preview.src = URL.createObjectURL(
+          this.getChangeInsured.documentAttachment.file
         );
         this.image_preview.show = true;
       }
@@ -394,13 +382,13 @@ export default {
       this.validate();
       if (this.validationMessage.length <= 0) {
         const result = await this.$store.dispatch(
-          "submission_transaction/change_payer/changePayer"
+          "submission_transaction/change_insured/changeInsured"
         );
         if (result && result.success == true) {
           let transactionIds = result.data.transactionIds;
           this.$router.push({
             path:
-              "/transaction/submission/change/payer/thankyou?transaction_ids=" +
+              "/transaction/submission/change/insured/thankyou?transaction_ids=" +
               transactionIds.join(","),
           });
         }

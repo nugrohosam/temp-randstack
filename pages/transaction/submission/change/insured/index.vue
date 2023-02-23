@@ -42,7 +42,8 @@
                 "
                 mobile-breakpoint="480"
                 hide-default-footer
-                v-model="form.partyId"
+                v-model="partyChoosen"
+                @input="(e) => { onInsuredChoosen(e) }"
                 item-key="itemId"
                 show-select
                 class="elevation-1"
@@ -95,6 +96,9 @@
                 class="form-control"
               />
             </div>
+            <small
+              >Nama Depan tidak bisa menggunakan nomor dan tanda baca</small
+            >
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Nama Belakang</p>
@@ -106,6 +110,9 @@
                 class="form-control"
               />
             </div>
+            <small
+              >Nama Belakang tidak bisa menggunakan nomor dan tanda baca</small
+            >
           </div>
         </div>
 
@@ -133,16 +140,11 @@
                 class="form-control"
               />
             </div>
+            <small>Nomor Identitas tidak bisa menggunakan tanda baca</small>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-lg-4 col-sm-6">
-            <p class="data-title mb-2">Tanggal Lahir</p>
-            <div class="form-input">
-              <input type="date" v-model="form.birthDate" class="form-control" />
-            </div>
-          </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Tempat lahir</p>
             <div class="form-input">
@@ -152,6 +154,20 @@
                 pattern="[a-zA-Z.,\s]+"
                 class="form-control"
               />
+            </div>
+            <small
+              >Tempat lahir tidak bisa menggunakan nomor dan tanda baca</small
+            >
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <p class="data-title mb-2">Status Perkawinan</p>
+            <div class="form-input">
+              <v-select
+                outlined
+                dense
+                v-model="form.marrigeStatus"
+                :items="options.martialStatus"
+              ></v-select>
             </div>
           </div>
         </div>
@@ -166,38 +182,14 @@
                 class="form-control"
               />
             </div>
+            <small
+              >No Hanphone tidak bisa menggunakan huruf dan tanda baca</small
+            >
           </div>
           <div class="col-lg-4 col-sm-6">
             <p class="data-title mb-2">Alamat Email</p>
             <div class="form-input">
               <input type="email" v-model="form.email" class="form-control" />
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-4 col-sm-6">
-            <p class="data-title mb-2">Jenis Kelamin</p>
-            <div class="form-input">
-              <v-select
-                outlined
-                dense
-                item-text="name"
-                item-value="value"
-                :items="optionGenders"
-                v-model="form.gender"
-              ></v-select>
-            </div>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <p class="data-title mb-2">Status Perkawinan</p>
-            <div class="form-input">
-              <v-select
-                outlined
-                dense
-                v-model="form.marrigeStatus"
-                :items="options.martialStatus"
-              ></v-select>
             </div>
           </div>
         </div>
@@ -225,7 +217,9 @@
                         @click.prevent="toggleAddressEditable(index)"
                       >
                         {{
-                          isEditable(index) ? "Kembali" : "Ubah Informasi Alamat"
+                          isEditable(index)
+                            ? "Kembali"
+                            : "Ubah Informasi Alamat"
                         }}
                       </button>
                       <button
@@ -261,7 +255,7 @@
                             <input
                               type="text"
                               class="outlined"
-                              placeholder="Jl Jenderal Ahmad Yani By Pass"
+                              placeholder="Jl Jenderal XXX..."
                               v-model="form.addresses[index].address1"
                             />
                           </div>
@@ -274,7 +268,17 @@
                           isEditable(index)
                         "
                       >
-                        <div class="col-lg-12 col-sm-6">
+                        <div
+                          class="col-lg-12 col-sm-6"
+                          v-if="!isEditable(index)"
+                        >
+                          <p class="data-title mb-2">Jenis Alamat</p>
+                          <div class="form-input">-</div>
+                        </div>
+                        <div
+                          class="col-lg-12 col-sm-6"
+                          v-if="isEditable(index)"
+                        >
                           <p class="data-title mb-2">Jenis Alamat</p>
                           <div class="form-input">
                             <v-select
@@ -287,8 +291,14 @@
                             ></v-select>
                           </div>
                         </div>
+
                         <div class="col-lg-4 col-sm-12">
                           <p class="data-title">Provinsi</p>
+                          <p class="data-value" v-show="!isEditable(index)">
+                            {{
+                              form.addresses[index].address7
+                            }}
+                          </p>
                           <div class="form-input" v-show="isEditable(index)">
                             <v-select-ot
                               :id="'province-option-' + index"
@@ -316,9 +326,7 @@
                           <p class="data-title">Kota</p>
                           <p class="data-value" v-show="!isEditable(index)">
                             {{
-                              form.addresses[index].city
-                                ? form.addresses[index].city
-                                : "-"
+                              form.addresses[index].address6
                             }}
                           </p>
                           <div class="form-input" v-show="isEditable(index)">
@@ -347,9 +355,7 @@
                           <p class="data-title">Kecamatan</p>
                           <p class="data-value" v-show="!isEditable(index)">
                             {{
-                              form.addresses[index].street
-                                ? form.addresses[index].street
-                                : "-"
+                              form.addresses[index].address5
                             }}
                           </p>
                           <div class="form-input" v-show="isEditable(index)">
@@ -378,9 +384,7 @@
                           <p class="data-title">Kelurahan</p>
                           <p class="data-value" v-show="!isEditable(index)">
                             {{
-                              form.addresses[index].village
-                                ? form.addresses[index].village
-                                : "-"
+                              form.addresses[index].address4
                             }}
                           </p>
                           <div class="form-input" v-show="isEditable(index)">
@@ -418,7 +422,7 @@
                             <input
                               type="text"
                               class="outlined w-100"
-                              placeholder="Jl Jenderal Ahmad Yani By Pass"
+                              placeholder="Jl Jenderal XXX..."
                               v-model="form.addresses[index].address1"
                             />
                           </div>
@@ -523,26 +527,26 @@
               rules="required|image"
               v-slot="{ validate, errors }"
             >
-              <p class="data-title mb-2">Fotocopy KTP Pemegang Polis</p>
+              <p class="data-title mb-2">Fotocopy KTP Tertanggung</p>
               <input
                 type="file"
-                ref="ktpSelfieAttachment"
+                ref="beneficiaryKtpAttachment"
                 v-show="false"
                 accept="image/*"
                 @change="
                   (e) => {
                     validate(e);
-                    addSelfieKtpImage(e);
+                    addBeneficiaryKtpImage(e);
                   }
                 "
               />
               <button
                 class="btn btn-primary-outlined"
-                @click.prevent="$refs.ktpSelfieAttachment.click()"
+                @click.prevent="$refs.beneficiaryKtpAttachment.click()"
               >
                 Unggah
               </button>
-              <small>{{ form.ktpSelfieAttachment.name }}</small>
+              <small>{{ form.beneficiaryKtpAttachment.name }}</small>
               <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
               <br />
               <span class="text-error">{{ errors[0] }}</span>
@@ -556,7 +560,64 @@
               rules="required|image"
               v-slot="{ validate, errors }"
             >
-              <p class="data-title mb-2">Selfie + KTP Pemegang Polis</p>
+              <p class="data-title mb-2">Selfie + KTP Tertanggung</p>
+              <input
+                type="file"
+                ref="inputSelfieKtpImage"
+                v-show="false"
+                accept="image/*"
+                @change="
+                  (e) => {
+                    validate(e);
+                    addSelfieKtpImage(e);
+                  }
+                "
+              />
+              <button
+                class="btn btn-primary-outlined"
+                @click.prevent="$refs.inputSelfieKtpImage.click()"
+              >
+                Unggah
+              </button>
+              <small>{{ form.ktpSelfieAttachment.name }}</small>
+              <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
+              <br />
+              <span class="text-error">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <v-radio-group
+              v-model="form.familyAttachment"
+              row
+              @change="form.documentAttachment = {}"
+            >
+              <v-radio
+                v-for="(item, index) in radios"
+                :key="index"
+                color="#F15921"
+                v-bind="item"
+              ></v-radio>
+            </v-radio-group>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 col-sm-12">
+            <ValidationProvider
+              rules="required|image"
+              v-slot="{ validate, errors }"
+            >
+              <p class="data-title mb-2">
+                {{
+                  form.familyAttachment == "BIRTHCERTIFICATE"
+                    ? "Akte Kelahiran"
+                    : "Ijazah"
+                }}
+                Tertanggung
+              </p>
               <input
                 type="file"
                 ref="inputDocumentImage"
@@ -593,13 +654,12 @@
               <br />
               <ul>
                 <li>
-                  - Pengajuan ini hanya bersifat merubah tidak mengganti Tertanggung Untuk mengganti Tertanggung, dapat menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id atau Service point atau Kantor Layanan BNI Life
+                  - Pengajuan ini hanya bersifat merevisi tidak mengganti Tertanggung, untuk informasi lebih lanjut dapat menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id atau Service point atau Kantor Layanan BNI Life.
                 </li>
                 <li>
-                  - Jika melakukan perubahan Tanggal lahir mohon menyertakan Akta Lahir / Ijazah
-                </li>
-                <li>
-                  - Perubahan Jenis Kelamin dan Tanggal lahir tertanggung dapat menggunakan menu perubahan Data tgl lahir & Jenis kelamin tertanggung
+                  - Perubahan Jenis Kelamin dan Tanggal lahir tertanggung dapat
+                  menggunakan menu perubahan Data tgl lahir & Jenis kelamin
+                  tertanggung.
                 </li>
               </ul>
             </div>
@@ -631,11 +691,18 @@
         <p style="color: black">Mohon Tunggu...</p>
       </div>
     </template>
+
+    <NuxtChild />
+    <ModalMessage
+      :message="modal.message"
+      :show="modal.show"
+      :button="modal.button"
+      @closeModal="modal.show = false"
+    />
   </div>
 </template>
 
 <script>
-
 import { identityType, martialStatus, addressType } from "@/utils/constant";
 import { SaveIcon, InfoIcon } from "vue-feather-icons";
 
@@ -643,8 +710,18 @@ export default {
   components: { SaveIcon, InfoIcon },
   data() {
     return {
+      modal: {
+        message: "",
+        show: false,
+        button: {
+          text: "Tutup",
+          redirect_link: "/transaction/submission",
+          redirect_type: "spa",
+        },
+      },
       my_policy: null,
       isLoading: true,
+      partyChoosen: [],
       options: {
         identityType,
         addressType,
@@ -676,60 +753,75 @@ export default {
         ],
       },
       selectedPolicy: null,
-      province: [{
-        observer: null,
-        limit: 10,
-        search: "",
-        page: 1,
-        selected: null,
-        hasNextPage: false,
-        collection: [],
-      }],
-      city: [{
-        observer: null,
-        limit: 10,
-        search: "",
-        page: 1,
-        selected: null,
-        hasNextPage: false,
-        collection: [],
-      }],
-      district: [{
-        observer: null,
-        limit: 10,
-        search: "",
-        page: 1,
-        selected: null,
-        hasNextPage: false,
-        collection: [],
-      }],
-      village: [{
-        observer: null,
-        limit: 10,
-        search: "",
-        page: 1,
-        selected: null,
-        hasNextPage: false,
-        collection: [],
-      }],
+      province: [
+        {
+          observer: null,
+          limit: 10,
+          search: "",
+          page: 1,
+          selected: null,
+          hasNextPage: false,
+          collection: [],
+        },
+      ],
+      city: [
+        {
+          observer: null,
+          limit: 10,
+          search: "",
+          page: 1,
+          selected: null,
+          hasNextPage: false,
+          collection: [],
+        },
+      ],
+      district: [
+        {
+          observer: null,
+          limit: 10,
+          search: "",
+          page: 1,
+          selected: null,
+          hasNextPage: false,
+          collection: [],
+        },
+      ],
+      village: [
+        {
+          observer: null,
+          limit: 10,
+          search: "",
+          page: 1,
+          selected: null,
+          hasNextPage: false,
+          collection: [],
+        },
+      ],
+      radios: [
+        { label: "Ijazah", value: "IJAZAH" },
+        {
+          label: "Akte Kelahiran",
+          value: "BIRTHCERTIFICATE",
+        },
+      ],
       form: {
-        partyId: [],
+        familyAttachment: "IJAZAH",
+        partyId: null,
         firstName: "",
         lastName: "",
         marrigeStatus: "",
         certiType: "",
         certiCode: "",
-        birthDate: "",
         birthPlace: "",
         phoneNumber: "",
         email: "",
-        gender: "",
         addresses: [],
         ktpAttachment: {},
         ktpSelfieAttachment: {},
+        beneficiaryKtpAttachment: {},
         documentAttachment: {},
       },
-      validationMessage: []
+      validationMessage: [],
     };
   },
   computed: {
@@ -763,29 +855,27 @@ export default {
       return this.options.addressType.map((item) => {
         return {
           name: item.label,
-          value: item.idenitfier,
+          value: item.identifier,
         };
       });
     },
   },
 
   beforeMount() {
+    if (this.myPolicy.policyWithCode.riskStatus != 1) {
+      this.modal.show = true;
+      this.modal.message =
+        "Polis Anda sudah tidak aktif transaksi tidak dapat dilakukan, untuk informasi lebih lanjut silahkan menghubungi Customer Care 1-500-045 atau e-mail ke care@bni-life.co.id";
+    }
+
     this.$store.commit("submission_transaction/setCurrentHeaderTitle", {
       title: "Perubahan Data Tertanggung",
       sub: "Pengajuan Perubahan Data Tertanggung",
     });
-    
   },
 
   mounted() {
     this.getData();
-    this.getMyPolicy();
-
-    this.form.addresses.push({
-      ...this.selectedPolicy.address,
-      addressEditable: false,
-      addressType: "",
-    });
 
     this.getProvinces(0);
     this.province[0].observer = new IntersectionObserver((data) =>
@@ -807,9 +897,6 @@ export default {
       let data = this.myPolicy;
       let productIds = [],
         products = [];
-      data.policyWithCode.coverages = data.policyWithCode.coverages.filter(
-        (coverage) => coverage.riskStatus == 1
-      );
       data.policyWithCode.coverages.forEach((v, i) => {
         productIds.push(v.productId);
         data.policyWithCode.coverages[i].lifeInsured = v.lifeInsured1;
@@ -839,32 +926,6 @@ export default {
       this.my_policy = data;
       this.isLoading = false;
     },
-    getMyPolicy: async function () {
-      this.selectedPolicy = this.myPolicy.policyWithCode.policyHolder;
-      
-      if (this.selectedPolicy.address.addressFormat == "Y") {
-        if (!isNaN(parseInt(this.selectedPolicy.address.province))) {
-          this.selectedPolicy.address.province = await this.findProvince(
-            this.selectedPolicy.address.province
-          );
-        }
-        if (!isNaN(parseInt(this.selectedPolicy.address.city))) {
-          this.selectedPolicy.address.city = await this.findCity(
-            this.selectedPolicy.address.city
-          );
-        }
-        if (!isNaN(parseInt(this.selectedPolicy.address.street))) {
-          this.selectedPolicy.address.street = await this.findDistrict(
-            this.selectedPolicy.address.street
-          );
-        }
-        if (!isNaN(parseInt(this.selectedPolicy.address.village))) {
-          this.selectedPolicy.address.village = await this.findVillage(
-            this.selectedPolicy.address.village
-          );
-        }
-      }
-    },
 
     isEditable: function (index) {
       return this.form.addresses[index].addressEditable;
@@ -887,10 +948,55 @@ export default {
       }
     },
 
+    async onInsuredChoosen() {
+      if (this.partyChoosen.length > 0) {
+        const insuredChoosen = this.myPolicy.policyWithCode.insureds.find(x => x.partyId == this.partyChoosen[0].insureds[0].insured.partyId)
+        this.form.addresses = [];
+        this.form.addresses.push({
+          ...insuredChoosen.address,
+          addressEditable: false,
+          addressType: "",
+        });
+        this.form.partyId = this.partyChoosen[0].insureds[0].insured.partyId;
+        this.form.firstName = insuredChoosen.person.firstName;
+        this.form.lastName = insuredChoosen.person.lastName;
+        this.form.marrigeStatus = insuredChoosen.person.marriageId != null ? "KAWIN" : "BELUM KAWIN";
+        this.form.certiType = insuredChoosen.person.certiType;
+        this.form.certiCode = insuredChoosen.person.certiCode;
+        this.form.birthPlace = insuredChoosen.person.birthPlace;
+        this.form.email = insuredChoosen.person.email;
+        this.form.phoneNumber = insuredChoosen.mobileTelephone;
+      } else {
+        this.resetForm();
+      }
+    },
+
+    resetForm() {
+      this.form = {
+        familyAttachment: "IJAZAH",
+        partyId: null,
+        firstName: "",
+        lastName: "",
+        marrigeStatus: "",
+        certiType: "",
+        certiCode: "",
+        birthPlace: "",
+        phoneNumber: "",
+        email: "",
+        addresses: [],
+        ktpAttachment: {},
+        beneficiaryKtpAttachment: {},
+        ktpSelfieAttachment: {},
+        documentAttachment: {},
+      }
+    },
+
     onOpenProvince: async function (index) {
       if (this.province[index].hasNextPage) {
         await this.$nextTick();
-        this.province[index].observer.observe(this.$el.querySelector('.load-province-' + index));
+        this.province[index].observer.observe(
+          this.$el.querySelector(".load-province-" + index)
+        );
       }
     },
 
@@ -941,7 +1047,9 @@ export default {
     onOpenCity: async function (index) {
       if (this.city[index].hasNextPage) {
         await this.$nextTick();
-        this.city[index].observer.observe(this.$el.querySelector('.load-city-' + index));
+        this.city[index].observer.observe(
+          this.$el.querySelector(".load-city-" + index)
+        );
       }
     },
 
@@ -988,7 +1096,9 @@ export default {
     onOpenDistrict: async function (index) {
       if (this.district[index].hasNextPage) {
         await this.$nextTick();
-        this.district[index].observer.observe(this.$el.querySelector('.load-district-' + index));
+        this.district[index].observer.observe(
+          this.$el.querySelector(".load-district-" + index)
+        );
       }
     },
 
@@ -1034,7 +1144,9 @@ export default {
     onOpenVillage: async function (index) {
       if (this.village[index].hasNextPage) {
         await this.$nextTick();
-        this.village[index].observer.observe(this.$el.querySelector('.load-village-' + index));
+        this.village[index].observer.observe(
+          this.$el.querySelector(".load-village-" + index)
+        );
       }
     },
 
@@ -1058,25 +1170,26 @@ export default {
     },
 
     toggleAddressEditable(index) {
-      this.form.addresses[index].addressEditable = !this.form.addresses[index].addressEditable;
+      this.form.addresses[index].addressEditable =
+        !this.form.addresses[index].addressEditable;
     },
 
     deleteAddressEditable(index) {
-      this.form.addresses.splice(index, 1)
-      
-      this.province.splice(index, 1)
-      this.city.splice(index, 1)
-      this.district.splice(index, 1)
-      this.village.splice(index, 1)
+      this.form.addresses.splice(index, 1);
+
+      this.province.splice(index, 1);
+      this.city.splice(index, 1);
+      this.district.splice(index, 1);
+      this.village.splice(index, 1);
     },
 
-    findProvince: async function (provinceId = null) {
+   findProvince: async function (provinceId = null) {
       if (provinceId != null && !isNaN(parseInt(provinceId))) {
         let response = await this.$findProvince(provinceId);
         if (response.success) {
           return response.data.name;
         } else {
-          return provinceId;
+          return findProvince(provinceId);
         }
       }
       return null;
@@ -1088,7 +1201,7 @@ export default {
         if (response.success) {
           return response.data.name;
         } else {
-          return cityId;
+          return findCity(cityId);
         }
       }
       return null;
@@ -1100,7 +1213,7 @@ export default {
         if (response.success) {
           return response.data.name;
         } else {
-          return districtId;
+          return findDistrict(districtId);
         }
       }
       return null;
@@ -1112,7 +1225,7 @@ export default {
         if (response.success) {
           return response.data.name;
         } else {
-          return villageId;
+          return findVillage(villageId);
         }
       }
       return null;
@@ -1123,6 +1236,15 @@ export default {
       const clonedAddressChange = this.form.addresses[cloneIndex];
       this.form.addresses.push({
         ...clonedAddressChange,
+        province: "",
+        addressFormat: "N",
+        city: "",
+        street: "",
+        district: "",
+        village: "",
+        address1: "-",
+        address2: "",
+        address3: "",
         addressEditable: false,
         addressType: "",
       });
@@ -1217,7 +1339,7 @@ export default {
     async addDocumentImage(e) {
       if (e.target.files[0]) {
         const result = await this.$store.dispatch(
-          "submission_transaction/uploadKtpFile",
+          "submission_transaction/uploadDocumentFile",
           { file: e.target.files[0] }
         );
         this.form.documentAttachment = {
@@ -1227,23 +1349,30 @@ export default {
       }
     },
 
+    async addBeneficiaryKtpImage(e) {
+      if (e.target.files[0]) {
+        const result = await this.$store.dispatch(
+          "submission_transaction/uploadBeneficiaryOwnerFile",
+          { file: e.target.files[0] }
+        );
+        this.form.beneficiaryKtpAttachment = {
+          file: e.target.files[0],
+          name: result.name,
+        };
+      }
+    },
+
     validate() {
       this.validationMessage = [];
-      
+
       if (!this.form.firstName) {
         this.validationMessage.push("Nama Depan diperlukan");
-      }
-      if (!this.form.lastName) {
-        this.validationMessage.push("Nama Belakang diperlukan");
       }
       if (!this.form.certiType) {
         this.validationMessage.push("Kartu Identitas diperlukan");
       }
       if (!this.form.certiCode) {
         this.validationMessage.push("Nomor Identitas diperlukan");
-      }
-      if (!this.form.birthDate) {
-        this.validationMessage.push("Tanggal Lahir diperlukan");
       }
       if (!this.form.birthPlace) {
         this.validationMessage.push("Tempat lahir diperlukan");
@@ -1254,14 +1383,41 @@ export default {
       if (!this.form.email) {
         this.validationMessage.push("Alamat Email diperlukan");
       }
-      if (!this.form.gender) {
-        this.validationMessage.push("Jenis Kelamin diperlukan");
+
+
+      let warningAddress =
+        "Alamat {{ alamatWarning }} perlu dirubah/diisi lengkap";
+      let warningAddresses = [];
+      for (let i = 0; i < this.province.length; i++) {
+        if (
+            !this.province[i].selected || 
+            !this.city[i].selected || 
+            !this.district[i].selected || 
+            !this.village[i].selected ||
+            !this.form.addresses[i].address1 || 
+            !this.form.addresses[i].address2 || 
+            !this.form.addresses[i].address3 
+          ) {
+          warningAddresses.push(i + 1);
+          continue;
+        }
       }
+      
+      if (warningAddresses.length > 0) {
+        warningAddress = warningAddress.replace(
+          "{{ alamatWarning }}",
+          warningAddresses.join(", ")
+        );
+        this.validationMessage.push(warningAddress);
+      }
+
       if (!this.form.marrigeStatus) {
         this.validationMessage.push("Status Perkawinan diperlukan");
       }
       if (!this.form.ktpAttachment.name) {
-        this.validationMessage.push("Unggah Fotocopy KTP Pemegang polis diperlukan");
+        this.validationMessage.push(
+          "Unggah Fotocopy KTP Pemegang polis diperlukan"
+        );
       }
       if (!this.form.documentAttachment.name) {
         this.validationMessage.push("Unggah Fotocopy KTP Pembayar diperlukan");
@@ -1274,7 +1430,6 @@ export default {
     save() {
       this.validate();
       if (this.validationMessage.length) return false;
-
       for (
         let i = 0;
         i < this.province.length &&

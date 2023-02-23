@@ -30,20 +30,36 @@ const mutations = {
 const actions = {
   async changePolicyHolder({ state, rootGetters, dispatch }) {
     const form = {
-      addresses: state.getChangePolicyHolder.addresses,
-      first_name: state.getChangePolicyHolder.firstName,
-      last_name: state.getChangePolicyHolder.lastName,
-      certi_type: state.getChangePolicyHolder.certiType,
-      certi_code: state.getChangePolicyHolder.certiCode,
-      birth_date: state.getChangePolicyHolder.birthDate,
-      birth_place: state.getChangePolicyHolder.birthPlace,
-      phone_number: state.getChangePolicyHolder.phoneNumber,
-      email: state.getChangePolicyHolder.email,
-      marrige_status: state.getChangePolicyHolder.marrigeStatus,
-      gender: state.getChangePolicyHolder.gender,
-      ktp_selfie_attachment: state.getChangePolicyHolder.ktpSelfieAttachment.name,
-      ktp_attachment: state.getChangePolicyHolder.ktpAttachment.name,
-      document_attachment: state.getChangePolicyHolder.documentAttachment.name,
+      addresses: state.changePolicyHolder.addresses.map(address => {
+        return ({
+          post_code: "-",
+          address_1: address.address1,
+          address_2: address.address2,
+          address_3: address.address3,
+          address_4: address.address4,
+          address_5: address.address5,
+          address_6: address.address6,
+          address_7: address.address7,
+          address_type: address.addressType,
+          province_id: address.provinceId,
+          city_id: address.cityId,
+          district_id: address.districtId,
+          village_id: address.villageId,
+        })
+      }),
+      first_name: state.changePolicyHolder.firstName,
+      last_name: state.changePolicyHolder.lastName,
+      certi_type: state.changePolicyHolder.certiType,
+      certi_code: state.changePolicyHolder.certiCode,
+      birth_date: state.changePolicyHolder.birthDate,
+      birth_place: state.changePolicyHolder.birthPlace,
+      phone_number: state.changePolicyHolder.phoneNumber,
+      email: state.changePolicyHolder.email,
+      marrige_status: state.changePolicyHolder.marrigeStatus,
+      gender: state.changePolicyHolder.gender,
+      ktp_selfie_attachment: state.changePolicyHolder.ktpSelfieAttachment.name,
+      ktp_attachment: state.changePolicyHolder.ktpAttachment.name,
+      document_attachment: state.changePolicyHolder.documentAttachment.name,
     };
 
     dispatch(
