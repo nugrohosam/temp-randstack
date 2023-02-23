@@ -508,7 +508,7 @@
               <small>{{ selfieKtpFileName }}</small>
               <small>Format file jpg, jpeg, dan png. Maksimal 7MB</small>
               <br />
-              <span class="text-error">{{ errors[0] }}</span>
+              <span class="text-error">{{ errors.length > 0 ? 'Mohon Upload Dokumen yang sesuai.' :'' }}</span>
             </ValidationProvider>
           </div>
         </div>
