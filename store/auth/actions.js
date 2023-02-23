@@ -48,7 +48,7 @@ export default {
       });
   },
 
-  async signOut({ getters, commit }) {
+  async signOut({ getters, dispatch }) {
     this.$axios.setToken(getters.getAuthAccessToken, "Bearer");
     return await this.$axios
       .$post("/api/v1/auth/logout")
